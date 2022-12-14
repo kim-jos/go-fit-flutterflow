@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/confirmation_reservation_widget.dart';
 import '../components/no_time_slots_available_widget.dart';
-import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -31,7 +30,7 @@ class ReservationWidget extends StatefulWidget {
 }
 
 class _ReservationWidgetState extends State<ReservationWidget> {
-  ChatsRecord? groupChat;
+  ChatsRecord? newChatGroup;
   DateTimeRange? calendarSelectedDay;
 
   @override
@@ -290,26 +289,32 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                       },
                                     ).then((value) => setState(() {}));
                                   } else {
-                                    groupChat =
-                                        await FFChatManager.instance.createChat(
-                                      containerReservationsRecordList
+                                    final chatsCreateData = {
+                                      ...createChatsRecordData(
+                                        timeSlotGroup: true,
+                                        timeSlotRef:
+                                            rowClassAvailableTimeSlotsRecord
+                                                .reference,
+                                        timeSlotDate: dateTimeFormat(
+                                          'd/M/y',
+                                          calendarSelectedDay?.start,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ),
+                                        maxUsers: widget.maxLimit,
+                                      ),
+                                      'users': containerReservationsRecordList
                                           .map((e) => e.user!)
                                           .toList(),
-                                    );
-
-                                    final chatsUpdateData =
-                                        createChatsRecordData(
-                                      timeSlotDate: dateTimeFormat(
-                                        'd/M/y',
-                                        calendarSelectedDay?.start,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      ),
-                                      timeSlotGroup: true,
-                                      maxUsers: widget.maxLimit,
-                                    );
-                                    await groupChat!.reference
-                                        .update(chatsUpdateData);
+                                    };
+                                    var chatsRecordReference =
+                                        ChatsRecord.collection.doc();
+                                    await chatsRecordReference
+                                        .set(chatsCreateData);
+                                    newChatGroup =
+                                        ChatsRecord.getDocumentFromData(
+                                            chatsCreateData,
+                                            chatsRecordReference);
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
                                       backgroundColor: Colors.transparent,
@@ -335,7 +340,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                   rowClassAvailableTimeSlotsRecord
                                                       .reference,
                                               chatGroupRef:
-                                                  groupChat!.reference,
+                                                  newChatGroup!.reference,
                                             ),
                                           ),
                                         );
