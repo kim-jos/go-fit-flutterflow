@@ -349,6 +349,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                       .languageCode,
                                             ),
                                             maxUsers: widget.maxLimit,
+                                            lastMessageTime:
+                                                getCurrentTimestamp,
                                           ),
                                           'users':
                                               containerReservationsRecordList
