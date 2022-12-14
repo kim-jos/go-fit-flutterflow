@@ -344,10 +344,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'ko': '모임상대 추가',
       'en': 'Select the friends to add to chat.',
     },
-    '95lqz7rq': {
-      'ko': '그룹에 초대',
-      'en': 'Invite to Chat',
-    },
   },
   // BuyMembership
   {
@@ -483,7 +479,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // NoTimeSlotsAvailable
   {
-    '1fgp3znx': {
+    '90u0b7za': {
       'ko': 'No Time Slots Available',
       'en': '',
     },

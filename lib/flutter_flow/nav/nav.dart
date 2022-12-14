@@ -91,11 +91,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'MyReservations',
               path: 'myReservations',
+              requireAuth: true,
               builder: (context, params) => MyReservationsWidget(),
             ),
             FFRoute(
               name: 'ClassDetails',
               path: 'ClassDetails',
+              requireAuth: true,
               builder: (context, params) => ClassDetailsWidget(
                 classRef: params.getParam(
                     'classRef', ParamType.DocumentReference, false, 'classes'),
@@ -107,6 +109,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Classes',
               path: 'classes',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'Classes')
                   : ClassesWidget(),
@@ -114,6 +117,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Settings',
               path: 'settings',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'Settings')
                   : SettingsWidget(),
@@ -121,11 +125,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ReservationComplete',
               path: 'reservationComplete',
+              requireAuth: true,
               builder: (context, params) => ReservationCompleteWidget(),
             ),
             FFRoute(
               name: 'Chat',
               path: 'chat',
+              requireAuth: true,
               asyncParams: {
                 'chatUser': getDoc('users', UsersRecord.serializer),
               },
@@ -138,6 +144,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ChatGroups',
               path: 'chatGroups',
+              requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'ChatGroups')
                   : ChatGroupsWidget(),
@@ -145,11 +152,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ChatCreateGroup',
               path: 'chatCreateGroup',
+              requireAuth: true,
               builder: (context, params) => ChatCreateGroupWidget(),
             ),
             FFRoute(
               name: 'ChatAddUser',
               path: 'chatAddUser',
+              requireAuth: true,
               asyncParams: {
                 'chat': getDoc('chats', ChatsRecord.serializer),
               },
@@ -160,6 +169,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'BuyMembership',
               path: 'buyMembership',
+              requireAuth: true,
               builder: (context, params) => BuyMembershipWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),

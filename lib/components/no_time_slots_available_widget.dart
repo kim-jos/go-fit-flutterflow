@@ -26,7 +26,9 @@ class _NoTimeSlotsAvailableWidgetState
     context.watch<FFAppState>();
 
     return Text(
-      'No Time Slots Available',
+      FFLocalizations.of(context).getText(
+        '90u0b7za' /* No Time Slots Available */,
+      ),
       style: FlutterFlowTheme.of(context).subtitle1,
     );
   }

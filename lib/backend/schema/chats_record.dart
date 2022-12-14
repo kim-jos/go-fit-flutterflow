@@ -29,6 +29,14 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   @BuiltValueField(wireName: 'last_message_seen_by')
   BuiltList<DocumentReference>? get lastMessageSeenBy;
 
+  bool? get timeSlotGroup;
+
+  DocumentReference? get timeSlotRef;
+
+  String? get timeSlotDate;
+
+  int? get maxUsers;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -36,7 +44,10 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   static void _initializeBuilder(ChatsRecordBuilder builder) => builder
     ..users = ListBuilder()
     ..lastMessage = ''
-    ..lastMessageSeenBy = ListBuilder();
+    ..lastMessageSeenBy = ListBuilder()
+    ..timeSlotGroup = false
+    ..timeSlotDate = ''
+    ..maxUsers = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('chats');
@@ -65,6 +76,10 @@ Map<String, dynamic> createChatsRecordData({
   String? lastMessage,
   DateTime? lastMessageTime,
   DocumentReference? lastMessageSentBy,
+  bool? timeSlotGroup,
+  DocumentReference? timeSlotRef,
+  String? timeSlotDate,
+  int? maxUsers,
 }) {
   final firestoreData = serializers.toFirestore(
     ChatsRecord.serializer,
@@ -76,7 +91,11 @@ Map<String, dynamic> createChatsRecordData({
         ..lastMessage = lastMessage
         ..lastMessageTime = lastMessageTime
         ..lastMessageSentBy = lastMessageSentBy
-        ..lastMessageSeenBy = null,
+        ..lastMessageSeenBy = null
+        ..timeSlotGroup = timeSlotGroup
+        ..timeSlotRef = timeSlotRef
+        ..timeSlotDate = timeSlotDate
+        ..maxUsers = maxUsers,
     ),
   );
 

@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/confirmation_reservation_widget.dart';
 import '../components/no_time_slots_available_widget.dart';
+import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -30,6 +31,7 @@ class ReservationWidget extends StatefulWidget {
 }
 
 class _ReservationWidgetState extends State<ReservationWidget> {
+  ChatsRecord? groupChat;
   DateTimeRange? calendarSelectedDay;
 
   @override
@@ -252,31 +254,96 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                         rowClassAvailableTimeSlotsRecord
                                             .startTime!;
                                   });
-                                  await showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    context: context,
-                                    builder: (context) {
-                                      return Padding(
-                                        padding:
-                                            MediaQuery.of(context).viewInsets,
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.5,
-                                          child: ConfirmationReservationWidget(
-                                            className: widget.className,
-                                            selectedDate:
-                                                calendarSelectedDay?.start,
-                                            selectedTime:
-                                                FFAppState().selectedTime,
-                                            classRef: widget.classRef,
+                                  if (rowClassAvailableTimeSlotsRecord
+                                          .chatGroup !=
+                                      null) {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.5,
+                                            child:
+                                                ConfirmationReservationWidget(
+                                              className: widget.className,
+                                              selectedDate:
+                                                  calendarSelectedDay?.start,
+                                              selectedTime:
+                                                  FFAppState().selectedTime,
+                                              classRef: widget.classRef,
+                                              selectedTimeSlot:
+                                                  rowClassAvailableTimeSlotsRecord
+                                                      .reference,
+                                              chatGroupRef:
+                                                  rowClassAvailableTimeSlotsRecord
+                                                      .chatGroup,
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ).then((value) => setState(() {}));
+                                        );
+                                      },
+                                    ).then((value) => setState(() {}));
+                                  } else {
+                                    groupChat =
+                                        await FFChatManager.instance.createChat(
+                                      containerReservationsRecordList
+                                          .map((e) => e.user!)
+                                          .toList(),
+                                    );
+
+                                    final chatsUpdateData =
+                                        createChatsRecordData(
+                                      timeSlotDate: dateTimeFormat(
+                                        'd/M/y',
+                                        calendarSelectedDay?.start,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      ),
+                                      timeSlotGroup: true,
+                                      maxUsers: widget.maxLimit,
+                                    );
+                                    await groupChat!.reference
+                                        .update(chatsUpdateData);
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.5,
+                                            child:
+                                                ConfirmationReservationWidget(
+                                              className: widget.className,
+                                              selectedDate:
+                                                  calendarSelectedDay?.start,
+                                              selectedTime:
+                                                  FFAppState().selectedTime,
+                                              classRef: widget.classRef,
+                                              selectedTimeSlot:
+                                                  rowClassAvailableTimeSlotsRecord
+                                                      .reference,
+                                              chatGroupRef:
+                                                  groupChat!.reference,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => setState(() {}));
+                                  }
+
+                                  setState(() {});
                                 },
                                 text:
                                     rowClassAvailableTimeSlotsRecord.startTime!,
