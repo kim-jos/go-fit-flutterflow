@@ -53,8 +53,15 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
 
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
-      child: FutureBuilder<ChatsRecord>(
-        future: ChatsRecord.getDocumentOnce(widget.chatRef!),
+      child: FutureBuilder<List<ChatsRecord>>(
+        future: queryChatsRecordOnce(
+          queryBuilder: (chatsRecord) => chatsRecord
+              .where('timeSlotDate',
+                  isEqualTo: widget.date != '' ? widget.date : null)
+              .where('users', arrayContains: currentUserReference)
+              .where('timeSlotRef', isEqualTo: widget.timeSlotRef),
+          singleRecord: true,
+        ),
         builder: (context, snapshot) {
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {
@@ -68,7 +75,15 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
               ),
             );
           }
-          final checkoutBottomSheetChatsRecord = snapshot.data!;
+          List<ChatsRecord> checkoutBottomSheetChatsRecordList = snapshot.data!;
+          // Return an empty Container when the document does not exist.
+          if (snapshot.data!.isEmpty) {
+            return Container();
+          }
+          final checkoutBottomSheetChatsRecord =
+              checkoutBottomSheetChatsRecordList.isNotEmpty
+                  ? checkoutBottomSheetChatsRecordList.first
+                  : null;
           return Container(
             width: double.infinity,
             constraints: BoxConstraints(
@@ -199,7 +214,7 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
                                 .update(reservationsUpdateData);
                             groupChat =
                                 await FFChatManager.instance.removeGroupMembers(
-                              checkoutBottomSheetChatsRecord,
+                              checkoutBottomSheetChatsRecord!,
                               [currentUserReference!],
                             );
                             // Increment credits
