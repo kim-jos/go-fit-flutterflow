@@ -246,129 +246,152 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                           .toList()
                                           .length <
                                       1),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() {
-                                    FFAppState().selectedTime =
-                                        rowClassAvailableTimeSlotsRecord
-                                            .startTime!;
-                                  });
-                                  if (rowClassAvailableTimeSlotsRecord
-                                          .chatGroup !=
-                                      null) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.5,
-                                            child:
-                                                ConfirmationReservationWidget(
-                                              className: widget.className,
-                                              selectedDate:
-                                                  calendarSelectedDay?.start,
-                                              selectedTime:
-                                                  FFAppState().selectedTime,
-                                              classRef: widget.classRef,
-                                              selectedTimeSlot:
-                                                  rowClassAvailableTimeSlotsRecord
-                                                      .reference,
-                                              chatGroupRef:
-                                                  rowClassAvailableTimeSlotsRecord
-                                                      .chatGroup,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
-                                  } else {
-                                    final chatsCreateData = {
-                                      ...createChatsRecordData(
-                                        timeSlotGroup: true,
-                                        timeSlotRef:
-                                            rowClassAvailableTimeSlotsRecord
-                                                .reference,
-                                        timeSlotDate: dateTimeFormat(
-                                          'd/M/y',
-                                          calendarSelectedDay?.start,
-                                          locale: FFLocalizations.of(context)
-                                              .languageCode,
+                              child: FutureBuilder<ChatsRecord>(
+                                future: ChatsRecord.getDocumentOnce(
+                                    rowClassAvailableTimeSlotsRecord
+                                        .chatGroup!),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
                                         ),
-                                        maxUsers: widget.maxLimit,
                                       ),
-                                      'users': containerReservationsRecordList
-                                          .map((e) => e.user!)
-                                          .toList(),
-                                    };
-                                    var chatsRecordReference =
-                                        ChatsRecord.collection.doc();
-                                    await chatsRecordReference
-                                        .set(chatsCreateData);
-                                    newChatGroup =
-                                        ChatsRecord.getDocumentFromData(
-                                            chatsCreateData,
-                                            chatsRecordReference);
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.5,
-                                            child:
-                                                ConfirmationReservationWidget(
-                                              className: widget.className,
-                                              selectedDate:
-                                                  calendarSelectedDay?.start,
-                                              selectedTime:
-                                                  FFAppState().selectedTime,
-                                              classRef: widget.classRef,
-                                              selectedTimeSlot:
-                                                  rowClassAvailableTimeSlotsRecord
-                                                      .reference,
-                                              chatGroupRef:
-                                                  newChatGroup!.reference,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
+                                    );
                                   }
+                                  final buttonChatsRecord = snapshot.data!;
+                                  return FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() {
+                                        FFAppState().selectedTime =
+                                            rowClassAvailableTimeSlotsRecord
+                                                .startTime!;
+                                      });
+                                      if (rowClassAvailableTimeSlotsRecord
+                                              .chatGroup !=
+                                          null) {
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.of(context)
+                                                  .viewInsets,
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.5,
+                                                child:
+                                                    ConfirmationReservationWidget(
+                                                  className: widget.className,
+                                                  selectedDate:
+                                                      calendarSelectedDay
+                                                          ?.start,
+                                                  selectedTime:
+                                                      FFAppState().selectedTime,
+                                                  classRef: widget.classRef,
+                                                  selectedTimeSlot:
+                                                      rowClassAvailableTimeSlotsRecord
+                                                          .reference,
+                                                  chatGroupRef:
+                                                      buttonChatsRecord,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                      } else {
+                                        final chatsCreateData = {
+                                          ...createChatsRecordData(
+                                            timeSlotGroup: true,
+                                            timeSlotRef:
+                                                rowClassAvailableTimeSlotsRecord
+                                                    .reference,
+                                            timeSlotDate: dateTimeFormat(
+                                              'd/M/y',
+                                              calendarSelectedDay?.start,
+                                              locale:
+                                                  FFLocalizations.of(context)
+                                                      .languageCode,
+                                            ),
+                                            maxUsers: widget.maxLimit,
+                                          ),
+                                          'users':
+                                              containerReservationsRecordList
+                                                  .map((e) => e.user!)
+                                                  .toList(),
+                                        };
+                                        var chatsRecordReference =
+                                            ChatsRecord.collection.doc();
+                                        await chatsRecordReference
+                                            .set(chatsCreateData);
+                                        newChatGroup =
+                                            ChatsRecord.getDocumentFromData(
+                                                chatsCreateData,
+                                                chatsRecordReference);
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.of(context)
+                                                  .viewInsets,
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.5,
+                                                child:
+                                                    ConfirmationReservationWidget(
+                                                  className: widget.className,
+                                                  selectedDate:
+                                                      calendarSelectedDay
+                                                          ?.start,
+                                                  selectedTime:
+                                                      FFAppState().selectedTime,
+                                                  classRef: widget.classRef,
+                                                  selectedTimeSlot:
+                                                      rowClassAvailableTimeSlotsRecord
+                                                          .reference,
+                                                  chatGroupRef: newChatGroup,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                      }
 
-                                  setState(() {});
-                                },
-                                text:
-                                    rowClassAvailableTimeSlotsRecord.startTime!,
-                                options: FFButtonOptions(
-                                  width: 130,
-                                  height: 40,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Poppins',
-                                        color: Colors.white,
+                                      setState(() {});
+                                    },
+                                    text: rowClassAvailableTimeSlotsRecord
+                                        .startTime!,
+                                    options: FFButtonOptions(
+                                      width: 130,
+                                      height: 40,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'Poppins',
+                                            color: Colors.white,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
                                       ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  );
+                                },
                               ),
                             );
                           }),

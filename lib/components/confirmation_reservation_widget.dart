@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -25,7 +26,7 @@ class ConfirmationReservationWidget extends StatefulWidget {
   final String? selectedTime;
   final DocumentReference? classRef;
   final DocumentReference? selectedTimeSlot;
-  final DocumentReference? chatGroupRef;
+  final ChatsRecord? chatGroupRef;
 
   @override
   _ConfirmationReservationWidgetState createState() =>
@@ -34,6 +35,7 @@ class ConfirmationReservationWidget extends StatefulWidget {
 
 class _ConfirmationReservationWidgetState
     extends State<ConfirmationReservationWidget> {
+  ChatsRecord? groupChat;
   ReservationsRecord? newReservation;
 
   @override
@@ -170,6 +172,11 @@ class _ConfirmationReservationWidgetState
                         newReservation = ReservationsRecord.getDocumentFromData(
                             reservationsCreateData,
                             reservationsRecordReference);
+                        groupChat =
+                            await FFChatManager.instance.addGroupMembers(
+                          widget.chatGroupRef!,
+                          [currentUserReference!],
+                        );
                         // myReservations collection
 
                         final myReservationsCreateData =
