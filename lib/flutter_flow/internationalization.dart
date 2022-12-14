@@ -483,7 +483,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // NoTimeSlotsAvailable
   {
-    'k01vr0rj': {
+    '1fgp3znx': {
       'ko': 'No Time Slots Available',
       'en': '',
     },
