@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "925942846141",
+    "project_id": "customer-management-6f127",
+    "storage_bucket": "customer-management-6f127.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925942846141:android:23346acf58856e81a21dd4",
+        "android_client_info": {
+          "package_name": "com.example.bookings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925942846141-kcobdggunn8dr5itm1cvh3n8rcvm8965.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bookings",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "925942846141-ecd8424f34aaesngispij2fshjel4g8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv2cquFp5Z1YFBCCJKPMMaQqNOl6Wddxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925942846141-ecd8424f34aaesngispij2fshjel4g8j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "925942846141-9acvrd8i2r8hng6dskmile4j9r1vdqtp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.gofit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925942846141:android:65224b3833c13182a21dd4",
+        "android_client_info": {
+          "package_name": "com.mycompany.gofit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925942846141-3hli2d2ha3dh8v9f2r50d1f9cjek2s6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.gofit",
+            "certificate_hash": "226c09e489a05bcda8205444c13e7735fc99d867"
+          }
+        },
+        {
+          "client_id": "925942846141-68vsn0q0956none8re5tid7a2npsml3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.gofit",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "925942846141-ecd8424f34aaesngispij2fshjel4g8j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv2cquFp5Z1YFBCCJKPMMaQqNOl6Wddxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925942846141-ecd8424f34aaesngispij2fshjel4g8j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "925942846141-9acvrd8i2r8hng6dskmile4j9r1vdqtp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.gofit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

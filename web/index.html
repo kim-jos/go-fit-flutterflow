@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    Fore more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Go Fit">
+
+  
+
+  <!-- Favicon -->
+  <link rel="icon" href="GoFit_Logo.svg" sizes="any"/>
+  <link rel="icon" type="image/svg+xml" href="GoFit_Logo.svg" />
+  <link rel="apple-touch-icon" href="GoFit_Logo.svg">
+  
+
+  <!-- Open Graph & SEO tags -->
+  <meta property="og:title" content="하나의 멤버십으로 모든 운동시설 방문하세요!" />
+  <meta property="og:description" content="하나의 멤버십으로 모든 운동시설 방문하세요!" />
+  <meta property="og:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" /> 
+  <meta name="twitter:title" content="하나의 멤버십으로 모든 운동시설 방문하세요!" />
+  <meta name="twitter:description" content="하나의 멤버십으로 모든 운동시설 방문하세요!" />
+  <meta name="twitter:image" content="https://storage.googleapis.com/flutterflow-prod-hosting/og_splash_gradient.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <title> 하나의 멤버십으로 모든 운동시설 방문하세요! </title>
+  <meta name="description" content="하나의 멤버십으로 모든 운동시설 방문하세요!" />
+    
+
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('flutter-first-frame', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-functions.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
+  
+
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyCfLjFCVBG9ge8QnR5z7UoTp85Xh9fi_ow",
+      authDomain: "customer-management-6f127.firebaseapp.com",
+      projectId: "customer-management-6f127",
+      storageBucket: "customer-management-6f127.appspot.com",
+      messagingSenderId: "925942846141",
+      appId: "1:925942846141:web:e1af3ef35f059e25a21dd4",
+      measurementId: "G-9S1MQRWZFD"
+    }
+    firebase.initializeApp(firebaseConfig);
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeFzayi_niCDY3WqBXZYqR_Pyk0osl868"></script>
+  
+  
+  <script src="main.dart.js" type="application/javascript"></script>
+</body>
+</html>
