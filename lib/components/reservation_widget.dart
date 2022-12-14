@@ -246,10 +246,32 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                           .toList()
                                           .length <
                                       1),
-                              child: FutureBuilder<ChatsRecord>(
-                                future: ChatsRecord.getDocumentOnce(
-                                    rowClassAvailableTimeSlotsRecord
-                                        .chatGroup!),
+                              child: FutureBuilder<List<ChatsRecord>>(
+                                future: queryChatsRecordOnce(
+                                  queryBuilder: (chatsRecord) => chatsRecord
+                                      .where('timeSlotRef',
+                                          isEqualTo:
+                                              rowClassAvailableTimeSlotsRecord
+                                                  .reference)
+                                      .where('timeSlotDate',
+                                          isEqualTo: dateTimeFormat(
+                                                    'd/M/y',
+                                                    calendarSelectedDay?.start,
+                                                    locale: FFLocalizations.of(
+                                                            context)
+                                                        .languageCode,
+                                                  ) !=
+                                                  ''
+                                              ? dateTimeFormat(
+                                                  'd/M/y',
+                                                  calendarSelectedDay?.start,
+                                                  locale: FFLocalizations.of(
+                                                          context)
+                                                      .languageCode,
+                                                )
+                                              : null),
+                                  singleRecord: true,
+                                ),
                                 builder: (context, snapshot) {
                                   // Customize what your widget looks like when it's loading.
                                   if (!snapshot.hasData) {
@@ -264,7 +286,12 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                       ),
                                     );
                                   }
-                                  final buttonChatsRecord = snapshot.data!;
+                                  List<ChatsRecord> buttonChatsRecordList =
+                                      snapshot.data!;
+                                  final buttonChatsRecord =
+                                      buttonChatsRecordList.isNotEmpty
+                                          ? buttonChatsRecordList.first
+                                          : null;
                                   return FFButtonWidget(
                                     onPressed: () async {
                                       setState(() {
