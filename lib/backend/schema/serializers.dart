@@ -6,7 +6,6 @@ import 'classes_record.dart';
 import 'class_details_record.dart';
 import 'reservation_transactions_record.dart';
 import 'class_available_time_slots_record.dart';
-import 'my_reservations_record.dart';
 import 'chats_record.dart';
 import 'chat_messages_record.dart';
 import 'reservations_record.dart';
@@ -25,7 +24,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   ClassDetailsRecord,
   ReservationTransactionsRecord,
   ClassAvailableTimeSlotsRecord,
-  MyReservationsRecord,
   ChatsRecord,
   ChatMessagesRecord,
   ReservationsRecord,

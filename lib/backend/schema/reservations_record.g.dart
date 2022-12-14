@@ -45,6 +45,26 @@ class _$ReservationsRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
+    value = object.isCancelled;
+    if (value != null) {
+      result
+        ..add('isCancelled')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.classRequiredCredits;
+    if (value != null) {
+      result
+        ..add('classRequiredCredits')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.className;
+    if (value != null) {
+      result
+        ..add('className')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -84,6 +104,18 @@ class _$ReservationsRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
+        case 'isCancelled':
+          result.isCancelled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'classRequiredCredits':
+          result.classRequiredCredits = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'className':
+          result.className = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -105,13 +137,26 @@ class _$ReservationsRecord extends ReservationsRecord {
   @override
   final DocumentReference<Object?>? user;
   @override
+  final bool? isCancelled;
+  @override
+  final int? classRequiredCredits;
+  @override
+  final String? className;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ReservationsRecord(
           [void Function(ReservationsRecordBuilder)? updates]) =>
       (new ReservationsRecordBuilder()..update(updates))._build();
 
-  _$ReservationsRecord._({this.date, this.timeSlot, this.user, this.ffRef})
+  _$ReservationsRecord._(
+      {this.date,
+      this.timeSlot,
+      this.user,
+      this.isCancelled,
+      this.classRequiredCredits,
+      this.className,
+      this.ffRef})
       : super._();
 
   @override
@@ -130,13 +175,23 @@ class _$ReservationsRecord extends ReservationsRecord {
         date == other.date &&
         timeSlot == other.timeSlot &&
         user == other.user &&
+        isCancelled == other.isCancelled &&
+        classRequiredCredits == other.classRequiredCredits &&
+        className == other.className &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, date.hashCode), timeSlot.hashCode), user.hashCode),
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
+                        user.hashCode),
+                    isCancelled.hashCode),
+                classRequiredCredits.hashCode),
+            className.hashCode),
         ffRef.hashCode));
   }
 
@@ -146,6 +201,9 @@ class _$ReservationsRecord extends ReservationsRecord {
           ..add('date', date)
           ..add('timeSlot', timeSlot)
           ..add('user', user)
+          ..add('isCancelled', isCancelled)
+          ..add('classRequiredCredits', classRequiredCredits)
+          ..add('className', className)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -168,6 +226,19 @@ class ReservationsRecordBuilder
   DocumentReference<Object?>? get user => _$this._user;
   set user(DocumentReference<Object?>? user) => _$this._user = user;
 
+  bool? _isCancelled;
+  bool? get isCancelled => _$this._isCancelled;
+  set isCancelled(bool? isCancelled) => _$this._isCancelled = isCancelled;
+
+  int? _classRequiredCredits;
+  int? get classRequiredCredits => _$this._classRequiredCredits;
+  set classRequiredCredits(int? classRequiredCredits) =>
+      _$this._classRequiredCredits = classRequiredCredits;
+
+  String? _className;
+  String? get className => _$this._className;
+  set className(String? className) => _$this._className = className;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -182,6 +253,9 @@ class ReservationsRecordBuilder
       _date = $v.date;
       _timeSlot = $v.timeSlot;
       _user = $v.user;
+      _isCancelled = $v.isCancelled;
+      _classRequiredCredits = $v.classRequiredCredits;
+      _className = $v.className;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -205,7 +279,13 @@ class ReservationsRecordBuilder
   _$ReservationsRecord _build() {
     final _$result = _$v ??
         new _$ReservationsRecord._(
-            date: date, timeSlot: timeSlot, user: user, ffRef: ffRef);
+            date: date,
+            timeSlot: timeSlot,
+            user: user,
+            isCancelled: isCancelled,
+            classRequiredCredits: classRequiredCredits,
+            className: className,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

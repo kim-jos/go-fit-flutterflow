@@ -15,6 +15,20 @@
       ]
     },
     {
+      "collectionGroup": "reservations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "date",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "classAvailableTimeSlots",
       "queryScope": "COLLECTION",
       "fields": [
@@ -64,16 +78,6 @@
       "indexes": [
         {
           "order": "ASCENDING",
-          "queryScope": "COLLECTION_GROUP"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "myReservations",
-      "fieldPath": "date",
-      "indexes": [
-        {
-          "order": "DESCENDING",
           "queryScope": "COLLECTION_GROUP"
         }
       ]

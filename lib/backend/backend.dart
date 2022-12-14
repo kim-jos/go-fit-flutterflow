@@ -9,7 +9,6 @@ import 'schema/classes_record.dart';
 import 'schema/class_details_record.dart';
 import 'schema/reservation_transactions_record.dart';
 import 'schema/class_available_time_slots_record.dart';
-import 'schema/my_reservations_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/reservations_record.dart';
@@ -25,7 +24,6 @@ export 'schema/classes_record.dart';
 export 'schema/class_details_record.dart';
 export 'schema/reservation_transactions_record.dart';
 export 'schema/class_available_time_slots_record.dart';
-export 'schema/my_reservations_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/reservations_record.dart';
@@ -243,51 +241,6 @@ Future<FFFirestorePage<ClassAvailableTimeSlotsRecord>>
           pageSize: pageSize,
           isStream: isStream,
         );
-
-/// Functions to query MyReservationsRecords (as a Stream and as a Future).
-Stream<List<MyReservationsRecord>> queryMyReservationsRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      MyReservationsRecord.collection(parent),
-      MyReservationsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<MyReservationsRecord>> queryMyReservationsRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      MyReservationsRecord.collection(parent),
-      MyReservationsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<MyReservationsRecord>> queryMyReservationsRecordPage({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      MyReservationsRecord.collection(parent),
-      MyReservationsRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
 
 /// Functions to query ChatsRecords (as a Stream and as a Future).
 Stream<List<ChatsRecord>> queryChatsRecord({
