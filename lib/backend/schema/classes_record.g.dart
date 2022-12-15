@@ -73,24 +73,6 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
         ..add('ratings')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.maxPeoplePerSlot;
-    if (value != null) {
-      result
-        ..add('max_people_per_slot')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.maxHoursBeforeClass;
-    if (value != null) {
-      result
-        ..add('max_hours_before_class')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.minHoursBeforeClass;
-    if (value != null) {
-      result
-        ..add('min_hours_before_class')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -146,18 +128,6 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
           result.ratings = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
-        case 'max_people_per_slot':
-          result.maxPeoplePerSlot = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'max_hours_before_class':
-          result.maxHoursBeforeClass = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'min_hours_before_class':
-          result.minHoursBeforeClass = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -189,12 +159,6 @@ class _$ClassesRecord extends ClassesRecord {
   @override
   final int? ratings;
   @override
-  final int? maxPeoplePerSlot;
-  @override
-  final int? maxHoursBeforeClass;
-  @override
-  final int? minHoursBeforeClass;
-  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassesRecord([void Function(ClassesRecordBuilder)? updates]) =>
@@ -209,9 +173,6 @@ class _$ClassesRecord extends ClassesRecord {
       this.distance,
       this.hideClass,
       this.ratings,
-      this.maxPeoplePerSlot,
-      this.maxHoursBeforeClass,
-      this.minHoursBeforeClass,
       this.ffRef})
       : super._();
 
@@ -234,9 +195,6 @@ class _$ClassesRecord extends ClassesRecord {
         distance == other.distance &&
         hideClass == other.hideClass &&
         ratings == other.ratings &&
-        maxPeoplePerSlot == other.maxPeoplePerSlot &&
-        maxHoursBeforeClass == other.maxHoursBeforeClass &&
-        minHoursBeforeClass == other.minHoursBeforeClass &&
         ffRef == other.ffRef;
   }
 
@@ -248,21 +206,13 @@ class _$ClassesRecord extends ClassesRecord {
                 $jc(
                     $jc(
                         $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc($jc(0, name.hashCode),
-                                                image.hashCode),
-                                            creditsRequired.hashCode),
-                                        exerciseType.hashCode),
-                                    priority.hashCode),
-                                distance.hashCode),
-                            hideClass.hashCode),
-                        ratings.hashCode),
-                    maxPeoplePerSlot.hashCode),
-                maxHoursBeforeClass.hashCode),
-            minHoursBeforeClass.hashCode),
+                            $jc($jc($jc(0, name.hashCode), image.hashCode),
+                                creditsRequired.hashCode),
+                            exerciseType.hashCode),
+                        priority.hashCode),
+                    distance.hashCode),
+                hideClass.hashCode),
+            ratings.hashCode),
         ffRef.hashCode));
   }
 
@@ -277,9 +227,6 @@ class _$ClassesRecord extends ClassesRecord {
           ..add('distance', distance)
           ..add('hideClass', hideClass)
           ..add('ratings', ratings)
-          ..add('maxPeoplePerSlot', maxPeoplePerSlot)
-          ..add('maxHoursBeforeClass', maxHoursBeforeClass)
-          ..add('minHoursBeforeClass', minHoursBeforeClass)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -322,21 +269,6 @@ class ClassesRecordBuilder
   int? get ratings => _$this._ratings;
   set ratings(int? ratings) => _$this._ratings = ratings;
 
-  int? _maxPeoplePerSlot;
-  int? get maxPeoplePerSlot => _$this._maxPeoplePerSlot;
-  set maxPeoplePerSlot(int? maxPeoplePerSlot) =>
-      _$this._maxPeoplePerSlot = maxPeoplePerSlot;
-
-  int? _maxHoursBeforeClass;
-  int? get maxHoursBeforeClass => _$this._maxHoursBeforeClass;
-  set maxHoursBeforeClass(int? maxHoursBeforeClass) =>
-      _$this._maxHoursBeforeClass = maxHoursBeforeClass;
-
-  int? _minHoursBeforeClass;
-  int? get minHoursBeforeClass => _$this._minHoursBeforeClass;
-  set minHoursBeforeClass(int? minHoursBeforeClass) =>
-      _$this._minHoursBeforeClass = minHoursBeforeClass;
-
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -356,9 +288,6 @@ class ClassesRecordBuilder
       _distance = $v.distance;
       _hideClass = $v.hideClass;
       _ratings = $v.ratings;
-      _maxPeoplePerSlot = $v.maxPeoplePerSlot;
-      _maxHoursBeforeClass = $v.maxHoursBeforeClass;
-      _minHoursBeforeClass = $v.minHoursBeforeClass;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -390,9 +319,6 @@ class ClassesRecordBuilder
             distance: distance,
             hideClass: hideClass,
             ratings: ratings,
-            maxPeoplePerSlot: maxPeoplePerSlot,
-            maxHoursBeforeClass: maxHoursBeforeClass,
-            minHoursBeforeClass: minHoursBeforeClass,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

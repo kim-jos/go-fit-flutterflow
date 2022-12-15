@@ -57,7 +57,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.pop();
+            context.goNamed('Settings');
           },
         ),
         title: Text(
@@ -196,150 +196,144 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     itemBuilder: (context, _, listViewIndex) {
                       final listViewReservationsRecord =
                           _pagingController!.itemList![listViewIndex];
-                      return Visibility(
-                        visible: !listViewReservationsRecord.isCancelled!,
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 1),
-                          child: FutureBuilder<ClassAvailableTimeSlotsRecord>(
-                            future:
-                                ClassAvailableTimeSlotsRecord.getDocumentOnce(
-                                    listViewReservationsRecord.timeSlot!),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              final containerClassAvailableTimeSlotsRecord =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                height: 91,
-                                constraints: BoxConstraints(
-                                  maxHeight: 500,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: FlutterFlowTheme.of(context)
-                                          .lineColor,
-                                      offset: Offset(0, 1),
-                                    )
-                                  ],
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16, 5, 16, 5),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            listViewReservationsRecord
-                                                .className!,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 0),
-                                                child: Text(
-                                                  listViewReservationsRecord
-                                                      .date!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2,
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 5, 0, 0),
-                                                child: Text(
-                                                  containerClassAvailableTimeSlotsRecord
-                                                      .startTime!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child: ConfirmationCancelWidget(
-                                                  className:
-                                                      listViewReservationsRecord
-                                                          .className,
-                                                  date:
-                                                      listViewReservationsRecord
-                                                          .date,
-                                                  time:
-                                                      containerClassAvailableTimeSlotsRecord
-                                                          .startTime,
-                                                  reservationsRef:
-                                                      listViewReservationsRecord
-                                                          .reference,
-                                                  creditsRequired:
-                                                      listViewReservationsRecord
-                                                          .classRequiredCredits,
-                                                  classRef:
-                                                      containerClassAvailableTimeSlotsRecord
-                                                          .classRef,
-                                                  timeSlotRef:
-                                                      containerClassAvailableTimeSlotsRecord
-                                                          .reference,
-                                                  chatRef:
-                                                      containerClassAvailableTimeSlotsRecord
-                                                          .chatGroup,
-                                                ),
-                                              );
-                                            },
-                                          ).then((value) => setState(() {}));
-                                        },
-                                        child: Icon(
-                                          Icons.cancel_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .grayIcon,
-                                          size: 24,
-                                        ),
-                                      ),
-                                    ],
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 1),
+                        child: FutureBuilder<ClassAvailableTimeSlotsRecord>(
+                          future: ClassAvailableTimeSlotsRecord.getDocumentOnce(
+                              listViewReservationsRecord.timeSlot!),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
                                   ),
                                 ),
                               );
-                            },
-                          ),
+                            }
+                            final containerClassAvailableTimeSlotsRecord =
+                                snapshot.data!;
+                            return Container(
+                              width: double.infinity,
+                              height: 91,
+                              constraints: BoxConstraints(
+                                maxHeight: 500,
+                              ),
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        FlutterFlowTheme.of(context).lineColor,
+                                    offset: Offset(0, 1),
+                                  )
+                                ],
+                              ),
+                              child: Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16, 5, 16, 5),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          listViewReservationsRecord.className!,
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1,
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 5, 0, 0),
+                                              child: Text(
+                                                listViewReservationsRecord
+                                                    .date!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 5, 0, 0),
+                                              child: Text(
+                                                containerClassAvailableTimeSlotsRecord
+                                                    .startTime!,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.of(context)
+                                                  .viewInsets,
+                                              child: ConfirmationCancelWidget(
+                                                className:
+                                                    listViewReservationsRecord
+                                                        .className,
+                                                date: listViewReservationsRecord
+                                                    .date,
+                                                time:
+                                                    containerClassAvailableTimeSlotsRecord
+                                                        .startTime,
+                                                reservationsRef:
+                                                    listViewReservationsRecord
+                                                        .reference,
+                                                creditsRequired:
+                                                    listViewReservationsRecord
+                                                        .classRequiredCredits,
+                                                classRef:
+                                                    containerClassAvailableTimeSlotsRecord
+                                                        .classRef,
+                                                timeSlotRef:
+                                                    containerClassAvailableTimeSlotsRecord
+                                                        .reference,
+                                                chatRef:
+                                                    containerClassAvailableTimeSlotsRecord
+                                                        .chatGroup,
+                                              ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                      },
+                                      child: Icon(
+                                        Icons.cancel_outlined,
+                                        color: FlutterFlowTheme.of(context)
+                                            .grayIcon,
+                                        size: 24,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },

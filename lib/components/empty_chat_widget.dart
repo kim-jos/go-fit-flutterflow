@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class NoTimeSlotsAvailableWidget extends StatefulWidget {
-  const NoTimeSlotsAvailableWidget({Key? key}) : super(key: key);
+class EmptyChatWidget extends StatefulWidget {
+  const EmptyChatWidget({Key? key}) : super(key: key);
 
   @override
-  _NoTimeSlotsAvailableWidgetState createState() =>
-      _NoTimeSlotsAvailableWidgetState();
+  _EmptyChatWidgetState createState() => _EmptyChatWidgetState();
 }
 
-class _NoTimeSlotsAvailableWidgetState
-    extends State<NoTimeSlotsAvailableWidget> {
+class _EmptyChatWidgetState extends State<EmptyChatWidget> {
   @override
   void initState() {
     super.initState();
@@ -27,7 +25,7 @@ class _NoTimeSlotsAvailableWidgetState
 
     return Text(
       FFLocalizations.of(context).getText(
-        '90u0b7za' /* 수업이 없습니다 */,
+        '8gazeklv' /* 채팅그룹이 없습니다 */,
       ),
       style: FlutterFlowTheme.of(context).subtitle1,
     );

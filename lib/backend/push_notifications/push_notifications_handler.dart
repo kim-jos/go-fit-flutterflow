@@ -105,8 +105,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
             data, 'chatUser', UsersRecord.serializer),
         chatRef: getParameter(data, 'chatRef'),
       ),
-  'ChatGroups': (data) async => NavBarPage(initialPage: 'ChatGroups'),
   'ChatCreateGroup': (data) async => ChatCreateGroupWidget(),
+  'ChatGroups': (data) async => NavBarPage(initialPage: 'ChatGroups'),
   'ChatAddUser': (data) async => ChatAddUserWidget(
         chat: await getDocumentParameter(data, 'chat', ChatsRecord.serializer),
       ),

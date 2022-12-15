@@ -163,7 +163,7 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: FFLocalizations.of(context).getText(
-              'dxwm54gk' /* 소셜 */,
+              'ii39eso6' /* 소셜 */,
             ),
             tooltip: '',
           ),

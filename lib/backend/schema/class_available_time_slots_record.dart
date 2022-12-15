@@ -21,8 +21,6 @@ abstract class ClassAvailableTimeSlotsRecord
 
   BuiltList<String>? get weekdays;
 
-  int? get maxLimit;
-
   int? get minHoursBeforeClass;
 
   int? get maxHoursBeforeClass;
@@ -30,6 +28,8 @@ abstract class ClassAvailableTimeSlotsRecord
   BuiltList<DocumentReference>? get reservations;
 
   DocumentReference? get chatGroup;
+
+  int? get maxLimit;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -41,10 +41,10 @@ abstract class ClassAvailableTimeSlotsRecord
         ..startTime = ''
         ..endTime = ''
         ..weekdays = ListBuilder()
-        ..maxLimit = 0
         ..minHoursBeforeClass = 0
         ..maxHoursBeforeClass = 0
-        ..reservations = ListBuilder();
+        ..reservations = ListBuilder()
+        ..maxLimit = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classAvailableTimeSlots');
@@ -74,10 +74,10 @@ Map<String, dynamic> createClassAvailableTimeSlotsRecordData({
   DocumentReference? classRef,
   String? startTime,
   String? endTime,
-  int? maxLimit,
   int? minHoursBeforeClass,
   int? maxHoursBeforeClass,
   DocumentReference? chatGroup,
+  int? maxLimit,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassAvailableTimeSlotsRecord.serializer,
@@ -87,11 +87,11 @@ Map<String, dynamic> createClassAvailableTimeSlotsRecordData({
         ..startTime = startTime
         ..endTime = endTime
         ..weekdays = null
-        ..maxLimit = maxLimit
         ..minHoursBeforeClass = minHoursBeforeClass
         ..maxHoursBeforeClass = maxHoursBeforeClass
         ..reservations = null
-        ..chatGroup = chatGroup,
+        ..chatGroup = chatGroup
+        ..maxLimit = maxLimit,
     ),
   );
 

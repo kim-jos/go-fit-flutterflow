@@ -17,8 +17,6 @@ abstract class ReservationsRecord
 
   DocumentReference? get user;
 
-  bool? get isCancelled;
-
   int? get classRequiredCredits;
 
   String? get className;
@@ -29,7 +27,6 @@ abstract class ReservationsRecord
 
   static void _initializeBuilder(ReservationsRecordBuilder builder) => builder
     ..date = ''
-    ..isCancelled = false
     ..classRequiredCredits = 0
     ..className = '';
 
@@ -59,7 +56,6 @@ Map<String, dynamic> createReservationsRecordData({
   String? date,
   DocumentReference? timeSlot,
   DocumentReference? user,
-  bool? isCancelled,
   int? classRequiredCredits,
   String? className,
 }) {
@@ -70,7 +66,6 @@ Map<String, dynamic> createReservationsRecordData({
         ..date = date
         ..timeSlot = timeSlot
         ..user = user
-        ..isCancelled = isCancelled
         ..classRequiredCredits = classRequiredCredits
         ..className = className,
     ),

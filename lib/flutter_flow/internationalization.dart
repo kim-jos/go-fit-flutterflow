@@ -304,17 +304,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Group Chat',
     },
   },
-  // ChatGroups
-  {
-    '1szv7479': {
-      'ko': '내 그룹',
-      'en': 'My Groups',
-    },
-    'dxwm54gk': {
-      'ko': '소셜',
-      'en': 'Social',
-    },
-  },
   // ChatCreateGroup
   {
     '57oq4dyh': {
@@ -332,6 +321,25 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'ocbdrmzv': {
       'ko': '최소 2명을 추가해주세요! :)',
       'en': '',
+    },
+  },
+  // ChatGroups
+  {
+    'dkh9qzkk': {
+      'ko': '내 그룹',
+      'en': 'My Groups',
+    },
+    'yjs0nx2h': {
+      'ko': '운동 모집 채팅',
+      'en': 'Group Chat',
+    },
+    'ycwcocb2': {
+      'ko': '내 채팅',
+      'en': 'My Chat',
+    },
+    'ii39eso6': {
+      'ko': '소셜',
+      'en': 'Social',
     },
   },
   // ChatAddUser
@@ -480,8 +488,22 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   // NoTimeSlotsAvailable
   {
     '90u0b7za': {
-      'ko': 'No Time Slots Available',
-      'en': '',
+      'ko': '수업이 없습니다',
+      'en': 'No Time Slots Available',
+    },
+  },
+  // EmptyChat
+  {
+    '8gazeklv': {
+      'ko': '채팅그룹이 없습니다',
+      'en': 'No Group Chats Available',
+    },
+  },
+  // EmptyReservation
+  {
+    '6dr8u57v': {
+      'ko': '예약한 수업이 없습니다',
+      'en': 'No Reservations',
     },
   },
   // Miscellaneous

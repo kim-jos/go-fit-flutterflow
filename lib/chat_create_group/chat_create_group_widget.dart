@@ -361,6 +361,7 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.w600,
                                   ),
+                          elevation: 0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,

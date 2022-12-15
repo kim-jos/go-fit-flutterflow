@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:from_css_color/from_css_color.dart';
+
 import 'index.dart';
 import 'serializers.dart';
 import 'package:built_value/built_value.dart';
@@ -26,15 +28,6 @@ abstract class ClassesRecord
 
   int? get ratings;
 
-  @BuiltValueField(wireName: 'max_people_per_slot')
-  int? get maxPeoplePerSlot;
-
-  @BuiltValueField(wireName: 'max_hours_before_class')
-  int? get maxHoursBeforeClass;
-
-  @BuiltValueField(wireName: 'min_hours_before_class')
-  int? get minHoursBeforeClass;
-
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -47,10 +40,7 @@ abstract class ClassesRecord
     ..priority = 0
     ..distance = ''
     ..hideClass = false
-    ..ratings = 0
-    ..maxPeoplePerSlot = 0
-    ..maxHoursBeforeClass = 0
-    ..minHoursBeforeClass = 0;
+    ..ratings = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classes');
@@ -62,6 +52,35 @@ abstract class ClassesRecord
   static Future<ClassesRecord> getDocumentOnce(DocumentReference ref) => ref
       .get()
       .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+
+  static ClassesRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      ClassesRecord(
+        (c) => c
+          ..name = snapshot.data['name']
+          ..image = snapshot.data['image']
+          ..creditsRequired = snapshot.data['creditsRequired']?.round()
+          ..exerciseType = snapshot.data['exerciseType']
+          ..priority = snapshot.data['priority']?.round()
+          ..distance = snapshot.data['distance']
+          ..hideClass = snapshot.data['hideClass']
+          ..ratings = snapshot.data['ratings']?.round()
+          ..ffRef = ClassesRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<ClassesRecord>> search(
+          {String? term,
+          FutureOr<LatLng>? location,
+          int? maxResults,
+          double? searchRadiusMeters}) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'classes',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   ClassesRecord._();
   factory ClassesRecord([void Function(ClassesRecordBuilder) updates]) =
@@ -82,9 +101,6 @@ Map<String, dynamic> createClassesRecordData({
   String? distance,
   bool? hideClass,
   int? ratings,
-  int? maxPeoplePerSlot,
-  int? maxHoursBeforeClass,
-  int? minHoursBeforeClass,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassesRecord.serializer,
@@ -97,10 +113,7 @@ Map<String, dynamic> createClassesRecordData({
         ..priority = priority
         ..distance = distance
         ..hideClass = hideClass
-        ..ratings = ratings
-        ..maxPeoplePerSlot = maxPeoplePerSlot
-        ..maxHoursBeforeClass = maxHoursBeforeClass
-        ..minHoursBeforeClass = minHoursBeforeClass,
+        ..ratings = ratings,
     ),
   );
 

@@ -56,12 +56,6 @@ class _$ClassAvailableTimeSlotsRecordSerializer
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
-    value = object.maxLimit;
-    if (value != null) {
-      result
-        ..add('maxLimit')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.minHoursBeforeClass;
     if (value != null) {
       result
@@ -91,6 +85,12 @@ class _$ClassAvailableTimeSlotsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
+    }
+    value = object.maxLimit;
+    if (value != null) {
+      result
+        ..add('maxLimit')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -135,10 +135,6 @@ class _$ClassAvailableTimeSlotsRecordSerializer
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
-        case 'maxLimit':
-          result.maxLimit = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'minHoursBeforeClass':
           result.minHoursBeforeClass = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
@@ -159,6 +155,10 @@ class _$ClassAvailableTimeSlotsRecordSerializer
               specifiedType: const FullType(DocumentReference, const [
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
+          break;
+        case 'maxLimit':
+          result.maxLimit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -183,8 +183,6 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
   @override
   final BuiltList<String>? weekdays;
   @override
-  final int? maxLimit;
-  @override
   final int? minHoursBeforeClass;
   @override
   final int? maxHoursBeforeClass;
@@ -192,6 +190,8 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
   final BuiltList<DocumentReference<Object?>>? reservations;
   @override
   final DocumentReference<Object?>? chatGroup;
+  @override
+  final int? maxLimit;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -204,11 +204,11 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
       this.startTime,
       this.endTime,
       this.weekdays,
-      this.maxLimit,
       this.minHoursBeforeClass,
       this.maxHoursBeforeClass,
       this.reservations,
       this.chatGroup,
+      this.maxLimit,
       this.ffRef})
       : super._();
 
@@ -229,11 +229,11 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
         startTime == other.startTime &&
         endTime == other.endTime &&
         weekdays == other.weekdays &&
-        maxLimit == other.maxLimit &&
         minHoursBeforeClass == other.minHoursBeforeClass &&
         maxHoursBeforeClass == other.maxHoursBeforeClass &&
         reservations == other.reservations &&
         chatGroup == other.chatGroup &&
+        maxLimit == other.maxLimit &&
         ffRef == other.ffRef;
   }
 
@@ -251,11 +251,11 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
                                         startTime.hashCode),
                                     endTime.hashCode),
                                 weekdays.hashCode),
-                            maxLimit.hashCode),
-                        minHoursBeforeClass.hashCode),
-                    maxHoursBeforeClass.hashCode),
-                reservations.hashCode),
-            chatGroup.hashCode),
+                            minHoursBeforeClass.hashCode),
+                        maxHoursBeforeClass.hashCode),
+                    reservations.hashCode),
+                chatGroup.hashCode),
+            maxLimit.hashCode),
         ffRef.hashCode));
   }
 
@@ -266,11 +266,11 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
           ..add('startTime', startTime)
           ..add('endTime', endTime)
           ..add('weekdays', weekdays)
-          ..add('maxLimit', maxLimit)
           ..add('minHoursBeforeClass', minHoursBeforeClass)
           ..add('maxHoursBeforeClass', maxHoursBeforeClass)
           ..add('reservations', reservations)
           ..add('chatGroup', chatGroup)
+          ..add('maxLimit', maxLimit)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -300,10 +300,6 @@ class ClassAvailableTimeSlotsRecordBuilder
       _$this._weekdays ??= new ListBuilder<String>();
   set weekdays(ListBuilder<String>? weekdays) => _$this._weekdays = weekdays;
 
-  int? _maxLimit;
-  int? get maxLimit => _$this._maxLimit;
-  set maxLimit(int? maxLimit) => _$this._maxLimit = maxLimit;
-
   int? _minHoursBeforeClass;
   int? get minHoursBeforeClass => _$this._minHoursBeforeClass;
   set minHoursBeforeClass(int? minHoursBeforeClass) =>
@@ -325,6 +321,10 @@ class ClassAvailableTimeSlotsRecordBuilder
   set chatGroup(DocumentReference<Object?>? chatGroup) =>
       _$this._chatGroup = chatGroup;
 
+  int? _maxLimit;
+  int? get maxLimit => _$this._maxLimit;
+  set maxLimit(int? maxLimit) => _$this._maxLimit = maxLimit;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -340,11 +340,11 @@ class ClassAvailableTimeSlotsRecordBuilder
       _startTime = $v.startTime;
       _endTime = $v.endTime;
       _weekdays = $v.weekdays?.toBuilder();
-      _maxLimit = $v.maxLimit;
       _minHoursBeforeClass = $v.minHoursBeforeClass;
       _maxHoursBeforeClass = $v.maxHoursBeforeClass;
       _reservations = $v.reservations?.toBuilder();
       _chatGroup = $v.chatGroup;
+      _maxLimit = $v.maxLimit;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -374,11 +374,11 @@ class ClassAvailableTimeSlotsRecordBuilder
               startTime: startTime,
               endTime: endTime,
               weekdays: _weekdays?.build(),
-              maxLimit: maxLimit,
               minHoursBeforeClass: minHoursBeforeClass,
               maxHoursBeforeClass: maxHoursBeforeClass,
               reservations: _reservations?.build(),
               chatGroup: chatGroup,
+              maxLimit: maxLimit,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

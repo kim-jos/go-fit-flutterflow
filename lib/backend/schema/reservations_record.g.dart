@@ -45,13 +45,6 @@ class _$ReservationsRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
-    value = object.isCancelled;
-    if (value != null) {
-      result
-        ..add('isCancelled')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     value = object.classRequiredCredits;
     if (value != null) {
       result
@@ -104,10 +97,6 @@ class _$ReservationsRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
-        case 'isCancelled':
-          result.isCancelled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
-          break;
         case 'classRequiredCredits':
           result.classRequiredCredits = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
@@ -137,8 +126,6 @@ class _$ReservationsRecord extends ReservationsRecord {
   @override
   final DocumentReference<Object?>? user;
   @override
-  final bool? isCancelled;
-  @override
   final int? classRequiredCredits;
   @override
   final String? className;
@@ -153,7 +140,6 @@ class _$ReservationsRecord extends ReservationsRecord {
       {this.date,
       this.timeSlot,
       this.user,
-      this.isCancelled,
       this.classRequiredCredits,
       this.className,
       this.ffRef})
@@ -175,7 +161,6 @@ class _$ReservationsRecord extends ReservationsRecord {
         date == other.date &&
         timeSlot == other.timeSlot &&
         user == other.user &&
-        isCancelled == other.isCancelled &&
         classRequiredCredits == other.classRequiredCredits &&
         className == other.className &&
         ffRef == other.ffRef;
@@ -186,10 +171,8 @@ class _$ReservationsRecord extends ReservationsRecord {
     return $jf($jc(
         $jc(
             $jc(
-                $jc(
-                    $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
-                        user.hashCode),
-                    isCancelled.hashCode),
+                $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
+                    user.hashCode),
                 classRequiredCredits.hashCode),
             className.hashCode),
         ffRef.hashCode));
@@ -201,7 +184,6 @@ class _$ReservationsRecord extends ReservationsRecord {
           ..add('date', date)
           ..add('timeSlot', timeSlot)
           ..add('user', user)
-          ..add('isCancelled', isCancelled)
           ..add('classRequiredCredits', classRequiredCredits)
           ..add('className', className)
           ..add('ffRef', ffRef))
@@ -226,10 +208,6 @@ class ReservationsRecordBuilder
   DocumentReference<Object?>? get user => _$this._user;
   set user(DocumentReference<Object?>? user) => _$this._user = user;
 
-  bool? _isCancelled;
-  bool? get isCancelled => _$this._isCancelled;
-  set isCancelled(bool? isCancelled) => _$this._isCancelled = isCancelled;
-
   int? _classRequiredCredits;
   int? get classRequiredCredits => _$this._classRequiredCredits;
   set classRequiredCredits(int? classRequiredCredits) =>
@@ -253,7 +231,6 @@ class ReservationsRecordBuilder
       _date = $v.date;
       _timeSlot = $v.timeSlot;
       _user = $v.user;
-      _isCancelled = $v.isCancelled;
       _classRequiredCredits = $v.classRequiredCredits;
       _className = $v.className;
       _ffRef = $v.ffRef;
@@ -282,7 +259,6 @@ class ReservationsRecordBuilder
             date: date,
             timeSlot: timeSlot,
             user: user,
-            isCancelled: isCancelled,
             classRequiredCredits: classRequiredCredits,
             className: className,
             ffRef: ffRef);

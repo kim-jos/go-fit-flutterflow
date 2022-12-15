@@ -182,7 +182,6 @@ class _ConfirmationReservationWidgetState
                               ),
                               timeSlot: widget.selectedTimeSlot,
                               user: currentUserReference,
-                              isCancelled: false,
                               classRequiredCredits:
                                   checkoutBottomSheetClassesRecord
                                       .creditsRequired,

@@ -142,18 +142,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'ChatCreateGroup',
+              path: 'chatCreateGroup',
+              requireAuth: true,
+              builder: (context, params) => ChatCreateGroupWidget(),
+            ),
+            FFRoute(
               name: 'ChatGroups',
               path: 'chatGroups',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'ChatGroups')
                   : ChatGroupsWidget(),
-            ),
-            FFRoute(
-              name: 'ChatCreateGroup',
-              path: 'chatCreateGroup',
-              requireAuth: true,
-              builder: (context, params) => ChatCreateGroupWidget(),
             ),
             FFRoute(
               name: 'ChatAddUser',

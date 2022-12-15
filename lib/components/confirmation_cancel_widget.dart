@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -38,8 +37,6 @@ class ConfirmationCancelWidget extends StatefulWidget {
 }
 
 class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
-  ChatsRecord? groupChat;
-
   @override
   void initState() {
     super.initState();
@@ -180,13 +177,6 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
                             ),
                             Text(
                               valueOrDefault<String>(
-                                widget.creditsRequired?.toString(),
-                                '-',
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                            Text(
-                              valueOrDefault<String>(
                                 widget.time,
                                 '-',
                               ),
@@ -200,23 +190,14 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             // reservations collection
+                            await widget.reservationsRef!.delete();
 
-                            final reservationsUpdateData =
-                                createReservationsRecordData(
-                              date: widget.date,
-                              timeSlot: widget.timeSlotRef,
-                              user: currentUserReference,
-                              isCancelled: false,
-                              classRequiredCredits: widget.creditsRequired,
-                              className: widget.className,
-                            );
-                            await widget.reservationsRef!
-                                .update(reservationsUpdateData);
-                            groupChat =
-                                await FFChatManager.instance.removeGroupMembers(
-                              checkoutBottomSheetChatsRecord!,
-                              [currentUserReference!],
-                            );
+                            final chatsUpdateData = {
+                              'users': FieldValue.arrayRemove(
+                                  [currentUserReference]),
+                            };
+                            await checkoutBottomSheetChatsRecord!.reference
+                                .update(chatsUpdateData);
                             // Increment credits
 
                             final usersUpdateData = {
@@ -224,9 +205,8 @@ class _ConfirmationCancelWidgetState extends State<ConfirmationCancelWidget> {
                                   FieldValue.increment(widget.creditsRequired!),
                             };
                             await currentUserReference!.update(usersUpdateData);
-                            Navigator.pop(context);
 
-                            setState(() {});
+                            context.goNamed('MyReservations');
                           },
                           text: FFLocalizations.of(context).getText(
                             'u55jruvs' /* 취소하기 */,

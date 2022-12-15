@@ -7,7 +7,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/users_record.dart';
 import 'schema/classes_record.dart';
 import 'schema/class_details_record.dart';
-import 'schema/reservation_transactions_record.dart';
 import 'schema/class_available_time_slots_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
@@ -22,7 +21,6 @@ export 'schema/serializers.dart';
 export 'schema/users_record.dart';
 export 'schema/classes_record.dart';
 export 'schema/class_details_record.dart';
-export 'schema/reservation_transactions_record.dart';
 export 'schema/class_available_time_slots_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
@@ -153,50 +151,6 @@ Future<FFFirestorePage<ClassDetailsRecord>> queryClassDetailsRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
-
-/// Functions to query ReservationTransactionsRecords (as a Stream and as a Future).
-Stream<List<ReservationTransactionsRecord>> queryReservationTransactionsRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      ReservationTransactionsRecord.collection,
-      ReservationTransactionsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<ReservationTransactionsRecord>>
-    queryReservationTransactionsRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-        queryCollectionOnce(
-          ReservationTransactionsRecord.collection,
-          ReservationTransactionsRecord.serializer,
-          queryBuilder: queryBuilder,
-          limit: limit,
-          singleRecord: singleRecord,
-        );
-
-Future<FFFirestorePage<ReservationTransactionsRecord>>
-    queryReservationTransactionsRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-        queryCollectionPage(
-          ReservationTransactionsRecord.collection,
-          ReservationTransactionsRecord.serializer,
-          queryBuilder: queryBuilder,
-          nextPageMarker: nextPageMarker,
-          pageSize: pageSize,
-          isStream: isStream,
-        );
 
 /// Functions to query ClassAvailableTimeSlotsRecords (as a Stream and as a Future).
 Stream<List<ClassAvailableTimeSlotsRecord>> queryClassAvailableTimeSlotsRecord({

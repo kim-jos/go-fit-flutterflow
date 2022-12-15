@@ -78,12 +78,6 @@ class _$ClassDetailsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.capacity;
-    if (value != null) {
-      result
-        ..add('capacity')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.requirements;
     if (value != null) {
       result
@@ -155,10 +149,6 @@ class _$ClassDetailsRecordSerializer
           result.description = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'capacity':
-          result.capacity = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'requirements':
           result.requirements = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -198,8 +188,6 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final String? description;
   @override
-  final int? capacity;
-  @override
   final String? requirements;
   @override
   final LatLng? latitude;
@@ -219,7 +207,6 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
       this.address,
       this.website,
       this.description,
-      this.capacity,
       this.requirements,
       this.latitude,
       this.ffRef})
@@ -246,7 +233,6 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
         address == other.address &&
         website == other.website &&
         description == other.description &&
-        capacity == other.capacity &&
         requirements == other.requirements &&
         latitude == other.latitude &&
         ffRef == other.ffRef;
@@ -263,16 +249,14 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc($jc(0, classRef.hashCode),
-                                                monthlyLimit.hashCode),
-                                            duration.hashCode),
-                                        instagram.hashCode),
-                                    misc.hashCode),
-                                address.hashCode),
-                            website.hashCode),
-                        description.hashCode),
-                    capacity.hashCode),
+                                        $jc($jc(0, classRef.hashCode),
+                                            monthlyLimit.hashCode),
+                                        duration.hashCode),
+                                    instagram.hashCode),
+                                misc.hashCode),
+                            address.hashCode),
+                        website.hashCode),
+                    description.hashCode),
                 requirements.hashCode),
             latitude.hashCode),
         ffRef.hashCode));
@@ -289,7 +273,6 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
           ..add('address', address)
           ..add('website', website)
           ..add('description', description)
-          ..add('capacity', capacity)
           ..add('requirements', requirements)
           ..add('latitude', latitude)
           ..add('ffRef', ffRef))
@@ -334,10 +317,6 @@ class ClassDetailsRecordBuilder
   String? get description => _$this._description;
   set description(String? description) => _$this._description = description;
 
-  int? _capacity;
-  int? get capacity => _$this._capacity;
-  set capacity(int? capacity) => _$this._capacity = capacity;
-
   String? _requirements;
   String? get requirements => _$this._requirements;
   set requirements(String? requirements) => _$this._requirements = requirements;
@@ -365,7 +344,6 @@ class ClassDetailsRecordBuilder
       _address = $v.address;
       _website = $v.website;
       _description = $v.description;
-      _capacity = $v.capacity;
       _requirements = $v.requirements;
       _latitude = $v.latitude;
       _ffRef = $v.ffRef;
@@ -399,7 +377,6 @@ class ClassDetailsRecordBuilder
             address: address,
             website: website,
             description: description,
-            capacity: capacity,
             requirements: requirements,
             latitude: latitude,
             ffRef: ffRef);

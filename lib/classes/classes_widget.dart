@@ -239,10 +239,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         listViewClassesRecord.name,
                                         ParamType.String,
                                       ),
-                                      'maxLimit': serializeParam(
-                                        listViewClassesRecord.maxPeoplePerSlot,
-                                        ParamType.int,
-                                      ),
                                       'exerciseType': serializeParam(
                                         listViewClassesRecord.exerciseType,
                                         ParamType.String,

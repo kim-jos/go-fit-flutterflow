@@ -4,7 +4,6 @@ import 'package:from_css_color/from_css_color.dart';
 import 'users_record.dart';
 import 'classes_record.dart';
 import 'class_details_record.dart';
-import 'reservation_transactions_record.dart';
 import 'class_available_time_slots_record.dart';
 import 'chats_record.dart';
 import 'chat_messages_record.dart';
@@ -12,6 +11,7 @@ import 'reservations_record.dart';
 
 import 'index.dart';
 
+export '../algolia/algolia_manager.dart';
 export 'index.dart';
 
 part 'serializers.g.dart';
@@ -22,7 +22,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   UsersRecord,
   ClassesRecord,
   ClassDetailsRecord,
-  ReservationTransactionsRecord,
   ClassAvailableTimeSlotsRecord,
   ChatsRecord,
   ChatMessagesRecord,

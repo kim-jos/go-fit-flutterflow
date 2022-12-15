@@ -27,8 +27,6 @@ abstract class ClassDetailsRecord
 
   String? get description;
 
-  int? get capacity;
-
   String? get requirements;
 
   LatLng? get latitude;
@@ -45,7 +43,6 @@ abstract class ClassDetailsRecord
     ..address = ''
     ..website = ''
     ..description = ''
-    ..capacity = 0
     ..requirements = '';
 
   static CollectionReference get collection =>
@@ -79,7 +76,6 @@ Map<String, dynamic> createClassDetailsRecordData({
   String? address,
   String? website,
   String? description,
-  int? capacity,
   String? requirements,
   LatLng? latitude,
 }) {
@@ -95,7 +91,6 @@ Map<String, dynamic> createClassDetailsRecordData({
         ..address = address
         ..website = website
         ..description = description
-        ..capacity = capacity
         ..requirements = requirements
         ..latitude = latitude,
     ),
