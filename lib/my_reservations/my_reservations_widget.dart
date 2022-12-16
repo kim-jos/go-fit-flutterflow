@@ -1,10 +1,12 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/confirmation_cancel_widget.dart';
+import '../components/empty_reservation_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -97,14 +99,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         (reservationsRecord) => reservationsRecord
                             .where('date',
                                 isGreaterThanOrEqualTo: dateTimeFormat(
-                                          'd/M/y',
+                                          'yMd',
                                           getCurrentTimestamp,
                                           locale: FFLocalizations.of(context)
                                               .languageCode,
                                         ) !=
                                         ''
                                     ? dateTimeFormat(
-                                        'd/M/y',
+                                        'yMd',
                                         getCurrentTimestamp,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
@@ -131,14 +133,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         queryBuilder: (reservationsRecord) => reservationsRecord
                             .where('date',
                                 isGreaterThanOrEqualTo: dateTimeFormat(
-                                          'd/M/y',
+                                          'yMd',
                                           getCurrentTimestamp,
                                           locale: FFLocalizations.of(context)
                                               .languageCode,
                                         ) !=
                                         ''
                                     ? dateTimeFormat(
-                                        'd/M/y',
+                                        'yMd',
                                         getCurrentTimestamp,
                                         locale: FFLocalizations.of(context)
                                             .languageCode,
@@ -185,14 +187,17 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     // Customize what your widget looks like when it's loading the first page.
                     firstPageProgressIndicatorBuilder: (_) => Center(
                       child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
+                        width: 40,
+                        height: 40,
+                        child: SpinKitRing(
                           color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 40,
                         ),
                       ),
                     ),
-
+                    noItemsFoundIndicatorBuilder: (_) => Center(
+                      child: EmptyReservationWidget(),
+                    ),
                     itemBuilder: (context, _, listViewIndex) {
                       final listViewReservationsRecord =
                           _pagingController!.itemList![listViewIndex];
@@ -206,11 +211,12 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                             if (!snapshot.hasData) {
                               return Center(
                                 child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: CircularProgressIndicator(
+                                  width: 40,
+                                  height: 40,
+                                  child: SpinKitRing(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
+                                    size: 40,
                                   ),
                                 ),
                               );

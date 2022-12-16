@@ -2,7 +2,9 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -101,42 +103,110 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                 children: [
                                   Align(
                                     alignment: AlignmentDirectional(0, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        final user =
-                                            await signInWithGoogle(context);
-                                        if (user == null) {
-                                          return;
-                                        }
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 44,
+                                      child: Stack(
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: FFLocalizations.of(context)
+                                                  .getText(
+                                                '85vec8ut' /* Sign in with Google */,
+                                              ),
+                                              icon: Icon(
+                                                Icons.add,
+                                                color: Colors.transparent,
+                                                size: 20,
+                                              ),
+                                              options: FFButtonOptions(
+                                                width: 230,
+                                                height: 44,
+                                                color: Colors.white,
+                                                textStyle: GoogleFonts.getFont(
+                                                  'Roboto',
+                                                  color: Color(0xFF606060),
+                                                  fontSize: 17,
+                                                ),
+                                                elevation: 4,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-0.8, 0),
+                                            child: Container(
+                                              width: 22,
+                                              height: 22,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                GoRouter.of(context)
+                                                    .prepareAuthEvent();
+                                                final user =
+                                                    await signInWithGoogle(
+                                                        context);
+                                                if (user == null) {
+                                                  return;
+                                                }
 
-                                        context.goNamedAuth('Classes', mounted);
-                                      },
-                                      text: FFLocalizations.of(context).getText(
-                                        'qwglaxrp' /* 구글 로그인 */,
-                                      ),
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.google,
-                                        color: FlutterFlowTheme.of(context)
-                                            .black600,
-                                        size: 20,
-                                      ),
-                                      options: FFButtonOptions(
-                                        width: double.infinity,
-                                        height: 50,
-                                        color: Colors.white,
-                                        textStyle: GoogleFonts.getFont(
-                                          'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 17,
-                                        ),
-                                        elevation: 4,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 0,
-                                        ),
+                                                context.goNamedAuth(
+                                                    'Classes', mounted);
+                                              },
+                                              text: FFLocalizations.of(context)
+                                                  .getText(
+                                                'qwglaxrp' /* 구글 */,
+                                              ),
+                                              icon: FaIcon(
+                                                FontAwesomeIcons.google,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .gray600,
+                                                size: 20,
+                                              ),
+                                              options: FFButtonOptions(
+                                                width: double.infinity,
+                                                height: 50,
+                                                color: Colors.white,
+                                                textStyle: GoogleFonts.getFont(
+                                                  'Roboto',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 17,
+                                                ),
+                                                elevation: 4,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -162,19 +232,21 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             },
                                             text: FFLocalizations.of(context)
                                                 .getText(
-                                              'zwoheq92' /* 애플 로그인 */,
+                                              'zwoheq92' /* 애플 */,
                                             ),
                                             icon: FaIcon(
                                               FontAwesomeIcons.apple,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .black600,
+                                                      .textColor,
                                               size: 20,
                                             ),
                                             options: FFButtonOptions(
                                               width: double.infinity,
                                               height: 50,
-                                              color: Colors.white,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
                                               textStyle: GoogleFonts.getFont(
                                                 'Roboto',
                                                 color:
@@ -199,7 +271,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         context.pushNamed('AuthEmailLogin');
                                       },
                                       text: FFLocalizations.of(context).getText(
-                                        'f2xay9l9' /* 이메일 로그인 */,
+                                        'f2xay9l9' /* 이메일 */,
                                       ),
                                       icon: Icon(
                                         Icons.email,
@@ -296,7 +368,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         context.goNamedAuth('Classes', mounted);
                                       },
                                       text: FFLocalizations.of(context).getText(
-                                        'sh0xuws4' /* 구글 회원가입 */,
+                                        'sh0xuws4' /* 구글 */,
                                       ),
                                       icon: FaIcon(
                                         FontAwesomeIcons.google,
@@ -345,7 +417,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             },
                                             text: FFLocalizations.of(context)
                                                 .getText(
-                                              'd33hhv9s' /* 애플 회원가입 */,
+                                              'd33hhv9s' /* 애플 */,
                                             ),
                                             icon: FaIcon(
                                               FontAwesomeIcons.apple,
@@ -382,7 +454,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         context.pushNamed('AuthEmailLogin');
                                       },
                                       text: FFLocalizations.of(context).getText(
-                                        'd3532eyn' /* 이메일 회원가입 */,
+                                        'd3532eyn' /* 이메일 */,
                                       ),
                                       icon: Icon(
                                         Icons.email,

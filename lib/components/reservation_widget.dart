@@ -7,9 +7,9 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:styled_divider/styled_divider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -131,32 +131,37 @@ class _ReservationWidgetState extends State<ReservationWidget> {
               ),
               StreamBuilder<List<ReservationsRecord>>(
                 stream: queryReservationsRecord(
-                  queryBuilder: (reservationsRecord) =>
-                      reservationsRecord.where('date',
+                  queryBuilder: (reservationsRecord) => reservationsRecord
+                      .where('date',
                           isEqualTo: dateTimeFormat(
-                                    'd/M/y',
+                                    'yMd',
                                     calendarSelectedDay?.start,
                                     locale: FFLocalizations.of(context)
                                         .languageCode,
                                   ) !=
                                   ''
                               ? dateTimeFormat(
-                                  'd/M/y',
+                                  'yMd',
                                   calendarSelectedDay?.start,
                                   locale:
                                       FFLocalizations.of(context).languageCode,
                                 )
-                              : null),
+                              : null)
+                      .where('className',
+                          isEqualTo:
+                              widget.className != '' ? widget.className : null)
+                      .where('user', isEqualTo: currentUserReference),
                 ),
                 builder: (context, snapshot) {
                   // Customize what your widget looks like when it's loading.
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
+                        width: 40,
+                        height: 40,
+                        child: SpinKitRing(
                           color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 40,
                         ),
                       ),
                     );
@@ -196,11 +201,12 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
+                              width: 40,
+                              height: 40,
+                              child: SpinKitRing(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                size: 40,
                               ),
                             ),
                           );
@@ -222,7 +228,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                 rowClassAvailableTimeSlotsRecordList[rowIndex];
                             return Visibility(
                               visible: (containerReservationsRecordList.length <
-                                      widget.maxLimit!) &&
+                                      rowClassAvailableTimeSlotsRecord
+                                          .maxLimit!) &&
                                   (functions.differenceInHours(
                                           getCurrentTimestamp,
                                           functions.dateTimeParser(
@@ -241,7 +248,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                           .maxHoursBeforeClass!) &&
                                   (containerReservationsRecordList
                                           .where((e) =>
-                                              e.user! == currentUserReference)
+                                              e.time! ==
+                                              rowClassAvailableTimeSlotsRecord
+                                                  .startTime)
                                           .toList()
                                           .length <
                                       1),
@@ -257,7 +266,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                     .reference)
                                         .where('timeSlotDate',
                                             isEqualTo: dateTimeFormat(
-                                                      'd/M/y',
+                                                      'yMd',
                                                       calendarSelectedDay
                                                           ?.start,
                                                       locale:
@@ -267,7 +276,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                     ) !=
                                                     ''
                                                 ? dateTimeFormat(
-                                                    'd/M/y',
+                                                    'yMd',
                                                     calendarSelectedDay?.start,
                                                     locale: FFLocalizations.of(
                                                             context)
@@ -281,11 +290,12 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                     if (!snapshot.hasData) {
                                       return Center(
                                         child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
+                                          width: 40,
+                                          height: 40,
+                                          child: SpinKitRing(
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
+                                            size: 40,
                                           ),
                                         ),
                                       );
@@ -303,9 +313,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               rowClassAvailableTimeSlotsRecord
                                                   .startTime!;
                                         });
-                                        if (rowClassAvailableTimeSlotsRecord
-                                                .chatGroup !=
-                                            null) {
+                                        if (buttonChatsRecord != null) {
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -341,20 +349,26 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                         } else {
                                           final chatsCreateData = {
                                             ...createChatsRecordData(
-                                              timeSlotGroup: true,
                                               timeSlotRef:
                                                   rowClassAvailableTimeSlotsRecord
                                                       .reference,
                                               timeSlotDate: dateTimeFormat(
-                                                'd/M/y',
+                                                'yMd',
                                                 calendarSelectedDay?.start,
                                                 locale:
                                                     FFLocalizations.of(context)
                                                         .languageCode,
                                               ),
-                                              maxUsers: widget.maxLimit,
+                                              maxUsers:
+                                                  rowClassAvailableTimeSlotsRecord
+                                                      .maxLimit,
                                               lastMessageTime:
                                                   getCurrentTimestamp,
+                                              isTimeSlotChatGroup: true,
+                                              className: widget.className,
+                                              classTime:
+                                                  rowClassAvailableTimeSlotsRecord
+                                                      .startTime,
                                             ),
                                             'users':
                                                 containerReservationsRecordList
@@ -405,7 +419,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                         setState(() {});
                                       },
                                       text: rowClassAvailableTimeSlotsRecord
-                                          .startTime!,
+                                                  .startTime ==
+                                              '22:30'
+                                          ? '종일권'
+                                          : rowClassAvailableTimeSlotsRecord
+                                              .startTime!,
                                       options: FFButtonOptions(
                                         width: 130,
                                         height: 40,

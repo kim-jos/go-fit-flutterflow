@@ -4,7 +4,10 @@ import '../components/empty_chat_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
@@ -168,11 +171,12 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                           // Customize what your widget looks like when it's loading the first page.
                           firstPageProgressIndicatorBuilder: (_) => Center(
                             child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
+                              width: 40,
+                              height: 40,
+                              child: SpinKitRing(
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
+                                size: 40,
                               ),
                             ),
                           ),
@@ -182,67 +186,453 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                           itemBuilder: (context, _, listViewIndex) {
                             final listViewChatsRecord =
                                 _pagingController!.itemList![listViewIndex];
-                            return StreamBuilder<FFChatInfo>(
-                              stream: FFChatManager.instance
-                                  .getChatInfo(chatRecord: listViewChatsRecord),
-                              builder: (context, snapshot) {
-                                final chatInfo = snapshot.data ??
-                                    FFChatInfo(listViewChatsRecord);
-                                return FFChatPreview(
-                                  onTap: () => context.pushNamed(
-                                    'Chat',
-                                    queryParams: {
-                                      'chatUser': serializeParam(
-                                        chatInfo.otherUsers.length == 1
-                                            ? chatInfo.otherUsersList.first
-                                            : null,
-                                        ParamType.Document,
+                            return Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                              child: StreamBuilder<List<ReservationsRecord>>(
+                                stream: queryReservationsRecord(
+                                  queryBuilder: (reservationsRecord) =>
+                                      reservationsRecord
+                                          .where('timeSlot',
+                                              isEqualTo: listViewChatsRecord
+                                                  .timeSlotRef)
+                                          .where('date',
+                                              isEqualTo: listViewChatsRecord
+                                                  .timeSlotDate),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 40,
+                                        height: 40,
+                                        child: SpinKitRing(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          size: 40,
+                                        ),
                                       ),
-                                      'chatRef': serializeParam(
-                                        chatInfo.chatRecord.reference,
-                                        ParamType.DocumentReference,
+                                    );
+                                  }
+                                  List<ReservationsRecord>
+                                      commentReservationsRecordList =
+                                      snapshot.data!;
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 3,
+                                          color: Color(0x41000000),
+                                          offset: Offset(0, 1),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: StreamBuilder<List<ClassesRecord>>(
+                                      stream: queryClassesRecord(
+                                        queryBuilder: (classesRecord) =>
+                                            classesRecord.where('name',
+                                                isEqualTo: listViewChatsRecord
+                                                    .className),
+                                        singleRecord: true,
                                       ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      'chatUser':
-                                          chatInfo.otherUsers.length == 1
-                                              ? chatInfo.otherUsersList.first
-                                              : null,
-                                    },
-                                  ),
-                                  lastChatText: chatInfo.chatPreviewMessage(),
-                                  lastChatTime:
-                                      listViewChatsRecord.lastMessageTime,
-                                  seen: listViewChatsRecord.lastMessageSeenBy!
-                                      .contains(currentUserReference),
-                                  title: chatInfo.chatPreviewTitle(),
-                                  userProfilePic: chatInfo.chatPreviewPic(),
-                                  color: Color(0xFFEEF0F5),
-                                  unreadColor: Colors.blue,
-                                  titleTextStyle: GoogleFonts.getFont(
-                                    'DM Sans',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                  dateTextStyle: GoogleFonts.getFont(
-                                    'DM Sans',
-                                    color: Color(0x73000000),
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                  ),
-                                  previewTextStyle: GoogleFonts.getFont(
-                                    'DM Sans',
-                                    color: Color(0x73000000),
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 14,
-                                  ),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          3, 3, 3, 3),
-                                  borderRadius: BorderRadius.circular(0),
-                                );
-                              },
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 40,
+                                              height: 40,
+                                              child: SpinKitRing(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                size: 40,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<ClassesRecord>
+                                            containerClassesRecordList =
+                                            snapshot.data!;
+                                        // Return an empty Container when the item does not exist.
+                                        if (snapshot.data!.isEmpty) {
+                                          return Container();
+                                        }
+                                        final containerClassesRecord =
+                                            containerClassesRecordList
+                                                    .isNotEmpty
+                                                ? containerClassesRecordList
+                                                    .first
+                                                : null;
+                                        return InkWell(
+                                          onTap: () async {
+                                            if (commentReservationsRecordList
+                                                    .where((e) =>
+                                                        e.user! ==
+                                                        currentUserReference)
+                                                    .toList()
+                                                    .length >=
+                                                1) {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('예약 불가능!'),
+                                                    content:
+                                                        Text('이미 예약한 수업입니다!'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('확인'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              return;
+                                            } else {
+                                              if (commentReservationsRecordList
+                                                      .length <
+                                                  listViewChatsRecord
+                                                      .maxUsers!) {
+                                                if (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.currCredits,
+                                                        0) >=
+                                                    containerClassesRecord!
+                                                        .creditsRequired!) {
+                                                  var confirmDialogResponse =
+                                                      await showDialog<bool>(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    '수업을 예약하시겠습니까?'),
+                                                                content: Text(
+                                                                    '수업 예약과 채팅방에 입장하게 됩니다!'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                    child: Text(
+                                                                        '아니요'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                    child: Text(
+                                                                        '예!'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          ) ??
+                                                          false;
+                                                  if (confirmDialogResponse) {
+                                                    await FFChatManager.instance
+                                                        .addGroupMembers(
+                                                      listViewChatsRecord,
+                                                      [currentUserReference!],
+                                                    );
+                                                  } else {
+                                                    return;
+                                                  }
+
+                                                  final reservationsCreateData =
+                                                      createReservationsRecordData(
+                                                    date: listViewChatsRecord
+                                                        .timeSlotDate,
+                                                    timeSlot:
+                                                        listViewChatsRecord
+                                                            .timeSlotRef,
+                                                    user: currentUserReference,
+                                                    classRequiredCredits:
+                                                        containerClassesRecord!
+                                                            .creditsRequired,
+                                                    className:
+                                                        listViewChatsRecord
+                                                            .className,
+                                                    time: listViewChatsRecord
+                                                        .classTime,
+                                                  );
+                                                  await ReservationsRecord
+                                                      .collection
+                                                      .doc()
+                                                      .set(
+                                                          reservationsCreateData);
+
+                                                  final usersUpdateData = {
+                                                    'currCredits': FieldValue.increment(
+                                                        -(containerClassesRecord!
+                                                            .creditsRequired!)),
+                                                  };
+                                                  await currentUserReference!
+                                                      .update(usersUpdateData);
+
+                                                  context.pushNamed(
+                                                    'Chat',
+                                                    queryParams: {
+                                                      'chatRef': serializeParam(
+                                                        listViewChatsRecord
+                                                            .reference,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                    }.withoutNulls,
+                                                  );
+                                                } else {
+                                                  await showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (alertDialogContext) {
+                                                      return AlertDialog(
+                                                        title:
+                                                            Text('크레딧이 부족합니다!'),
+                                                        content: Text(
+                                                            '크레딧 충전 후 사용해주세요! :)'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    alertDialogContext),
+                                                            child: Text('확인'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                }
+
+                                                return;
+                                              } else {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: Text('수업 예약 마감!'),
+                                                      content: Text(
+                                                          '수업 예약 취소가 발생하면 다시 예약해주세요!'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: Text('확인'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                                return;
+                                              }
+                                            }
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 12, 8, 12),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          containerClassesRecord!
+                                                              .image!,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12, 0, 0, 0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                listViewChatsRecord
+                                                                    .className!,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Outfit',
+                                                                      color: Color(
+                                                                          0xFF4B39EF),
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            4,
+                                                                            0),
+                                                                child: Text(
+                                                                  '${listViewChatsRecord.timeSlotDate} - ${listViewChatsRecord.classTime}수업',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Outfit',
+                                                                        color: Color(
+                                                                            0xFF090F13),
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                      ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                '${listViewChatsRecord.users!.toList().length.toString()}/${listViewChatsRecord.maxUsers?.toString()}',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Outfit',
+                                                                      color: Color(
+                                                                          0xFF7C8791),
+                                                                      fontSize:
+                                                                          12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                listViewChatsRecord
+                                                                    .lastMessage!,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyText1
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Outfit',
+                                                                      color: Color(
+                                                                          0xFF090F13),
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
+                                                              ),
+                                                              if (listViewChatsRecord
+                                                                      .lastMessage !=
+                                                                  '')
+                                                                Text(
+                                                                  dateTimeFormat(
+                                                                    'relative',
+                                                                    listViewChatsRecord
+                                                                        .lastMessageTime!,
+                                                                    locale: FFLocalizations.of(
+                                                                            context)
+                                                                        .languageCode,
+                                                                  ),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Outfit',
+                                                                        color: Color(
+                                                                            0xFF7C8791),
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontWeight:
+                                                                            FontWeight.normal,
+                                                                      ),
+                                                                ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
                             );
                           },
                         ),
@@ -262,11 +652,12 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                           if (!snapshot.hasData) {
                             return Center(
                               child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CircularProgressIndicator(
+                                width: 40,
+                                height: 40,
+                                child: SpinKitRing(
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
+                                  size: 40,
                                 ),
                               ),
                             );
@@ -285,67 +676,202 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                             itemBuilder: (context, listViewIndex) {
                               final listViewChatsRecord =
                                   listViewChatsRecordList[listViewIndex];
-                              return StreamBuilder<FFChatInfo>(
-                                stream: FFChatManager.instance.getChatInfo(
-                                    chatRecord: listViewChatsRecord),
-                                builder: (context, snapshot) {
-                                  final chatInfo = snapshot.data ??
-                                      FFChatInfo(listViewChatsRecord);
-                                  return FFChatPreview(
-                                    onTap: () => context.pushNamed(
+                              return Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                child: InkWell(
+                                  onTap: () async {
+                                    context.pushNamed(
                                       'Chat',
                                       queryParams: {
-                                        'chatUser': serializeParam(
-                                          chatInfo.otherUsers.length == 1
-                                              ? chatInfo.otherUsersList.first
-                                              : null,
-                                          ParamType.Document,
-                                        ),
                                         'chatRef': serializeParam(
-                                          chatInfo.chatRecord.reference,
+                                          listViewChatsRecord.reference,
                                           ParamType.DocumentReference,
                                         ),
                                       }.withoutNulls,
-                                      extra: <String, dynamic>{
-                                        'chatUser':
-                                            chatInfo.otherUsers.length == 1
-                                                ? chatInfo.otherUsersList.first
-                                                : null,
-                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 3,
+                                          color: Color(0x41000000),
+                                          offset: Offset(0, 1),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    lastChatText: chatInfo.chatPreviewMessage(),
-                                    lastChatTime:
-                                        listViewChatsRecord.lastMessageTime,
-                                    seen: listViewChatsRecord.lastMessageSeenBy!
-                                        .contains(currentUserReference),
-                                    title: chatInfo.chatPreviewTitle(),
-                                    userProfilePic: chatInfo.chatPreviewPic(),
-                                    color: Color(0xFFEEF0F5),
-                                    unreadColor: Colors.blue,
-                                    titleTextStyle: GoogleFonts.getFont(
-                                      'DM Sans',
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 12, 8, 12),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: 40,
+                                            height: 40,
+                                            clipBehavior: Clip.antiAlias,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Image.network(
+                                              'https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDN8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(12, 0, 0, 0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        listViewChatsRecord
+                                                            .className!,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF4B39EF),
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0, 0, 4, 0),
+                                                        child: Text(
+                                                          '${listViewChatsRecord.timeSlotDate} - ${listViewChatsRecord.classTime}수업',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                color: Color(
+                                                                    0xFF090F13),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        '${listViewChatsRecord.users!.toList().length.toString()}/${listViewChatsRecord.maxUsers?.toString()}',
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF7C8791),
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        listViewChatsRecord
+                                                            .lastMessage!,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Color(
+                                                                      0xFF090F13),
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
+                                                      ),
+                                                      if (listViewChatsRecord
+                                                              .lastMessage !=
+                                                          '')
+                                                        Text(
+                                                          dateTimeFormat(
+                                                            'relative',
+                                                            listViewChatsRecord
+                                                                .lastMessageTime!,
+                                                            locale: FFLocalizations
+                                                                    .of(context)
+                                                                .languageCode,
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Outfit',
+                                                                color: Color(
+                                                                    0xFF7C8791),
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                        ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    dateTextStyle: GoogleFonts.getFont(
-                                      'DM Sans',
-                                      color: Color(0x73000000),
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                    ),
-                                    previewTextStyle: GoogleFonts.getFont(
-                                      'DM Sans',
-                                      color: Color(0x73000000),
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14,
-                                    ),
-                                    contentPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            3, 3, 3, 3),
-                                    borderRadius: BorderRadius.circular(0),
-                                  );
-                                },
+                                  ),
+                                ),
                               );
                             },
                           );

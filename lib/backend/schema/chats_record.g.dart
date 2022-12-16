@@ -77,13 +77,6 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
                   DocumentReference, const [const FullType.nullable(Object)])
             ])));
     }
-    value = object.timeSlotGroup;
-    if (value != null) {
-      result
-        ..add('timeSlotGroup')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
     value = object.timeSlotRef;
     if (value != null) {
       result
@@ -104,6 +97,27 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
       result
         ..add('maxUsers')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.isTimeSlotChatGroup;
+    if (value != null) {
+      result
+        ..add('isTimeSlotChatGroup')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.className;
+    if (value != null) {
+      result
+        ..add('className')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.classTime;
+    if (value != null) {
+      result
+        ..add('classTime')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -167,10 +181,6 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
                     DocumentReference, const [const FullType.nullable(Object)])
               ]))! as BuiltList<Object?>);
           break;
-        case 'timeSlotGroup':
-          result.timeSlotGroup = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
-          break;
         case 'timeSlotRef':
           result.timeSlotRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -184,6 +194,18 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
         case 'maxUsers':
           result.maxUsers = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
+          break;
+        case 'isTimeSlotChatGroup':
+          result.isTimeSlotChatGroup = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'className':
+          result.className = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'classTime':
+          result.classTime = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -214,13 +236,17 @@ class _$ChatsRecord extends ChatsRecord {
   @override
   final BuiltList<DocumentReference<Object?>>? lastMessageSeenBy;
   @override
-  final bool? timeSlotGroup;
-  @override
   final DocumentReference<Object?>? timeSlotRef;
   @override
   final String? timeSlotDate;
   @override
   final int? maxUsers;
+  @override
+  final bool? isTimeSlotChatGroup;
+  @override
+  final String? className;
+  @override
+  final String? classTime;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -235,10 +261,12 @@ class _$ChatsRecord extends ChatsRecord {
       this.lastMessageTime,
       this.lastMessageSentBy,
       this.lastMessageSeenBy,
-      this.timeSlotGroup,
       this.timeSlotRef,
       this.timeSlotDate,
       this.maxUsers,
+      this.isTimeSlotChatGroup,
+      this.className,
+      this.classTime,
       this.ffRef})
       : super._();
 
@@ -260,10 +288,12 @@ class _$ChatsRecord extends ChatsRecord {
         lastMessageTime == other.lastMessageTime &&
         lastMessageSentBy == other.lastMessageSentBy &&
         lastMessageSeenBy == other.lastMessageSeenBy &&
-        timeSlotGroup == other.timeSlotGroup &&
         timeSlotRef == other.timeSlotRef &&
         timeSlotDate == other.timeSlotDate &&
         maxUsers == other.maxUsers &&
+        isTimeSlotChatGroup == other.isTimeSlotChatGroup &&
+        className == other.className &&
+        classTime == other.classTime &&
         ffRef == other.ffRef;
   }
 
@@ -279,17 +309,21 @@ class _$ChatsRecord extends ChatsRecord {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, users.hashCode),
-                                                userA.hashCode),
-                                            userB.hashCode),
-                                        lastMessage.hashCode),
-                                    lastMessageTime.hashCode),
-                                lastMessageSentBy.hashCode),
-                            lastMessageSeenBy.hashCode),
-                        timeSlotGroup.hashCode),
-                    timeSlotRef.hashCode),
-                timeSlotDate.hashCode),
-            maxUsers.hashCode),
+                                            $jc(
+                                                $jc(
+                                                    $jc($jc(0, users.hashCode),
+                                                        userA.hashCode),
+                                                    userB.hashCode),
+                                                lastMessage.hashCode),
+                                            lastMessageTime.hashCode),
+                                        lastMessageSentBy.hashCode),
+                                    lastMessageSeenBy.hashCode),
+                                timeSlotRef.hashCode),
+                            timeSlotDate.hashCode),
+                        maxUsers.hashCode),
+                    isTimeSlotChatGroup.hashCode),
+                className.hashCode),
+            classTime.hashCode),
         ffRef.hashCode));
   }
 
@@ -303,10 +337,12 @@ class _$ChatsRecord extends ChatsRecord {
           ..add('lastMessageTime', lastMessageTime)
           ..add('lastMessageSentBy', lastMessageSentBy)
           ..add('lastMessageSeenBy', lastMessageSeenBy)
-          ..add('timeSlotGroup', timeSlotGroup)
           ..add('timeSlotRef', timeSlotRef)
           ..add('timeSlotDate', timeSlotDate)
           ..add('maxUsers', maxUsers)
+          ..add('isTimeSlotChatGroup', isTimeSlotChatGroup)
+          ..add('className', className)
+          ..add('classTime', classTime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -352,11 +388,6 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
           ListBuilder<DocumentReference<Object?>>? lastMessageSeenBy) =>
       _$this._lastMessageSeenBy = lastMessageSeenBy;
 
-  bool? _timeSlotGroup;
-  bool? get timeSlotGroup => _$this._timeSlotGroup;
-  set timeSlotGroup(bool? timeSlotGroup) =>
-      _$this._timeSlotGroup = timeSlotGroup;
-
   DocumentReference<Object?>? _timeSlotRef;
   DocumentReference<Object?>? get timeSlotRef => _$this._timeSlotRef;
   set timeSlotRef(DocumentReference<Object?>? timeSlotRef) =>
@@ -369,6 +400,19 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
   int? _maxUsers;
   int? get maxUsers => _$this._maxUsers;
   set maxUsers(int? maxUsers) => _$this._maxUsers = maxUsers;
+
+  bool? _isTimeSlotChatGroup;
+  bool? get isTimeSlotChatGroup => _$this._isTimeSlotChatGroup;
+  set isTimeSlotChatGroup(bool? isTimeSlotChatGroup) =>
+      _$this._isTimeSlotChatGroup = isTimeSlotChatGroup;
+
+  String? _className;
+  String? get className => _$this._className;
+  set className(String? className) => _$this._className = className;
+
+  String? _classTime;
+  String? get classTime => _$this._classTime;
+  set classTime(String? classTime) => _$this._classTime = classTime;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -388,10 +432,12 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
       _lastMessageTime = $v.lastMessageTime;
       _lastMessageSentBy = $v.lastMessageSentBy;
       _lastMessageSeenBy = $v.lastMessageSeenBy?.toBuilder();
-      _timeSlotGroup = $v.timeSlotGroup;
       _timeSlotRef = $v.timeSlotRef;
       _timeSlotDate = $v.timeSlotDate;
       _maxUsers = $v.maxUsers;
+      _isTimeSlotChatGroup = $v.isTimeSlotChatGroup;
+      _className = $v.className;
+      _classTime = $v.classTime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -424,10 +470,12 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
               lastMessageTime: lastMessageTime,
               lastMessageSentBy: lastMessageSentBy,
               lastMessageSeenBy: _lastMessageSeenBy?.build(),
-              timeSlotGroup: timeSlotGroup,
               timeSlotRef: timeSlotRef,
               timeSlotDate: timeSlotDate,
               maxUsers: maxUsers,
+              isTimeSlotChatGroup: isTimeSlotChatGroup,
+              className: className,
+              classTime: classTime,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

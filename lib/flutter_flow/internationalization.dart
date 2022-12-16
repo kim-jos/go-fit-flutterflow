@@ -149,16 +149,20 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'ko': '로그인',
       'en': 'Login',
     },
+    '85vec8ut': {
+      'ko': 'Sign in with Google',
+      'en': '',
+    },
     'qwglaxrp': {
-      'ko': '구글 로그인',
+      'ko': '구글',
       'en': 'Sign in with Google',
     },
     'zwoheq92': {
-      'ko': '애플 로그인',
+      'ko': '애플',
       'en': 'Sign in with Apple',
     },
     'f2xay9l9': {
-      'ko': '이메일 로그인',
+      'ko': '이메일',
       'en': 'Email Login',
     },
     '4scdlrn6': {
@@ -170,15 +174,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Sign Up',
     },
     'sh0xuws4': {
-      'ko': '구글 회원가입',
+      'ko': '구글',
       'en': 'Sign up with Google',
     },
     'd33hhv9s': {
-      'ko': '애플 회원가입',
+      'ko': '애플',
       'en': 'Sign up with Apple',
     },
     'd3532eyn': {
-      'ko': '이메일 회원가입',
+      'ko': '이메일',
       'en': 'Sign up with Email',
     },
     '45w6tqv2': {

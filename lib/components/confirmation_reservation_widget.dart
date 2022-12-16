@@ -4,9 +4,9 @@ import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import 'package:styled_divider/styled_divider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -58,10 +58,11 @@ class _ConfirmationReservationWidgetState
           if (!snapshot.hasData) {
             return Center(
               child: SizedBox(
-                width: 50,
-                height: 50,
-                child: CircularProgressIndicator(
+                width: 40,
+                height: 40,
+                child: SpinKitRing(
                   color: FlutterFlowTheme.of(context).primaryColor,
+                  size: 40,
                 ),
               ),
             );
@@ -170,12 +171,36 @@ class _ConfirmationReservationWidgetState
                         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            var _shouldSetState = false;
+                            if (valueOrDefault(
+                                    currentUserDocument?.currCredits, 0) <
+                                checkoutBottomSheetClassesRecord
+                                    .creditsRequired!) {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('크레딧 부족'),
+                                    content: Text('크레딧 충전 후에 사용해주세요!'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('확인'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              if (_shouldSetState) setState(() {});
+                              return;
+                            }
                             // reservations collection
 
                             final reservationsCreateData =
                                 createReservationsRecordData(
                               date: dateTimeFormat(
-                                'd/M/y',
+                                'yMd',
                                 widget.selectedDate,
                                 locale:
                                     FFLocalizations.of(context).languageCode,
@@ -186,6 +211,7 @@ class _ConfirmationReservationWidgetState
                                   checkoutBottomSheetClassesRecord
                                       .creditsRequired,
                               className: checkoutBottomSheetClassesRecord.name,
+                              time: widget.selectedTime,
                             );
                             var reservationsRecordReference =
                                 ReservationsRecord.collection.doc();
@@ -195,11 +221,13 @@ class _ConfirmationReservationWidgetState
                                 ReservationsRecord.getDocumentFromData(
                                     reservationsCreateData,
                                     reservationsRecordReference);
+                            _shouldSetState = true;
                             groupChat =
                                 await FFChatManager.instance.addGroupMembers(
                               widget.chatGroupRef!,
                               [currentUserReference!],
                             );
+                            _shouldSetState = true;
                             // Decrement currCredits
 
                             final usersUpdateData = {
@@ -210,7 +238,7 @@ class _ConfirmationReservationWidgetState
 
                             context.goNamed('ReservationComplete');
 
-                            setState(() {});
+                            if (_shouldSetState) setState(() {});
                           },
                           text: FFLocalizations.of(context).getText(
                             '7q84xuov' /* 예약하기 */,
