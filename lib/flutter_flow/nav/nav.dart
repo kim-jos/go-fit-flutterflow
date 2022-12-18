@@ -8,6 +8,8 @@ import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
 
 import '../../auth/firebase_user_provider.dart';
+import '../../backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 
 import '../../index.dart';
 import '../../main.dart';
@@ -97,19 +99,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ClassDetails',
               path: 'ClassDetails',
-              requireAuth: true,
               builder: (context, params) => ClassDetailsWidget(
                 classRef: params.getParam(
                     'classRef', ParamType.DocumentReference, false, 'classes'),
                 className: params.getParam('className', ParamType.String),
                 maxLimit: params.getParam('maxLimit', ParamType.int),
                 exerciseType: params.getParam('exerciseType', ParamType.String),
+                image: params.getParam('image', ParamType.String),
               ),
             ),
             FFRoute(
               name: 'Classes',
               path: 'classes',
-              requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'Classes')
                   : ClassesWidget(),
@@ -117,16 +118,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Settings',
               path: 'settings',
-              requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'Settings')
                   : SettingsWidget(),
             ),
             FFRoute(
-              name: 'ReservationComplete',
-              path: 'reservationComplete',
+              name: 'ChatGroups',
+              path: 'chatGroups',
               requireAuth: true,
-              builder: (context, params) => ReservationCompleteWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ChatGroups')
+                  : ChatGroupsWidget(),
             ),
             FFRoute(
               name: 'Chat',
@@ -139,6 +141,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 chatUser: params.getParam('chatUser', ParamType.Document),
                 chatRef: params.getParam(
                     'chatRef', ParamType.DocumentReference, false, 'chats'),
+                chatUserList: params.getParam<DocumentReference>(
+                    'chatUserList', ParamType.DocumentReference, true, 'users'),
               ),
             ),
             FFRoute(
@@ -148,12 +152,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ChatCreateGroupWidget(),
             ),
             FFRoute(
-              name: 'ChatGroups',
-              path: 'chatGroups',
+              name: 'ReservationComplete',
+              path: 'reservationComplete',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ChatGroups')
-                  : ChatGroupsWidget(),
+              builder: (context, params) => ReservationCompleteWidget(),
             ),
             FFRoute(
               name: 'ChatAddUser',
@@ -171,6 +173,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'buyMembership',
               requireAuth: true,
               builder: (context, params) => BuyMembershipWidget(),
+            ),
+            FFRoute(
+              name: 'Feedback',
+              path: 'feedback',
+              requireAuth: true,
+              builder: (context, params) => FeedbackWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -353,7 +361,7 @@ class FFRoute {
                     ),
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

@@ -27,3 +27,10 @@ int differenceInHours(
   final int differenceInHours = dateTime2.difference(dateTime1).inMinutes ~/ 60;
   return differenceInHours;
 }
+
+bool? showClass(String yMdFormatString) {
+  final classDate = DateFormat("yMd").parse(yMdFormatString);
+  final currTime = DateTime.now();
+
+  return currTime.isBefore(classDate);
+}

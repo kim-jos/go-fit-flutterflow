@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/confirmation_cancel_widget.dart';
-import '../components/empty_reservation_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -195,9 +194,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         ),
                       ),
                     ),
-                    noItemsFoundIndicatorBuilder: (_) => Center(
-                      child: EmptyReservationWidget(),
-                    ),
+
                     itemBuilder: (context, _, listViewIndex) {
                       final listViewReservationsRecord =
                           _pagingController!.itemList![listViewIndex];

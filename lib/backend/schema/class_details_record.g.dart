@@ -43,13 +43,6 @@ class _$ClassDetailsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.instagram;
-    if (value != null) {
-      result
-        ..add('instagram')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.misc;
     if (value != null) {
       result
@@ -92,6 +85,13 @@ class _$ClassDetailsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(LatLng)));
     }
+    value = object.instagram;
+    if (value != null) {
+      result
+        ..add('instagram')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -129,10 +129,6 @@ class _$ClassDetailsRecordSerializer
           result.duration = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'instagram':
-          result.instagram = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'misc':
           result.misc = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -157,6 +153,10 @@ class _$ClassDetailsRecordSerializer
           result.latitude = serializers.deserialize(value,
               specifiedType: const FullType(LatLng)) as LatLng?;
           break;
+        case 'instagram':
+          result.instagram = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -178,8 +178,6 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final String? duration;
   @override
-  final String? instagram;
-  @override
   final String? misc;
   @override
   final String? address;
@@ -192,6 +190,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final LatLng? latitude;
   @override
+  final String? instagram;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassDetailsRecord(
@@ -202,13 +202,13 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
       {this.classRef,
       this.monthlyLimit,
       this.duration,
-      this.instagram,
       this.misc,
       this.address,
       this.website,
       this.description,
       this.requirements,
       this.latitude,
+      this.instagram,
       this.ffRef})
       : super._();
 
@@ -228,13 +228,13 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
         classRef == other.classRef &&
         monthlyLimit == other.monthlyLimit &&
         duration == other.duration &&
-        instagram == other.instagram &&
         misc == other.misc &&
         address == other.address &&
         website == other.website &&
         description == other.description &&
         requirements == other.requirements &&
         latitude == other.latitude &&
+        instagram == other.instagram &&
         ffRef == other.ffRef;
   }
 
@@ -252,13 +252,13 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
                                         $jc($jc(0, classRef.hashCode),
                                             monthlyLimit.hashCode),
                                         duration.hashCode),
-                                    instagram.hashCode),
-                                misc.hashCode),
-                            address.hashCode),
-                        website.hashCode),
-                    description.hashCode),
-                requirements.hashCode),
-            latitude.hashCode),
+                                    misc.hashCode),
+                                address.hashCode),
+                            website.hashCode),
+                        description.hashCode),
+                    requirements.hashCode),
+                latitude.hashCode),
+            instagram.hashCode),
         ffRef.hashCode));
   }
 
@@ -268,13 +268,13 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
           ..add('classRef', classRef)
           ..add('monthlyLimit', monthlyLimit)
           ..add('duration', duration)
-          ..add('instagram', instagram)
           ..add('misc', misc)
           ..add('address', address)
           ..add('website', website)
           ..add('description', description)
           ..add('requirements', requirements)
           ..add('latitude', latitude)
+          ..add('instagram', instagram)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -296,10 +296,6 @@ class ClassDetailsRecordBuilder
   String? _duration;
   String? get duration => _$this._duration;
   set duration(String? duration) => _$this._duration = duration;
-
-  String? _instagram;
-  String? get instagram => _$this._instagram;
-  set instagram(String? instagram) => _$this._instagram = instagram;
 
   String? _misc;
   String? get misc => _$this._misc;
@@ -325,6 +321,10 @@ class ClassDetailsRecordBuilder
   LatLng? get latitude => _$this._latitude;
   set latitude(LatLng? latitude) => _$this._latitude = latitude;
 
+  String? _instagram;
+  String? get instagram => _$this._instagram;
+  set instagram(String? instagram) => _$this._instagram = instagram;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -339,13 +339,13 @@ class ClassDetailsRecordBuilder
       _classRef = $v.classRef;
       _monthlyLimit = $v.monthlyLimit;
       _duration = $v.duration;
-      _instagram = $v.instagram;
       _misc = $v.misc;
       _address = $v.address;
       _website = $v.website;
       _description = $v.description;
       _requirements = $v.requirements;
       _latitude = $v.latitude;
+      _instagram = $v.instagram;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -372,13 +372,13 @@ class ClassDetailsRecordBuilder
             classRef: classRef,
             monthlyLimit: monthlyLimit,
             duration: duration,
-            instagram: instagram,
             misc: misc,
             address: address,
             website: website,
             description: description,
             requirements: requirements,
             latitude: latitude,
+            instagram: instagram,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

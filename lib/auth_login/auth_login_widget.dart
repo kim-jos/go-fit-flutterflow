@@ -117,7 +117,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               },
                                               text: FFLocalizations.of(context)
                                                   .getText(
-                                                '85vec8ut' /* Sign in with Google */,
+                                                'hcqp4p7i' /* Sign in with Google */,
                                               ),
                                               icon: Icon(
                                                 Icons.add,

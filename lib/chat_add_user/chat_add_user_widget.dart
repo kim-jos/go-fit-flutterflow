@@ -82,9 +82,9 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
               ),
               style: FlutterFlowTheme.of(context).subtitle1.override(
                     fontFamily: 'Lexend Deca',
-                    color: Color(0xFF95A1AC),
+                    color: FlutterFlowTheme.of(context).black600,
                     fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
             ),
             Text(

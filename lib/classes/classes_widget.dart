@@ -1,8 +1,12 @@
+import '../auth/auth_util.dart';
+import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
+import '../components/insert_phone_number_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +25,32 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (loggedIn) {
+        if (currentPhoneNumber == null || currentPhoneNumber == '') {
+          await showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            enableDrag: false,
+            context: context,
+            builder: (context) {
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: InsertPhoneNumberWidget(),
+                ),
+              );
+            },
+          ).then((value) => setState(() {}));
+        }
+        return;
+      } else {
+        return;
+      }
+    });
+
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -243,6 +273,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                       ),
                                       'exerciseType': serializeParam(
                                         listViewClassesRecord.exerciseType,
+                                        ParamType.String,
+                                      ),
+                                      'image': serializeParam(
+                                        listViewClassesRecord.image,
                                         ParamType.String,
                                       ),
                                     }.withoutNulls,

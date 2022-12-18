@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/lat_lng.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -43,6 +45,24 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
 
     _creditsRequired = _value;
+  }
+
+  List<DocumentReference> _chatGroupMembers = [];
+  List<DocumentReference> get chatGroupMembers => _chatGroupMembers;
+  set chatGroupMembers(List<DocumentReference> _value) {
+    notifyListeners();
+
+    _chatGroupMembers = _value;
+  }
+
+  void addToChatGroupMembers(DocumentReference _value) {
+    notifyListeners();
+    _chatGroupMembers.add(_value);
+  }
+
+  void removeFromChatGroupMembers(DocumentReference _value) {
+    notifyListeners();
+    _chatGroupMembers.remove(_value);
   }
 }
 

@@ -430,7 +430,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                         ),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            context.pushNamed('Classes');
+                                            context.pushNamed('Settings');
                                           },
                                           text: FFLocalizations.of(context)
                                               .getText(

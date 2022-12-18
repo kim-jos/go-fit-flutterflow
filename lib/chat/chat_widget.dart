@@ -1,4 +1,5 @@
 import '../backend/backend.dart';
+import '../components/chat_user_list_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -14,10 +15,12 @@ class ChatWidget extends StatefulWidget {
     Key? key,
     this.chatUser,
     this.chatRef,
+    this.chatUserList,
   }) : super(key: key);
 
   final UsersRecord? chatUser;
   final DocumentReference? chatRef;
+  final List<DocumentReference>? chatUserList;
 
   @override
   _ChatWidgetState createState() => _ChatWidgetState();
@@ -83,12 +86,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               FFLocalizations.of(context).getText(
                 '43yanfxv' /* 그룹 채팅 */,
               ),
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Lexend Deca',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: FlutterFlowTheme.of(context).subtitle1,
             ),
           ],
         ),
@@ -97,21 +95,26 @@ class _ChatWidgetState extends State<ChatWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
             child: InkWell(
               onTap: () async {
-                context.pushNamed(
-                  'ChatAddUser',
-                  queryParams: {
-                    'chat': serializeParam(
-                      _chatInfo!.chatRecord,
-                      ParamType.Document,
-                    ),
-                  }.withoutNulls,
-                  extra: <String, dynamic>{
-                    'chat': _chatInfo!.chatRecord,
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  enableDrag: false,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: MediaQuery.of(context).viewInsets,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: ChatUserListWidget(
+                          chatUserList: widget.chatUserList?.toList(),
+                        ),
+                      ),
+                    );
                   },
-                );
+                ).then((value) => setState(() {}));
               },
               child: Icon(
-                Icons.person_add,
+                Icons.group,
                 color: Colors.black,
                 size: 24,
               ),

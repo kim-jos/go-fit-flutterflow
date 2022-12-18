@@ -1,3 +1,4 @@
+import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
 import '../components/reservation_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
@@ -5,6 +6,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,12 +20,14 @@ class ClassDetailsWidget extends StatefulWidget {
     this.className,
     this.maxLimit,
     this.exerciseType,
+    this.image,
   }) : super(key: key);
 
   final DocumentReference? classRef;
   final String? className;
   final int? maxLimit;
   final String? exerciseType;
+  final String? image;
 
   @override
   _ClassDetailsWidgetState createState() => _ClassDetailsWidgetState();
@@ -96,9 +100,17 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                 context.pop();
               },
             ),
+            title: Text(
+              widget.className!,
+              style: FlutterFlowTheme.of(context).bodyText1.override(
+                    fontFamily: 'Poppins',
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
             actions: [],
             centerTitle: false,
-            elevation: 0,
+            elevation: 2,
           ),
           body: ListView(
             padding: EdgeInsets.zero,
@@ -124,8 +136,8 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
-                              child: Image.network(
-                                'https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                              child: CachedNetworkImage(
+                                imageUrl: widget.image!,
                                 width: double.infinity,
                                 height: double.infinity,
                                 fit: BoxFit.cover,
@@ -300,55 +312,49 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                       child: Container(
                         width: double.infinity,
-                        height: 45,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding:
-                                          MediaQuery.of(context).viewInsets,
-                                      child: ReservationWidget(
-                                        classRef: widget.classRef,
-                                        className: widget.className,
-                                        maxLimit: widget.maxLimit,
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => setState(() {}));
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (!loggedIn) {
+                              context.pushNamed('AuthLogin');
+
+                              return;
+                            }
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) {
+                                return Padding(
+                                  padding: MediaQuery.of(context).viewInsets,
+                                  child: ReservationWidget(
+                                    classRef: widget.classRef,
+                                    className: widget.className,
+                                    maxLimit: widget.maxLimit,
+                                  ),
+                                );
                               },
-                              text: FFLocalizations.of(context).getText(
-                                '7am1in47' /* 예약하기 */,
-                              ),
-                              options: FFButtonOptions(
-                                width: 130,
-                                height: 40,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
+                            ).then((value) => setState(() {}));
+                          },
+                          text: loggedIn ? '예약하기' : '로그인',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle:
+                                FlutterFlowTheme.of(context).subtitle2.override(
                                       fontFamily: 'Poppins',
                                       color: Colors.white,
                                     ),
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
-                          ],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       ),
                     ),
@@ -356,7 +362,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 0),
                       child: Container(
                         width: double.infinity,
-                        height: 250,
+                        height: 277.8,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -390,6 +396,90 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                             centerMapOnMarkerTap: true,
                           );
                         }),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await launchURL(
+                                      classDetailsClassDetailsRecord!.website!);
+                                },
+                                text: FFLocalizations.of(context).getText(
+                                  'zj33isu8' /* 네이버 맵 */,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 170,
+                                  height: 40,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await launchURL(
+                                      classDetailsClassDetailsRecord!
+                                          .instagram!);
+                                },
+                                text: FFLocalizations.of(context).getText(
+                                  'bjlzd4ig' /* 인스타 */,
+                                ),
+                                options: FFButtonOptions(
+                                  height: 40,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Poppins',
+                                        color: Colors.white,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

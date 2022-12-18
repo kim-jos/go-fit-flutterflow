@@ -17,8 +17,6 @@ abstract class ClassDetailsRecord
 
   String? get duration;
 
-  String? get instagram;
-
   String? get misc;
 
   String? get address;
@@ -31,6 +29,8 @@ abstract class ClassDetailsRecord
 
   LatLng? get latitude;
 
+  String? get instagram;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -38,12 +38,12 @@ abstract class ClassDetailsRecord
   static void _initializeBuilder(ClassDetailsRecordBuilder builder) => builder
     ..monthlyLimit = 0
     ..duration = ''
-    ..instagram = ''
     ..misc = ''
     ..address = ''
     ..website = ''
     ..description = ''
-    ..requirements = '';
+    ..requirements = ''
+    ..instagram = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classDetails');
@@ -71,13 +71,13 @@ Map<String, dynamic> createClassDetailsRecordData({
   DocumentReference? classRef,
   int? monthlyLimit,
   String? duration,
-  String? instagram,
   String? misc,
   String? address,
   String? website,
   String? description,
   String? requirements,
   LatLng? latitude,
+  String? instagram,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassDetailsRecord.serializer,
@@ -86,13 +86,13 @@ Map<String, dynamic> createClassDetailsRecordData({
         ..classRef = classRef
         ..monthlyLimit = monthlyLimit
         ..duration = duration
-        ..instagram = instagram
         ..misc = misc
         ..address = address
         ..website = website
         ..description = description
         ..requirements = requirements
-        ..latitude = latitude,
+        ..latitude = latitude
+        ..instagram = instagram,
     ),
   );
 

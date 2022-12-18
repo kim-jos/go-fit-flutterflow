@@ -12,6 +12,7 @@ import 'schema/class_available_time_slots_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/reservations_record.dart';
+import 'schema/feedback_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -26,6 +27,7 @@ export 'schema/class_available_time_slots_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/reservations_record.dart';
+export 'schema/feedback_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Stream<List<UsersRecord>> queryUsersRecord({
@@ -317,6 +319,48 @@ Future<FFFirestorePage<ReservationsRecord>> queryReservationsRecordPage({
     queryCollectionPage(
       ReservationsRecord.collection,
       ReservationsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query FeedbackRecords (as a Stream and as a Future).
+Stream<List<FeedbackRecord>> queryFeedbackRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      FeedbackRecord.collection,
+      FeedbackRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<FeedbackRecord>> queryFeedbackRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      FeedbackRecord.collection,
+      FeedbackRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<FeedbackRecord>> queryFeedbackRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      FeedbackRecord.collection,
+      FeedbackRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
