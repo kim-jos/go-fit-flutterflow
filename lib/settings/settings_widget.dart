@@ -497,40 +497,91 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           width: 1,
                         ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Icon(
-                              Icons.text_snippet,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Text(
-                              FFLocalizations.of(context).getText(
-                                'wuo3ru0i' /* 이용약관 */,
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.9, 0),
+                      child: InkWell(
+                        onTap: () async {
+                          Function() _navigate = () {};
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('계정 삭제'),
+                                    content: Text('계정을 삭제하시겠습니까?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child: Text('아니요'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('네'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            await deleteUser(context);
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('계정 삭제 완료'),
+                                  content: Text('계정이 삭제됐습니다.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('확인'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            return;
+                          }
+
+                          _navigate();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Icon(
-                                Icons.arrow_forward_ios,
+                                Icons.text_snippet,
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 18,
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                size: 24,
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                              child: Text(
+                                FFLocalizations.of(context).getText(
+                                  'wuo3ru0i' /* 계정삭제 */,
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: AlignmentDirectional(0.9, 0),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

@@ -189,7 +189,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                             );
                           },
                         );
-                        context.pop();
+                        Navigator.pop(context);
                       },
                       text: FFLocalizations.of(context).getText(
                         'jfog9f6q' /* 저장하기 */,

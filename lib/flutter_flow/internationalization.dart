@@ -266,7 +266,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Buy Membership',
     },
     'wuo3ru0i': {
-      'ko': '이용약관',
+      'ko': '계정삭제',
       'en': 'Terms of service',
     },
     'ozvae4ko': {
