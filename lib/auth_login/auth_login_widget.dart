@@ -22,7 +22,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
   @override
   void initState() {
     super.initState();
-
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'AuthLogin'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -163,6 +163,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 AlignmentDirectional(0, 0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
+                                                logFirebaseEvent(
+                                                    'AUTH_LOGIN_PAGE_구글_BTN_ON_TAP');
+                                                logFirebaseEvent('Button_auth');
                                                 GoRouter.of(context)
                                                     .prepareAuthEvent();
                                                 final user =
@@ -218,6 +221,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                   0, 10, 0, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'AUTH_LOGIN_PAGE_애플_BTN_ON_TAP');
+                                              logFirebaseEvent('Button_auth');
                                               GoRouter.of(context)
                                                   .prepareAuthEvent();
                                               final user =
@@ -268,6 +274,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         0, 10, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'AUTH_LOGIN_PAGE_Button-Login_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Button-Login_navigate_to');
+
                                         context.pushNamed('AuthEmailLogin');
                                       },
                                       text: FFLocalizations.of(context).getText(
@@ -316,6 +327,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                       ),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'AUTH_LOGIN_PAGE_먼저_둘러보기_BTN_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Button_navigate_to');
+
                                           context.pushNamed('Classes');
                                         },
                                         text:
@@ -358,6 +374,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                     alignment: AlignmentDirectional(0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'AUTH_LOGIN_PAGE_구글_BTN_ON_TAP');
+                                        logFirebaseEvent('Button_auth');
                                         GoRouter.of(context).prepareAuthEvent();
                                         final user =
                                             await signInWithGoogle(context);
@@ -403,6 +422,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                   0, 10, 0, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'AUTH_LOGIN_PAGE_애플_BTN_ON_TAP');
+                                              logFirebaseEvent('Button_auth');
                                               GoRouter.of(context)
                                                   .prepareAuthEvent();
                                               final user =
@@ -451,6 +473,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         0, 10, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        logFirebaseEvent(
+                                            'AUTH_LOGIN_PAGE_Button-Login_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Button-Login_navigate_to');
+
                                         context.pushNamed('AuthEmailLogin');
                                       },
                                       text: FFLocalizations.of(context).getText(

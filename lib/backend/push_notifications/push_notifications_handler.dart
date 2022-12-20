@@ -93,7 +93,6 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'AuthEmailLogin': (data) async => AuthEmailLoginWidget(),
   'AuthLogin': (data) async => AuthLoginWidget(),
-  'MyReservations': (data) async => MyReservationsWidget(),
   'ClassDetails': (data) async => ClassDetailsWidget(
         classRef: getParameter(data, 'classRef'),
         className: getParameter(data, 'className'),
@@ -101,8 +100,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         exerciseType: getParameter(data, 'exerciseType'),
         image: getParameter(data, 'image'),
       ),
-  'Settings': (data) async => NavBarPage(initialPage: 'Settings'),
+  'MyReservations': (data) async => MyReservationsWidget(),
   'ChatGroups': (data) async => NavBarPage(initialPage: 'ChatGroups'),
+  'Settings': (data) async => NavBarPage(initialPage: 'Settings'),
   'Chat': (data) async => ChatWidget(
         chatUser: await getDocumentParameter(
             data, 'chatUser', UsersRecord.serializer),
@@ -116,6 +116,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'BuyMembership': (data) async => BuyMembershipWidget(),
   'Feedback': (data) async => FeedbackWidget(),
+  'TermsOfService': (data) async => TermsOfServiceWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

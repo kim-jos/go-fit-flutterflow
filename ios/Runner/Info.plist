@@ -33,7 +33,7 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>com.googleusercontent.apps.925942846141-9acvrd8i2r8hng6dskmile4j9r1vdqtp</string>
+                <string>com.googleusercontent.apps.925942846141-gsgqbufe3q2loajqcpobgquppn1esorc</string>
                 
             </array>
         </dict>
@@ -59,9 +59,9 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-      <string>In order to take a picture or video, this app requires permission to access the camera.</string>
+      <string>We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-      <string>In order to upload media, this app requires permission to access the photo library.</string>
+      <string>We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
 
     <key>UIBackgroundModes</key>
     <array>

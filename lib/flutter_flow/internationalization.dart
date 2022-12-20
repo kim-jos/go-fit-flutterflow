@@ -76,15 +76,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'mrjn4nw8': {
       'ko': '로그인',
-      'en': 'login',
+      'en': 'Login',
     },
     'lwr4upm4': {
       'ko': '',
-      'en': 'Email Address',
+      'en': 'Email',
     },
     'sm6kkgm0': {
       'ko': '이메일',
-      'en': 'email',
+      'en': 'Email',
     },
     'uaptgtcu': {
       'ko': '',
@@ -92,27 +92,27 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'nmslv0cc': {
       'ko': '비밀번호',
-      'en': 'password',
+      'en': 'Password',
     },
     'lbwr7onm': {
       'ko': '로그인',
-      'en': 'login',
+      'en': 'Login',
     },
     'qdypelx9': {
       'ko': '비밀번호 찾기',
-      'en': 'Forgot your password',
+      'en': 'Forgot your password?',
     },
     'beorv1g4': {
       'ko': '먼저 둘러보기',
-      'en': 'Take a tour first',
+      'en': 'Take a look around',
     },
     '1lyvfoko': {
       'ko': '회원가입',
-      'en': 'Sign Up',
+      'en': 'Register',
     },
     'v2n03fwl': {
       'ko': '이름',
-      'en': 'name',
+      'en': 'Name',
     },
     'pq9r0zt0': {
       'ko': '전화번호',
@@ -120,19 +120,19 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'h8ot3s4k': {
       'ko': '이메일',
-      'en': 'email',
+      'en': 'Email',
     },
     'u3t9zbc8': {
       'ko': '비밀번호',
-      'en': 'password',
+      'en': 'Password',
     },
     'untvo2lq': {
       'ko': '비밀번호 확인',
-      'en': 'verify password',
+      'en': 'Verify password',
     },
     'celr4qfk': {
       'ko': '회원가입',
-      'en': 'Sign Up',
+      'en': 'Register',
     },
     'kc9iznkl': {
       'ko': 'Home',
@@ -147,7 +147,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '9t8b8ezy': {
       'ko': '로그인',
-      'en': 'login',
+      'en': 'Login',
     },
     'hcqp4p7i': {
       'ko': 'Sign in with Google',
@@ -163,15 +163,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'f2xay9l9': {
       'ko': '이메일',
-      'en': 'email',
+      'en': 'Email',
     },
     '4scdlrn6': {
       'ko': '먼저 둘러보기',
-      'en': 'Take a tour first',
+      'en': 'Take a look around',
     },
     'q34ek0kh': {
       'ko': '회원가입',
-      'en': 'Sign Up',
+      'en': 'Register',
     },
     'sh0xuws4': {
       'ko': '구글',
@@ -183,24 +183,9 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'd3532eyn': {
       'ko': '이메일',
-      'en': 'email',
+      'en': 'Email',
     },
     '45w6tqv2': {
-      'ko': 'Home',
-      'en': 'Home',
-    },
-  },
-  // MyReservations
-  {
-    'cvfu770k': {
-      'ko': '최신',
-      'en': 'recent',
-    },
-    'gwavr9ay': {
-      'ko': '예약현황',
-      'en': 'Reservation status',
-    },
-    'rtdplk0h': {
       'ko': 'Home',
       'en': 'Home',
     },
@@ -209,15 +194,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   {
     'kj9uvxm7': {
       'ko': '수업 유형',
-      'en': 'class type',
+      'en': 'Class type',
     },
     'njp96srb': {
       'ko': '소요 시간',
-      'en': 'time taken',
+      'en': 'Duration',
     },
     'p9p3nl8a': {
       'ko': '수업 준비물',
-      'en': 'class supplies',
+      'en': 'Class Requirements',
     },
     'ra6ymp6e': {
       'ko': '기타',
@@ -244,22 +229,60 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'vpp8litr': {
       'ko': '운동시설',
-      'en': 'exercise facility',
+      'en': 'Fitness Centers',
     },
     '4v43t5yc': {
       'ko': '운동시설',
-      'en': 'exercise facility',
+      'en': 'Fitness Centers',
+    },
+  },
+  // MyReservations
+  {
+    'cvfu770k': {
+      'ko': '최신',
+      'en': 'Recent',
+    },
+    'zomtvc99': {
+      'ko': ' - ',
+      'en': '',
+    },
+    'gwavr9ay': {
+      'ko': '예약현황',
+      'en': 'My Reservations',
+    },
+    'rtdplk0h': {
+      'ko': 'Home',
+      'en': 'Home',
+    },
+  },
+  // ChatGroups
+  {
+    'dkh9qzkk': {
+      'ko': '내 그룹',
+      'en': 'My groups',
+    },
+    'yjs0nx2h': {
+      'ko': '운동 모집 채팅',
+      'en': 'Find Workout Groups',
+    },
+    'ycwcocb2': {
+      'ko': '내 채팅',
+      'en': 'My Chat',
+    },
+    'ii39eso6': {
+      'ko': '소셜',
+      'en': 'Social',
     },
   },
   // Settings
   {
     'amv6f82u': {
       'ko': '내 계정',
-      'en': 'my account',
+      'en': 'My Account',
     },
     '3y491idk': {
       'ko': '예약현황',
-      'en': 'Reservation status',
+      'en': 'My Reservations',
     },
     'zt2qicvo': {
       'ko': '멤버십 구매',
@@ -267,15 +290,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'wuo3ru0i': {
       'ko': '계정삭제',
-      'en': 'Terms of service',
+      'en': 'Terms of Service',
     },
     'ozvae4ko': {
       'ko': '피드백 남기기',
-      'en': 'Terms of service',
+      'en': 'Give Feedback',
     },
     'n6ejduc0': {
       'ko': '보유 크레딧',
-      'en': 'holding credit',
+      'en': 'Remaining Credits',
     },
     'ks1i92zv': {
       'ko': '전화번호 입력',
@@ -283,12 +306,12 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'iyzbxe2u': {
       'ko': '번호 저장',
-      'en': 'save number',
+      'en': 'Save number',
     },
     'ui4w6k2x': {
       'ko': '예약이 불가능할 때 급하게 연락드리기 위해 전환번호가 필요합니다!',
       'en':
-          'We need a conversion number to contact you urgently when reservations are not possible!',
+          'We need your number to contact you in case of emergencies regarding your reservations.',
     },
     'mqz45pq4': {
       'ko': '[User Name]',
@@ -299,68 +322,45 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': '[username@domain.com]',
     },
     'szdy40va': {
-      'ko': '내정보',
-      'en': 'My Info',
-    },
-  },
-  // ChatGroups
-  {
-    'dkh9qzkk': {
-      'ko': '내 그룹',
-      'en': 'my group',
-    },
-    'yjs0nx2h': {
-      'ko': '운동 모집 채팅',
-      'en': 'athletic recruitment chat',
-    },
-    'ycwcocb2': {
-      'ko': '내 채팅',
-      'en': 'my chat',
-    },
-    'ii39eso6': {
-      'ko': '소셜',
-      'en': 'social',
+      'ko': '내 계정',
+      'en': 'My Account',
     },
   },
   // Chat
   {
     '43yanfxv': {
       'ko': '그룹 채팅',
-      'en': 'group chat',
+      'en': 'Group Chat',
     },
   },
   // ChatCreateGroup
   {
     '57oq4dyh': {
       'ko': '그룹 모임 생성',
-      'en': 'Create a group meeting',
+      'en': 'Create Group Chat',
     },
     't0r1ol6b': {
       'ko': '모임상대 추가',
-      'en': 'Add meeting partner',
+      'en': 'Invite Friend',
     },
     'm6alrk5e': {
       'ko': '모임 생성',
-      'en': 'create meeting',
+      'en': 'Create Group Chat',
     },
     'ocbdrmzv': {
       'ko': '최소 2명을 추가해주세요! :)',
-      'en': 'Please add at least 2 people! :)',
+      'en': 'Add at least 2 people! :)',
     },
   },
   // ReservationComplete
   {
     'ngpu391n': {
-      'ko': '예약완료!',
-      'en': 'reservation complete!',
-    },
-    'usv8gkh9': {
-      'ko': '수업 재밌게 들으세요! :)',
-      'en': 'Enjoy the class! :)',
+      'ko': '예약 요청 완료!',
+      'en': 'Reservation Request Complete!',
     },
     'qbo5qv38': {
-      'ko': '홈으로 가기',
-      'en': 'go home',
+      'ko': '다른 수업 보기',
+      'en': 'Home',
     },
     '46doyl8w': {
       'ko': 'Home',
@@ -371,11 +371,11 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   {
     'az1zj6hz': {
       'ko': '그룹에 추가',
-      'en': 'add to group',
+      'en': 'Add to Group',
     },
     'suggcp5u': {
       'ko': '모임상대 추가',
-      'en': 'Add meeting partner',
+      'en': 'Invite Friend',
     },
   },
   // BuyMembership
@@ -477,33 +477,50 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   {
     'ijr7xhfd': {
       'ko': '피드백 남기기',
-      'en': '',
+      'en': 'Provide Feedback',
     },
     'ppw7mhc5': {
       'ko': '피드백 남겨주세요!\n1. 추가적으로 하고 싶은 운동\n2. 사용하면서 좋았던 점과 불편했던 점',
-      'en': '',
+      'en':
+          'Any feedback regarding your experience using the app is highly appreciated!',
     },
     '3a42vjju': {
       'ko': '피드백 남기기',
-      'en': '',
+      'en': 'Provide Feedback',
     },
   },
-  // ConfirmationCancel
+  // TermsOfService
   {
-    'yf2s0tw9': {
-      'ko': '예약을 취소하시겠습니까?',
-      'en': 'Are you sure you want to cancel your reservation?',
+    'ou1rvpv7': {
+      'ko': '예약 가능 시간',
+      'en': '',
     },
-    'u55jruvs': {
-      'ko': '취소하기',
-      'en': 'cancel',
+    'iuz9aqqb': {
+      'ko': '예약은 수업 시작 6시간 전까지 가능합니다.',
+      'en': '',
+    },
+    'gspjll2r': {
+      'ko': '취소 가능 시간',
+      'en': '',
+    },
+    'b1htz7hp': {
+      'ko': '예약 취소는 수업 시작 24시간 전까지 가능합니다.',
+      'en': '',
+    },
+    'bu5z0jkm': {
+      'ko': '이용약관',
+      'en': 'Terms of Service',
     },
   },
   // ConfirmationReservation
   {
     'cixwrkmj': {
       'ko': '예약을 진행하시겠습니까?',
-      'en': 'Would you like to proceed with the reservation?',
+      'en': 'Proceed with reservation?',
+    },
+    'voqvkzbp': {
+      'ko': '예약 취소는 수업 시작 24시간 전 까지만 가능합니다.',
+      'en': 'Proceed with reservation?',
     },
     '7q84xuov': {
       'ko': '예약하기',
@@ -514,7 +531,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   {
     '3xgaq3lj': {
       'ko': '수업 예약',
-      'en': 'Book a class',
+      'en': 'Make reservation',
     },
     '4ldfd1n9': {
       'ko': '날짜/시간 선택',
@@ -522,21 +539,21 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'fitnbi1b': {
       'ko': '닫기',
-      'en': 'to close',
+      'en': 'Close',
     },
   },
   // NoTimeSlotsAvailable
   {
     '90u0b7za': {
       'ko': '수업이 없습니다',
-      'en': 'no classes',
+      'en': 'No classes',
     },
   },
   // EmptyChat
   {
     '8gazeklv': {
       'ko': '채팅그룹이 없습니다',
-      'en': 'There are no chat groups',
+      'en': 'No chat groups',
     },
   },
   // EmptyReservation
@@ -550,27 +567,27 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   {
     'ajeaeil6': {
       'ko': '그룹 멤버',
-      'en': 'group member',
+      'en': 'Group Members',
     },
     'cfupxao9': {
       'ko': '같이 운동하는 멤버들입니다! :)',
-      'en': 'These are the members who exercise together! :)',
+      'en': 'Your Workout Buddies ! :)',
     },
     '58sz0ojd': {
       'ko': '닫기',
-      'en': 'to close',
+      'en': 'Close',
     },
   },
   // InsertPhoneNumber
   {
     '8ftjlwvi': {
-      'ko': '전환번호 입력',
-      'en': 'Enter conversion number',
+      'ko': '전화번호 입력',
+      'en': 'Enter phone number',
     },
     'o6ki3du3': {
       'ko': '예약이 불가능할 때 급하게 연락드리기 전환번호가 필요합니다!',
       'en':
-          'I need a conversion number to contact you urgently when a reservation is not possible!',
+          'We need your number to contact you in case of emergencies regarding your reservations.',
     },
     '4l6vq5fy': {
       'ko': '전화번호 입력해주세요',
@@ -578,17 +595,19 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     'jfog9f6q': {
       'ko': '저장하기',
-      'en': 'save',
+      'en': 'Save',
     },
   },
   // Miscellaneous
   {
     'e4o9fhp5': {
-      'ko': '',
+      'ko':
+          'We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.',
       'en': '',
     },
     'kocxjsvz': {
-      'ko': '',
+      'ko':
+          'We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.',
       'en': '',
     },
     'k5swvivw': {

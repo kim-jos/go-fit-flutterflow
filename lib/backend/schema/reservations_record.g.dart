@@ -65,6 +65,14 @@ class _$ReservationsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.chatsRef;
+    if (value != null) {
+      result
+        ..add('chatsRef')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                DocumentReference, const [const FullType.nullable(Object)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -116,6 +124,12 @@ class _$ReservationsRecordSerializer
           result.time = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'chatsRef':
+          result.chatsRef = serializers.deserialize(value,
+              specifiedType: const FullType(DocumentReference, const [
+                const FullType.nullable(Object)
+              ])) as DocumentReference<Object?>?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -143,6 +157,8 @@ class _$ReservationsRecord extends ReservationsRecord {
   @override
   final String? time;
   @override
+  final DocumentReference<Object?>? chatsRef;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ReservationsRecord(
@@ -156,6 +172,7 @@ class _$ReservationsRecord extends ReservationsRecord {
       this.classRequiredCredits,
       this.className,
       this.time,
+      this.chatsRef,
       this.ffRef})
       : super._();
 
@@ -178,6 +195,7 @@ class _$ReservationsRecord extends ReservationsRecord {
         classRequiredCredits == other.classRequiredCredits &&
         className == other.className &&
         time == other.time &&
+        chatsRef == other.chatsRef &&
         ffRef == other.ffRef;
   }
 
@@ -187,11 +205,13 @@ class _$ReservationsRecord extends ReservationsRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
-                        user.hashCode),
-                    classRequiredCredits.hashCode),
-                className.hashCode),
-            time.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
+                            user.hashCode),
+                        classRequiredCredits.hashCode),
+                    className.hashCode),
+                time.hashCode),
+            chatsRef.hashCode),
         ffRef.hashCode));
   }
 
@@ -204,6 +224,7 @@ class _$ReservationsRecord extends ReservationsRecord {
           ..add('classRequiredCredits', classRequiredCredits)
           ..add('className', className)
           ..add('time', time)
+          ..add('chatsRef', chatsRef)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -239,6 +260,11 @@ class ReservationsRecordBuilder
   String? get time => _$this._time;
   set time(String? time) => _$this._time = time;
 
+  DocumentReference<Object?>? _chatsRef;
+  DocumentReference<Object?>? get chatsRef => _$this._chatsRef;
+  set chatsRef(DocumentReference<Object?>? chatsRef) =>
+      _$this._chatsRef = chatsRef;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -256,6 +282,7 @@ class ReservationsRecordBuilder
       _classRequiredCredits = $v.classRequiredCredits;
       _className = $v.className;
       _time = $v.time;
+      _chatsRef = $v.chatsRef;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -285,6 +312,7 @@ class ReservationsRecordBuilder
             classRequiredCredits: classRequiredCredits,
             className: className,
             time: time,
+            chatsRef: chatsRef,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

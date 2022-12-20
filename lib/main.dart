@@ -174,7 +174,7 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: FFLocalizations.of(context).getText(
-              'szdy40va' /* 내정보 */,
+              'szdy40va' /* 내 계정 */,
             ),
             tooltip: '',
           )

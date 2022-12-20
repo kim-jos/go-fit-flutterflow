@@ -44,6 +44,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
     passwordCreateVisibility = false;
     passwordConfirmCreateController = TextEditingController();
     passwordConfirmCreateVisibility = false;
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'AuthEmailLogin'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -296,6 +298,9 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           0, 24, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'AUTH_EMAIL_LOGIN_Button-Login_ON_TAP');
+                                          logFirebaseEvent('Button-Login_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
 
@@ -307,6 +312,9 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           if (user == null) {
                                             return;
                                           }
+
+                                          logFirebaseEvent(
+                                              'Button-Login_navigate_to');
 
                                           context.goNamedAuth(
                                               'Classes', mounted);
@@ -341,6 +349,10 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           0, 20, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'AUTH_EMAIL_LOGIN_Button-ForgotPassword_O');
+                                          logFirebaseEvent(
+                                              'Button-ForgotPassword_alert_dialog');
                                           var confirmDialogResponse =
                                               await showDialog<bool>(
                                                     context: context,
@@ -372,6 +384,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                   ) ??
                                                   false;
                                           if (confirmDialogResponse) {
+                                            logFirebaseEvent(
+                                                'Button-ForgotPassword_auth');
                                             if (emailAddressController!
                                                 .text.isEmpty) {
                                               ScaffoldMessenger.of(context)
@@ -390,6 +404,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               context: context,
                                             );
                                           } else {
+                                            logFirebaseEvent(
+                                                'Button-ForgotPassword_close_dialog,_draw');
                                             Navigator.pop(context);
                                           }
                                         },
@@ -430,6 +446,11 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                         ),
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            logFirebaseEvent(
+                                                'AUTH_EMAIL_LOGIN_PAGE_먼저_둘러보기_BTN_ON_TAP');
+                                            logFirebaseEvent(
+                                                'Button_navigate_to');
+
                                             context.pushNamed('Settings');
                                           },
                                           text: FFLocalizations.of(context)
@@ -836,6 +857,9 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           0, 24, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'AUTH_EMAIL_LOGIN_Button-Login_ON_TAP');
+                                          logFirebaseEvent('Button-Login_auth');
                                           GoRouter.of(context)
                                               .prepareAuthEvent();
                                           if (passwordCreateController?.text !=

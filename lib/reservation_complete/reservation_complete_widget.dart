@@ -21,7 +21,8 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
   @override
   void initState() {
     super.initState();
-
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ReservationComplete'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -59,8 +60,9 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
               ),
               Text(
                 FFLocalizations.of(context).getText(
-                  'ngpu391n' /* 예약완료! */,
+                  'ngpu391n' /* 예약 요청 완료! */,
                 ),
+                textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).title2.override(
                       fontFamily: 'Poppins',
                       color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -68,27 +70,17 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
                     ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                child: Text(
-                  FFLocalizations.of(context).getText(
-                    'usv8gkh9' /* 수업 재밌게 들으세요! :) */,
-                  ),
-                  style: FlutterFlowTheme.of(context).subtitle2.override(
-                        fontFamily: 'Poppins',
-                        color: FlutterFlowTheme.of(context).primaryBtnText,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w300,
-                      ),
-                ),
-              ),
-              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent(
+                        'RESERVATION_COMPLETE_다른_수업_보기_BTN_ON_TAP');
+                    logFirebaseEvent('Button_navigate_to');
+
                     context.goNamed('Classes');
                   },
                   text: FFLocalizations.of(context).getText(
-                    'qbo5qv38' /* 홈으로 가기 */,
+                    'qbo5qv38' /* 다른 수업 보기 */,
                   ),
                   options: FFButtonOptions(
                     width: 130,

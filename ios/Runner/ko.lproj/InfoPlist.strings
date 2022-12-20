@@ -1,0 +1,2 @@
+NSCameraUsageDescription = "We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.";
+NSPhotoLibraryUsageDescription = "We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.";

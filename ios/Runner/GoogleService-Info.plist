@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>925942846141-9acvrd8i2r8hng6dskmile4j9r1vdqtp.apps.googleusercontent.com</string>
+	<string>925942846141-gsgqbufe3q2loajqcpobgquppn1esorc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.925942846141-9acvrd8i2r8hng6dskmile4j9r1vdqtp</string>
+	<string>com.googleusercontent.apps.925942846141-gsgqbufe3q2loajqcpobgquppn1esorc</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>925942846141-3hli2d2ha3dh8v9f2r50d1f9cjek2s6r.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mycompany.gofit</string>
+	<string>com.korea.gofit.wellness</string>
 	<key>PROJECT_ID</key>
 	<string>customer-management-6f127</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:925942846141:ios:0a801081c3b41670a21dd4</string>
+	<string>1:925942846141:ios:92f08a16596bfe30a21dd4</string>
 </dict>
 </plist>

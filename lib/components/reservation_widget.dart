@@ -117,6 +117,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                 initialDate: getCurrentTimestamp,
                 onChange: (DateTimeRange? newSelectedDate) async {
                   calendarSelectedDay = newSelectedDate;
+                  logFirebaseEvent('RESERVATION_Calendar_s9g34vcw_ON_DATE_SE');
+                  logFirebaseEvent('Calendar_update_local_state');
                   setState(() {
                     FFAppState().selectedDate = calendarSelectedDay?.start;
                   });
@@ -316,12 +318,18 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               : null;
                                       return FFButtonWidget(
                                         onPressed: () async {
+                                          logFirebaseEvent(
+                                              'RESERVATION_COMP_BUTTON_BTN_ON_TAP');
+                                          logFirebaseEvent(
+                                              'Button_update_local_state');
                                           setState(() {
                                             FFAppState().selectedTime =
                                                 rowClassAvailableTimeSlotsRecord
                                                     .startTime!;
                                           });
                                           if (buttonChatsRecord != null) {
+                                            logFirebaseEvent(
+                                                'Button_bottom_sheet');
                                             await showModalBottomSheet(
                                               isScrollControlled: true,
                                               backgroundColor:
@@ -359,6 +367,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               },
                                             ).then((value) => setState(() {}));
                                           } else {
+                                            logFirebaseEvent(
+                                                'Button_backend_call');
+
                                             final chatsCreateData = {
                                               ...createChatsRecordData(
                                                 timeSlotRef:
@@ -395,6 +406,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                                 ChatsRecord.getDocumentFromData(
                                                     chatsCreateData,
                                                     chatsRecordReference);
+                                            logFirebaseEvent(
+                                                'Button_bottom_sheet');
                                             await showModalBottomSheet(
                                               isScrollControlled: true,
                                               backgroundColor:
@@ -490,6 +503,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                 ),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('RESERVATION_COMP_닫기_BTN_ON_TAP');
+                    logFirebaseEvent('Button_bottom_sheet');
                     Navigator.pop(context);
                   },
                   text: FFLocalizations.of(context).getText(

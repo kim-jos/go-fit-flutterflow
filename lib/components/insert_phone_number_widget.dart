@@ -86,7 +86,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                 child: Text(
                   FFLocalizations.of(context).getText(
-                    '8ftjlwvi' /* 전환번호 입력 */,
+                    '8ftjlwvi' /* 전화번호 입력 */,
                   ),
                   style: FlutterFlowTheme.of(context).title2,
                 ),
@@ -164,15 +164,19 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent(
+                            'INSERT_PHONE_NUMBER_COMP_저장하기_BTN_ON_TAP');
                         if (!(textController!.text != null &&
                             textController!.text != '')) {
                           return;
                         }
+                        logFirebaseEvent('Button_backend_call');
 
                         final usersUpdateData = createUsersRecordData(
                           phoneNumber: textController!.text,
                         );
                         await currentUserReference!.update(usersUpdateData);
+                        logFirebaseEvent('Button_alert_dialog');
                         await showDialog(
                           context: context,
                           builder: (alertDialogContext) {
@@ -189,6 +193,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                             );
                           },
                         );
+                        logFirebaseEvent('Button_bottom_sheet');
                         Navigator.pop(context);
                       },
                       text: FFLocalizations.of(context).getText(

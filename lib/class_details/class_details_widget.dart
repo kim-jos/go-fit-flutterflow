@@ -41,7 +41,8 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
   @override
   void initState() {
     super.initState();
-
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ClassDetails'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -97,6 +98,8 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                 size: 30,
               ),
               onPressed: () async {
+                logFirebaseEvent('CLASS_DETAILS_arrow_back_rounded_ICN_ON_');
+                logFirebaseEvent('IconButton_navigate_back');
                 context.pop();
               },
             ),
@@ -318,11 +321,16 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         ),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            logFirebaseEvent(
+                                'CLASS_DETAILS_PAGE_예약하기_BTN_ON_TAP');
                             if (!loggedIn) {
+                              logFirebaseEvent('Button_navigate_to');
+
                               context.pushNamed('AuthLogin');
 
                               return;
                             }
+                            logFirebaseEvent('Button_bottom_sheet');
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
@@ -419,6 +427,9 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                               ),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  logFirebaseEvent(
+                                      'CLASS_DETAILS_PAGE_네이버_맵_BTN_ON_TAP');
+                                  logFirebaseEvent('Button_launch_u_r_l');
                                   await launchURL(
                                       classDetailsClassDetailsRecord!.website!);
                                 },
@@ -453,6 +464,9 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                               ),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  logFirebaseEvent(
+                                      'CLASS_DETAILS_PAGE_인스타_BTN_ON_TAP');
+                                  logFirebaseEvent('Button_launch_u_r_l');
                                   await launchURL(
                                       classDetailsClassDetailsRecord!
                                           .instagram!);

@@ -24,6 +24,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Feedback'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -55,6 +56,8 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('FEEDBACK_arrow_back_rounded_ICN_ON_TAP');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -153,11 +156,15 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
             child: FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('FEEDBACK_PAGE_피드백_남기기_BTN_ON_TAP');
+                logFirebaseEvent('Button_backend_call');
+
                 final feedbackCreateData = createFeedbackRecordData(
                   userRef: currentUserReference,
                   message: textController!.text,
                 );
                 await FeedbackRecord.collection.doc().set(feedbackCreateData);
+                logFirebaseEvent('Button_alert_dialog');
                 await showDialog(
                   context: context,
                   builder: (alertDialogContext) {

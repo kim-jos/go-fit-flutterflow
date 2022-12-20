@@ -27,8 +27,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('CLASSES_PAGE_Classes_ON_PAGE_LOAD');
       if (loggedIn) {
-        if (currentPhoneNumber == null || currentPhoneNumber == '') {
+        if (currentPhoneNumber == '') {
+          logFirebaseEvent('Classes_bottom_sheet');
           await showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -51,6 +53,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       }
     });
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Classes'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -255,10 +258,14 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                               ),
                               child: InkWell(
                                 onTap: () async {
+                                  logFirebaseEvent(
+                                      'CLASSES_PAGE_Row_rzb4q98p_ON_TAP');
+                                  logFirebaseEvent('Row_update_local_state');
                                   setState(() {
                                     FFAppState().creditsRequired =
                                         listViewClassesRecord.creditsRequired!;
                                   });
+                                  logFirebaseEvent('Row_navigate_to');
 
                                   context.pushNamed(
                                     'ClassDetails',

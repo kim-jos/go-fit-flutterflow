@@ -1,10 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/confirmation_cancel_widget.dart';
 import '../components/empty_reservation_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,7 +29,8 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
   @override
   void initState() {
     super.initState();
-
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'MyReservations'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -59,6 +61,9 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('MY_RESERVATIONS_arrow_back_rounded_ICN_O');
+            logFirebaseEvent('IconButton_navigate_to');
+
             context.goNamed('Settings');
           },
         ),
@@ -278,6 +283,19 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 5, 0, 0),
                                               child: Text(
+                                                FFLocalizations.of(context)
+                                                    .getText(
+                                                  'zomtvc99' /*  -  */,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 5, 0, 0),
+                                              child: Text(
                                                 containerClassAvailableTimeSlotsRecord
                                                     .startTime!,
                                                 style:
@@ -291,42 +309,126 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
+                                        logFirebaseEvent(
+                                            'MY_RESERVATIONS_Icon_rwo8uv97_ON_TAP');
+                                        var _shouldSetState = false;
+                                        if (functions.differenceInHours(
+                                                getCurrentTimestamp,
+                                                functions.dateAndTimeStringParser(
+                                                    listViewReservationsRecord
+                                                        .date!,
+                                                    listViewReservationsRecord
+                                                        .time!)) <
+                                            containerClassAvailableTimeSlotsRecord
+                                                .minHoursToCancel!) {
+                                          logFirebaseEvent('Icon_alert_dialog');
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('예약 취소 불가능'),
+                                                content: Text(
+                                                    '예약 취소는 수업 시작 24시간 전에 해주세요!'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('확인'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                          if (_shouldSetState) setState(() {});
+                                          return;
+                                        }
+                                        logFirebaseEvent('Icon_alert_dialog');
+                                        var confirmDialogResponse =
+                                            await showDialog<bool>(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: Text('예약 취소'),
+                                                      content:
+                                                          Text('예약을 취소하시겠습니까?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  false),
+                                                          child: Text('아니요'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext,
+                                                                  true),
+                                                          child: Text('예'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                ) ??
+                                                false;
+                                        if (!confirmDialogResponse) {
+                                          if (_shouldSetState) setState(() {});
+                                          return;
+                                        }
+                                        // Increment credits
+                                        logFirebaseEvent(
+                                            'Icon_Incrementcredits');
+
+                                        final usersUpdateData = {
+                                          'currCredits': FieldValue.increment(
+                                              listViewReservationsRecord
+                                                  .classRequiredCredits!),
+                                        };
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                        // Remove from chat collection
+                                        logFirebaseEvent(
+                                            'Icon_Removefromchatcollection');
+
+                                        final chatsUpdateData = {
+                                          'users': FieldValue.arrayRemove(
+                                              [currentUserReference]),
+                                        };
+                                        await listViewReservationsRecord
+                                            .chatsRef!
+                                            .update(chatsUpdateData);
+                                        _shouldSetState = true;
+                                        // reservations collection
+                                        logFirebaseEvent(
+                                            'Icon_reservationscollection');
+                                        await listViewReservationsRecord
+                                            .reference
+                                            .delete();
+                                        logFirebaseEvent('Icon_alert_dialog');
+                                        await showDialog(
                                           context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding: MediaQuery.of(context)
-                                                  .viewInsets,
-                                              child: ConfirmationCancelWidget(
-                                                className:
-                                                    listViewReservationsRecord
-                                                        .className,
-                                                date: listViewReservationsRecord
-                                                    .date,
-                                                time:
-                                                    containerClassAvailableTimeSlotsRecord
-                                                        .startTime,
-                                                reservationsRef:
-                                                    listViewReservationsRecord
-                                                        .reference,
-                                                creditsRequired:
-                                                    listViewReservationsRecord
-                                                        .classRequiredCredits,
-                                                classRef:
-                                                    containerClassAvailableTimeSlotsRecord
-                                                        .classRef,
-                                                timeSlotRef:
-                                                    containerClassAvailableTimeSlotsRecord
-                                                        .reference,
-                                                chatRef:
-                                                    containerClassAvailableTimeSlotsRecord
-                                                        .chatGroup,
-                                              ),
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('예약 취소 완료'),
+                                              content: Text('예약이 취소됐습니다'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('확인'),
+                                                ),
+                                              ],
                                             );
                                           },
-                                        ).then((value) => setState(() {}));
+                                        );
+                                        logFirebaseEvent('Icon_navigate_to');
+
+                                        context.goNamed('MyReservations');
+
+                                        if (_shouldSetState) setState(() {});
                                       },
                                       child: Icon(
                                         Icons.cancel_outlined,

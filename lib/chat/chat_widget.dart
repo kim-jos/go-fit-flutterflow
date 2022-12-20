@@ -54,6 +54,7 @@ class _ChatWidgetState extends State<ChatWidget> {
       }
     });
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Chat'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -77,6 +78,8 @@ class _ChatWidgetState extends State<ChatWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('CHAT_PAGE_arrow_back_rounded_ICN_ON_TAP');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -95,6 +98,8 @@ class _ChatWidgetState extends State<ChatWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
             child: InkWell(
               onTap: () async {
+                logFirebaseEvent('CHAT_PAGE_Icon_x569z336_ON_TAP');
+                logFirebaseEvent('Icon_bottom_sheet');
                 await showModalBottomSheet(
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,

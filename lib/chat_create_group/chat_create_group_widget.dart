@@ -33,6 +33,8 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ChatCreateGroup'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -63,6 +65,8 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('CHAT_CREATE_GROUP_arrow_back_rounded_ICN');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -332,6 +336,9 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 34),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          logFirebaseEvent(
+                              'CHAT_CREATE_GROUP_PAGE_모임_생성_BTN_ON_TAP');
+                          logFirebaseEvent('Button_group_chat_action');
                           groupChat = await FFChatManager.instance.createChat(
                             checkboxListTileCheckedItems
                                 .map((e) => e.reference)

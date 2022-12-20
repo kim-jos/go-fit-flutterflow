@@ -120,9 +120,10 @@ class _ConfirmationReservationWidgetState
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(24, 16, 24, 4),
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 16, 5, 4),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -141,7 +142,26 @@ class _ConfirmationReservationWidgetState
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(24, 4, 24, 24),
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 2, 5, 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              FFLocalizations.of(context).getText(
+                                'voqvkzbp' /* 예약 취소는 수업 시작 24시간 전 까지만 가능합니다. */,
+                              ),
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(5, 4, 5, 24),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,11 +191,14 @@ class _ConfirmationReservationWidgetState
                         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            logFirebaseEvent(
+                                'CONFIRMATION_RESERVATION_예약하기_BTN_ON_TAP');
                             var _shouldSetState = false;
                             if (valueOrDefault(
                                     currentUserDocument?.currCredits, 0) <
                                 checkoutBottomSheetClassesRecord
                                     .creditsRequired!) {
+                              logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -196,6 +219,7 @@ class _ConfirmationReservationWidgetState
                               return;
                             }
                             // reservations collection
+                            logFirebaseEvent('Button_reservationscollection');
 
                             final reservationsCreateData =
                                 createReservationsRecordData(
@@ -212,6 +236,7 @@ class _ConfirmationReservationWidgetState
                                       .creditsRequired,
                               className: checkoutBottomSheetClassesRecord.name,
                               time: widget.selectedTime,
+                              chatsRef: widget.chatGroupRef!.reference,
                             );
                             var reservationsRecordReference =
                                 ReservationsRecord.collection.doc();
@@ -222,6 +247,7 @@ class _ConfirmationReservationWidgetState
                                     reservationsCreateData,
                                     reservationsRecordReference);
                             _shouldSetState = true;
+                            logFirebaseEvent('Button_group_chat_action');
                             groupChat =
                                 await FFChatManager.instance.addGroupMembers(
                               widget.chatGroupRef!,
@@ -229,12 +255,14 @@ class _ConfirmationReservationWidgetState
                             );
                             _shouldSetState = true;
                             // Decrement currCredits
+                            logFirebaseEvent('Button_DecrementcurrCredits');
 
                             final usersUpdateData = {
                               'currCredits': FieldValue.increment(
                                   -(FFAppState().creditsRequired)),
                             };
                             await currentUserReference!.update(usersUpdateData);
+                            logFirebaseEvent('Button_navigate_to');
 
                             context.goNamed('ReservationComplete');
 

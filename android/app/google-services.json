@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:925942846141:android:23346acf58856e81a21dd4",
+        "mobilesdk_app_id": "1:925942846141:android:70cf1325b4c48a7aa21dd4",
         "android_client_info": {
-          "package_name": "com.example.bookings"
+          "package_name": "com.korea.gofit.wellness"
         }
       },
       "oauth_client": [
         {
-          "client_id": "925942846141-kcobdggunn8dr5itm1cvh3n8rcvm8965.apps.googleusercontent.com",
+          "client_id": "925942846141-4gpqahgb7q1e9rbsdml6tn90qsdip60c.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.bookings",
+            "package_name": "com.korea.gofit.wellness",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
@@ -71,6 +71,30 @@
           "android_info": {
             "package_name": "com.mycompany.gofit",
             "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "925942846141-b0oef0esh04m1v5kdmhk20onfjaseqsr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.gofit",
+            "certificate_hash": "7d18086295910b3966d1de04d59e6d231544940d"
+          }
+        },
+        {
+          "client_id": "925942846141-fb8adiqch5rt8uam2qffrlj2oqs8it54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.gofit",
+            "certificate_hash": "573f87ddaf9b67bea13896955afd7cb8f899fd55"
+          }
+        },
+        {
+          "client_id": "925942846141-qsff1oe66d15df8ffk5l1t824r36m5vl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.gofit",
+            "certificate_hash": "823d4226d6b22360ef47992dc7e7513527c0e85b"
           }
         },
         {

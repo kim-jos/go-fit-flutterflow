@@ -39,6 +39,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ChatAddUser'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -69,6 +70,8 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('CHAT_ADD_USER_arrow_back_rounded_ICN_ON_');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
@@ -222,9 +225,13 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
                       child: InkWell(
                         onTap: () async {
+                          logFirebaseEvent(
+                              'CHAT_ADD_USER_PAGE_userEntry_ON_TAP');
                           if (widget.chat!.isTimeSlotChatGroup == true) {
                             if (widget.chat!.users!.toList().length <
                                 widget.chat!.maxUsers!) {
+                              logFirebaseEvent('userEntry_backend_call');
+
                               final reservationsCreateData =
                                   createReservationsRecordData(
                                 date: widget.chat!.timeSlotDate,
@@ -239,6 +246,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                                   ReservationsRecord.getDocumentFromData(
                                       reservationsCreateData,
                                       reservationsRecordReference);
+                              logFirebaseEvent('userEntry_backend_call');
 
                               final classAvailableTimeSlotsUpdateData = {
                                 'reservations': FieldValue.arrayUnion(
@@ -246,12 +254,14 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                               };
                               await widget.chat!.timeSlotRef!
                                   .update(classAvailableTimeSlotsUpdateData);
+                              logFirebaseEvent('userEntry_group_chat_action');
                               groupChatForTimeSlot =
                                   await FFChatManager.instance.addGroupMembers(
                                 widget.chat!,
                                 [listViewUsersRecord.reference],
                               );
                             } else {
+                              logFirebaseEvent('userEntry_show_snack_bar');
                               ScaffoldMessenger.of(context).clearSnackBars();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -268,6 +278,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                               );
                             }
                           } else {
+                            logFirebaseEvent('userEntry_group_chat_action');
                             groupChat =
                                 await FFChatManager.instance.addGroupMembers(
                               widget.chat!,
@@ -275,6 +286,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                             );
                           }
 
+                          logFirebaseEvent('userEntry_navigate_back');
                           context.pop();
 
                           setState(() {});

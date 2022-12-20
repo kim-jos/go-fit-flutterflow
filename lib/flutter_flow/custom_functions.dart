@@ -24,13 +24,30 @@ int differenceInHours(
   DateTime dateTime2,
 ) {
   // diffence in datetime in hours
-  final int differenceInHours = dateTime2.difference(dateTime1).inMinutes ~/ 60;
-  return differenceInHours;
+  return dateTime2.difference(dateTime1).inMinutes ~/ 60;
 }
 
-bool? showClass(String yMdFormatString) {
-  final classDate = DateFormat("yMd").parse(yMdFormatString);
-  final currTime = DateTime.now();
+bool? showClass(
+  String yMdFormatString,
+  String timeString,
+) {
+  DateTime tempDate = new DateFormat("yMd").parse(yMdFormatString);
+  DateTime date = DateTime.parse(
+      DateFormat("yyyy-MM-dd").format(tempDate) + " " + timeString + ":00");
+  DateTime currTime = DateTime.now();
 
-  return currTime.isBefore(classDate);
+  return currTime.isBefore(date);
+}
+
+DateTime dateAndTimeStringParser(
+  String dateString,
+  String timeString,
+) {
+  DateTime tempDate = new DateFormat("yMd").parse(dateString);
+
+  DateTime date = DateTime.parse(
+      DateFormat("yyyy-MM-dd").format(tempDate) + " " + timeString + ":00");
+  print("full date should work: $date");
+
+  return date;
 }

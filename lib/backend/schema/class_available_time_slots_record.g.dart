@@ -78,18 +78,16 @@ class _$ClassAvailableTimeSlotsRecordSerializer
                   DocumentReference, const [const FullType.nullable(Object)])
             ])));
     }
-    value = object.chatGroup;
-    if (value != null) {
-      result
-        ..add('chatGroup')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
-    }
     value = object.maxLimit;
     if (value != null) {
       result
         ..add('maxLimit')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.minHoursToCancel;
+    if (value != null) {
+      result
+        ..add('minHoursToCancel')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.ffRef;
@@ -150,14 +148,12 @@ class _$ClassAvailableTimeSlotsRecordSerializer
                     DocumentReference, const [const FullType.nullable(Object)])
               ]))! as BuiltList<Object?>);
           break;
-        case 'chatGroup':
-          result.chatGroup = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
-          break;
         case 'maxLimit':
           result.maxLimit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'minHoursToCancel':
+          result.minHoursToCancel = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
         case 'Document__Reference__Field':
@@ -189,9 +185,9 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
   @override
   final BuiltList<DocumentReference<Object?>>? reservations;
   @override
-  final DocumentReference<Object?>? chatGroup;
-  @override
   final int? maxLimit;
+  @override
+  final int? minHoursToCancel;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -207,8 +203,8 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
       this.minHoursBeforeClass,
       this.maxHoursBeforeClass,
       this.reservations,
-      this.chatGroup,
       this.maxLimit,
+      this.minHoursToCancel,
       this.ffRef})
       : super._();
 
@@ -232,8 +228,8 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
         minHoursBeforeClass == other.minHoursBeforeClass &&
         maxHoursBeforeClass == other.maxHoursBeforeClass &&
         reservations == other.reservations &&
-        chatGroup == other.chatGroup &&
         maxLimit == other.maxLimit &&
+        minHoursToCancel == other.minHoursToCancel &&
         ffRef == other.ffRef;
   }
 
@@ -254,8 +250,8 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
                             minHoursBeforeClass.hashCode),
                         maxHoursBeforeClass.hashCode),
                     reservations.hashCode),
-                chatGroup.hashCode),
-            maxLimit.hashCode),
+                maxLimit.hashCode),
+            minHoursToCancel.hashCode),
         ffRef.hashCode));
   }
 
@@ -269,8 +265,8 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
           ..add('minHoursBeforeClass', minHoursBeforeClass)
           ..add('maxHoursBeforeClass', maxHoursBeforeClass)
           ..add('reservations', reservations)
-          ..add('chatGroup', chatGroup)
           ..add('maxLimit', maxLimit)
+          ..add('minHoursToCancel', minHoursToCancel)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -316,14 +312,14 @@ class ClassAvailableTimeSlotsRecordBuilder
   set reservations(ListBuilder<DocumentReference<Object?>>? reservations) =>
       _$this._reservations = reservations;
 
-  DocumentReference<Object?>? _chatGroup;
-  DocumentReference<Object?>? get chatGroup => _$this._chatGroup;
-  set chatGroup(DocumentReference<Object?>? chatGroup) =>
-      _$this._chatGroup = chatGroup;
-
   int? _maxLimit;
   int? get maxLimit => _$this._maxLimit;
   set maxLimit(int? maxLimit) => _$this._maxLimit = maxLimit;
+
+  int? _minHoursToCancel;
+  int? get minHoursToCancel => _$this._minHoursToCancel;
+  set minHoursToCancel(int? minHoursToCancel) =>
+      _$this._minHoursToCancel = minHoursToCancel;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -343,8 +339,8 @@ class ClassAvailableTimeSlotsRecordBuilder
       _minHoursBeforeClass = $v.minHoursBeforeClass;
       _maxHoursBeforeClass = $v.maxHoursBeforeClass;
       _reservations = $v.reservations?.toBuilder();
-      _chatGroup = $v.chatGroup;
       _maxLimit = $v.maxLimit;
+      _minHoursToCancel = $v.minHoursToCancel;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -377,8 +373,8 @@ class ClassAvailableTimeSlotsRecordBuilder
               minHoursBeforeClass: minHoursBeforeClass,
               maxHoursBeforeClass: maxHoursBeforeClass,
               reservations: _reservations?.build(),
-              chatGroup: chatGroup,
               maxLimit: maxLimit,
+              minHoursToCancel: minHoursToCancel,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

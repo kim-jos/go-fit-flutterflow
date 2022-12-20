@@ -91,12 +91,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AuthLoginWidget(),
             ),
             FFRoute(
-              name: 'MyReservations',
-              path: 'myReservations',
-              requireAuth: true,
-              builder: (context, params) => MyReservationsWidget(),
-            ),
-            FFRoute(
               name: 'ClassDetails',
               path: 'ClassDetails',
               builder: (context, params) => ClassDetailsWidget(
@@ -116,11 +110,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ClassesWidget(),
             ),
             FFRoute(
-              name: 'Settings',
-              path: 'settings',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Settings')
-                  : SettingsWidget(),
+              name: 'MyReservations',
+              path: 'myReservations',
+              requireAuth: true,
+              builder: (context, params) => MyReservationsWidget(),
             ),
             FFRoute(
               name: 'ChatGroups',
@@ -129,6 +122,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'ChatGroups')
                   : ChatGroupsWidget(),
+            ),
+            FFRoute(
+              name: 'Settings',
+              path: 'settings',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Settings')
+                  : SettingsWidget(),
             ),
             FFRoute(
               name: 'Chat',
@@ -179,6 +179,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'feedback',
               requireAuth: true,
               builder: (context, params) => FeedbackWidget(),
+            ),
+            FFRoute(
+              name: 'TermsOfService',
+              path: 'termsOfService',
+              requireAuth: true,
+              builder: (context, params) => TermsOfServiceWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

@@ -29,24 +29,6 @@
       ]
     },
     {
-      "collectionGroup": "chats",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "timeSlotDate",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "timeSlotRef",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "users",
-          "arrayConfig": "CONTAINS"
-        }
-      ]
-    },
-    {
       "collectionGroup": "classAvailableTimeSlots",
       "queryScope": "COLLECTION",
       "fields": [

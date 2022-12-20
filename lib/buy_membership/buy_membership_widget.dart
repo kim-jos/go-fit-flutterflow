@@ -20,7 +20,8 @@ class _BuyMembershipWidgetState extends State<BuyMembershipWidget> {
   @override
   void initState() {
     super.initState();
-
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'BuyMembership'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -45,6 +46,8 @@ class _BuyMembershipWidgetState extends State<BuyMembershipWidget> {
             size: 30,
           ),
           onPressed: () async {
+            logFirebaseEvent('BUY_MEMBERSHIP_arrow_back_ICN_ON_TAP');
+            logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),

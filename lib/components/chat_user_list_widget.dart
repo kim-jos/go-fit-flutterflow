@@ -208,6 +208,8 @@ class _ChatUserListWidgetState extends State<ChatUserListWidget> {
             ),
             FFButtonWidget(
               onPressed: () async {
+                logFirebaseEvent('CHAT_USER_LIST_COMP_닫기_BTN_ON_TAP');
+                logFirebaseEvent('Button_bottom_sheet');
                 Navigator.pop(context);
               },
               text: FFLocalizations.of(context).getText(

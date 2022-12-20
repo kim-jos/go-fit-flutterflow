@@ -35,8 +35,10 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('CHAT_GROUPS_PAGE_ChatGroups_ON_PAGE_LOAD');
       if (loggedIn) {
         if (currentPhoneNumber == null || currentPhoneNumber == '') {
+          logFirebaseEvent('ChatGroups_bottom_sheet');
           await showModalBottomSheet(
             isScrollControlled: true,
             backgroundColor: Colors.transparent,
@@ -59,6 +61,7 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
       }
     });
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'ChatGroups'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -93,6 +96,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
             child: InkWell(
               onTap: () async {
+                logFirebaseEvent('CHAT_GROUPS_PAGE_Icon_u7ed0r4c_ON_TAP');
+                logFirebaseEvent('Icon_navigate_to');
+
                 context.pushNamed('ChatCreateGroup');
               },
               child: Icon(
@@ -217,7 +223,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                 _pagingController!.itemList![listViewIndex];
                             return Visibility(
                               visible: functions.showClass(
-                                      listViewChatsRecord.timeSlotDate!) ??
+                                      listViewChatsRecord.timeSlotDate!,
+                                      listViewChatsRecord.classTime!) ??
                                   true,
                               child: Padding(
                                 padding:
@@ -303,6 +310,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                   : null;
                                           return InkWell(
                                             onTap: () async {
+                                              logFirebaseEvent(
+                                                  'CHAT_GROUPS_Container_32bzw73d_ON_TAP');
                                               if (chatGroupReservationsRecordList
                                                       .where((e) =>
                                                           e.user! ==
@@ -310,6 +319,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                       .toList()
                                                       .length >=
                                                   1) {
+                                                logFirebaseEvent(
+                                                    'Container_navigate_to');
+
                                                 context.pushNamed(
                                                   'Chat',
                                                   queryParams: {
@@ -342,6 +354,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                           0) >=
                                                       containerClassesRecord!
                                                           .creditsRequired!) {
+                                                    logFirebaseEvent(
+                                                        'Container_alert_dialog');
                                                     var confirmDialogResponse =
                                                         await showDialog<bool>(
                                                               context: context,
@@ -373,6 +387,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                             ) ??
                                                             false;
                                                     if (confirmDialogResponse) {
+                                                      logFirebaseEvent(
+                                                          'Container_group_chat_action');
                                                       await FFChatManager
                                                           .instance
                                                           .addGroupMembers(
@@ -382,6 +398,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                     } else {
                                                       return;
                                                     }
+
+                                                    logFirebaseEvent(
+                                                        'Container_backend_call');
 
                                                     final reservationsCreateData =
                                                         createReservationsRecordData(
@@ -406,6 +425,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                         .doc()
                                                         .set(
                                                             reservationsCreateData);
+                                                    logFirebaseEvent(
+                                                        'Container_backend_call');
 
                                                     final usersUpdateData = {
                                                       'currCredits':
@@ -416,6 +437,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                     await currentUserReference!
                                                         .update(
                                                             usersUpdateData);
+                                                    logFirebaseEvent(
+                                                        'Container_navigate_to');
 
                                                     context.pushNamed(
                                                       'Chat',
@@ -439,6 +462,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                       }.withoutNulls,
                                                     );
                                                   } else {
+                                                    logFirebaseEvent(
+                                                        'Container_alert_dialog');
                                                     await showDialog(
                                                       context: context,
                                                       builder:
@@ -463,6 +488,8 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
 
                                                   return;
                                                 } else {
+                                                  logFirebaseEvent(
+                                                      'Container_alert_dialog');
                                                   await showDialog(
                                                     context: context,
                                                     builder:
@@ -664,6 +691,77 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                                   ),
                                                               ],
                                                             ),
+                                                            Builder(
+                                                              builder:
+                                                                  (context) {
+                                                                final userRefs =
+                                                                    listViewChatsRecord
+                                                                        .users!
+                                                                        .toList();
+                                                                return SingleChildScrollView(
+                                                                  scrollDirection:
+                                                                      Axis.horizontal,
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .end,
+                                                                    children: List.generate(
+                                                                        userRefs
+                                                                            .length,
+                                                                        (userRefsIndex) {
+                                                                      final userRefsItem =
+                                                                          userRefs[
+                                                                              userRefsIndex];
+                                                                      return Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            1,
+                                                                            0),
+                                                                        child: StreamBuilder<
+                                                                            UsersRecord>(
+                                                                          stream:
+                                                                              UsersRecord.getDocument(userRefsItem),
+                                                                          builder:
+                                                                              (context, snapshot) {
+                                                                            // Customize what your widget looks like when it's loading.
+                                                                            if (!snapshot.hasData) {
+                                                                              return Center(
+                                                                                child: SizedBox(
+                                                                                  width: 40,
+                                                                                  height: 40,
+                                                                                  child: SpinKitRing(
+                                                                                    color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                    size: 40,
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            }
+                                                                            final textUsersRecord =
+                                                                                snapshot.data!;
+                                                                            return Text(
+                                                                              '${textUsersRecord.displayName} ',
+                                                                              style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                    fontFamily: 'Outfit',
+                                                                                    color: Color(0xFF090F13),
+                                                                                    fontSize: 14,
+                                                                                    fontWeight: FontWeight.normal,
+                                                                                  ),
+                                                                            );
+                                                                          },
+                                                                        ),
+                                                                      );
+                                                                    }),
+                                                                  ),
+                                                                );
+                                                              },
+                                                            ),
                                                           ],
                                                         ),
                                                       ),
@@ -724,13 +822,18 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                   listViewChatsRecordList[listViewIndex];
                               return Visibility(
                                 visible: functions.showClass(
-                                        listViewChatsRecord.timeSlotDate!) ??
+                                        listViewChatsRecord.timeSlotDate!,
+                                        listViewChatsRecord.classTime!) ??
                                     true,
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       5, 5, 5, 5),
                                   child: InkWell(
                                     onTap: () async {
+                                      logFirebaseEvent(
+                                          'CHAT_GROUPS_PAGE_ChatGroup_ON_TAP');
+                                      logFirebaseEvent('ChatGroup_navigate_to');
+
                                       context.pushNamed(
                                         'Chat',
                                         queryParams: {
@@ -927,7 +1030,7 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                                       'Outfit',
                                                                   color: Color(
                                                                       0xFF090F13),
-                                                                  fontSize: 12,
+                                                                  fontSize: 14,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -958,6 +1061,94 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                               ),
                                                         ),
                                                       ],
+                                                    ),
+                                                    Builder(
+                                                      builder: (context) {
+                                                        final userRefsList =
+                                                            listViewChatsRecord
+                                                                .users!
+                                                                .toList();
+                                                        return SingleChildScrollView(
+                                                          scrollDirection:
+                                                              Axis.horizontal,
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: List.generate(
+                                                                userRefsList
+                                                                    .length,
+                                                                (userRefsListIndex) {
+                                                              final userRefsListItem =
+                                                                  userRefsList[
+                                                                      userRefsListIndex];
+                                                              return Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            0,
+                                                                            1,
+                                                                            0),
+                                                                child: StreamBuilder<
+                                                                    UsersRecord>(
+                                                                  stream: UsersRecord
+                                                                      .getDocument(
+                                                                          userRefsListItem),
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    // Customize what your widget looks like when it's loading.
+                                                                    if (!snapshot
+                                                                        .hasData) {
+                                                                      return Center(
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              40,
+                                                                          height:
+                                                                              40,
+                                                                          child:
+                                                                              SpinKitRing(
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                            size:
+                                                                                40,
+                                                                          ),
+                                                                        ),
+                                                                      );
+                                                                    }
+                                                                    final textUsersRecord =
+                                                                        snapshot
+                                                                            .data!;
+                                                                    return Text(
+                                                                      '${textUsersRecord.displayName} ',
+                                                                      style: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyText1
+                                                                          .override(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF090F13),
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.normal,
+                                                                          ),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              );
+                                                            }),
+                                                          ),
+                                                        );
+                                                      },
                                                     ),
                                                   ],
                                                 ),

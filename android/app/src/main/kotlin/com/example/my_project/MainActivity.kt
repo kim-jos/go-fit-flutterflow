@@ -1,4 +1,4 @@
-package com.gofit3v001.ios
+package com.korea.gofit.wellness
 
 import io.flutter.embedding.android.FlutterActivity
 

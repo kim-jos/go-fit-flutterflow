@@ -32,6 +32,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   @override
   void initState() {
     super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Settings'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -190,6 +191,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                     child: AuthUserStreamWidget(
                                       child: InkWell(
                                         onTap: () async {
+                                          logFirebaseEvent(
+                                              'SETTINGS_CircleImage_y0ovcd4q_ON_TAP');
+                                          logFirebaseEvent(
+                                              'CircleImage_alert_dialog');
                                           var confirmDialogResponse =
                                               await showDialog<bool>(
                                                     context: context,
@@ -223,6 +228,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                           if (!confirmDialogResponse) {
                                             return;
                                           }
+                                          logFirebaseEvent(
+                                              'CircleImage_upload_photo_video');
                                           final selectedMedia =
                                               await selectMediaWithSourceBottomSheet(
                                             context: context,
@@ -269,6 +276,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                               return;
                                             }
                                           }
+
+                                          logFirebaseEvent(
+                                              'CircleImage_backend_call');
 
                                           final usersUpdateData =
                                               createUsersRecordData(
@@ -389,6 +399,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                       child: InkWell(
                         onTap: () async {
+                          logFirebaseEvent('SETTINGS_PAGE_Row_nebbtnd3_ON_TAP');
+                          logFirebaseEvent('Row_navigate_to');
+
                           context.pushNamed('MyReservations');
                         },
                         child: Row(
@@ -499,7 +512,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                       child: InkWell(
                         onTap: () async {
+                          logFirebaseEvent('SETTINGS_PAGE_Row_yb884nh1_ON_TAP');
                           Function() _navigate = () {};
+                          logFirebaseEvent('Row_alert_dialog');
                           var confirmDialogResponse = await showDialog<bool>(
                                 context: context,
                                 builder: (alertDialogContext) {
@@ -523,7 +538,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               ) ??
                               false;
                           if (confirmDialogResponse) {
+                            logFirebaseEvent('Row_auth');
                             await deleteUser(context);
+                            logFirebaseEvent('Row_alert_dialog');
                             await showDialog(
                               context: context,
                               builder: (alertDialogContext) {
@@ -602,6 +619,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                       child: InkWell(
                         onTap: () async {
+                          logFirebaseEvent('SETTINGS_PAGE_Row_f1kn9djc_ON_TAP');
+                          logFirebaseEvent('Row_navigate_to');
+
                           context.pushNamed('Feedback');
                         },
                         child: Row(
@@ -739,10 +759,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent('SETTINGS_PAGE_로그아웃_BTN_ON_TAP');
                         if (loggedIn) {
+                          logFirebaseEvent('Button_auth');
                           GoRouter.of(context).prepareAuthEvent();
                           await signOut();
                         } else {
+                          logFirebaseEvent('Button_navigate_to');
+
                           context.pushNamedAuth('AuthLogin', mounted);
                         }
                       },
@@ -845,16 +869,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           ),
                           FFButtonWidget(
                             onPressed: () async {
+                              logFirebaseEvent(
+                                  'SETTINGS_PAGE_번호_저장_BTN_ON_TAP');
                               if (!(textController!.text != null &&
                                   textController!.text != '')) {
                                 return;
                               }
+                              logFirebaseEvent('Button_backend_call');
 
                               final usersUpdateData = createUsersRecordData(
                                 phoneNumber: textController!.text,
                               );
                               await currentUserReference!
                                   .update(usersUpdateData);
+                              logFirebaseEvent('Button_alert_dialog');
                               await showDialog(
                                 context: context,
                                 builder: (alertDialogContext) {

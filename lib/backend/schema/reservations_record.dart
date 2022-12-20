@@ -23,6 +23,8 @@ abstract class ReservationsRecord
 
   String? get time;
 
+  DocumentReference? get chatsRef;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -62,6 +64,7 @@ Map<String, dynamic> createReservationsRecordData({
   int? classRequiredCredits,
   String? className,
   String? time,
+  DocumentReference? chatsRef,
 }) {
   final firestoreData = serializers.toFirestore(
     ReservationsRecord.serializer,
@@ -72,7 +75,8 @@ Map<String, dynamic> createReservationsRecordData({
         ..user = user
         ..classRequiredCredits = classRequiredCredits
         ..className = className
-        ..time = time,
+        ..time = time
+        ..chatsRef = chatsRef,
     ),
   );
 
