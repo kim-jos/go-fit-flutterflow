@@ -419,39 +419,47 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Subscriptions
   {
-    '9u46dufr': {
+    'noirvxk1': {
       'ko': 'Your Subscription',
       'en': '',
     },
-    'ezeab3gq': {
+    'i6hfpu2o': {
       'ko': 'Monthly',
       'en': '',
     },
-    'rm7l0511': {
+    'uuxo797z': {
       'ko': '\$15.99/mo',
       'en': '',
     },
-    'nysa56fh': {
+    'sdey7x8s': {
       'ko': 'Gain unlimited access to all the content we have to offer! ',
       'en': '',
     },
-    's8tmyjas': {
+    'bitubv9f': {
       'ko': 'Other Offers',
       'en': '',
     },
-    'u1noua46': {
+    'a3qzhdv2': {
+      'ko': 'Annual (save \$12)',
+      'en': '',
+    },
+    'erridth4': {
+      'ko': '\$180/yr',
+      'en': '',
+    },
+    'kgjfklfc': {
       'ko': 'Gain unlimited access to all the content we have to offer! ',
       'en': '',
     },
-    'u13ivnh0': {
+    'cnrcyquv': {
       'ko': 'Change Plan',
       'en': '',
     },
-    'hkm5r84q': {
+    'gr40xyck': {
       'ko': 'Subscription / Payment',
       'en': '',
     },
-    'ljym8tar': {
+    'hn0ie7tf': {
       'ko': 'Home',
       'en': '',
     },

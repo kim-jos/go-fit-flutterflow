@@ -24,8 +24,6 @@ int differenceInHours(
   DateTime dateTime2,
 ) {
   // diffence in datetime in hours
-  print("dateTime1: $dateTime1");
-  print("dateTime2: $dateTime2");
   return dateTime2.difference(dateTime1).inMinutes ~/ 60;
 }
 
@@ -50,11 +48,8 @@ DateTime dateAndTimeStringParser(
   String dateString,
   String timeString,
 ) {
-  DateTime tempDate = new DateFormat("yMd").parse(dateString);
+  DateTime tempDate = DateFormat("yMd").parse(dateString);
 
-  DateTime date = DateTime.parse(
+  return DateTime.parse(
       DateFormat("yyyy-MM-dd").format(tempDate) + " " + timeString + ":00");
-  print("full date should work: $date");
-
-  return date;
 }

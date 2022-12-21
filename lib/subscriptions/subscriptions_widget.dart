@@ -18,6 +18,7 @@ class SubscriptionsWidget extends StatefulWidget {
 class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
   bool? checkboxListTileValue1;
   bool? checkboxListTileValue2;
+  bool? didPurchase;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -54,7 +55,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
         ),
         title: Text(
           FFLocalizations.of(context).getText(
-            'hkm5r84q' /* Subscription / Payment */,
+            'gr40xyck' /* Subscription / Payment */,
           ),
           style: FlutterFlowTheme.of(context).bodyText1,
         ),
@@ -75,7 +76,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                   children: [
                     Text(
                       FFLocalizations.of(context).getText(
-                        '9u46dufr' /* Your Subscription */,
+                        'noirvxk1' /* Your Subscription */,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
@@ -121,13 +122,13 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                             },
                             title: Text(
                               FFLocalizations.of(context).getText(
-                                'ezeab3gq' /* Monthly */,
+                                'i6hfpu2o' /* Monthly */,
                               ),
                               style: FlutterFlowTheme.of(context).bodyText2,
                             ),
                             subtitle: Text(
                               FFLocalizations.of(context).getText(
-                                'rm7l0511' /* $15.99/mo */,
+                                'uuxo797z' /* $15.99/mo */,
                               ),
                               style: FlutterFlowTheme.of(context).title3,
                             ),
@@ -147,7 +148,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(12, 0, 24, 0),
                           child: Text(
                             FFLocalizations.of(context).getText(
-                              'nysa56fh' /* Gain unlimited access to all t... */,
+                              'sdey7x8s' /* Gain unlimited access to all t... */,
                             ),
                             style: FlutterFlowTheme.of(context).bodyText2,
                           ),
@@ -164,7 +165,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                   children: [
                     Text(
                       FFLocalizations.of(context).getText(
-                        's8tmyjas' /* Other Offers */,
+                        'bitubv9f' /* Other Offers */,
                       ),
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
@@ -214,13 +215,15 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                                       () => checkboxListTileValue2 = newValue!);
                                 },
                                 title: Text(
-                                  revenue_cat.offerings!.current!.monthly!
-                                      .product.title,
+                                  FFLocalizations.of(context).getText(
+                                    'a3qzhdv2' /* Annual (save $12) */,
+                                  ),
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                                 subtitle: Text(
-                                  revenue_cat.offerings!.current!.monthly!
-                                      .product.priceString,
+                                  FFLocalizations.of(context).getText(
+                                    'erridth4' /* $180/yr */,
+                                  ),
                                   style: FlutterFlowTheme.of(context).title3,
                                 ),
                                 tileColor: FlutterFlowTheme.of(context)
@@ -241,7 +244,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 24, 0),
                               child: Text(
                                 FFLocalizations.of(context).getText(
-                                  'u1noua46' /* Gain unlimited access to all t... */,
+                                  'kgjfklfc' /* Gain unlimited access to all t... */,
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyText2,
                               ),
@@ -261,11 +264,22 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'SUBSCRIPTIONS_CHANGE_PLAN_BTN_ON_TAP');
+                          var _shouldSetState = false;
+                          if (!(isAndroid || isiOS)) {
+                            if (_shouldSetState) setState(() {});
+                            return;
+                          }
+                          logFirebaseEvent('Button_revenue_cat');
+                          didPurchase = await revenue_cat.purchasePackage(
+                              ' gofit_test_40000_monthly_1month_free');
+                          _shouldSetState = true;
+                          if (_shouldSetState) setState(() {});
                         },
                         text: FFLocalizations.of(context).getText(
-                          'u13ivnh0' /* Change Plan */,
+                          'cnrcyquv' /* Change Plan */,
                         ),
                         options: FFButtonOptions(
                           width: 270,
