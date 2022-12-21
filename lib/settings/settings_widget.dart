@@ -458,40 +458,49 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           width: 1,
                         ),
                       ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Icon(
-                              Icons.shopping_basket_rounded,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 24,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                            child: Text(
-                              FFLocalizations.of(context).getText(
-                                'zt2qicvo' /* 멤버십 구매 */,
-                              ),
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0.9, 0),
+                      child: InkWell(
+                        onTap: () async {
+                          logFirebaseEvent('SETTINGS_PAGE_Row_xihouq86_ON_TAP');
+                          logFirebaseEvent('Row_navigate_to');
+
+                          context.pushNamed('Subscriptions');
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Icon(
-                                Icons.arrow_forward_ios,
+                                Icons.shopping_basket_rounded,
                                 color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 18,
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                size: 24,
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                              child: Text(
+                                FFLocalizations.of(context).getText(
+                                  'zt2qicvo' /* 멤버십 가입 */,
+                                ),
+                                style: FlutterFlowTheme.of(context).bodyText1,
+                              ),
+                            ),
+                            Expanded(
+                              child: Align(
+                                alignment: AlignmentDirectional(0.9, 0),
+                                child: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

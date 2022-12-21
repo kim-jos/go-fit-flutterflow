@@ -285,7 +285,7 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'My Reservations',
     },
     'zt2qicvo': {
-      'ko': '멤버십 구매',
+      'ko': '멤버십 가입',
       'en': 'Buy Membership',
     },
     'wuo3ru0i': {
@@ -378,101 +378,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Invite Friend',
     },
   },
-  // BuyMembership
-  {
-    '8u4pgugs': {
-      'ko': '멤버십 구매',
-      'en': 'Buy Membership',
-    },
-    'jkw6s1i4': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    '3bt2tdow': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'aljou63c': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'evbkfjbl': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    '72e1oac2': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    '0ptk0xrn': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'jigme8k5': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    '1p5hplt0': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'fkntz9zj': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'tn5ccd8w': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    '3a3iycky': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'ohbapoiy': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'nj3bwqe1': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    'm9x1app2': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'crthfurf': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'xsuj9279': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    '38ntkc9a': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'mtknd7xr': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    'sopshgcf': {
-      'ko': 'Title',
-      'en': 'Title',
-    },
-    'bfccv3ko': {
-      'ko': 'Subtext',
-      'en': 'Subtext',
-    },
-    'khaykn19': {
-      'ko': '\$11.00',
-      'en': '\$11.00',
-    },
-    '1t33dl87': {
-      'ko': 'Home',
-      'en': 'Home',
-    },
-  },
   // Feedback
   {
     'ijr7xhfd': {
@@ -510,6 +415,45 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'bu5z0jkm': {
       'ko': '이용약관',
       'en': 'Terms of Service',
+    },
+  },
+  // Subscriptions
+  {
+    '9u46dufr': {
+      'ko': 'Your Subscription',
+      'en': '',
+    },
+    'ezeab3gq': {
+      'ko': 'Monthly',
+      'en': '',
+    },
+    'rm7l0511': {
+      'ko': '\$15.99/mo',
+      'en': '',
+    },
+    'nysa56fh': {
+      'ko': 'Gain unlimited access to all the content we have to offer! ',
+      'en': '',
+    },
+    's8tmyjas': {
+      'ko': 'Other Offers',
+      'en': '',
+    },
+    'u1noua46': {
+      'ko': 'Gain unlimited access to all the content we have to offer! ',
+      'en': '',
+    },
+    'u13ivnh0': {
+      'ko': 'Change Plan',
+      'en': '',
+    },
+    'hkm5r84q': {
+      'ko': 'Subscription / Payment',
+      'en': '',
+    },
+    'ljym8tar': {
+      'ko': 'Home',
+      'en': '',
     },
   },
   // ConfirmationReservation

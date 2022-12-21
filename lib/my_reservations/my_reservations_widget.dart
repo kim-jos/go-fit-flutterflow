@@ -78,7 +78,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
               ),
         ),
         actions: [],
-        centerTitle: true,
+        centerTitle: false,
         elevation: 2,
       ),
       body: SafeArea(

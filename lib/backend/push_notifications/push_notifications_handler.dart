@@ -114,9 +114,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'ChatAddUser': (data) async => ChatAddUserWidget(
         chat: await getDocumentParameter(data, 'chat', ChatsRecord.serializer),
       ),
-  'BuyMembership': (data) async => BuyMembershipWidget(),
   'Feedback': (data) async => FeedbackWidget(),
   'TermsOfService': (data) async => TermsOfServiceWidget(),
+  'Subscriptions': (data) async => SubscriptionsWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

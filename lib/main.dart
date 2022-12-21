@@ -13,12 +13,19 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+import 'flutter_flow/revenue_cat_util.dart' as revenue_cat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   final appState = FFAppState(); // Initialize FFAppState
+  await revenue_cat.initialize(
+    "appl_srknfkXoRbPwSlRmXmLTQCpCIKK",
+    "goog_UcLcddtvHgaixJoAlNCEYhDkYNn",
+    debugLogEnabled: true,
+    loadDataAfterLaunch: true,
+  );
 
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
@@ -44,7 +51,9 @@ class _MyAppState extends State<MyApp> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
-  final authUserSub = authenticatedUserStream.listen((_) {});
+  final authUserSub = authenticatedUserStream.listen((user) {
+    revenue_cat.login(user?.uid);
+  });
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
   @override

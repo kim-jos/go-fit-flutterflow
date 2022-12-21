@@ -169,12 +169,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'BuyMembership',
-              path: 'buyMembership',
-              requireAuth: true,
-              builder: (context, params) => BuyMembershipWidget(),
-            ),
-            FFRoute(
               name: 'Feedback',
               path: 'feedback',
               requireAuth: true,
@@ -185,6 +179,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'termsOfService',
               requireAuth: true,
               builder: (context, params) => TermsOfServiceWidget(),
+            ),
+            FFRoute(
+              name: 'Subscriptions',
+              path: 'subscriptions',
+              requireAuth: true,
+              builder: (context, params) => SubscriptionsWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

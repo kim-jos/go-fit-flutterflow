@@ -80,6 +80,7 @@ dependencies:
   page_transition: 2.0.4
   plugin_platform_interface: 2.1.2
   provider: 6.0.4
+  purchases_flutter: 3.7.0
   rxdart: 0.27.4
   shared_preferences: 2.0.15
   sign_in_with_apple: 4.1.0

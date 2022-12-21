@@ -13,7 +13,7 @@ export 'chat_create_group/chat_create_group_widget.dart'
 export 'reservation_complete/reservation_complete_widget.dart'
     show ReservationCompleteWidget;
 export 'chat_add_user/chat_add_user_widget.dart' show ChatAddUserWidget;
-export 'buy_membership/buy_membership_widget.dart' show BuyMembershipWidget;
 export 'feedback/feedback_widget.dart' show FeedbackWidget;
 export 'terms_of_service/terms_of_service_widget.dart'
     show TermsOfServiceWidget;
+export 'subscriptions/subscriptions_widget.dart' show SubscriptionsWidget;
