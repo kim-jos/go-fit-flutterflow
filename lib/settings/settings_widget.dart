@@ -229,7 +229,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                             return;
                                           }
                                           logFirebaseEvent(
-                                              'CircleImage_upload_photo_video');
+                                              'CircleImage_upload_media_to_firebase');
                                           final selectedMedia =
                                               await selectMediaWithSourceBottomSheet(
                                             context: context,
@@ -463,7 +463,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           logFirebaseEvent('SETTINGS_PAGE_Row_xihouq86_ON_TAP');
                           logFirebaseEvent('Row_navigate_to');
 
-                          context.pushNamed('Subscriptions');
+                          context.pushNamed('SubscriptionsCopy');
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -528,8 +528,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 context: context,
                                 builder: (alertDialogContext) {
                                   return AlertDialog(
-                                    title: Text('계정 삭제'),
-                                    content: Text('계정을 삭제하시겠습니까?'),
+                                    title: Text('계정 영구 삭제'),
+                                    content: Text('계정을 영구 삭제하시겠습니까?'),
                                     actions: [
                                       TextButton(
                                         onPressed: () => Navigator.pop(
@@ -539,7 +539,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                       TextButton(
                                         onPressed: () => Navigator.pop(
                                             alertDialogContext, true),
-                                        child: Text('네'),
+                                        child: Text('예'),
                                       ),
                                     ],
                                   );

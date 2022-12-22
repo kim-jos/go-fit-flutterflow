@@ -18,16 +18,13 @@ class AuthEmailLoginWidget extends StatefulWidget {
 class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
   TextEditingController? emailAddressController;
   TextEditingController? passwordController;
-
   late bool passwordVisibility;
   TextEditingController? emailAddressCreateController;
   TextEditingController? nameCreateController;
   TextEditingController? phoneNumberCreateController;
   TextEditingController? passwordCreateController;
-
   late bool passwordCreateVisibility;
   TextEditingController? passwordConfirmCreateController;
-
   late bool passwordConfirmCreateVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 

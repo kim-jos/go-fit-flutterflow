@@ -103,17 +103,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'MyReservations',
+              path: 'myReservations',
+              requireAuth: true,
+              builder: (context, params) => MyReservationsWidget(),
+            ),
+            FFRoute(
               name: 'Classes',
               path: 'classes',
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'Classes')
                   : ClassesWidget(),
-            ),
-            FFRoute(
-              name: 'MyReservations',
-              path: 'myReservations',
-              requireAuth: true,
-              builder: (context, params) => MyReservationsWidget(),
             ),
             FFRoute(
               name: 'ChatGroups',
@@ -185,6 +185,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'subscriptions',
               requireAuth: true,
               builder: (context, params) => SubscriptionsWidget(),
+            ),
+            FFRoute(
+              name: 'SubscriptionsCopy',
+              path: 'subscriptionsCopy',
+              requireAuth: true,
+              builder: (context, params) => SubscriptionsCopyWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

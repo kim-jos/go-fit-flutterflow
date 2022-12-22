@@ -217,25 +217,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'INSTAGRAM',
     },
   },
-  // Classes
-  {
-    '07c0oj65': {
-      'ko': '',
-      'en': '',
-    },
-    'o0sej5yi': {
-      'ko': '검색',
-      'en': 'Search',
-    },
-    'vpp8litr': {
-      'ko': '운동시설',
-      'en': 'Fitness Centers',
-    },
-    '4v43t5yc': {
-      'ko': '운동시설',
-      'en': 'Fitness Centers',
-    },
-  },
   // MyReservations
   {
     'cvfu770k': {
@@ -253,6 +234,25 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'rtdplk0h': {
       'ko': 'Home',
       'en': 'Home',
+    },
+  },
+  // Classes
+  {
+    '07c0oj65': {
+      'ko': '',
+      'en': '',
+    },
+    'o0sej5yi': {
+      'ko': '검색',
+      'en': 'Search',
+    },
+    'vpp8litr': {
+      'ko': '운동시설',
+      'en': 'Fitness Centers',
+    },
+    '4v43t5yc': {
+      'ko': '운동시설',
+      'en': 'Fitness Centers',
     },
   },
   // ChatGroups
@@ -419,47 +419,74 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   },
   // Subscriptions
   {
-    'noirvxk1': {
-      'ko': 'Your Subscription',
+    '8h9s06ky': {
+      'ko': '멤버십',
       'en': '',
     },
-    'i6hfpu2o': {
-      'ko': 'Monthly',
+    'tr1edtno': {
+      'ko': 'Standard 멤버십',
       'en': '',
     },
-    'uuxo797z': {
-      'ko': '\$15.99/mo',
+    '0nvq0r7u': {
+      'ko': '79,000만원',
       'en': '',
     },
-    'sdey7x8s': {
-      'ko': 'Gain unlimited access to all the content we have to offer! ',
+    'tkatyv4n': {
+      'ko': '프리미엄 수업 4회권',
       'en': '',
     },
-    'bitubv9f': {
-      'ko': 'Other Offers',
+    'coro3xo4': {
+      'ko': 'Lite 멤버십',
       'en': '',
     },
-    'a3qzhdv2': {
-      'ko': 'Annual (save \$12)',
+    'po5qheit': {
+      'ko': '42,000만원',
       'en': '',
     },
-    'erridth4': {
-      'ko': '\$180/yr',
+    '7bnuy9xx': {
+      'ko': '프리미엄 수업 2회권',
       'en': '',
     },
-    'kgjfklfc': {
-      'ko': 'Gain unlimited access to all the content we have to offer! ',
+    'ib4ij1qi': {
+      'ko': '멤버십 가입',
+      'en': 'Membership',
+    },
+    'oo6r1ns9': {
+      'ko': 'Home',
       'en': '',
     },
-    'cnrcyquv': {
-      'ko': 'Change Plan',
+  },
+  // SubscriptionsCopy
+  {
+    'tay7zjdj': {
+      'ko': '멤버십',
       'en': '',
     },
-    'gr40xyck': {
-      'ko': 'Subscription / Payment',
+    'drolkzcp': {
+      'ko': 'Standard 멤버십',
       'en': '',
     },
-    'hn0ie7tf': {
+    'tag46a4v': {
+      'ko': '프리미엄 수업 4회권',
+      'en': '',
+    },
+    '93mqyxly': {
+      'ko': 'Lite 멤버십',
+      'en': '',
+    },
+    '3887327r': {
+      'ko': '42,000만원',
+      'en': '',
+    },
+    '4igfn9j4': {
+      'ko': '프리미엄 수업 2회권',
+      'en': '',
+    },
+    'qsfv3e46': {
+      'ko': '멤버십 가입',
+      'en': 'Membership',
+    },
+    'uildbl37': {
       'ko': 'Home',
       'en': '',
     },
