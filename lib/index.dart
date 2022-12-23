@@ -19,3 +19,5 @@ export 'terms_of_service/terms_of_service_widget.dart'
 export 'subscriptions/subscriptions_widget.dart' show SubscriptionsWidget;
 export 'subscriptions_copy/subscriptions_copy_widget.dart'
     show SubscriptionsCopyWidget;
+export 'subscriptions_braintree/subscriptions_braintree_widget.dart'
+    show SubscriptionsBraintreeWidget;

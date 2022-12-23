@@ -488,6 +488,45 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': 'Home',
     },
   },
+  // SubscriptionsBraintree
+  {
+    'leske57f': {
+      'ko': '멤버십',
+      'en': 'membership',
+    },
+    '0cqj9cii': {
+      'ko': 'Standard 멤버십',
+      'en': 'Standard membership',
+    },
+    '6p90515e': {
+      'ko': '79,000만원',
+      'en': '79,000 won',
+    },
+    'r856f6z8': {
+      'ko': '프리미엄 수업 4회권',
+      'en': '4 premium classes',
+    },
+    'y9050exe': {
+      'ko': 'Lite 멤버십',
+      'en': 'Lite membership',
+    },
+    'zkxlm8gt': {
+      'ko': '42,000만원',
+      'en': 'KRW 42,000,000',
+    },
+    'apuxokpb': {
+      'ko': '프리미엄 수업 2회권',
+      'en': '2 premium class tickets',
+    },
+    'aiu94a4j': {
+      'ko': '멤버십 가입',
+      'en': 'sign up for membership',
+    },
+    'c8n74s4y': {
+      'ko': 'Home',
+      'en': 'Home',
+    },
+  },
   // ConfirmationReservation
   {
     'cixwrkmj': {

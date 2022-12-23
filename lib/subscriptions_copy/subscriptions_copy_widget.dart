@@ -1,3 +1,4 @@
+import '../components/empty_chat_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -90,6 +91,9 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
                   final revenueCatList = revenue_cat
                       .offerings!.current!.availablePackages
                       .toList();
+                  if (revenueCatList.isEmpty) {
+                    return EmptyChatWidget();
+                  }
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,

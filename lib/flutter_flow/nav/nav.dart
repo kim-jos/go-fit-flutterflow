@@ -191,6 +191,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'subscriptionsCopy',
               requireAuth: true,
               builder: (context, params) => SubscriptionsCopyWidget(),
+            ),
+            FFRoute(
+              name: 'SubscriptionsBraintree',
+              path: 'subscriptionsBraintree',
+              requireAuth: true,
+              builder: (context, params) => SubscriptionsBraintreeWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
