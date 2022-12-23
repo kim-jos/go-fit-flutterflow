@@ -25,6 +25,7 @@ void main() async {
     "appl_srknfkXoRbPwSlRmXmLTQCpCIKK",
     "goog_UcLcddtvHgaixJoAlNCEYhDkYNn",
     debugLogEnabled: true,
+    loadDataAfterLaunch: true,
   );
 
   runApp(ChangeNotifierProvider(

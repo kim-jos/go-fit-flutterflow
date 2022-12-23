@@ -133,7 +133,13 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12, 0, 24, 0),
                                     child: Text(
-                                      revenueCatListItem.product.title,
+                                      revenueCatListItem.product.title !=
+                                                  null &&
+                                              revenueCatListItem
+                                                      .product.title !=
+                                                  ''
+                                          ? revenueCatListItem.product.title
+                                          : 'None',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                     ),
@@ -142,7 +148,14 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12, 0, 0, 0),
                                     child: Text(
-                                      revenueCatListItem.product.priceString,
+                                      revenueCatListItem.product.priceString !=
+                                                  null &&
+                                              revenueCatListItem
+                                                      .product.priceString !=
+                                                  ''
+                                          ? revenueCatListItem
+                                              .product.priceString
+                                          : '0',
                                       style:
                                           FlutterFlowTheme.of(context).title3,
                                     ),
