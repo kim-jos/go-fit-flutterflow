@@ -87,16 +87,17 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
               ),
               Builder(
                 builder: (context) {
-                  final packages = revenue_cat
+                  final revenueCatList = revenue_cat
                       .offerings!.current!.availablePackages
                       .toList();
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: packages.length,
-                    itemBuilder: (context, packagesIndex) {
-                      final packagesItem = packages[packagesIndex];
+                    itemCount: revenueCatList.length,
+                    itemBuilder: (context, revenueCatListIndex) {
+                      final revenueCatListItem =
+                          revenueCatList[revenueCatListIndex];
                       return Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                         child: InkWell(
@@ -132,9 +133,7 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12, 0, 24, 0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        'drolkzcp' /* Standard 멤버십 */,
-                                      ),
+                                      revenueCatListItem.product.title,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                     ),
@@ -143,7 +142,7 @@ class _SubscriptionsCopyWidgetState extends State<SubscriptionsCopyWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12, 0, 0, 0),
                                     child: Text(
-                                      packagesItem.product.title,
+                                      revenueCatListItem.product.priceString,
                                       style:
                                           FlutterFlowTheme.of(context).title3,
                                     ),

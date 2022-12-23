@@ -320,6 +320,43 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                       .length >=
                                                   1) {
                                                 logFirebaseEvent(
+                                                    'Container_alert_dialog');
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  '채팅방으로 가기'),
+                                                              content: Text(
+                                                                  '이미 예약한 수업입니다! 채팅방으로 가시겠습니까?'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      '아니요'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child:
+                                                                      Text('예'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (!confirmDialogResponse) {
+                                                  return;
+                                                }
+                                                logFirebaseEvent(
                                                     'Container_navigate_to');
 
                                                 context.pushNamed(
@@ -365,7 +402,7 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                                   title: Text(
                                                                       '수업을 예약하시겠습니까?'),
                                                                   content: Text(
-                                                                      '수업 예약과 채팅방에 입장하게 됩니다!'),
+                                                                      '수업 예약 취소는 수업 시작 24시간 전에만 가능합니다'),
                                                                   actions: [
                                                                     TextButton(
                                                                       onPressed: () => Navigator.pop(

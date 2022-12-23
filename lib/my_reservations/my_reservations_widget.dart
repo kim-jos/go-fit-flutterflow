@@ -102,21 +102,6 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                   pagingController: () {
                     final Query<Object?> Function(Query<Object?>) queryBuilder =
                         (reservationsRecord) => reservationsRecord
-                            .where('date',
-                                isGreaterThanOrEqualTo: dateTimeFormat(
-                                          'yMd',
-                                          getCurrentTimestamp,
-                                          locale: FFLocalizations.of(context)
-                                              .languageCode,
-                                        ) !=
-                                        ''
-                                    ? dateTimeFormat(
-                                        'yMd',
-                                        getCurrentTimestamp,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )
-                                    : null)
                             .where('user', isEqualTo: currentUserReference)
                             .orderBy('date', descending: true);
                     if (_pagingController != null) {
@@ -136,25 +121,10 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     _pagingController!.addPageRequestListener((nextPageMarker) {
                       queryReservationsRecordPage(
                         queryBuilder: (reservationsRecord) => reservationsRecord
-                            .where('date',
-                                isGreaterThanOrEqualTo: dateTimeFormat(
-                                          'yMd',
-                                          getCurrentTimestamp,
-                                          locale: FFLocalizations.of(context)
-                                              .languageCode,
-                                        ) !=
-                                        ''
-                                    ? dateTimeFormat(
-                                        'yMd',
-                                        getCurrentTimestamp,
-                                        locale: FFLocalizations.of(context)
-                                            .languageCode,
-                                      )
-                                    : null)
                             .where('user', isEqualTo: currentUserReference)
                             .orderBy('date', descending: true),
                         nextPageMarker: nextPageMarker,
-                        pageSize: 25,
+                        pageSize: 15,
                         isStream: true,
                       ).then((page) {
                         _pagingController!.appendPage(

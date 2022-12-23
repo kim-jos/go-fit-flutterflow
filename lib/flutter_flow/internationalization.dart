@@ -462,10 +462,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'ko': '멤버십',
       'en': '',
     },
-    'drolkzcp': {
-      'ko': 'Standard 멤버십',
-      'en': '',
-    },
     'tag46a4v': {
       'ko': '프리미엄 수업 4회권',
       'en': '',
@@ -587,6 +583,11 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     'kocxjsvz': {
       'ko':
           'We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.',
+      'en': '',
+    },
+    'ftfi12u4': {
+      'ko':
+          'We need to access your notifications to allow you to receive notifications for the chat feature. The chat feature is used to group the people who workout on the same day and time.',
       'en': '',
     },
     'k5swvivw': {

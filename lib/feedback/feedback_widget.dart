@@ -157,6 +157,10 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             child: FFButtonWidget(
               onPressed: () async {
                 logFirebaseEvent('FEEDBACK_PAGE_피드백_남기기_BTN_ON_TAP');
+                if (!(textController!.text != null &&
+                    textController!.text != '')) {
+                  return;
+                }
                 logFirebaseEvent('Button_backend_call');
 
                 final feedbackCreateData = createFeedbackRecordData(

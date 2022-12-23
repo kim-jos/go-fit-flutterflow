@@ -25,9 +25,6 @@ class FFAppState extends ChangeNotifier {
   DateTime? get selectedDate => _selectedDate;
   set selectedDate(DateTime? _value) {
     notifyListeners();
-    if (_value == null) {
-      return;
-    }
     _selectedDate = _value;
   }
 
@@ -35,7 +32,6 @@ class FFAppState extends ChangeNotifier {
   String get selectedTime => _selectedTime;
   set selectedTime(String _value) {
     notifyListeners();
-
     _selectedTime = _value;
   }
 
@@ -43,7 +39,6 @@ class FFAppState extends ChangeNotifier {
   int get creditsRequired => _creditsRequired;
   set creditsRequired(int _value) {
     notifyListeners();
-
     _creditsRequired = _value;
   }
 
@@ -51,7 +46,6 @@ class FFAppState extends ChangeNotifier {
   List<DocumentReference> get chatGroupMembers => _chatGroupMembers;
   set chatGroupMembers(List<DocumentReference> _value) {
     notifyListeners();
-
     _chatGroupMembers = _value;
   }
 
