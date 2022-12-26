@@ -75,18 +75,14 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              FFLocalizations.of(context).getText(
-                '57oq4dyh' /* 그룹 모임 생성 */,
-              ),
+              '그룹 모임 생성',
               style: FlutterFlowTheme.of(context).subtitle1.override(
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
                   ),
             ),
             Text(
-              FFLocalizations.of(context).getText(
-                't0r1ol6b' /* 모임상대 추가 */,
-              ),
+              '모임상대 추가',
               style: FlutterFlowTheme.of(context).bodyText2.override(
                     fontFamily: 'Lexend Deca',
                     color: Color(0xFF1A1F24),
@@ -356,9 +352,7 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
 
                           setState(() {});
                         },
-                        text: FFLocalizations.of(context).getText(
-                          'm6alrk5e' /* 모임 생성 */,
-                        ),
+                        text: '모임 생성',
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 40,
@@ -383,9 +377,7 @@ class _ChatCreateGroupWidgetState extends State<ChatCreateGroupWidget> {
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                     child: Text(
-                      FFLocalizations.of(context).getText(
-                        'ocbdrmzv' /* 최소 2명을 추가해주세요! :) */,
-                      ),
+                      '최소 2명을 추가해주세요! :)',
                       style: FlutterFlowTheme.of(context).title3.override(
                             fontFamily: 'Poppins',
                             color:

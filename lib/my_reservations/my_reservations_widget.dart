@@ -24,6 +24,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
   Query? _pagingQuery;
   List<StreamSubscription?> _streamSubscriptions = [];
 
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -37,6 +38,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
   @override
   void dispose() {
     _streamSubscriptions.forEach((s) => s?.cancel());
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -68,9 +70,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'gwavr9ay' /* 예약현황 */,
-          ),
+          '예약현황',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -83,7 +83,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
       ),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -92,9 +92,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                   child: Text(
-                    FFLocalizations.of(context).getText(
-                      'cvfu770k' /* 최신 */,
-                    ),
+                    '최신',
                     style: FlutterFlowTheme.of(context).bodyText2,
                   ),
                 ),
@@ -253,10 +251,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 5, 0, 0),
                                               child: Text(
-                                                FFLocalizations.of(context)
-                                                    .getText(
-                                                  'zomtvc99' /*  -  */,
-                                                ),
+                                                ' - ',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2,

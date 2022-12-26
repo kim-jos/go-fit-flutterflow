@@ -13,6 +13,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ClassDetailsRecord.serializer)
       ..add(ClassesRecord.serializer)
       ..add(FeedbackRecord.serializer)
+      ..add(MembershipsRecord.serializer)
       ..add(ReservationsRecord.serializer)
       ..add(UsersRecord.serializer)
       ..addBuilderFactory(

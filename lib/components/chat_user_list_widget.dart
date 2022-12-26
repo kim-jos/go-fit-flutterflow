@@ -82,18 +82,14 @@ class _ChatUserListWidgetState extends State<ChatUserListWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'ajeaeil6' /* 그룹 멤버 */,
-                        ),
+                        '그룹 멤버',
                         style: FlutterFlowTheme.of(context).title3,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'cfupxao9' /* 같이 운동하는 멤버들입니다! :) */,
-                        ),
+                        '같이 운동하는 멤버들입니다! :)',
                         style: FlutterFlowTheme.of(context).bodyText2,
                       ),
                     ),
@@ -217,9 +213,7 @@ class _ChatUserListWidgetState extends State<ChatUserListWidget> {
                   logFirebaseEvent('Button_bottom_sheet');
                   Navigator.pop(context);
                 },
-                text: FFLocalizations.of(context).getText(
-                  '58sz0ojd' /* 닫기 */,
-                ),
+                text: '닫기',
                 options: FFButtonOptions(
                   width: 130,
                   height: 40,

@@ -86,9 +86,7 @@ class _ChatWidgetState extends State<ChatWidget> {
         title: Stack(
           children: [
             Text(
-              FFLocalizations.of(context).getText(
-                '43yanfxv' /* 그룹 채팅 */,
-              ),
+              '그룹 채팅',
               style: FlutterFlowTheme.of(context).subtitle1,
             ),
           ],

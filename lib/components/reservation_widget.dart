@@ -90,18 +90,14 @@ class _ReservationWidgetState extends State<ReservationWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    '3xgaq3lj' /* 수업 예약 */,
-                  ),
+                  '수업 예약',
                   style: FlutterFlowTheme.of(context).title3,
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    '4ldfd1n9' /* 날짜/시간 선택 */,
-                  ),
+                  '날짜/시간 선택',
                   style: FlutterFlowTheme.of(context).bodyText2,
                 ),
               ),
@@ -119,9 +115,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                   calendarSelectedDay = newSelectedDate;
                   logFirebaseEvent('RESERVATION_Calendar_s9g34vcw_ON_DATE_SE');
                   logFirebaseEvent('Calendar_update_local_state');
-                  setState(() {
-                    FFAppState().selectedDate = calendarSelectedDay?.start;
-                  });
+                  FFAppState().selectedDate = calendarSelectedDay?.start;
                   setState(() {});
                 },
                 titleStyle: TextStyle(),
@@ -322,11 +316,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               'RESERVATION_COMP_BUTTON_BTN_ON_TAP');
                                           logFirebaseEvent(
                                               'Button_update_local_state');
-                                          setState(() {
-                                            FFAppState().selectedTime =
-                                                rowClassAvailableTimeSlotsRecord
-                                                    .startTime!;
-                                          });
+                                          FFAppState().selectedTime =
+                                              rowClassAvailableTimeSlotsRecord
+                                                  .startTime!;
                                           if (buttonChatsRecord != null) {
                                             logFirebaseEvent(
                                                 'Button_bottom_sheet');
@@ -507,9 +499,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                     logFirebaseEvent('Button_bottom_sheet');
                     Navigator.pop(context);
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'fitnbi1b' /* 닫기 */,
-                  ),
+                  text: '닫기',
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 40,

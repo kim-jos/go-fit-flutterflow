@@ -80,9 +80,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              FFLocalizations.of(context).getText(
-                'az1zj6hz' /* 그룹에 추가 */,
-              ),
+              '그룹에 추가',
               style: FlutterFlowTheme.of(context).subtitle1.override(
                     fontFamily: 'Lexend Deca',
                     color: FlutterFlowTheme.of(context).black600,
@@ -91,9 +89,7 @@ class _ChatAddUserWidgetState extends State<ChatAddUserWidget> {
                   ),
             ),
             Text(
-              FFLocalizations.of(context).getText(
-                'suggcp5u' /* 모임상대 추가 */,
-              ),
+              '모임상대 추가',
               style: FlutterFlowTheme.of(context).bodyText2.override(
                     fontFamily: 'Lexend Deca',
                     color: Color(0xFF1A1F24),

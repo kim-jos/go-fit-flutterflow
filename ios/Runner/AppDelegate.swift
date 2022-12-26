@@ -1,5 +1,4 @@
 import UIKit
-import Braintree
 
 import Flutter
 import GoogleMaps
@@ -12,7 +11,6 @@ import GoogleMaps
   ) -> Bool {
     GMSServices.provideAPIKey("AIzaSyCTzrz2l2AF_i8yv_BUKFIvE-r55tXMVTU")
     GeneratedPluginRegistrant.register(with: self)
-    BTAppContextSwitcher.setReturnURLScheme("com.korea.gofit.wellness.braintree")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

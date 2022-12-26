@@ -16,11 +16,6 @@
 	<string>Go Fit</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>ko</string>
-		<string>en</string>
-	</array>
 
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
@@ -35,18 +30,6 @@
             <array>
                 <string>com.googleusercontent.apps.925942846141-gsgqbufe3q2loajqcpobgquppn1esorc</string>
                 
-            </array>
-        </dict>
-
-
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>com.korea.gofit.wellness.braintree</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>com.korea.gofit.wellness.braintree</string>
             </array>
         </dict>
 

@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -14,6 +15,7 @@ class SubscriptionsWidget extends StatefulWidget {
 }
 
 class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -22,6 +24,12 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'Subscriptions'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,9 +59,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'ib4ij1qi' /* 멤버십 가입 */,
-          ),
+          '멤버십 가입',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 fontSize: 22,
@@ -65,7 +71,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
       ),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -75,152 +81,118 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      FFLocalizations.of(context).getText(
-                        '8h9s06ky' /* 멤버십 */,
-                      ),
+                      '멤버십은 구매일로부터 30일간 유효합니다!',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                   ],
                 ),
               ),
-              ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'SUBSCRIPTIONS_Container_s6m3b4xe_ON_TAP');
-                        logFirebaseEvent('Container_launch_u_r_l');
-                        await launchURL('https://payapplite.com/l/HiyRfv');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x34111417),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'tr1edtno' /* Standard 멤버십 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    '0nvq0r7u' /* 79,000만원 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).title3,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'tkatyv4n' /* 프리미엄 수업 4회권 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
-                              ),
-                            ],
-                          ),
+              StreamBuilder<List<MembershipsRecord>>(
+                stream: queryMembershipsRecord(
+                  queryBuilder: (membershipsRecord) =>
+                      membershipsRecord.orderBy('price', descending: true),
+                ),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: SpinKitRing(
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          size: 40,
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'SUBSCRIPTIONS_Container_3ma7srum_ON_TAP');
-                        logFirebaseEvent('Container_launch_u_r_l');
-                        await launchURL('https://payapplite.com/l/HMsJLU');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x34111417),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'coro3xo4' /* Lite 멤버십 */,
+                    );
+                  }
+                  List<MembershipsRecord> listViewMembershipsRecordList =
+                      snapshot.data!;
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: listViewMembershipsRecordList.length,
+                    itemBuilder: (context, listViewIndex) {
+                      final listViewMembershipsRecord =
+                          listViewMembershipsRecordList[listViewIndex];
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                        child: InkWell(
+                          onTap: () async {
+                            logFirebaseEvent(
+                                'SUBSCRIPTIONS_Container_s6m3b4xe_ON_TAP');
+                            logFirebaseEvent('Container_launch_u_r_l');
+                            await launchURL(
+                                listViewMembershipsRecord.paymentUrl!);
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: Color(0x34111417),
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 24, 0),
+                                    child: Text(
+                                      listViewMembershipsRecord.title!,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'po5qheit' /* 42,000만원 */,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 0, 0),
+                                    child: Text(
+                                      '${listViewMembershipsRecord.price?.toString()}원',
+                                      style:
+                                          FlutterFlowTheme.of(context).title3,
+                                    ),
                                   ),
-                                  style: FlutterFlowTheme.of(context).title3,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    '7bnuy9xx' /* 프리미엄 수업 2회권 */,
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 24, 0),
+                                    child: Text(
+                                      listViewMembershipsRecord.description!,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
                                   ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        12, 0, 24, 0),
+                                    child: Text(
+                                      '크레딧: ${listViewMembershipsRecord.creditsIssued?.toString()}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                ],
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),

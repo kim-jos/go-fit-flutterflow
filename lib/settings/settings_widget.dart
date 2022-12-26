@@ -107,9 +107,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'mqz45pq4' /* [User Name] */,
-                                ),
+                                '[User Name]',
                                 style: FlutterFlowTheme.of(context)
                                     .title3
                                     .override(
@@ -128,9 +126,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                FFLocalizations.of(context).getText(
-                                  'zilqow9t' /* [username@domain.com] */,
-                                ),
+                                '[username@domain.com]',
                                 style: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
@@ -370,9 +366,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(24, 12, 0, 12),
                   child: Text(
-                    FFLocalizations.of(context).getText(
-                      'amv6f82u' /* 내 계정 */,
-                    ),
+                    '내 계정',
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
                 ),
@@ -421,9 +415,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  '3y491idk' /* 예약현황 */,
-                                ),
+                                '예약현황',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
@@ -463,7 +455,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           logFirebaseEvent('SETTINGS_PAGE_Row_xihouq86_ON_TAP');
                           logFirebaseEvent('Row_navigate_to');
 
-                          context.pushNamed('SubscriptionsCopy');
+                          context.pushNamed('Subscriptions');
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -482,9 +474,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'zt2qicvo' /* 멤버십 가입 */,
-                                ),
+                                '멤버십 가입',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
@@ -589,9 +579,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'wuo3ru0i' /* 계정삭제 */,
-                                ),
+                                '계정삭제',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
@@ -650,9 +638,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'ozvae4ko' /* 피드백 남기기 */,
-                                ),
+                                '피드백 남기기',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
@@ -708,9 +694,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       12, 0, 0, 0),
                                   child: Text(
-                                    FFLocalizations.of(context).getText(
-                                      'n6ejduc0' /* 보유 크레딧 */,
-                                    ),
+                                    '보유 크레딧',
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
                                   ),
@@ -823,9 +807,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: FFLocalizations.of(context).getText(
-                                    'ks1i92zv' /* 전화번호 입력 */,
-                                  ),
+                                  hintText: '전화번호 입력',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: UnderlineInputBorder(
@@ -909,9 +891,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                 },
                               );
                             },
-                            text: FFLocalizations.of(context).getText(
-                              'iyzbxe2u' /* 번호 저장 */,
-                            ),
+                            text: '번호 저장',
                             options: FFButtonOptions(
                               width: 90,
                               height: 40,
@@ -935,9 +915,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       ),
                     ),
                     Text(
-                      FFLocalizations.of(context).getText(
-                        'ui4w6k2x' /* 예약이 불가능할 때 급하게 연락드리기 위해 전환번호가 ... */,
-                      ),
+                      '예약이 불가능할 때 급하게 연락드리기 위해 전환번호가 필요합니다!',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
                             color: Color(0xFFFF0000),

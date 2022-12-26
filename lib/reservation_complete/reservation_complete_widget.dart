@@ -16,6 +16,7 @@ class ReservationCompleteWidget extends StatefulWidget {
 }
 
 class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,6 +28,12 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
   }
 
   @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
@@ -35,7 +42,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -59,9 +66,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
                 ),
               ),
               Text(
-                FFLocalizations.of(context).getText(
-                  'ngpu391n' /* 예약 요청 완료! */,
-                ),
+                '예약 요청 완료!',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).title2.override(
                       fontFamily: 'Poppins',
@@ -79,9 +84,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
 
                     context.goNamed('Classes');
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'qbo5qv38' /* 다른 수업 보기 */,
-                  ),
+                  text: '다른 수업 보기',
                   options: FFButtonOptions(
                     width: 130,
                     height: 50,

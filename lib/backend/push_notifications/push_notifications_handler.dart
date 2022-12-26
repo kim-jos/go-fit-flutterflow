@@ -99,6 +99,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         maxLimit: getParameter(data, 'maxLimit'),
         exerciseType: getParameter(data, 'exerciseType'),
         image: getParameter(data, 'image'),
+        creditsRequired: getParameter(data, 'creditsRequired'),
       ),
   'MyReservations': (data) async => MyReservationsWidget(),
   'ChatGroups': (data) async => NavBarPage(initialPage: 'ChatGroups'),
@@ -117,7 +118,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'Feedback': (data) async => FeedbackWidget(),
   'TermsOfService': (data) async => TermsOfServiceWidget(),
   'Subscriptions': (data) async => SubscriptionsWidget(),
-  'SubscriptionsCopy': (data) async => SubscriptionsCopyWidget(),
   'SubscriptionsBraintree': (data) async => SubscriptionsBraintreeWidget(),
 };
 

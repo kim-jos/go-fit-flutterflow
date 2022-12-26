@@ -62,9 +62,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'ijr7xhfd' /* 피드백 남기기 */,
-          ),
+          '피드백 남기기',
           style: FlutterFlowTheme.of(context).title2,
         ),
         actions: [],
@@ -96,12 +94,8 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                 controller: textController,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: FFLocalizations.of(context).getText(
-                                    'ppw7mhc5' /* 피드백 남겨주세요!
-1. 추가적으로 하고 싶은 운동
-2... */
-                                    ,
-                                  ),
+                                  hintText:
+                                      '피드백 남겨주세요!\n1. 추가적으로 하고 싶은 운동\n2. 사용하면서 좋았던 점과 불편했던 점',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: OutlineInputBorder(
@@ -185,9 +179,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                   },
                 );
               },
-              text: FFLocalizations.of(context).getText(
-                '3a42vjju' /* 피드백 남기기 */,
-              ),
+              text: '피드백 남기기',
               options: FFButtonOptions(
                 width: 270,
                 height: 50,

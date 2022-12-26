@@ -1,4 +1,3 @@
-import '../backend/braintree/payment_manager.dart';
 import '../flutter_flow/flutter_flow_credit_card_form.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -18,10 +17,10 @@ class SubscriptionsBraintreeWidget extends StatefulWidget {
 
 class _SubscriptionsBraintreeWidgetState
     extends State<SubscriptionsBraintreeWidget> {
-  String? transactionId;
+  final _unfocusNode = FocusNode();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final creditCardFormKey = GlobalKey<FormState>();
   CreditCardModel creditCardInfo = emptyCreditCard();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -29,6 +28,12 @@ class _SubscriptionsBraintreeWidgetState
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'SubscriptionsBraintree'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -58,9 +63,7 @@ class _SubscriptionsBraintreeWidgetState
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'aiu94a4j' /* 멤버십 가입 */,
-          ),
+          '멤버십 가입',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 fontSize: 22,
@@ -72,7 +75,7 @@ class _SubscriptionsBraintreeWidgetState
       ),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -82,9 +85,7 @@ class _SubscriptionsBraintreeWidgetState
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      FFLocalizations.of(context).getText(
-                        'leske57f' /* 멤버십 */,
-                      ),
+                      '멤버십',
                       style: FlutterFlowTheme.of(context).bodyText2,
                     ),
                   ],
@@ -97,110 +98,51 @@ class _SubscriptionsBraintreeWidgetState
                 children: [
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        logFirebaseEvent(
-                            'SUBSCRIPTIONS_BRAINTREE_Container_ov9ghv');
-                        logFirebaseEvent('Container_braintree_payment');
-                        final transacAmount = 79000.0;
-                        if (!(creditCardFormKey.currentState?.validate() ??
-                            false)) {
-                          return;
-                        }
-                        if (kIsWeb) {
-                          showSnackbar(
-                              context, 'Payments not yet supported on web.');
-                          return;
-                        }
-
-                        final cardRequest = BraintreeCreditCardRequest(
-                          cardNumber: creditCardInfo.cardNumber,
-                          expirationMonth:
-                              creditCardInfo.expiryDate.split('/').first,
-                          expirationYear:
-                              creditCardInfo.expiryDate.split('/').last,
-                          cvv: creditCardInfo.cvvCode,
-                        );
-                        final cardResult = await Braintree.tokenizeCreditCard(
-                          braintreeClientToken(),
-                          cardRequest,
-                        );
-                        if (cardResult == null) {
-                          return;
-                        }
-                        showSnackbar(
-                          context,
-                          'Processing payment...',
-                          duration: 10,
-                          loading: true,
-                        );
-                        final paymentResponse = await processBraintreePayment(
-                          transacAmount,
-                          cardResult.nonce,
-                        );
-                        if (paymentResponse.errorMessage != null) {
-                          showSnackbar(context,
-                              'Error: ${paymentResponse.errorMessage}');
-                          return;
-                        }
-                        showSnackbar(context, 'Success!');
-                        transactionId = paymentResponse.transactionId!;
-
-                        setState(() {});
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x34111417),
-                              offset: Offset(0, 2),
-                            )
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 5,
+                            color: Color(0x34111417),
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 24, 0),
+                              child: Text(
+                                'Standard 멤버십',
+                                style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                              child: Text(
+                                '79,000만원',
+                                style: FlutterFlowTheme.of(context).title3,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(12, 0, 24, 0),
+                              child: Text(
+                                '프리미엄 수업 4회권',
+                                style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                            ),
                           ],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    '0cqj9cii' /* Standard 멤버십 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    '6p90515e' /* 79,000만원 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).title3,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12, 0, 24, 0),
-                                child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'r856f6z8' /* 프리미엄 수업 4회권 */,
-                                  ),
-                                  style: FlutterFlowTheme.of(context).bodyText2,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       ),
                     ),
@@ -239,9 +181,7 @@ class _SubscriptionsBraintreeWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     12, 0, 24, 0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'y9050exe' /* Lite 멤버십 */,
-                                  ),
+                                  'Lite 멤버십',
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                               ),
@@ -249,9 +189,7 @@ class _SubscriptionsBraintreeWidgetState
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'zkxlm8gt' /* 42,000만원 */,
-                                  ),
+                                  '42,000만원',
                                   style: FlutterFlowTheme.of(context).title3,
                                 ),
                               ),
@@ -259,9 +197,7 @@ class _SubscriptionsBraintreeWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     12, 0, 24, 0),
                                 child: Text(
-                                  FFLocalizations.of(context).getText(
-                                    'apuxokpb' /* 프리미엄 수업 2회권 */,
-                                  ),
+                                  '프리미엄 수업 2회권',
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                               ),

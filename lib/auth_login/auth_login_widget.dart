@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,6 +16,7 @@ class AuthLoginWidget extends StatefulWidget {
 }
 
 class _AuthLoginWidgetState extends State<AuthLoginWidget> {
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -27,6 +27,12 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
   }
 
   @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
@@ -34,7 +40,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
       body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
+        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
         child: Padding(
           padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
           child: Column(
@@ -47,9 +53,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      FFLocalizations.of(context).getText(
-                        '196371zp' /* Go Fit */,
-                      ),
+                      'Go Fit',
                       style: FlutterFlowTheme.of(context).title1.override(
                             fontFamily: 'Jalnan',
                             color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -81,14 +85,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                             FlutterFlowTheme.of(context).primaryBtnText,
                         tabs: [
                           Tab(
-                            text: FFLocalizations.of(context).getText(
-                              '9t8b8ezy' /* 로그인 */,
-                            ),
+                            text: '로그인',
                           ),
                           Tab(
-                            text: FFLocalizations.of(context).getText(
-                              'q34ek0kh' /* 회원가입 */,
-                            ),
+                            text: '회원가입',
                           ),
                         ],
                       ),
@@ -105,66 +105,16 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                     alignment: AlignmentDirectional(0, 0),
                                     child: Container(
                                       width: double.infinity,
-                                      height: 44,
+                                      height: 50,
                                       child: Stack(
                                         children: [
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, 0),
                                             child: FFButtonWidget(
-                                              onPressed: () {
-                                                print('Button pressed ...');
-                                              },
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                'hcqp4p7i' /* Sign in with Google */,
-                                              ),
-                                              icon: Icon(
-                                                Icons.add,
-                                                color: Colors.transparent,
-                                                size: 20,
-                                              ),
-                                              options: FFButtonOptions(
-                                                width: 230,
-                                                height: 44,
-                                                color: Colors.white,
-                                                textStyle: GoogleFonts.getFont(
-                                                  'Roboto',
-                                                  color: Color(0xFF606060),
-                                                  fontSize: 17,
-                                                ),
-                                                elevation: 4,
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 0,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(-0.8, 0),
-                                            child: Container(
-                                              width: 22,
-                                              height: 22,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            child: FFButtonWidget(
                                               onPressed: () async {
                                                 logFirebaseEvent(
-                                                    'AUTH_LOGIN_PAGE_구글_BTN_ON_TAP');
+                                                    'AUTH_LOGIN_PAGE_GOOGLE로_로그인_BTN_ON_TAP');
                                                 logFirebaseEvent('Button_auth');
                                                 GoRouter.of(context)
                                                     .prepareAuthEvent();
@@ -178,10 +128,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 context.goNamedAuth(
                                                     'Classes', mounted);
                                               },
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                'qwglaxrp' /* 구글 */,
-                                              ),
+                                              text: 'Google로 로그인',
                                               icon: FaIcon(
                                                 FontAwesomeIcons.google,
                                                 color:
@@ -222,7 +169,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_LOGIN_PAGE_애플_BTN_ON_TAP');
+                                                  'AUTH_LOGIN_PAGE_APPLE로_로그인_BTN_ON_TAP');
                                               logFirebaseEvent('Button_auth');
                                               GoRouter.of(context)
                                                   .prepareAuthEvent();
@@ -236,10 +183,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               context.goNamedAuth(
                                                   'Classes', mounted);
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              'zwoheq92' /* 애플 */,
-                                            ),
+                                            text: 'Apple로 로그인',
                                             icon: FaIcon(
                                               FontAwesomeIcons.apple,
                                               color:
@@ -281,9 +225,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                         context.pushNamed('AuthEmailLogin');
                                       },
-                                      text: FFLocalizations.of(context).getText(
-                                        'f2xay9l9' /* 이메일 */,
-                                      ),
+                                      text: '이메일로 로그인',
                                       icon: Icon(
                                         Icons.email,
                                         color: FlutterFlowTheme.of(context)
@@ -334,10 +276,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                           context.pushNamed('Classes');
                                         },
-                                        text:
-                                            FFLocalizations.of(context).getText(
-                                          '4scdlrn6' /* 먼저 둘러보기 */,
-                                        ),
+                                        text: '먼저 둘러보기',
                                         options: FFButtonOptions(
                                           width: 130,
                                           color: FlutterFlowTheme.of(context)
@@ -375,7 +314,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         logFirebaseEvent(
-                                            'AUTH_LOGIN_PAGE_구글_BTN_ON_TAP');
+                                            'AUTH_LOGIN_PAGE_GOOGLE로_등록_BTN_ON_TAP');
                                         logFirebaseEvent('Button_auth');
                                         GoRouter.of(context).prepareAuthEvent();
                                         final user =
@@ -386,9 +325,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                         context.goNamedAuth('Classes', mounted);
                                       },
-                                      text: FFLocalizations.of(context).getText(
-                                        'sh0xuws4' /* 구글 */,
-                                      ),
+                                      text: 'Google로 등록',
                                       icon: FaIcon(
                                         FontAwesomeIcons.google,
                                         color: FlutterFlowTheme.of(context)
@@ -423,7 +360,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_LOGIN_PAGE_애플_BTN_ON_TAP');
+                                                  'AUTH_LOGIN_PAGE_APPLE로_등록_BTN_ON_TAP');
                                               logFirebaseEvent('Button_auth');
                                               GoRouter.of(context)
                                                   .prepareAuthEvent();
@@ -437,10 +374,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               context.goNamedAuth(
                                                   'Classes', mounted);
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              'd33hhv9s' /* 애플 */,
-                                            ),
+                                            text: 'Apple로 등록',
                                             icon: FaIcon(
                                               FontAwesomeIcons.apple,
                                               color:
@@ -480,9 +414,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                         context.pushNamed('AuthEmailLogin');
                                       },
-                                      text: FFLocalizations.of(context).getText(
-                                        'd3532eyn' /* 이메일 */,
-                                      ),
+                                      text: '이메일로 등록',
                                       icon: Icon(
                                         Icons.email,
                                         color: FlutterFlowTheme.of(context)

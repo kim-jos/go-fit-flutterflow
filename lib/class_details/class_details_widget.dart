@@ -21,6 +21,7 @@ class ClassDetailsWidget extends StatefulWidget {
     this.maxLimit,
     this.exerciseType,
     this.image,
+    this.creditsRequired,
   }) : super(key: key);
 
   final DocumentReference? classRef;
@@ -28,6 +29,7 @@ class ClassDetailsWidget extends StatefulWidget {
   final int? maxLimit;
   final String? exerciseType;
   final String? image;
+  final int? creditsRequired;
 
   @override
   _ClassDetailsWidgetState createState() => _ClassDetailsWidgetState();
@@ -215,9 +217,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 8, 0, 0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'kj9uvxm7' /* 수업 유형 */,
-                                            ),
+                                            '수업 유형',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2,
                                           ),
@@ -237,9 +237,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 8, 0, 0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'njp96srb' /* 소요 시간 */,
-                                            ),
+                                            '소요 시간',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2,
                                           ),
@@ -260,9 +258,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 4, 0, 0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'p9p3nl8a' /* 수업 준비물 */,
-                                            ),
+                                            '수업 준비물',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2,
                                           ),
@@ -281,11 +277,33 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
+                                                  0, 4, 0, 0),
+                                          child: Text(
+                                            '크레딧',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 4, 0, 0),
+                                          child: Text(
+                                            valueOrDefault<String>(
+                                              widget.creditsRequired
+                                                  ?.toString(),
+                                              '0',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
                                                   0, 8, 0, 0),
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              'ra6ymp6e' /* 기타 */,
-                                            ),
+                                            '기타',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2,
                                           ),
@@ -433,9 +451,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                   await launchURL(
                                       classDetailsClassDetailsRecord!.website!);
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  'zj33isu8' /* 네이버 맵 */,
-                                ),
+                                text: '네이버 맵',
                                 options: FFButtonOptions(
                                   width: 170,
                                   height: 40,
@@ -471,9 +487,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                       classDetailsClassDetailsRecord!
                                           .instagram!);
                                 },
-                                text: FFLocalizations.of(context).getText(
-                                  'bjlzd4ig' /* 인스타 */,
-                                ),
+                                text: '인스타',
                                 options: FFButtonOptions(
                                   height: 40,
                                   color:

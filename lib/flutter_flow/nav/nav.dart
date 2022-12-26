@@ -94,12 +94,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'ClassDetails',
               path: 'ClassDetails',
               builder: (context, params) => ClassDetailsWidget(
-                classRef: params.getParam(
-                    'classRef', ParamType.DocumentReference, false, 'classes'),
+                classRef: params.getParam('classRef',
+                    ParamType.DocumentReference, false, ['classes']),
                 className: params.getParam('className', ParamType.String),
                 maxLimit: params.getParam('maxLimit', ParamType.int),
                 exerciseType: params.getParam('exerciseType', ParamType.String),
                 image: params.getParam('image', ParamType.String),
+                creditsRequired:
+                    params.getParam('creditsRequired', ParamType.int),
               ),
             ),
             FFRoute(
@@ -135,14 +137,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'chat',
               requireAuth: true,
               asyncParams: {
-                'chatUser': getDoc('users', UsersRecord.serializer),
+                'chatUser': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => ChatWidget(
                 chatUser: params.getParam('chatUser', ParamType.Document),
                 chatRef: params.getParam(
-                    'chatRef', ParamType.DocumentReference, false, 'chats'),
-                chatUserList: params.getParam<DocumentReference>(
-                    'chatUserList', ParamType.DocumentReference, true, 'users'),
+                    'chatRef', ParamType.DocumentReference, false, ['chats']),
+                chatUserList: params.getParam<DocumentReference>('chatUserList',
+                    ParamType.DocumentReference, true, ['users']),
               ),
             ),
             FFRoute(
@@ -162,7 +164,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'chatAddUser',
               requireAuth: true,
               asyncParams: {
-                'chat': getDoc('chats', ChatsRecord.serializer),
+                'chat': getDoc(['chats'], ChatsRecord.serializer),
               },
               builder: (context, params) => ChatAddUserWidget(
                 chat: params.getParam('chat', ParamType.Document),
@@ -185,12 +187,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'subscriptions',
               requireAuth: true,
               builder: (context, params) => SubscriptionsWidget(),
-            ),
-            FFRoute(
-              name: 'SubscriptionsCopy',
-              path: 'subscriptionsCopy',
-              requireAuth: true,
-              builder: (context, params) => SubscriptionsCopyWidget(),
             ),
             FFRoute(
               name: 'SubscriptionsBraintree',
@@ -309,7 +305,7 @@ class FFParameters {
     String paramName,
     ParamType type, [
     bool isList = false,
-    String? collectionName,
+    List<String>? collectionNamePath,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -323,7 +319,7 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionName);
+    return deserializeParam<T>(param, type, isList, collectionNamePath);
   }
 }
 

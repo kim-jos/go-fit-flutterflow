@@ -85,18 +85,14 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    '8ftjlwvi' /* 전화번호 입력 */,
-                  ),
+                  '전화번호 입력',
                   style: FlutterFlowTheme.of(context).title2,
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    'o6ki3du3' /* 예약이 불가능할 때 급하게 연락드리기 전환번호가 필요합... */,
-                  ),
+                  '예약이 불가능할 때 급하게 연락드리기 전환번호가 필요합니다!',
                   style: FlutterFlowTheme.of(context).bodyText2,
                 ),
               ),
@@ -107,9 +103,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
-                    hintText: FFLocalizations.of(context).getText(
-                      '4l6vq5fy' /* 전화번호 입력해주세요 */,
-                    ),
+                    hintText: '전화번호 입력해주세요',
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -196,9 +190,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                         logFirebaseEvent('Button_bottom_sheet');
                         Navigator.pop(context);
                       },
-                      text: FFLocalizations.of(context).getText(
-                        'jfog9f6q' /* 저장하기 */,
-                      ),
+                      text: '저장하기',
                       options: FFButtonOptions(
                         width: 270,
                         height: 50,

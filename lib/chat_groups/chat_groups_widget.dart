@@ -81,9 +81,7 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         title: Text(
-          FFLocalizations.of(context).getText(
-            'dkh9qzkk' /* 내 그룹 */,
-          ),
+          '내 그룹',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
                 color: Colors.black,
@@ -124,14 +122,10 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                 indicatorColor: FlutterFlowTheme.of(context).primaryColor,
                 tabs: [
                   Tab(
-                    text: FFLocalizations.of(context).getText(
-                      'yjs0nx2h' /* 운동 모집 채팅 */,
-                    ),
+                    text: '운동 모집 채팅',
                   ),
                   Tab(
-                    text: FFLocalizations.of(context).getText(
-                      'ycwcocb2' /* 내 채팅 */,
-                    ),
+                    text: '내 채팅',
                   ),
                 ],
               ),

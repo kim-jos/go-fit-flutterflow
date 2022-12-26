@@ -25,9 +25,7 @@ class _EmptyChatWidgetState extends State<EmptyChatWidget> {
     context.watch<FFAppState>();
 
     return Text(
-      FFLocalizations.of(context).getText(
-        '8gazeklv' /* 채팅그룹이 없습니다 */,
-      ),
+      '채팅그룹이 없습니다',
       style: FlutterFlowTheme.of(context).subtitle1,
     );
   }

@@ -79,9 +79,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              FFLocalizations.of(context).getText(
-                'vpp8litr' /* 운동시설 */,
-              ),
+              '운동시설',
               style: FlutterFlowTheme.of(context).title1.override(
                     fontFamily: 'Poppins',
                     color: FlutterFlowTheme.of(context).primaryBtnText,
@@ -147,10 +145,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      hintText:
-                                          FFLocalizations.of(context).getText(
-                                        'o0sej5yi' /* 검색 */,
-                                      ),
+                                      hintText: '검색',
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
@@ -261,10 +256,8 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                   logFirebaseEvent(
                                       'CLASSES_PAGE_Row_rzb4q98p_ON_TAP');
                                   logFirebaseEvent('Row_update_local_state');
-                                  setState(() {
-                                    FFAppState().creditsRequired =
-                                        listViewClassesRecord.creditsRequired!;
-                                  });
+                                  FFAppState().creditsRequired =
+                                      listViewClassesRecord.creditsRequired!;
                                   logFirebaseEvent('Row_navigate_to');
 
                                   context.pushNamed(
@@ -286,6 +279,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         listViewClassesRecord.image,
                                         ParamType.String,
                                       ),
+                                      'creditsRequired': serializeParam(
+                                        listViewClassesRecord.creditsRequired,
+                                        ParamType.int,
+                                      ),
                                     }.withoutNulls,
                                     extra: <String, dynamic>{
                                       kTransitionInfoKey: TransitionInfo(
@@ -302,21 +299,45 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 8, 8, 8),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  listViewClassesRecord.image!,
-                                              width: 74,
-                                              height: 74,
-                                              fit: BoxFit.cover,
+                                        Stack(
+                                          alignment:
+                                              AlignmentDirectional(0.7, -0.75),
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 8, 8, 8),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      listViewClassesRecord
+                                                          .image!,
+                                                  width: 74,
+                                                  height: 74,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  0.35, 0.35),
+                                              child: Text(
+                                                listViewClassesRecord
+                                                    .creditsRequired!
+                                                    .toString(),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryBtnText,
+                                                        ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),

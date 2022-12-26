@@ -51,9 +51,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'bu5z0jkm' /* 이용약관 */,
-          ),
+          '이용약관',
           style: FlutterFlowTheme.of(context).title2.override(
                 fontFamily: 'Poppins',
                 color: Colors.white,
@@ -77,9 +75,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(24, 24, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'ou1rvpv7' /* 예약 가능 시간 */,
-                        ),
+                        '예약 가능 시간',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -97,9 +93,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'iuz9aqqb' /* 예약은 수업 시작 6시간 전까지 가능합니다. */,
-                                ),
+                                '예약은 수업 시작 6시간 전까지 가능합니다.',
                                 style: FlutterFlowTheme.of(context).bodyText2,
                               ),
                             ),
@@ -110,9 +104,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(24, 5, 0, 0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'gspjll2r' /* 취소 가능 시간 */,
-                        ),
+                        '취소 가능 시간',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).bodyText1.override(
                               fontFamily: 'Poppins',
@@ -130,9 +122,7 @@ class _TermsOfServiceWidgetState extends State<TermsOfServiceWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                               child: Text(
-                                FFLocalizations.of(context).getText(
-                                  'b1htz7hp' /* 예약 취소는 수업 시작 24시간 전까지 가능합니다. */,
-                                ),
+                                '예약 취소는 수업 시작 24시간 전까지 가능합니다.',
                                 style: FlutterFlowTheme.of(context).bodyText2,
                               ),
                             ),
