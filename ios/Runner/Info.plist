@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Go Fit</string>
+	<string>GoFit</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Go Fit</string>
+	<string>GoFit</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 
@@ -54,11 +54,11 @@
 	<true/>
 
 	<key>NSCameraUsageDescription</key>
-      <string>We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
+    <string>We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-      <string>We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
+    <string>We need to access your photo library to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
 	<key>PermissionGroupNotification</key>
-      <string>We need to access your notifications to allow you to receive notifications for the chat feature. The chat feature is used to group the people who workout on the same day and time.</string>
+    <string>We need to access your notifications to allow you to receive notifications for the chat feature. The chat feature is used to group the people who workout on the same day and time.</string>
     <key>UIBackgroundModes</key>
     <array>
         <string>fetch</string>

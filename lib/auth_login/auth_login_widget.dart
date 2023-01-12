@@ -188,7 +188,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               FontAwesomeIcons.apple,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .textColor,
+                                                      .primaryBtnText,
                                               size: 20,
                                             ),
                                             options: FFButtonOptions(
@@ -196,12 +196,12 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               height: 50,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryBtnText,
+                                                      .primaryText,
                                               textStyle: GoogleFonts.getFont(
                                                 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primaryBtnText,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 17,
                                               ),
@@ -379,24 +379,28 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               FontAwesomeIcons.apple,
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .black600,
+                                                      .primaryBtnText,
                                               size: 20,
                                             ),
                                             options: FFButtonOptions(
                                               width: double.infinity,
                                               height: 50,
-                                              color: Colors.white,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
                                               textStyle: GoogleFonts.getFont(
                                                 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primaryBtnText,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 17,
                                               ),
                                               elevation: 4,
                                               borderSide: BorderSide(
-                                                color: Colors.transparent,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
                                                 width: 0,
                                               ),
                                             ),

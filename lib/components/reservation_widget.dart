@@ -115,7 +115,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                   calendarSelectedDay = newSelectedDate;
                   logFirebaseEvent('RESERVATION_Calendar_s9g34vcw_ON_DATE_SE');
                   logFirebaseEvent('Calendar_update_local_state');
-                  FFAppState().selectedDate = calendarSelectedDay?.start;
+                  FFAppState().update(() {
+                    FFAppState().selectedDate = calendarSelectedDay?.start;
+                  });
                   setState(() {});
                 },
                 titleStyle: TextStyle(),
@@ -249,7 +251,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                             .maxHoursBeforeClass!) &&
                                     (containerReservationsRecordList
                                             .where((e) =>
-                                                e.time! ==
+                                                e.time ==
                                                 rowClassAvailableTimeSlotsRecord
                                                     .startTime)
                                             .toList()
@@ -316,9 +318,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               'RESERVATION_COMP_BUTTON_BTN_ON_TAP');
                                           logFirebaseEvent(
                                               'Button_update_local_state');
-                                          FFAppState().selectedTime =
-                                              rowClassAvailableTimeSlotsRecord
-                                                  .startTime!;
+                                          FFAppState().update(() {
+                                            FFAppState().selectedTime =
+                                                rowClassAvailableTimeSlotsRecord
+                                                    .startTime!;
+                                          });
                                           if (buttonChatsRecord != null) {
                                             logFirebaseEvent(
                                                 'Button_bottom_sheet');
@@ -387,7 +391,8 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                               ),
                                               'users':
                                                   containerReservationsRecordList
-                                                      .map((e) => e.user!)
+                                                      .map((e) => e.user)
+                                                      .withoutNulls
                                                       .toList(),
                                             };
                                             var chatsRecordReference =

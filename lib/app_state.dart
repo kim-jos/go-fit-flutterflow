@@ -19,19 +19,9 @@ class FFAppState extends ChangeNotifier {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static bool _shouldNotify = true;
-  void _maybeNotifyListeners() {
-    if (_shouldNotify) notifyListeners();
-  }
-
-  // Update FFAppState without notifying and rebuilding all widgets.
-  static void updateSilently(VoidCallback callback) {
-    try {
-      _shouldNotify = false;
-      callback();
-    } finally {
-      _shouldNotify = true;
-    }
+  void update(VoidCallback callback) {
+    callback();
+    notifyListeners();
   }
 
   late SharedPreferences prefs;
@@ -39,38 +29,32 @@ class FFAppState extends ChangeNotifier {
   DateTime? _selectedDate;
   DateTime? get selectedDate => _selectedDate;
   set selectedDate(DateTime? _value) {
-    _maybeNotifyListeners();
     _selectedDate = _value;
   }
 
   String _selectedTime = '';
   String get selectedTime => _selectedTime;
   set selectedTime(String _value) {
-    _maybeNotifyListeners();
     _selectedTime = _value;
   }
 
   int _creditsRequired = 0;
   int get creditsRequired => _creditsRequired;
   set creditsRequired(int _value) {
-    _maybeNotifyListeners();
     _creditsRequired = _value;
   }
 
   List<DocumentReference> _chatGroupMembers = [];
   List<DocumentReference> get chatGroupMembers => _chatGroupMembers;
   set chatGroupMembers(List<DocumentReference> _value) {
-    _maybeNotifyListeners();
     _chatGroupMembers = _value;
   }
 
   void addToChatGroupMembers(DocumentReference _value) {
-    _maybeNotifyListeners();
     _chatGroupMembers.add(_value);
   }
 
   void removeFromChatGroupMembers(DocumentReference _value) {
-    _maybeNotifyListeners();
     _chatGroupMembers.remove(_value);
   }
 }

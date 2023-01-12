@@ -178,6 +178,8 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                     );
                   },
                 );
+                logFirebaseEvent('Button_navigate_back');
+                context.pop();
               },
               text: '피드백 남기기',
               options: FFButtonOptions(

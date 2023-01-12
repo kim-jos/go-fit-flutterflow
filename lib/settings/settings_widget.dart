@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../components/insert_name_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -50,104 +51,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      drawer: Drawer(
-        elevation: 16,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: 304,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF4B39EF),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-0.7, 0),
-                                child: Container(
-                                  width: 80,
-                                  height: 80,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.asset(
-                                    'assets/images/UI_avatar@2x.png',
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.7, 0),
-                                  child: Icon(
-                                    Icons.edit_rounded,
-                                    color: Colors.white,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                '[User Name]',
-                                style: FlutterFlowTheme.of(context)
-                                    .title3
-                                    .override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Text(
-                                '[username@domain.com]',
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFFEE8B60),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -185,7 +88,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 105, 0, 0),
                                     child: AuthUserStreamWidget(
-                                      child: InkWell(
+                                      builder: (context) => InkWell(
                                         onTap: () async {
                                           logFirebaseEvent(
                                               'SETTINGS_CircleImage_y0ovcd4q_ON_TAP');
@@ -317,16 +220,69 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                               child: AuthUserStreamWidget(
-                                child: Text(
-                                  currentUserDisplayName,
-                                  style: FlutterFlowTheme.of(context)
-                                      .title1
-                                      .override(
-                                        fontFamily: 'Lexend Deca',
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                builder: (context) => InkWell(
+                                  onTap: () async {
+                                    logFirebaseEvent(
+                                        'SETTINGS_PAGE_Text_zuzs1v7y_ON_TAP');
+                                    logFirebaseEvent('Text_alert_dialog');
+                                    var confirmDialogResponse =
+                                        await showDialog<bool>(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text('이름을 변경하시겠습니까?'),
+                                                  content: Text(
+                                                      '어플 내 사용되는 이름이 변경됩니다.'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              false),
+                                                      child: Text('아니요'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              true),
+                                                      child: Text('예'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ) ??
+                                            false;
+                                    if (confirmDialogResponse) {
+                                      logFirebaseEvent('Text_bottom_sheet');
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        enableDrag: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: InsertNameWidget(),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
+                                    } else {
+                                      return;
+                                    }
+                                  },
+                                  child: Text(
+                                    currentUserDisplayName,
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Lexend Deca',
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -474,7 +430,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                               child: Text(
-                                '멤버십 가입',
+                                '크레딧 구매',
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),
@@ -768,13 +724,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         width: 90,
                         height: 40,
                         color: Colors.white,
-                        textStyle:
-                            FlutterFlowTheme.of(context).bodyText2.override(
-                                  fontFamily: 'Lexend Deca',
-                                  color: Color(0xFF4B39EF),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                        textStyle: FlutterFlowTheme.of(context)
+                            .bodyText2
+                            .override(
+                              fontFamily: 'Lexend Deca',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                         elevation: 3,
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -789,7 +746,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             if ((currentPhoneNumber == null || currentPhoneNumber == '') &&
                 loggedIn)
               AuthUserStreamWidget(
-                child: Column(
+                builder: (context) => Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
@@ -900,7 +857,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                                   .bodyText2
                                   .override(
                                     fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF4B39EF),
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
                                     fontSize: 14,
                                     fontWeight: FontWeight.normal,
                                   ),

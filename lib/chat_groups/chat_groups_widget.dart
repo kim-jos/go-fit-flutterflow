@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_chat_widget.dart';
 import '../components/insert_phone_number_widget.dart';
 import '../flutter_flow/chat/index.dart';
@@ -138,9 +139,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                           ChatsRecord>(
                         pagingController: () {
                           final Query<Object?> Function(Query<Object?>)
-                              queryBuilder = (chatsRecord) =>
-                                  chatsRecord.orderBy('last_message_time',
-                                      descending: true);
+                              queryBuilder = (chatsRecord) => chatsRecord
+                                  .orderBy('className', descending: true)
+                                  .orderBy('timeSlotDate');
                           if (_pagingController != null) {
                             final query = queryBuilder(ChatsRecord.collection);
                             if (query != _pagingQuery) {
@@ -159,9 +160,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                           _pagingController!
                               .addPageRequestListener((nextPageMarker) {
                             queryChatsRecordPage(
-                              queryBuilder: (chatsRecord) =>
-                                  chatsRecord.orderBy('last_message_time',
-                                      descending: true),
+                              queryBuilder: (chatsRecord) => chatsRecord
+                                  .orderBy('className', descending: true)
+                                  .orderBy('timeSlotDate'),
                               nextPageMarker: nextPageMarker,
                               pageSize: 25,
                               isStream: true,
@@ -172,10 +173,12 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                               );
                               final streamSubscription =
                                   page.dataStream?.listen((data) {
-                                final itemIndexes = _pagingController!.itemList!
-                                    .asMap()
-                                    .map((k, v) => MapEntry(v.reference.id, k));
                                 data.forEach((item) {
+                                  final itemIndexes = _pagingController!
+                                      .itemList!
+                                      .asMap()
+                                      .map((k, v) =>
+                                          MapEntry(v.reference.id, k));
                                   final index = itemIndexes[item.reference.id];
                                   final items = _pagingController!.itemList!;
                                   if (index != null) {
@@ -218,8 +221,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                             return Visibility(
                               visible: functions.showClass(
                                       listViewChatsRecord.timeSlotDate!,
-                                      listViewChatsRecord.classTime!) ??
-                                  true,
+                                      listViewChatsRecord.classTime!)! &&
+                                  (listViewChatsRecord.users!.toList().length >=
+                                      1),
                               child: Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
@@ -265,13 +269,11 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                         ],
                                         borderRadius: BorderRadius.circular(8),
                                       ),
-                                      child: StreamBuilder<List<ClassesRecord>>(
-                                        stream: queryClassesRecord(
-                                          queryBuilder: (classesRecord) =>
-                                              classesRecord.where('name',
-                                                  isEqualTo: listViewChatsRecord
-                                                      .className),
-                                          singleRecord: true,
+                                      child: StreamBuilder<List<UsersRecord>>(
+                                        stream: queryUsersRecord(
+                                          queryBuilder: (usersRecord) =>
+                                              usersRecord.where('admin',
+                                                  isEqualTo: true),
                                         ),
                                         builder: (context, snapshot) {
                                           // Customize what your widget looks like when it's loading.
@@ -289,517 +291,552 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                               ),
                                             );
                                           }
-                                          List<ClassesRecord>
-                                              containerClassesRecordList =
+                                          List<UsersRecord>
+                                              containerUsersRecordList =
                                               snapshot.data!;
-                                          // Return an empty Container when the item does not exist.
-                                          if (snapshot.data!.isEmpty) {
-                                            return Container();
-                                          }
-                                          final containerClassesRecord =
-                                              containerClassesRecordList
-                                                      .isNotEmpty
-                                                  ? containerClassesRecordList
-                                                      .first
-                                                  : null;
-                                          return InkWell(
-                                            onTap: () async {
-                                              logFirebaseEvent(
-                                                  'CHAT_GROUPS_Container_32bzw73d_ON_TAP');
-                                              if (chatGroupReservationsRecordList
-                                                      .where((e) =>
-                                                          e.user! ==
-                                                          currentUserReference)
-                                                      .toList()
-                                                      .length >=
-                                                  1) {
-                                                logFirebaseEvent(
-                                                    'Container_alert_dialog');
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
+                                          return Container(
+                                            width: 100,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                            ),
+                                            child: StreamBuilder<
+                                                List<ClassesRecord>>(
+                                              stream: queryClassesRecord(
+                                                queryBuilder: (classesRecord) =>
+                                                    classesRecord.where('name',
+                                                        isEqualTo:
+                                                            listViewChatsRecord
+                                                                .className),
+                                                singleRecord: true,
+                                              ),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 40,
+                                                      height: 40,
+                                                      child: SpinKitRing(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        size: 40,
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                                List<ClassesRecord>
+                                                    containerClassesRecordList =
+                                                    snapshot.data!;
+                                                // Return an empty Container when the item does not exist.
+                                                if (snapshot.data!.isEmpty) {
+                                                  return Container();
+                                                }
+                                                final containerClassesRecord =
+                                                    containerClassesRecordList
+                                                            .isNotEmpty
+                                                        ? containerClassesRecordList
+                                                            .first
+                                                        : null;
+                                                return InkWell(
+                                                  onTap: () async {
+                                                    logFirebaseEvent(
+                                                        'CHAT_GROUPS_Container_32bzw73d_ON_TAP');
+                                                    if (chatGroupReservationsRecordList
+                                                            .where((e) =>
+                                                                e.user ==
+                                                                currentUserReference)
+                                                            .toList()
+                                                            .length >=
+                                                        1) {
+                                                      logFirebaseEvent(
+                                                          'Container_alert_dialog');
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        '채팅방으로 가기'),
+                                                                    content: Text(
+                                                                        '이미 예약한 수업입니다! 채팅방으로 가시겠습니까?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: Text(
+                                                                            '아니요'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: Text(
+                                                                            '예'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (!confirmDialogResponse) {
+                                                        return;
+                                                      }
+                                                      logFirebaseEvent(
+                                                          'Container_navigate_to');
+
+                                                      context.pushNamed(
+                                                        'Chat',
+                                                        queryParams: {
+                                                          'chatRef':
+                                                              serializeParam(
+                                                            listViewChatsRecord
+                                                                .reference,
+                                                            ParamType
+                                                                .DocumentReference,
+                                                          ),
+                                                          'chatUserList':
+                                                              serializeParam(
+                                                            listViewChatsRecord
+                                                                .users!
+                                                                .toList(),
+                                                            ParamType
+                                                                .DocumentReference,
+                                                            true,
+                                                          ),
+                                                        }.withoutNulls,
+                                                      );
+
+                                                      return;
+                                                    } else {
+                                                      if (chatGroupReservationsRecordList
+                                                              .length <
+                                                          listViewChatsRecord
+                                                              .maxUsers!) {
+                                                        if (valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.currCredits,
+                                                                0) >=
+                                                            containerClassesRecord!
+                                                                .creditsRequired!) {
+                                                          logFirebaseEvent(
+                                                              'Container_alert_dialog');
+                                                          var confirmDialogResponse =
+                                                              await showDialog<
+                                                                      bool>(
+                                                                    context:
+                                                                        context,
+                                                                    builder:
+                                                                        (alertDialogContext) {
+                                                                      return AlertDialog(
+                                                                        title: Text(
+                                                                            '수업을 예약하시겠습니까?'),
+                                                                        content:
+                                                                            Text('수업 예약 취소는 수업 시작 24시간 전에만 가능합니다'),
+                                                                        actions: [
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext, false),
+                                                                            child:
+                                                                                Text('아니요'),
+                                                                          ),
+                                                                          TextButton(
+                                                                            onPressed: () =>
+                                                                                Navigator.pop(alertDialogContext, true),
+                                                                            child:
+                                                                                Text('예!'),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  ) ??
+                                                                  false;
+                                                          if (confirmDialogResponse) {
+                                                            logFirebaseEvent(
+                                                                'Container_group_chat_action');
+                                                            await FFChatManager
+                                                                .instance
+                                                                .addGroupMembers(
+                                                              listViewChatsRecord,
+                                                              [
+                                                                currentUserReference!
+                                                              ],
+                                                            );
+                                                          } else {
+                                                            return;
+                                                          }
+
+                                                          logFirebaseEvent(
+                                                              'Container_backend_call');
+
+                                                          final reservationsCreateData =
+                                                              createReservationsRecordData(
+                                                            date: listViewChatsRecord
+                                                                .timeSlotDate,
+                                                            timeSlot:
+                                                                listViewChatsRecord
+                                                                    .timeSlotRef,
+                                                            user:
+                                                                currentUserReference,
+                                                            classRequiredCredits:
+                                                                containerClassesRecord!
+                                                                    .creditsRequired,
+                                                            className:
+                                                                listViewChatsRecord
+                                                                    .className,
+                                                            time:
+                                                                listViewChatsRecord
+                                                                    .classTime,
+                                                          );
+                                                          await ReservationsRecord
+                                                              .collection
+                                                              .doc()
+                                                              .set(
+                                                                  reservationsCreateData);
+                                                          logFirebaseEvent(
+                                                              'Container_backend_call');
+
+                                                          final usersUpdateData =
+                                                              {
+                                                            'currCredits':
+                                                                FieldValue.increment(
+                                                                    -(containerClassesRecord!
+                                                                        .creditsRequired!)),
+                                                          };
+                                                          await currentUserReference!
+                                                              .update(
+                                                                  usersUpdateData);
+                                                          logFirebaseEvent(
+                                                              'Container_trigger_push_notification');
+                                                          triggerPushNotification(
+                                                            notificationTitle:
+                                                                'Reservation!',
+                                                            notificationText:
+                                                                '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${containerClassesRecord!.name}',
+                                                            userRefs:
+                                                                containerUsersRecordList
+                                                                    .map((e) =>
+                                                                        e.reference)
+                                                                    .toList(),
+                                                            initialPageName:
+                                                                'ChatGroups',
+                                                            parameterData: {},
+                                                          );
+                                                          logFirebaseEvent(
+                                                              'Container_navigate_to');
+
+                                                          context.pushNamed(
+                                                            'Chat',
+                                                            queryParams: {
+                                                              'chatRef':
+                                                                  serializeParam(
+                                                                listViewChatsRecord
+                                                                    .reference,
+                                                                ParamType
+                                                                    .DocumentReference,
+                                                              ),
+                                                              'chatUserList':
+                                                                  serializeParam(
+                                                                listViewChatsRecord
+                                                                    .users!
+                                                                    .toList(),
+                                                                ParamType
+                                                                    .DocumentReference,
+                                                                true,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
+                                                        } else {
+                                                          logFirebaseEvent(
+                                                              'Container_alert_dialog');
+                                                          await showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    '크레딧이 부족합니다!'),
+                                                                content: Text(
+                                                                    '크레딧 충전 후 사용해주세요! :)'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext),
+                                                                    child: Text(
+                                                                        '확인'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+                                                        }
+
+                                                        return;
+                                                      } else {
+                                                        logFirebaseEvent(
+                                                            'Container_alert_dialog');
+                                                        await showDialog(
                                                           context: context,
                                                           builder:
                                                               (alertDialogContext) {
                                                             return AlertDialog(
                                                               title: Text(
-                                                                  '채팅방으로 가기'),
+                                                                  '수업 예약 마감!'),
                                                               content: Text(
-                                                                  '이미 예약한 수업입니다! 채팅방으로 가시겠습니까?'),
+                                                                  '수업 예약 취소가 발생하면 다시 예약해주세요!'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
                                                                       Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
+                                                                          alertDialogContext),
                                                                   child: Text(
-                                                                      '아니요'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child:
-                                                                      Text('예'),
+                                                                      '확인'),
                                                                 ),
                                                               ],
                                                             );
                                                           },
-                                                        ) ??
-                                                        false;
-                                                if (!confirmDialogResponse) {
-                                                  return;
-                                                }
-                                                logFirebaseEvent(
-                                                    'Container_navigate_to');
-
-                                                context.pushNamed(
-                                                  'Chat',
-                                                  queryParams: {
-                                                    'chatRef': serializeParam(
-                                                      listViewChatsRecord
-                                                          .reference,
-                                                      ParamType
-                                                          .DocumentReference,
-                                                    ),
-                                                    'chatUserList':
-                                                        serializeParam(
-                                                      listViewChatsRecord.users!
-                                                          .toList(),
-                                                      ParamType
-                                                          .DocumentReference,
-                                                      true,
-                                                    ),
-                                                  }.withoutNulls,
-                                                );
-
-                                                return;
-                                              } else {
-                                                if (chatGroupReservationsRecordList
-                                                        .length <
-                                                    listViewChatsRecord
-                                                        .maxUsers!) {
-                                                  if (valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.currCredits,
-                                                          0) >=
-                                                      containerClassesRecord!
-                                                          .creditsRequired!) {
-                                                    logFirebaseEvent(
-                                                        'Container_alert_dialog');
-                                                    var confirmDialogResponse =
-                                                        await showDialog<bool>(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: Text(
-                                                                      '수업을 예약하시겠습니까?'),
-                                                                  content: Text(
-                                                                      '수업 예약 취소는 수업 시작 24시간 전에만 가능합니다'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                      child: Text(
-                                                                          '아니요'),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                      child: Text(
-                                                                          '예!'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            ) ??
-                                                            false;
-                                                    if (confirmDialogResponse) {
-                                                      logFirebaseEvent(
-                                                          'Container_group_chat_action');
-                                                      await FFChatManager
-                                                          .instance
-                                                          .addGroupMembers(
-                                                        listViewChatsRecord,
-                                                        [currentUserReference!],
-                                                      );
-                                                    } else {
-                                                      return;
-                                                    }
-
-                                                    logFirebaseEvent(
-                                                        'Container_backend_call');
-
-                                                    final reservationsCreateData =
-                                                        createReservationsRecordData(
-                                                      date: listViewChatsRecord
-                                                          .timeSlotDate,
-                                                      timeSlot:
-                                                          listViewChatsRecord
-                                                              .timeSlotRef,
-                                                      user:
-                                                          currentUserReference,
-                                                      classRequiredCredits:
-                                                          containerClassesRecord!
-                                                              .creditsRequired,
-                                                      className:
-                                                          listViewChatsRecord
-                                                              .className,
-                                                      time: listViewChatsRecord
-                                                          .classTime,
-                                                    );
-                                                    await ReservationsRecord
-                                                        .collection
-                                                        .doc()
-                                                        .set(
-                                                            reservationsCreateData);
-                                                    logFirebaseEvent(
-                                                        'Container_backend_call');
-
-                                                    final usersUpdateData = {
-                                                      'currCredits':
-                                                          FieldValue.increment(
-                                                              -(containerClassesRecord!
-                                                                  .creditsRequired!)),
-                                                    };
-                                                    await currentUserReference!
-                                                        .update(
-                                                            usersUpdateData);
-                                                    logFirebaseEvent(
-                                                        'Container_navigate_to');
-
-                                                    context.pushNamed(
-                                                      'Chat',
-                                                      queryParams: {
-                                                        'chatRef':
-                                                            serializeParam(
-                                                          listViewChatsRecord
-                                                              .reference,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                        'chatUserList':
-                                                            serializeParam(
-                                                          listViewChatsRecord
-                                                              .users!
-                                                              .toList(),
-                                                          ParamType
-                                                              .DocumentReference,
-                                                          true,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  } else {
-                                                    logFirebaseEvent(
-                                                        'Container_alert_dialog');
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text(
-                                                              '크레딧이 부족합니다!'),
-                                                          content: Text(
-                                                              '크레딧 충전 후 사용해주세요! :)'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: Text('확인'),
-                                                            ),
-                                                          ],
                                                         );
-                                                      },
-                                                    );
-                                                  }
-
-                                                  return;
-                                                } else {
-                                                  logFirebaseEvent(
-                                                      'Container_alert_dialog');
-                                                  await showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (alertDialogContext) {
-                                                      return AlertDialog(
-                                                        title:
-                                                            Text('수업 예약 마감!'),
-                                                        content: Text(
-                                                            '수업 예약 취소가 발생하면 다시 예약해주세요!'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () =>
-                                                                Navigator.pop(
-                                                                    alertDialogContext),
-                                                            child: Text('확인'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  );
-                                                  return;
-                                                }
-                                              }
-                                            },
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 12, 8, 12),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      width: 40,
-                                                      height: 40,
-                                                      clipBehavior:
-                                                          Clip.antiAlias,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            containerClassesRecord!
-                                                                .image!,
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                        return;
+                                                      }
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
                                                     ),
-                                                    Expanded(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(12, 0,
-                                                                    0, 0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Text(
-                                                                  listViewChatsRecord
-                                                                      .className!,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .subtitle2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF4B39EF),
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                              ],
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  8, 12, 8, 12),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            width: 40,
+                                                            height: 40,
+                                                            clipBehavior:
+                                                                Clip.antiAlias,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
                                                             ),
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
+                                                            child:
+                                                                CachedNetworkImage(
+                                                              imageUrl:
+                                                                  containerClassesRecord!
+                                                                      .image!,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
                                                                       .fromSTEB(
+                                                                          12,
                                                                           0,
                                                                           0,
-                                                                          4,
                                                                           0),
-                                                                  child: Text(
-                                                                    '${listViewChatsRecord.timeSlotDate} - ${listViewChatsRecord.classTime}수업',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText1
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF090F13),
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  '${listViewChatsRecord.users!.toList().length.toString()}/${listViewChatsRecord.maxUsers?.toString()}',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF7C8791),
-                                                                        fontSize:
-                                                                            12,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .end,
-                                                              children: [
-                                                                Text(
-                                                                  listViewChatsRecord
-                                                                      .lastMessage!,
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyText1
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Outfit',
-                                                                        color: Color(
-                                                                            0xFF090F13),
-                                                                        fontSize:
-                                                                            14,
-                                                                        fontWeight:
-                                                                            FontWeight.normal,
-                                                                      ),
-                                                                ),
-                                                                if (listViewChatsRecord
-                                                                        .lastMessage !=
-                                                                    '')
-                                                                  Text(
-                                                                    dateTimeFormat(
-                                                                      'relative',
-                                                                      listViewChatsRecord
-                                                                          .lastMessageTime!,
-                                                                      locale: FFLocalizations.of(
-                                                                              context)
-                                                                          .languageCode,
-                                                                    ),
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyText2
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Outfit',
-                                                                          color:
-                                                                              Color(0xFF7C8791),
-                                                                          fontSize:
-                                                                              12,
-                                                                          fontWeight:
-                                                                              FontWeight.normal,
-                                                                        ),
-                                                                  ),
-                                                              ],
-                                                            ),
-                                                            Builder(
-                                                              builder:
-                                                                  (context) {
-                                                                final userRefs =
-                                                                    listViewChatsRecord
-                                                                        .users!
-                                                                        .toList();
-                                                                return SingleChildScrollView(
-                                                                  scrollDirection:
-                                                                      Axis.horizontal,
-                                                                  child: Row(
+                                                              child: Column(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
                                                                             .max,
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
-                                                                            .start,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .end,
-                                                                    children: List.generate(
-                                                                        userRefs
-                                                                            .length,
-                                                                        (userRefsIndex) {
-                                                                      final userRefsItem =
-                                                                          userRefs[
-                                                                              userRefsIndex];
-                                                                      return Padding(
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        listViewChatsRecord
+                                                                            .className!,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .subtitle2
+                                                                            .override(
+                                                                              fontFamily: 'Outfit',
+                                                                              color: FlutterFlowTheme.of(context).primaryColor,
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.normal,
+                                                                            ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
                                                                             0,
                                                                             0,
-                                                                            1,
+                                                                            4,
                                                                             0),
-                                                                        child: StreamBuilder<
-                                                                            UsersRecord>(
-                                                                          stream:
-                                                                              UsersRecord.getDocument(userRefsItem),
-                                                                          builder:
-                                                                              (context, snapshot) {
-                                                                            // Customize what your widget looks like when it's loading.
-                                                                            if (!snapshot.hasData) {
-                                                                              return Center(
-                                                                                child: SizedBox(
-                                                                                  width: 40,
-                                                                                  height: 40,
-                                                                                  child: SpinKitRing(
-                                                                                    color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                    size: 40,
-                                                                                  ),
-                                                                                ),
-                                                                              );
-                                                                            }
-                                                                            final textUsersRecord =
-                                                                                snapshot.data!;
-                                                                            return Text(
-                                                                              '${textUsersRecord.displayName} ',
-                                                                              style: FlutterFlowTheme.of(context).bodyText1.override(
-                                                                                    fontFamily: 'Outfit',
-                                                                                    color: Color(0xFF090F13),
-                                                                                    fontSize: 14,
-                                                                                    fontWeight: FontWeight.normal,
-                                                                                  ),
+                                                                        child:
+                                                                            Text(
+                                                                          '${listViewChatsRecord.timeSlotDate} - ${listViewChatsRecord.classTime}수업',
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyText1
+                                                                              .override(
+                                                                                fontFamily: 'Outfit',
+                                                                                color: Color(0xFF090F13),
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.normal,
+                                                                              ),
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        '${listViewChatsRecord.users!.toList().length.toString()}/${listViewChatsRecord.maxUsers?.toString()}',
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyText2
+                                                                            .override(
+                                                                              fontFamily: 'Outfit',
+                                                                              color: Color(0xFF7C8791),
+                                                                              fontSize: 12,
+                                                                              fontWeight: FontWeight.normal,
+                                                                            ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    crossAxisAlignment:
+                                                                        CrossAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      Text(
+                                                                        listViewChatsRecord
+                                                                            .lastMessage!,
+                                                                        style: FlutterFlowTheme.of(context)
+                                                                            .bodyText1
+                                                                            .override(
+                                                                              fontFamily: 'Outfit',
+                                                                              color: Color(0xFF090F13),
+                                                                              fontSize: 14,
+                                                                              fontWeight: FontWeight.normal,
+                                                                            ),
+                                                                      ),
+                                                                      if (listViewChatsRecord
+                                                                              .lastMessage !=
+                                                                          '')
+                                                                        Text(
+                                                                          dateTimeFormat(
+                                                                            'relative',
+                                                                            listViewChatsRecord.lastMessageTime!,
+                                                                            locale:
+                                                                                FFLocalizations.of(context).languageCode,
+                                                                          ),
+                                                                          style: FlutterFlowTheme.of(context)
+                                                                              .bodyText2
+                                                                              .override(
+                                                                                fontFamily: 'Outfit',
+                                                                                color: Color(0xFF7C8791),
+                                                                                fontSize: 12,
+                                                                                fontWeight: FontWeight.normal,
+                                                                              ),
+                                                                        ),
+                                                                    ],
+                                                                  ),
+                                                                  Builder(
+                                                                    builder:
+                                                                        (context) {
+                                                                      final userRefs = listViewChatsRecord
+                                                                          .users!
+                                                                          .toList();
+                                                                      return SingleChildScrollView(
+                                                                        scrollDirection:
+                                                                            Axis.horizontal,
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.start,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.end,
+                                                                          children: List.generate(
+                                                                              userRefs.length,
+                                                                              (userRefsIndex) {
+                                                                            final userRefsItem =
+                                                                                userRefs[userRefsIndex];
+                                                                            return Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 1, 0),
+                                                                              child: StreamBuilder<UsersRecord>(
+                                                                                stream: UsersRecord.getDocument(userRefsItem),
+                                                                                builder: (context, snapshot) {
+                                                                                  // Customize what your widget looks like when it's loading.
+                                                                                  if (!snapshot.hasData) {
+                                                                                    return Center(
+                                                                                      child: SizedBox(
+                                                                                        width: 40,
+                                                                                        height: 40,
+                                                                                        child: SpinKitRing(
+                                                                                          color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                          size: 40,
+                                                                                        ),
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                  final textUsersRecord = snapshot.data!;
+                                                                                  return Text(
+                                                                                    '${textUsersRecord.displayName} ',
+                                                                                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                          fontFamily: 'Outfit',
+                                                                                          color: Color(0xFF090F13),
+                                                                                          fontSize: 14,
+                                                                                          fontWeight: FontWeight.normal,
+                                                                                        ),
+                                                                                  );
+                                                                                },
+                                                                              ),
                                                                             );
-                                                                          },
+                                                                          }),
                                                                         ),
                                                                       );
-                                                                    }),
+                                                                    },
                                                                   ),
-                                                                );
-                                                              },
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           );
                                         },
@@ -981,8 +1018,9 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
                                                               .override(
                                                                 fontFamily:
                                                                     'Outfit',
-                                                                color: Color(
-                                                                    0xFF4B39EF),
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
                                                                 fontSize: 16,
                                                                 fontWeight:
                                                                     FontWeight

@@ -290,8 +290,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                   0, 4, 0, 0),
                                           child: Text(
                                             valueOrDefault<String>(
-                                              widget.creditsRequired
-                                                  ?.toString(),
+                                              widget.creditsRequired.toString(),
                                               '0',
                                             ),
                                             style: FlutterFlowTheme.of(context)
@@ -408,10 +407,10 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                   _googleMapMarker,
                                 ),
                             ],
-                            markerColor: GoogleMarkerColor.violet,
+                            markerColor: GoogleMarkerColor.orange,
                             mapType: MapType.normal,
                             style: GoogleMapStyle.standard,
-                            initialZoom: 14,
+                            initialZoom: 16,
                             allowInteraction: true,
                             allowZoom: true,
                             showZoomControls: false,

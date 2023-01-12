@@ -256,8 +256,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                   logFirebaseEvent(
                                       'CLASSES_PAGE_Row_rzb4q98p_ON_TAP');
                                   logFirebaseEvent('Row_update_local_state');
-                                  FFAppState().creditsRequired =
-                                      listViewClassesRecord.creditsRequired!;
+                                  FFAppState().update(() {
+                                    FFAppState().creditsRequired =
+                                        listViewClassesRecord.creditsRequired!;
+                                  });
                                   logFirebaseEvent('Row_navigate_to');
 
                                   context.pushNamed(

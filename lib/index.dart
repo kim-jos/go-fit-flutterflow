@@ -17,5 +17,3 @@ export 'feedback/feedback_widget.dart' show FeedbackWidget;
 export 'terms_of_service/terms_of_service_widget.dart'
     show TermsOfServiceWidget;
 export 'subscriptions/subscriptions_widget.dart' show SubscriptionsWidget;
-export 'subscriptions_braintree/subscriptions_braintree_widget.dart'
-    show SubscriptionsBraintreeWidget;

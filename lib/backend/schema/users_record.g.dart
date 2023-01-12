@@ -67,6 +67,20 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add('currCredits')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.admin;
+    if (value != null) {
+      result
+        ..add('admin')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.expirationDate;
+    if (value != null) {
+      result
+        ..add('expirationDate')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -117,6 +131,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.currCredits = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'admin':
+          result.admin = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'expirationDate':
+          result.expirationDate = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -146,6 +168,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final int? currCredits;
   @override
+  final bool? admin;
+  @override
+  final DateTime? expirationDate;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -159,6 +185,8 @@ class _$UsersRecord extends UsersRecord {
       this.createdTime,
       this.phoneNumber,
       this.currCredits,
+      this.admin,
+      this.expirationDate,
       this.ffRef})
       : super._();
 
@@ -180,6 +208,8 @@ class _$UsersRecord extends UsersRecord {
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
         currCredits == other.currCredits &&
+        admin == other.admin &&
+        expirationDate == other.expirationDate &&
         ffRef == other.ffRef;
   }
 
@@ -190,12 +220,18 @@ class _$UsersRecord extends UsersRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                            photoUrl.hashCode),
-                        uid.hashCode),
-                    createdTime.hashCode),
-                phoneNumber.hashCode),
-            currCredits.hashCode),
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, email.hashCode),
+                                        displayName.hashCode),
+                                    photoUrl.hashCode),
+                                uid.hashCode),
+                            createdTime.hashCode),
+                        phoneNumber.hashCode),
+                    currCredits.hashCode),
+                admin.hashCode),
+            expirationDate.hashCode),
         ffRef.hashCode));
   }
 
@@ -209,6 +245,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
           ..add('currCredits', currCredits)
+          ..add('admin', admin)
+          ..add('expirationDate', expirationDate)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -245,6 +283,15 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   int? get currCredits => _$this._currCredits;
   set currCredits(int? currCredits) => _$this._currCredits = currCredits;
 
+  bool? _admin;
+  bool? get admin => _$this._admin;
+  set admin(bool? admin) => _$this._admin = admin;
+
+  DateTime? _expirationDate;
+  DateTime? get expirationDate => _$this._expirationDate;
+  set expirationDate(DateTime? expirationDate) =>
+      _$this._expirationDate = expirationDate;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -263,6 +310,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
       _currCredits = $v.currCredits;
+      _admin = $v.admin;
+      _expirationDate = $v.expirationDate;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -293,6 +342,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             createdTime: createdTime,
             phoneNumber: phoneNumber,
             currCredits: currCredits,
+            admin: admin,
+            expirationDate: expirationDate,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

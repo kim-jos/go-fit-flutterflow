@@ -187,12 +187,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'subscriptions',
               requireAuth: true,
               builder: (context, params) => SubscriptionsWidget(),
-            ),
-            FFRoute(
-              name: 'SubscriptionsBraintree',
-              path: 'subscriptionsBraintree',
-              requireAuth: true,
-              builder: (context, params) => SubscriptionsBraintreeWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

@@ -141,7 +141,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                   children: [
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 20, 20, 0),
+                                          0, 20, 0, 0),
                                       child: TextFormField(
                                         controller: emailAddressController,
                                         obscureText: false,
@@ -203,7 +203,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 12, 20, 0),
+                                          0, 12, 0, 0),
                                       child: TextFormField(
                                         controller: passwordController,
                                         obscureText: !passwordVisibility,

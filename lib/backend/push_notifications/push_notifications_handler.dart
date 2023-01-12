@@ -52,12 +52,13 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
     try {
       final initialPageName = message.data['initialPageName'] as String;
       final initialParameterData = getInitialParameterData(message.data);
-      final pageBuilder = pageBuilderMap[initialPageName];
-      if (pageBuilder != null) {
-        final page = await pageBuilder(initialParameterData);
-        await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => page),
+      final parametersBuilder = parametersBuilderMap[initialPageName];
+      if (parametersBuilder != null) {
+        final parameterData = await parametersBuilder(initialParameterData);
+        context.pushNamed(
+          initialPageName,
+          params: parameterData.params,
+          extra: parameterData.extra,
         );
       }
     } catch (e) {
@@ -90,39 +91,62 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
       : widget.child;
 }
 
-final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
-  'AuthEmailLogin': (data) async => AuthEmailLoginWidget(),
-  'AuthLogin': (data) async => AuthLoginWidget(),
-  'ClassDetails': (data) async => ClassDetailsWidget(
-        classRef: getParameter(data, 'classRef'),
-        className: getParameter(data, 'className'),
-        maxLimit: getParameter(data, 'maxLimit'),
-        exerciseType: getParameter(data, 'exerciseType'),
-        image: getParameter(data, 'image'),
-        creditsRequired: getParameter(data, 'creditsRequired'),
-      ),
-  'MyReservations': (data) async => MyReservationsWidget(),
-  'ChatGroups': (data) async => NavBarPage(initialPage: 'ChatGroups'),
-  'Settings': (data) async => NavBarPage(initialPage: 'Settings'),
-  'Chat': (data) async => ChatWidget(
-        chatUser: await getDocumentParameter(
-            data, 'chatUser', UsersRecord.serializer),
-        chatRef: getParameter(data, 'chatRef'),
-        chatUserList: [],
-      ),
-  'ChatCreateGroup': (data) async => ChatCreateGroupWidget(),
-  'ReservationComplete': (data) async => ReservationCompleteWidget(),
-  'ChatAddUser': (data) async => ChatAddUserWidget(
-        chat: await getDocumentParameter(data, 'chat', ChatsRecord.serializer),
-      ),
-  'Feedback': (data) async => FeedbackWidget(),
-  'TermsOfService': (data) async => TermsOfServiceWidget(),
-  'Subscriptions': (data) async => SubscriptionsWidget(),
-  'SubscriptionsBraintree': (data) async => SubscriptionsBraintreeWidget(),
-};
+class ParameterData {
+  const ParameterData(
+      {this.requiredParams = const {}, this.allParams = const {}});
+  final Map<String, String?> requiredParams;
+  final Map<String, dynamic> allParams;
 
-bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
-    params.any((param) => getParameter(data, param) != null);
+  Map<String, String> get params => Map.fromEntries(
+        requiredParams.entries
+            .where((e) => e.value != null)
+            .map((e) => MapEntry(e.key, e.value!)),
+      );
+  Map<String, dynamic> get extra => Map.fromEntries(
+        allParams.entries.where((e) => e.value != null),
+      );
+
+  static Future<ParameterData> Function(Map<String, dynamic>) none() =>
+      (data) async => ParameterData();
+}
+
+final parametersBuilderMap =
+    <String, Future<ParameterData> Function(Map<String, dynamic>)>{
+  'AuthEmailLogin': ParameterData.none(),
+  'AuthLogin': ParameterData.none(),
+  'ClassDetails': (data) async => ParameterData(
+        allParams: {
+          'classRef': getParameter<DocumentReference>(data, 'classRef'),
+          'className': getParameter<String>(data, 'className'),
+          'maxLimit': getParameter<int>(data, 'maxLimit'),
+          'exerciseType': getParameter<String>(data, 'exerciseType'),
+          'image': getParameter<String>(data, 'image'),
+          'creditsRequired': getParameter<int>(data, 'creditsRequired'),
+        },
+      ),
+  'MyReservations': ParameterData.none(),
+  'Classes': ParameterData.none(),
+  'ChatGroups': ParameterData.none(),
+  'Settings': ParameterData.none(),
+  'Chat': (data) async => ParameterData(
+        allParams: {
+          'chatUser': await getDocumentParameter<UsersRecord>(
+              data, 'chatUser', UsersRecord.serializer),
+          'chatRef': getParameter<DocumentReference>(data, 'chatRef'),
+        },
+      ),
+  'ChatCreateGroup': ParameterData.none(),
+  'ReservationComplete': ParameterData.none(),
+  'ChatAddUser': (data) async => ParameterData(
+        allParams: {
+          'chat': await getDocumentParameter<ChatsRecord>(
+              data, 'chat', ChatsRecord.serializer),
+        },
+      ),
+  'Feedback': ParameterData.none(),
+  'TermsOfService': ParameterData.none(),
+  'Subscriptions': ParameterData.none(),
+};
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
   try {

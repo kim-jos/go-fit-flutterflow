@@ -24,7 +24,7 @@
         },
         {
           "fieldPath": "date",
-          "order": "DESCENDING"
+          "order": "ASCENDING"
         }
       ]
     },
@@ -42,6 +42,20 @@
         },
         {
           "fieldPath": "startTime",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "chats",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "className",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "timeSlotDate",
           "order": "ASCENDING"
         }
       ]

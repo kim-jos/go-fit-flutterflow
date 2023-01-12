@@ -8,6 +8,7 @@ import 'package:from_css_color/from_css_color.dart';
 import '../../backend/backend.dart';
 import '../../flutter_flow/lat_lng.dart';
 import '../../flutter_flow/place.dart';
+import '../../flutter_flow/local_file.dart';
 
 /// SERIALIZATION HELPERS
 
@@ -27,6 +28,8 @@ String placeToString(FFPlace place) => jsonEncode({
       'zipCode': place.zipCode,
     });
 
+String localFileToString(FFLocalFile localFile) => localFile.serialize();
+
 /// Converts the input value into a value that can be JSON encoded.
 dynamic serializeParameter(dynamic value) {
   switch (value.runtimeType) {
@@ -40,6 +43,8 @@ dynamic serializeParameter(dynamic value) {
       return (value as Color).toCssString();
     case FFPlace:
       return placeToString(value as FFPlace);
+    case FFLocalFile:
+      return localFileToString(value as FFLocalFile);
   }
 
   if (value is DocumentReference) {
@@ -112,6 +117,9 @@ FFPlace placeFromString(String placeStr) {
   );
 }
 
+FFLocalFile localFileFromString(String localFileStr) =>
+    FFLocalFile.deserialize(localFileStr);
+
 T? getParameter<T>(Map<String, dynamic> data, String paramName) {
   try {
     if (!data.containsKey(paramName)) {
@@ -133,6 +141,8 @@ T? getParameter<T>(Map<String, dynamic> data, String paramName) {
         return fromCssColor(param) as T;
       case FFPlace:
         return placeFromString(param) as T;
+      case FFLocalFile:
+        return localFileFromString(param) as T;
     }
     if (param is String) {
       return FirebaseFirestore.instance.doc(param) as T;

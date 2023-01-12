@@ -27,6 +27,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   int? get currCredits;
 
+  bool? get admin;
+
+  DateTime? get expirationDate;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -37,7 +41,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..photoUrl = ''
     ..uid = ''
     ..phoneNumber = ''
-    ..currCredits = 0;
+    ..currCredits = 0
+    ..admin = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -68,6 +73,8 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   int? currCredits,
+  bool? admin,
+  DateTime? expirationDate,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -79,7 +86,9 @@ Map<String, dynamic> createUsersRecordData({
         ..uid = uid
         ..createdTime = createdTime
         ..phoneNumber = phoneNumber
-        ..currCredits = currCredits,
+        ..currCredits = currCredits
+        ..admin = admin
+        ..expirationDate = expirationDate,
     ),
   );
 
