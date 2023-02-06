@@ -1,9 +1,7 @@
 import '../auth/auth_util.dart';
-import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_chat_widget.dart';
-import '../components/insert_phone_number_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -11,7 +9,6 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -34,34 +31,6 @@ class _ChatGroupsWidgetState extends State<ChatGroupsWidget> {
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      logFirebaseEvent('CHAT_GROUPS_PAGE_ChatGroups_ON_PAGE_LOAD');
-      if (loggedIn) {
-        if (currentPhoneNumber == null || currentPhoneNumber == '') {
-          logFirebaseEvent('ChatGroups_bottom_sheet');
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            enableDrag: false,
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: InsertPhoneNumberWidget(),
-                ),
-              );
-            },
-          ).then((value) => setState(() {}));
-        }
-        return;
-      } else {
-        return;
-      }
-    });
-
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'ChatGroups'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }

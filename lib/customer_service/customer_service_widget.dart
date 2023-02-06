@@ -1,30 +1,29 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class FeedbackWidget extends StatefulWidget {
-  const FeedbackWidget({Key? key}) : super(key: key);
+class CustomerServiceWidget extends StatefulWidget {
+  const CustomerServiceWidget({Key? key}) : super(key: key);
 
   @override
-  _FeedbackWidgetState createState() => _FeedbackWidgetState();
+  _CustomerServiceWidgetState createState() => _CustomerServiceWidgetState();
 }
 
-class _FeedbackWidgetState extends State<FeedbackWidget> {
+class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Feedback'});
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'CustomerService'});
     textController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -56,17 +55,17 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
             size: 30,
           ),
           onPressed: () async {
-            logFirebaseEvent('FEEDBACK_arrow_back_rounded_ICN_ON_TAP');
+            logFirebaseEvent('CUSTOMER_SERVICE_arrow_back_rounded_ICN_');
             logFirebaseEvent('IconButton_navigate_back');
             context.pop();
           },
         ),
         title: Text(
-          '피드백 남기기',
+          '문의하기',
           style: FlutterFlowTheme.of(context).title2,
         ),
         actions: [],
-        centerTitle: false,
+        centerTitle: true,
         elevation: 0,
       ),
       body: Column(
@@ -94,8 +93,7 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
                                 controller: textController,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText:
-                                      '피드백 남겨주세요!\n1. 추가적으로 하고 싶은 운동\n2. 사용하면서 좋았던 점과 불편했던 점',
+                                  hintText: '문의사항을 남겨주세요! 10분 내로 답장 하겠습니다!',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodyText2,
                                   enabledBorder: OutlineInputBorder(
@@ -146,42 +144,29 @@ class _FeedbackWidgetState extends State<FeedbackWidget> {
               ),
             ],
           ),
+          Text(
+            ' 대표번호: 010-5090-9006',
+            style: FlutterFlowTheme.of(context).bodyText2,
+          ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
             child: FFButtonWidget(
               onPressed: () async {
-                logFirebaseEvent('FEEDBACK_PAGE_피드백_남기기_BTN_ON_TAP');
+                logFirebaseEvent('CUSTOMER_SERVICE_PAGE_문의하기_BTN_ON_TAP');
                 if (!(textController!.text != null &&
                     textController!.text != '')) {
                   return;
                 }
-                logFirebaseEvent('Button_backend_call');
-
-                final feedbackCreateData = createFeedbackRecordData(
-                  userRef: currentUserReference,
-                  message: textController!.text,
-                );
-                await FeedbackRecord.collection.doc().set(feedbackCreateData);
-                logFirebaseEvent('Button_alert_dialog');
-                await showDialog(
-                  context: context,
-                  builder: (alertDialogContext) {
-                    return AlertDialog(
-                      title: Text('피드백 저장 완료'),
-                      content: Text('피드백 잘 받았습니다! 감사합니다! :)'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(alertDialogContext),
-                          child: Text('확인'),
-                        ),
-                      ],
-                    );
+                logFirebaseEvent('Button_send_s_m_s');
+                await launchUrl(Uri(
+                  scheme: 'sms',
+                  path: '+821050909006',
+                  queryParameters: <String, String>{
+                    'body': textController!.text,
                   },
-                );
-                logFirebaseEvent('Button_navigate_back');
-                context.pop();
+                ));
               },
-              text: '피드백 남기기',
+              text: '문의하기',
               options: FFButtonOptions(
                 width: 270,
                 height: 50,

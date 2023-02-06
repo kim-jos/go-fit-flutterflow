@@ -9,15 +9,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class InsertPhoneNumberWidget extends StatefulWidget {
-  const InsertPhoneNumberWidget({Key? key}) : super(key: key);
+class UpdatePhoneWidget extends StatefulWidget {
+  const UpdatePhoneWidget({Key? key}) : super(key: key);
 
   @override
-  _InsertPhoneNumberWidgetState createState() =>
-      _InsertPhoneNumberWidgetState();
+  _UpdatePhoneWidgetState createState() => _UpdatePhoneWidgetState();
 }
 
-class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
+class _UpdatePhoneWidgetState extends State<UpdatePhoneWidget> {
   TextEditingController? textController;
 
   @override
@@ -85,15 +84,8 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                 child: Text(
-                  '전화번호 입력',
+                  '전화번호 변경',
                   style: FlutterFlowTheme.of(context).title2,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                child: Text(
-                  '예약이 불가능할 때 급하게 연락드리기 전환번호가 필요합니다!',
-                  style: FlutterFlowTheme.of(context).bodyText2,
                 ),
               ),
               Padding(
@@ -103,7 +95,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
-                    hintText: '전화번호 입력해주세요',
+                    hintText: '전화번호 변경하기',
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -158,8 +150,7 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent(
-                            'INSERT_PHONE_NUMBER_COMP_저장하기_BTN_ON_TAP');
+                        logFirebaseEvent('UPDATE_PHONE_COMP_저장하기_BTN_ON_TAP');
                         if (!(textController!.text != null &&
                             textController!.text != '')) {
                           return;
@@ -175,8 +166,8 @@ class _InsertPhoneNumberWidgetState extends State<InsertPhoneNumberWidget> {
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(
-                              title: Text('전화번호 저장 완료'),
-                              content: Text('전화번호가 저장 완료됐습니다! 감사합니다!'),
+                              title: Text('전화번호 변경 완료'),
+                              content: Text('전화번호 변경이 완료됐습니다!'),
                               actions: [
                                 TextButton(
                                   onPressed: () =>

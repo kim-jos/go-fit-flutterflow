@@ -14,6 +14,7 @@ import 'schema/chat_messages_record.dart';
 import 'schema/reservations_record.dart';
 import 'schema/feedback_record.dart';
 import 'schema/memberships_record.dart';
+import 'schema/discovery_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -30,6 +31,7 @@ export 'schema/chat_messages_record.dart';
 export 'schema/reservations_record.dart';
 export 'schema/feedback_record.dart';
 export 'schema/memberships_record.dart';
+export 'schema/discovery_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -495,6 +497,58 @@ Future<FFFirestorePage<MembershipsRecord>> queryMembershipsRecordPage({
     queryCollectionPage(
       MembershipsRecord.collection,
       MembershipsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query DiscoveryRecords (as a Stream and as a Future).
+Future<int> queryDiscoveryRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      DiscoveryRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<DiscoveryRecord>> queryDiscoveryRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      DiscoveryRecord.collection,
+      DiscoveryRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<DiscoveryRecord>> queryDiscoveryRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      DiscoveryRecord.collection,
+      DiscoveryRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<DiscoveryRecord>> queryDiscoveryRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      DiscoveryRecord.collection,
+      DiscoveryRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

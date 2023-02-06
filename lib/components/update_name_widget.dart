@@ -9,14 +9,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class InsertNameWidget extends StatefulWidget {
-  const InsertNameWidget({Key? key}) : super(key: key);
+class UpdateNameWidget extends StatefulWidget {
+  const UpdateNameWidget({Key? key}) : super(key: key);
 
   @override
-  _InsertNameWidgetState createState() => _InsertNameWidgetState();
+  _UpdateNameWidgetState createState() => _UpdateNameWidgetState();
 }
 
-class _InsertNameWidgetState extends State<InsertNameWidget> {
+class _UpdateNameWidgetState extends State<UpdateNameWidget> {
   TextEditingController? textController;
 
   @override
@@ -89,20 +89,13 @@ class _InsertNameWidgetState extends State<InsertNameWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                child: Text(
-                  '예약이 불가능할 때 급하게 연락드리기 전환번호가 필요합니다!',
-                  style: FlutterFlowTheme.of(context).bodyText2,
-                ),
-              ),
-              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
                 child: TextFormField(
                   controller: textController,
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
-                    hintText: '이름을 변경해주세요',
+                    hintText: '이름을 변경하기',
                     hintStyle: FlutterFlowTheme.of(context).bodyText2,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -157,7 +150,7 @@ class _InsertNameWidgetState extends State<InsertNameWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 44),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        logFirebaseEvent('INSERT_NAME_COMP_저장하기_BTN_ON_TAP');
+                        logFirebaseEvent('UPDATE_NAME_COMP_저장하기_BTN_ON_TAP');
                         if (!(textController!.text != null &&
                             textController!.text != '')) {
                           return;

@@ -82,7 +82,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
                         'RESERVATION_COMPLETE_다른_수업_보기_BTN_ON_TAP');
                     logFirebaseEvent('Button_navigate_to');
 
-                    context.goNamed('Classes');
+                    context.pushNamed('Classes');
                   },
                   text: '다른 수업 보기',
                   options: FFButtonOptions(

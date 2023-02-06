@@ -92,6 +92,22 @@ class _$ClassDetailsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.images;
+    if (value != null) {
+      result
+        ..add('images')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.businessHours;
+    if (value != null) {
+      result
+        ..add('businessHours')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -157,6 +173,18 @@ class _$ClassDetailsRecordSerializer
           result.instagram = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'images':
+          result.images.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'businessHours':
+          result.businessHours.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -192,6 +220,10 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final String? instagram;
   @override
+  final BuiltList<String>? images;
+  @override
+  final BuiltList<String>? businessHours;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassDetailsRecord(
@@ -209,6 +241,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
       this.requirements,
       this.latitude,
       this.instagram,
+      this.images,
+      this.businessHours,
       this.ffRef})
       : super._();
 
@@ -235,6 +269,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
         requirements == other.requirements &&
         latitude == other.latitude &&
         instagram == other.instagram &&
+        images == other.images &&
+        businessHours == other.businessHours &&
         ffRef == other.ffRef;
   }
 
@@ -249,16 +285,20 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, classRef.hashCode),
-                                            monthlyLimit.hashCode),
-                                        duration.hashCode),
-                                    misc.hashCode),
-                                address.hashCode),
-                            website.hashCode),
-                        description.hashCode),
-                    requirements.hashCode),
-                latitude.hashCode),
-            instagram.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, classRef.hashCode),
+                                                    monthlyLimit.hashCode),
+                                                duration.hashCode),
+                                            misc.hashCode),
+                                        address.hashCode),
+                                    website.hashCode),
+                                description.hashCode),
+                            requirements.hashCode),
+                        latitude.hashCode),
+                    instagram.hashCode),
+                images.hashCode),
+            businessHours.hashCode),
         ffRef.hashCode));
   }
 
@@ -275,6 +315,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
           ..add('requirements', requirements)
           ..add('latitude', latitude)
           ..add('instagram', instagram)
+          ..add('images', images)
+          ..add('businessHours', businessHours)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -325,6 +367,17 @@ class ClassDetailsRecordBuilder
   String? get instagram => _$this._instagram;
   set instagram(String? instagram) => _$this._instagram = instagram;
 
+  ListBuilder<String>? _images;
+  ListBuilder<String> get images =>
+      _$this._images ??= new ListBuilder<String>();
+  set images(ListBuilder<String>? images) => _$this._images = images;
+
+  ListBuilder<String>? _businessHours;
+  ListBuilder<String> get businessHours =>
+      _$this._businessHours ??= new ListBuilder<String>();
+  set businessHours(ListBuilder<String>? businessHours) =>
+      _$this._businessHours = businessHours;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -346,6 +399,8 @@ class ClassDetailsRecordBuilder
       _requirements = $v.requirements;
       _latitude = $v.latitude;
       _instagram = $v.instagram;
+      _images = $v.images?.toBuilder();
+      _businessHours = $v.businessHours?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -367,19 +422,36 @@ class ClassDetailsRecordBuilder
   ClassDetailsRecord build() => _build();
 
   _$ClassDetailsRecord _build() {
-    final _$result = _$v ??
-        new _$ClassDetailsRecord._(
-            classRef: classRef,
-            monthlyLimit: monthlyLimit,
-            duration: duration,
-            misc: misc,
-            address: address,
-            website: website,
-            description: description,
-            requirements: requirements,
-            latitude: latitude,
-            instagram: instagram,
-            ffRef: ffRef);
+    _$ClassDetailsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$ClassDetailsRecord._(
+              classRef: classRef,
+              monthlyLimit: monthlyLimit,
+              duration: duration,
+              misc: misc,
+              address: address,
+              website: website,
+              description: description,
+              requirements: requirements,
+              latitude: latitude,
+              instagram: instagram,
+              images: _images?.build(),
+              businessHours: _businessHours?.build(),
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'images';
+        _images?.build();
+        _$failedField = 'businessHours';
+        _businessHours?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'ClassDetailsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -73,6 +73,13 @@ class _$ReservationsRecordSerializer
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
     }
+    value = object.createdAt;
+    if (value != null) {
+      result
+        ..add('createdAt')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -130,6 +137,10 @@ class _$ReservationsRecordSerializer
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
           break;
+        case 'createdAt':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -159,6 +170,8 @@ class _$ReservationsRecord extends ReservationsRecord {
   @override
   final DocumentReference<Object?>? chatsRef;
   @override
+  final DateTime? createdAt;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ReservationsRecord(
@@ -173,6 +186,7 @@ class _$ReservationsRecord extends ReservationsRecord {
       this.className,
       this.time,
       this.chatsRef,
+      this.createdAt,
       this.ffRef})
       : super._();
 
@@ -196,6 +210,7 @@ class _$ReservationsRecord extends ReservationsRecord {
         className == other.className &&
         time == other.time &&
         chatsRef == other.chatsRef &&
+        createdAt == other.createdAt &&
         ffRef == other.ffRef;
   }
 
@@ -206,12 +221,14 @@ class _$ReservationsRecord extends ReservationsRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
-                            user.hashCode),
-                        classRequiredCredits.hashCode),
-                    className.hashCode),
-                time.hashCode),
-            chatsRef.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
+                                user.hashCode),
+                            classRequiredCredits.hashCode),
+                        className.hashCode),
+                    time.hashCode),
+                chatsRef.hashCode),
+            createdAt.hashCode),
         ffRef.hashCode));
   }
 
@@ -225,6 +242,7 @@ class _$ReservationsRecord extends ReservationsRecord {
           ..add('className', className)
           ..add('time', time)
           ..add('chatsRef', chatsRef)
+          ..add('createdAt', createdAt)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -265,6 +283,10 @@ class ReservationsRecordBuilder
   set chatsRef(DocumentReference<Object?>? chatsRef) =>
       _$this._chatsRef = chatsRef;
 
+  DateTime? _createdAt;
+  DateTime? get createdAt => _$this._createdAt;
+  set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -283,6 +305,7 @@ class ReservationsRecordBuilder
       _className = $v.className;
       _time = $v.time;
       _chatsRef = $v.chatsRef;
+      _createdAt = $v.createdAt;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -313,6 +336,7 @@ class ReservationsRecordBuilder
             className: className,
             time: time,
             chatsRef: chatsRef,
+            createdAt: createdAt,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

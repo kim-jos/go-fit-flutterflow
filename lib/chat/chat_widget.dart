@@ -1,5 +1,4 @@
 import '../backend/backend.dart';
-import '../components/chat_user_list_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -94,33 +93,10 @@ class _ChatWidgetState extends State<ChatWidget> {
         actions: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-            child: InkWell(
-              onTap: () async {
-                logFirebaseEvent('CHAT_PAGE_Icon_x569z336_ON_TAP');
-                logFirebaseEvent('Icon_bottom_sheet');
-                await showModalBottomSheet(
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  enableDrag: false,
-                  context: context,
-                  builder: (context) {
-                    return Padding(
-                      padding: MediaQuery.of(context).viewInsets,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: ChatUserListWidget(
-                          chatUserList: widget.chatUserList?.toList(),
-                        ),
-                      ),
-                    );
-                  },
-                ).then((value) => setState(() {}));
-              },
-              child: Icon(
-                Icons.group,
-                color: Colors.black,
-                size: 24,
-              ),
+            child: Icon(
+              Icons.group,
+              color: Colors.black,
+              size: 24,
             ),
           ),
         ],

@@ -26,12 +26,6 @@ class FFAppState extends ChangeNotifier {
 
   late SharedPreferences prefs;
 
-  DateTime? _selectedDate;
-  DateTime? get selectedDate => _selectedDate;
-  set selectedDate(DateTime? _value) {
-    _selectedDate = _value;
-  }
-
   String _selectedTime = '';
   String get selectedTime => _selectedTime;
   set selectedTime(String _value) {
@@ -56,6 +50,18 @@ class FFAppState extends ChangeNotifier {
 
   void removeFromChatGroupMembers(DocumentReference _value) {
     _chatGroupMembers.remove(_value);
+  }
+
+  DateTime? _selectedDate;
+  DateTime? get selectedDate => _selectedDate;
+  set selectedDate(DateTime? _value) {
+    _selectedDate = _value;
+  }
+
+  DocumentReference? _markerClassRef;
+  DocumentReference? get markerClassRef => _markerClassRef;
+  set markerClassRef(DocumentReference? _value) {
+    _markerClassRef = _value;
   }
 }
 

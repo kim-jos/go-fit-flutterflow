@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_user_provider.dart';
@@ -11,6 +12,7 @@ import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
@@ -124,9 +126,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
+      'Home': HomeWidget(),
       'Classes': ClassesWidget(),
-      'ChatGroups': ChatGroupsWidget(),
-      'Settings': SettingsWidget(),
+      'Credits': CreditsWidget(),
+      'MyReservations': MyReservationsWidget(),
+      'MyPage': MyPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -145,23 +149,35 @@ class _NavBarPageState extends State<NavBarPage> {
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.fitness_center_outlined,
+            icon: FaIcon(
+              FontAwesomeIcons.home,
               size: 24,
             ),
-            label: '운동시설',
+            label: '홈',
             tooltip: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat_bubble_outline,
+            icon: FaIcon(
+              FontAwesomeIcons.mapMarkerAlt,
               size: 24,
             ),
-            activeIcon: Icon(
-              Icons.chat_bubble_rounded,
+            label: '내 주변',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.dollarSign,
               size: 24,
             ),
-            label: '소셜',
+            label: '크레딧',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
+              FontAwesomeIcons.calendarCheck,
+              size: 24,
+            ),
+            label: '예약현황',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -169,7 +185,7 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.account_circle,
               size: 24,
             ),
-            label: '내 계정',
+            label: '내 정보',
             tooltip: '',
           )
         ],

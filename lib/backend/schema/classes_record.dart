@@ -26,6 +26,8 @@ abstract class ClassesRecord
 
   int? get ratings;
 
+  LatLng? get coords;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -70,6 +72,7 @@ Map<String, dynamic> createClassesRecordData({
   String? distance,
   bool? hideClass,
   int? ratings,
+  LatLng? coords,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassesRecord.serializer,
@@ -82,7 +85,8 @@ Map<String, dynamic> createClassesRecordData({
         ..priority = priority
         ..distance = distance
         ..hideClass = hideClass
-        ..ratings = ratings,
+        ..ratings = ratings
+        ..coords = coords,
     ),
   );
 

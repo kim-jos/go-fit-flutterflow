@@ -91,48 +91,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AuthLoginWidget(),
             ),
             FFRoute(
-              name: 'ClassDetails',
-              path: 'ClassDetails',
-              builder: (context, params) => ClassDetailsWidget(
-                classRef: params.getParam('classRef',
-                    ParamType.DocumentReference, false, ['classes']),
-                className: params.getParam('className', ParamType.String),
-                maxLimit: params.getParam('maxLimit', ParamType.int),
-                exerciseType: params.getParam('exerciseType', ParamType.String),
-                image: params.getParam('image', ParamType.String),
-                creditsRequired:
-                    params.getParam('creditsRequired', ParamType.int),
-              ),
-            ),
-            FFRoute(
-              name: 'MyReservations',
-              path: 'myReservations',
-              requireAuth: true,
-              builder: (context, params) => MyReservationsWidget(),
-            ),
-            FFRoute(
-              name: 'Classes',
-              path: 'classes',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Classes')
-                  : ClassesWidget(),
-            ),
-            FFRoute(
-              name: 'ChatGroups',
-              path: 'chatGroups',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ChatGroups')
-                  : ChatGroupsWidget(),
-            ),
-            FFRoute(
-              name: 'Settings',
-              path: 'settings',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Settings')
-                  : SettingsWidget(),
-            ),
-            FFRoute(
               name: 'Chat',
               path: 'chat',
               requireAuth: true,
@@ -148,10 +106,44 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'ChatGroups',
+              path: 'chatGroups',
+              requireAuth: true,
+              builder: (context, params) => ChatGroupsWidget(),
+            ),
+            FFRoute(
               name: 'ChatCreateGroup',
               path: 'chatCreateGroup',
               requireAuth: true,
               builder: (context, params) => ChatCreateGroupWidget(),
+            ),
+            FFRoute(
+              name: 'Classes',
+              path: 'classes',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Classes')
+                  : ClassesWidget(),
+            ),
+            FFRoute(
+              name: 'ClassDetails',
+              path: 'ClassDetails',
+              builder: (context, params) => ClassDetailsWidget(
+                classRef: params.getParam('classRef',
+                    ParamType.DocumentReference, false, ['classes']),
+                className: params.getParam('className', ParamType.String),
+                maxLimit: params.getParam('maxLimit', ParamType.int),
+                exerciseType: params.getParam('exerciseType', ParamType.String),
+                image: params.getParam('image', ParamType.String),
+                creditsRequired:
+                    params.getParam('creditsRequired', ParamType.int),
+              ),
+            ),
+            FFRoute(
+              name: 'MyPage',
+              path: 'myPage',
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'MyPage')
+                  : MyPageWidget(),
             ),
             FFRoute(
               name: 'ReservationComplete',
@@ -171,22 +163,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'Feedback',
-              path: 'feedback',
+              name: 'Credits',
+              path: 'credits',
               requireAuth: true,
-              builder: (context, params) => FeedbackWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Credits')
+                  : CreditsWidget(),
             ),
             FFRoute(
-              name: 'TermsOfService',
-              path: 'termsOfService',
+              name: 'Home',
+              path: 'home',
               requireAuth: true,
-              builder: (context, params) => TermsOfServiceWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Home')
+                  : HomeWidget(),
             ),
             FFRoute(
-              name: 'Subscriptions',
-              path: 'subscriptions',
+              name: 'MyReservations',
+              path: 'myReservations',
               requireAuth: true,
-              builder: (context, params) => SubscriptionsWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'MyReservations')
+                  : MyReservationsWidget(),
+            ),
+            FFRoute(
+              name: 'CustomerService',
+              path: 'customerService',
+              requireAuth: true,
+              builder: (context, params) => CustomerServiceWidget(),
+            ),
+            FFRoute(
+              name: 'Settings',
+              path: 'settings',
+              requireAuth: true,
+              builder: (context, params) => SettingsWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
@@ -359,13 +369,14 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: SpinKitRing(
-                      color: FlutterFlowTheme.of(context).primaryColor,
-                      size: 40,
+              ? Container(
+                  color: Colors.transparent,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/logo2.png',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.scaleDown,
                     ),
                   ),
                 )

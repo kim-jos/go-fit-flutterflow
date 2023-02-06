@@ -1,28 +1,27 @@
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class SubscriptionsWidget extends StatefulWidget {
-  const SubscriptionsWidget({Key? key}) : super(key: key);
+class CreditsWidget extends StatefulWidget {
+  const CreditsWidget({Key? key}) : super(key: key);
 
   @override
-  _SubscriptionsWidgetState createState() => _SubscriptionsWidgetState();
+  _CreditsWidgetState createState() => _CreditsWidgetState();
 }
 
-class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
+class _CreditsWidgetState extends State<CreditsWidget> {
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'Subscriptions'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Credits'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -42,22 +41,6 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
-          ),
-          onPressed: () async {
-            logFirebaseEvent('SUBSCRIPTIONS_arrow_back_rounded_ICN_ON_');
-            logFirebaseEvent('IconButton_navigate_back');
-            context.pop();
-          },
-        ),
         title: Text(
           '크레딧 구매',
           style: FlutterFlowTheme.of(context).bodyText1.override(
@@ -66,7 +49,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
               ),
         ),
         actions: [],
-        centerTitle: false,
+        centerTitle: true,
         elevation: 0,
       ),
       body: SafeArea(
@@ -123,7 +106,7 @@ class _SubscriptionsWidgetState extends State<SubscriptionsWidget> {
                           child: InkWell(
                             onTap: () async {
                               logFirebaseEvent(
-                                  'SUBSCRIPTIONS_Container_s6m3b4xe_ON_TAP');
+                                  'CREDITS_PAGE_Container_s6m3b4xe_ON_TAP');
                               logFirebaseEvent('Container_launch_u_r_l');
                               await launchURL(
                                   listViewMembershipsRecord.paymentUrl!);

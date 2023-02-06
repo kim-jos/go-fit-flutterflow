@@ -1,13 +1,14 @@
-import '../auth/auth_util.dart';
-import '../auth/firebase_user_provider.dart';
 import '../backend/backend.dart';
-import '../components/insert_phone_number_widget.dart';
+import '../components/class_list_widget.dart';
+import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,11 @@ class ClassesWidget extends StatefulWidget {
 }
 
 class _ClassesWidgetState extends State<ClassesWidget> {
-  TextEditingController? textController;
+  LatLng? currentUserLocationValue;
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  LatLng? googleMapsCenter;
+  final googleMapsController = Completer<GoogleMapController>();
 
   @override
   void initState() {
@@ -28,410 +32,437 @@ class _ClassesWidgetState extends State<ClassesWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('CLASSES_PAGE_Classes_ON_PAGE_LOAD');
-      if (loggedIn) {
-        if (currentPhoneNumber == '') {
-          logFirebaseEvent('Classes_bottom_sheet');
-          await showModalBottomSheet(
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            enableDrag: false,
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: MediaQuery.of(context).viewInsets,
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  child: InsertPhoneNumberWidget(),
-                ),
-              );
-            },
-          ).then((value) => setState(() {}));
-        }
-        return;
-      } else {
-        return;
-      }
+      logFirebaseEvent('Classes_update_local_state');
+      FFAppState().update(() {});
     });
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Classes'});
-    textController = TextEditingController();
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    textController?.dispose();
+    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              '운동시설',
-              style: FlutterFlowTheme.of(context).title1.override(
-                    fontFamily: 'Poppins',
-                    color: FlutterFlowTheme.of(context).primaryBtnText,
-                  ),
+    if (currentUserLocationValue == null) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: SpinKitRing(
+              color: FlutterFlowTheme.of(context).primaryColor,
+              size: 40,
             ),
-          ],
+          ),
         ),
-        actions: [],
-        centerTitle: true,
-        elevation: 4,
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.95,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            width: 2,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
-                                child: Icon(
-                                  Icons.search_rounded,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                  size: 24,
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      4, 0, 0, 0),
-                                  child: TextFormField(
-                                    controller: textController,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      hintText: '검색',
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      errorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                      focusedErrorBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
-                                      ),
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText1,
-                                    maxLines: null,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.95, 0),
-                                  child: Icon(
-                                    Icons.tune_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: StreamBuilder<List<ClassesRecord>>(
-                    stream: queryClassesRecord(
-                      queryBuilder: (classesRecord) => classesRecord
-                          .where('hideClass', isEqualTo: false)
-                          .orderBy('priority'),
-                      limit: 20,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: SpinKitRing(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              size: 40,
-                            ),
-                          ),
-                        );
-                      }
-                      List<ClassesRecord> listViewClassesRecordList =
-                          snapshot.data!;
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewClassesRecordList.length,
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewClassesRecord =
-                              listViewClassesRecordList[listViewIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-                            child: Container(
-                              width: double.infinity,
-                              height: 90,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              child: InkWell(
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'CLASSES_PAGE_Row_rzb4q98p_ON_TAP');
-                                  logFirebaseEvent('Row_update_local_state');
-                                  FFAppState().update(() {
-                                    FFAppState().creditsRequired =
-                                        listViewClassesRecord.creditsRequired!;
-                                  });
-                                  logFirebaseEvent('Row_navigate_to');
+      );
+    }
 
-                                  context.pushNamed(
-                                    'ClassDetails',
-                                    queryParams: {
-                                      'classRef': serializeParam(
-                                        listViewClassesRecord.reference,
-                                        ParamType.DocumentReference,
-                                      ),
-                                      'className': serializeParam(
-                                        listViewClassesRecord.name,
-                                        ParamType.String,
-                                      ),
-                                      'exerciseType': serializeParam(
-                                        listViewClassesRecord.exerciseType,
-                                        ParamType.String,
-                                      ),
-                                      'image': serializeParam(
-                                        listViewClassesRecord.image,
-                                        ParamType.String,
-                                      ),
-                                      'creditsRequired': serializeParam(
-                                        listViewClassesRecord.creditsRequired,
-                                        ParamType.int,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.rightToLeft,
-                                      ),
+    return StreamBuilder<List<ClassesRecord>>(
+      stream: queryClassesRecord(
+        queryBuilder: (classesRecord) => classesRecord.orderBy('priority'),
+      ),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(
+            child: SizedBox(
+              width: 40,
+              height: 40,
+              child: SpinKitRing(
+                color: FlutterFlowTheme.of(context).primaryColor,
+                size: 40,
+              ),
+            ),
+          );
+        }
+        List<ClassesRecord> classesClassesRecordList = snapshot.data!;
+        return Scaffold(
+          key: scaffoldKey,
+          resizeToAvoidBottomInset: false,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          body: SafeArea(
+            child: GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: FlutterFlowGoogleMap(
+                            controller: googleMapsController,
+                            onCameraIdle: (latLng) => googleMapsCenter = latLng,
+                            initialLocation: googleMapsCenter ??=
+                                currentUserLocationValue!,
+                            markers: classesClassesRecordList
+                                .where((e) => e.hideClass == false)
+                                .toList()
+                                .map(
+                                  (classesClassesRecord) => FlutterFlowMarker(
+                                    classesClassesRecord.reference.path,
+                                    classesClassesRecord.coords!,
+                                    () async {
+                                      logFirebaseEvent(
+                                          'CLASSES_GoogleMap_b3v9l3nf_ON_MARKER_TAP');
+                                      logFirebaseEvent(
+                                          'GoogleMap_update_local_state');
+                                      FFAppState().update(() {
+                                        FFAppState().markerClassRef =
+                                            classesClassesRecord.reference;
+                                      });
                                     },
-                                  );
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Stack(
-                                          alignment:
-                                              AlignmentDirectional(0.7, -0.75),
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 8, 8, 8),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: CachedNetworkImage(
-                                                  imageUrl:
-                                                      listViewClassesRecord
-                                                          .image!,
-                                                  width: 74,
-                                                  height: 74,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                  ),
+                                )
+                                .toList(),
+                            markerColor: GoogleMarkerColor.orange,
+                            mapType: MapType.normal,
+                            style: GoogleMapStyle.standard,
+                            initialZoom: 14,
+                            allowInteraction: true,
+                            allowZoom: true,
+                            showZoomControls: true,
+                            showLocation: true,
+                            showCompass: false,
+                            showMapToolbar: false,
+                            showTraffic: false,
+                            centerMapOnMarkerTap: true,
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(-0.01, 0.65),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 10),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'CLASSES_PAGE_목록_보기_BTN_ON_TAP');
+                                        logFirebaseEvent(
+                                            'Button_update_local_state');
+                                        FFAppState().update(() {
+                                          FFAppState().markerClassRef = null;
+                                        });
+                                        logFirebaseEvent('Button_bottom_sheet');
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.of(context)
+                                                  .viewInsets,
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.8,
+                                                child: ClassListWidget(),
                                               ),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
+                                      },
+                                      text: '목록 보기',
+                                      options: FFButtonOptions(
+                                        width: 100,
+                                        height: 40,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.white,
                                             ),
-                                            Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.35, 0.35),
-                                              child: Text(
-                                                listViewClassesRecord
-                                                    .creditsRequired!
-                                                    .toString(),
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Poppins',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryBtnText,
-                                                        ),
-                                              ),
-                                            ),
-                                          ],
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 1, 0, 0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  listViewClassesRecord.name!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .subtitle2,
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  listViewClassesRecord
-                                                      .exerciseType!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2,
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  listViewClassesRecord
-                                                      .distance!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Poppins',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
+                                        borderRadius: BorderRadius.circular(50),
                                       ),
                                     ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 8, 0),
-                                            child: Icon(
-                                              Icons.chevron_right_outlined,
-                                              color: Color(0xFF95A1AC),
-                                              size: 24,
-                                            ),
+                                  ),
+                                ),
+                                if (FFAppState().markerClassRef != null)
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0.95),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 0, 10, 1),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          logFirebaseEvent(
+                                              'CLASSES_PAGE_ClassContainer_ON_TAP');
+                                          logFirebaseEvent(
+                                              'ClassContainer_navigate_to');
+
+                                          context.pushNamed(
+                                            'ClassDetails',
+                                            queryParams: {
+                                              'classRef': serializeParam(
+                                                classesClassesRecordList
+                                                    .where((e) =>
+                                                        e.reference ==
+                                                        FFAppState()
+                                                            .markerClassRef)
+                                                    .toList()
+                                                    .first
+                                                    .reference,
+                                                ParamType.DocumentReference,
+                                              ),
+                                              'className': serializeParam(
+                                                classesClassesRecordList
+                                                    .where((e) =>
+                                                        e.reference ==
+                                                        FFAppState()
+                                                            .markerClassRef)
+                                                    .toList()
+                                                    .first
+                                                    .name,
+                                                ParamType.String,
+                                              ),
+                                              'exerciseType': serializeParam(
+                                                classesClassesRecordList
+                                                    .where((e) =>
+                                                        e.reference ==
+                                                        FFAppState()
+                                                            .markerClassRef)
+                                                    .toList()
+                                                    .first
+                                                    .exerciseType,
+                                                ParamType.String,
+                                              ),
+                                              'image': serializeParam(
+                                                classesClassesRecordList
+                                                    .where((e) =>
+                                                        e.reference ==
+                                                        FFAppState()
+                                                            .markerClassRef)
+                                                    .toList()
+                                                    .first
+                                                    .image,
+                                                ParamType.String,
+                                              ),
+                                              'creditsRequired': serializeParam(
+                                                classesClassesRecordList
+                                                    .where((e) =>
+                                                        e.reference ==
+                                                        FFAppState()
+                                                            .markerClassRef)
+                                                    .toList()
+                                                    .first
+                                                    .creditsRequired,
+                                                ParamType.int,
+                                              ),
+                                            }.withoutNulls,
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .rightToLeft,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 90,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Stack(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0.7, -0.75),
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8, 8, 8, 8),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8),
+                                                          child:
+                                                              CachedNetworkImage(
+                                                            imageUrl: classesClassesRecordList
+                                                                .where((e) =>
+                                                                    e.reference ==
+                                                                    FFAppState()
+                                                                        .markerClassRef)
+                                                                .toList()
+                                                                .first
+                                                                .image!,
+                                                            width: 74,
+                                                            height: 74,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0.35, 0.35),
+                                                        child: Text(
+                                                          classesClassesRecordList
+                                                              .where((e) =>
+                                                                  e.reference ==
+                                                                  FFAppState()
+                                                                      .markerClassRef)
+                                                              .toList()
+                                                              .first
+                                                              .creditsRequired!
+                                                              .toString(),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 1, 0, 0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Text(
+                                                            classesClassesRecordList
+                                                                .where((e) =>
+                                                                    e.reference ==
+                                                                    FFAppState()
+                                                                        .markerClassRef)
+                                                                .toList()
+                                                                .first
+                                                                .name!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle2,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Text(
+                                                            classesClassesRecordList
+                                                                .where((e) =>
+                                                                    e.reference ==
+                                                                    FFAppState()
+                                                                        .markerClassRef)
+                                                                .toList()
+                                                                .first
+                                                                .exerciseType!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText2,
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Text(
+                                                            classesClassesRecordList
+                                                                .where((e) =>
+                                                                    e.reference ==
+                                                                    FFAppState()
+                                                                        .markerClassRef)
+                                                                .toList()
+                                                                .first
+                                                                .distance!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Poppins',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                  ],
-                                ),
-                              ),
+                                  ),
+                              ],
                             ),
-                          );
-                        },
-                      );
-                    },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

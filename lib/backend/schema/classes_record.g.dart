@@ -73,6 +73,13 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
         ..add('ratings')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.coords;
+    if (value != null) {
+      result
+        ..add('coords')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(LatLng)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -128,6 +135,10 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
           result.ratings = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'coords':
+          result.coords = serializers.deserialize(value,
+              specifiedType: const FullType(LatLng)) as LatLng?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -159,6 +170,8 @@ class _$ClassesRecord extends ClassesRecord {
   @override
   final int? ratings;
   @override
+  final LatLng? coords;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassesRecord([void Function(ClassesRecordBuilder)? updates]) =>
@@ -173,6 +186,7 @@ class _$ClassesRecord extends ClassesRecord {
       this.distance,
       this.hideClass,
       this.ratings,
+      this.coords,
       this.ffRef})
       : super._();
 
@@ -195,6 +209,7 @@ class _$ClassesRecord extends ClassesRecord {
         distance == other.distance &&
         hideClass == other.hideClass &&
         ratings == other.ratings &&
+        coords == other.coords &&
         ffRef == other.ffRef;
   }
 
@@ -206,13 +221,15 @@ class _$ClassesRecord extends ClassesRecord {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc($jc(0, name.hashCode), image.hashCode),
-                                creditsRequired.hashCode),
-                            exerciseType.hashCode),
-                        priority.hashCode),
-                    distance.hashCode),
-                hideClass.hashCode),
-            ratings.hashCode),
+                            $jc(
+                                $jc($jc($jc(0, name.hashCode), image.hashCode),
+                                    creditsRequired.hashCode),
+                                exerciseType.hashCode),
+                            priority.hashCode),
+                        distance.hashCode),
+                    hideClass.hashCode),
+                ratings.hashCode),
+            coords.hashCode),
         ffRef.hashCode));
   }
 
@@ -227,6 +244,7 @@ class _$ClassesRecord extends ClassesRecord {
           ..add('distance', distance)
           ..add('hideClass', hideClass)
           ..add('ratings', ratings)
+          ..add('coords', coords)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -269,6 +287,10 @@ class ClassesRecordBuilder
   int? get ratings => _$this._ratings;
   set ratings(int? ratings) => _$this._ratings = ratings;
 
+  LatLng? _coords;
+  LatLng? get coords => _$this._coords;
+  set coords(LatLng? coords) => _$this._coords = coords;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -288,6 +310,7 @@ class ClassesRecordBuilder
       _distance = $v.distance;
       _hideClass = $v.hideClass;
       _ratings = $v.ratings;
+      _coords = $v.coords;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -319,6 +342,7 @@ class ClassesRecordBuilder
             distance: distance,
             hideClass: hideClass,
             ratings: ratings,
+            coords: coords,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

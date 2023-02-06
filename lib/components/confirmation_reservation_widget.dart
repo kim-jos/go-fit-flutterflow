@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
-import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -19,7 +18,6 @@ class ConfirmationReservationWidget extends StatefulWidget {
     this.selectedTime,
     this.classRef,
     this.selectedTimeSlot,
-    this.chatGroupRef,
   }) : super(key: key);
 
   final String? className;
@@ -27,7 +25,6 @@ class ConfirmationReservationWidget extends StatefulWidget {
   final String? selectedTime;
   final DocumentReference? classRef;
   final DocumentReference? selectedTimeSlot;
-  final ChatsRecord? chatGroupRef;
 
   @override
   _ConfirmationReservationWidgetState createState() =>
@@ -36,9 +33,6 @@ class ConfirmationReservationWidget extends StatefulWidget {
 
 class _ConfirmationReservationWidgetState
     extends State<ConfirmationReservationWidget> {
-  ChatsRecord? groupChat;
-  ReservationsRecord? newReservation;
-
   @override
   void initState() {
     super.initState();
@@ -212,7 +206,6 @@ class _ConfirmationReservationWidgetState
                               onPressed: () async {
                                 logFirebaseEvent(
                                     'CONFIRMATION_RESERVATION_예약하기_BTN_ON_TAP');
-                                var _shouldSetState = false;
                                 if (valueOrDefault(
                                         currentUserDocument?.currCredits, 0) <
                                     checkoutBottomSheetClassesRecord
@@ -234,47 +227,34 @@ class _ConfirmationReservationWidgetState
                                       );
                                     },
                                   );
-                                  if (_shouldSetState) setState(() {});
                                   return;
                                 }
                                 // reservations collection
                                 logFirebaseEvent(
                                     'Button_reservationscollection');
 
-                                final reservationsCreateData =
-                                    createReservationsRecordData(
-                                  date: dateTimeFormat(
-                                    'yMd',
-                                    widget.selectedDate,
-                                    locale: FFLocalizations.of(context)
-                                        .languageCode,
+                                final reservationsCreateData = {
+                                  ...createReservationsRecordData(
+                                    date: dateTimeFormat(
+                                      'yMd',
+                                      widget.selectedDate,
+                                      locale: FFLocalizations.of(context)
+                                          .languageCode,
+                                    ),
+                                    timeSlot: widget.selectedTimeSlot,
+                                    user: currentUserReference,
+                                    classRequiredCredits:
+                                        checkoutBottomSheetClassesRecord
+                                            .creditsRequired,
+                                    className:
+                                        checkoutBottomSheetClassesRecord.name,
+                                    time: widget.selectedTime,
                                   ),
-                                  timeSlot: widget.selectedTimeSlot,
-                                  user: currentUserReference,
-                                  classRequiredCredits:
-                                      checkoutBottomSheetClassesRecord
-                                          .creditsRequired,
-                                  className:
-                                      checkoutBottomSheetClassesRecord.name,
-                                  time: widget.selectedTime,
-                                  chatsRef: widget.chatGroupRef!.reference,
-                                );
-                                var reservationsRecordReference =
-                                    ReservationsRecord.collection.doc();
-                                await reservationsRecordReference
+                                  'createdAt': FieldValue.serverTimestamp(),
+                                };
+                                await ReservationsRecord.collection
+                                    .doc()
                                     .set(reservationsCreateData);
-                                newReservation =
-                                    ReservationsRecord.getDocumentFromData(
-                                        reservationsCreateData,
-                                        reservationsRecordReference);
-                                _shouldSetState = true;
-                                logFirebaseEvent('Button_group_chat_action');
-                                groupChat = await FFChatManager.instance
-                                    .addGroupMembers(
-                                  widget.chatGroupRef!,
-                                  [currentUserReference!],
-                                );
-                                _shouldSetState = true;
                                 // Decrement currCredits
                                 logFirebaseEvent('Button_DecrementcurrCredits');
 
@@ -291,16 +271,16 @@ class _ConfirmationReservationWidgetState
                                   notificationText:
                                       '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${widget.className} - ${widget.selectedDate?.toString()} - ${widget.selectedTime}',
                                   userRefs: buttonUsersRecordList
+                                      .where((e) => e.admin!)
+                                      .toList()
                                       .map((e) => e.reference)
                                       .toList(),
-                                  initialPageName: 'ChatGroups',
+                                  initialPageName: 'Classes',
                                   parameterData: {},
                                 );
                                 logFirebaseEvent('Button_navigate_to');
 
                                 context.goNamed('ReservationComplete');
-
-                                if (_shouldSetState) setState(() {});
                               },
                               text: '예약하기',
                               options: FFButtonOptions(

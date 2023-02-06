@@ -78,13 +78,14 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
 
   @override
   Widget build(BuildContext context) => _loading
-      ? Center(
-          child: SizedBox(
-            width: 40,
-            height: 40,
-            child: SpinKitRing(
-              color: FlutterFlowTheme.of(context).primaryColor,
-              size: 40,
+      ? Container(
+          color: Colors.transparent,
+          child: Center(
+            child: Image.asset(
+              'assets/images/logo2.png',
+              width: 50,
+              height: 50,
+              fit: BoxFit.scaleDown,
             ),
           ),
         )
@@ -114,6 +115,16 @@ final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
   'AuthEmailLogin': ParameterData.none(),
   'AuthLogin': ParameterData.none(),
+  'Chat': (data) async => ParameterData(
+        allParams: {
+          'chatUser': await getDocumentParameter<UsersRecord>(
+              data, 'chatUser', UsersRecord.serializer),
+          'chatRef': getParameter<DocumentReference>(data, 'chatRef'),
+        },
+      ),
+  'ChatGroups': ParameterData.none(),
+  'ChatCreateGroup': ParameterData.none(),
+  'Classes': ParameterData.none(),
   'ClassDetails': (data) async => ParameterData(
         allParams: {
           'classRef': getParameter<DocumentReference>(data, 'classRef'),
@@ -124,18 +135,7 @@ final parametersBuilderMap =
           'creditsRequired': getParameter<int>(data, 'creditsRequired'),
         },
       ),
-  'MyReservations': ParameterData.none(),
-  'Classes': ParameterData.none(),
-  'ChatGroups': ParameterData.none(),
-  'Settings': ParameterData.none(),
-  'Chat': (data) async => ParameterData(
-        allParams: {
-          'chatUser': await getDocumentParameter<UsersRecord>(
-              data, 'chatUser', UsersRecord.serializer),
-          'chatRef': getParameter<DocumentReference>(data, 'chatRef'),
-        },
-      ),
-  'ChatCreateGroup': ParameterData.none(),
+  'MyPage': ParameterData.none(),
   'ReservationComplete': ParameterData.none(),
   'ChatAddUser': (data) async => ParameterData(
         allParams: {
@@ -143,9 +143,11 @@ final parametersBuilderMap =
               data, 'chat', ChatsRecord.serializer),
         },
       ),
-  'Feedback': ParameterData.none(),
-  'TermsOfService': ParameterData.none(),
-  'Subscriptions': ParameterData.none(),
+  'Credits': ParameterData.none(),
+  'Home': ParameterData.none(),
+  'MyReservations': ParameterData.none(),
+  'CustomerService': ParameterData.none(),
+  'Settings': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
