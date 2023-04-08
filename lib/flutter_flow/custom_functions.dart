@@ -53,3 +53,7 @@ DateTime dateAndTimeStringParser(
   return DateTime.parse(
       DateFormat("yyyy-MM-dd").format(tempDate) + " " + timeString + ":00");
 }
+
+int convertWeekDayToInteger(DateTime date) {
+  return date.weekday;
+}

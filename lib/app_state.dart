@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'flutter_flow/lat_lng.dart';
 
 class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();
@@ -32,26 +31,6 @@ class FFAppState extends ChangeNotifier {
     _selectedTime = _value;
   }
 
-  int _creditsRequired = 0;
-  int get creditsRequired => _creditsRequired;
-  set creditsRequired(int _value) {
-    _creditsRequired = _value;
-  }
-
-  List<DocumentReference> _chatGroupMembers = [];
-  List<DocumentReference> get chatGroupMembers => _chatGroupMembers;
-  set chatGroupMembers(List<DocumentReference> _value) {
-    _chatGroupMembers = _value;
-  }
-
-  void addToChatGroupMembers(DocumentReference _value) {
-    _chatGroupMembers.add(_value);
-  }
-
-  void removeFromChatGroupMembers(DocumentReference _value) {
-    _chatGroupMembers.remove(_value);
-  }
-
   DateTime? _selectedDate;
   DateTime? get selectedDate => _selectedDate;
   set selectedDate(DateTime? _value) {
@@ -62,6 +41,12 @@ class FFAppState extends ChangeNotifier {
   DocumentReference? get markerClassRef => _markerClassRef;
   set markerClassRef(DocumentReference? _value) {
     _markerClassRef = _value;
+  }
+
+  bool _didPressReferralVerification = false;
+  bool get didPressReferralVerification => _didPressReferralVerification;
+  set didPressReferralVerification(bool _value) {
+    _didPressReferralVerification = _value;
   }
 }
 

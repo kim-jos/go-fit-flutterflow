@@ -108,6 +108,20 @@ class _$ClassDetailsRecordSerializer
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.info;
+    if (value != null) {
+      result
+        ..add('info')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
+    value = object.price;
+    if (value != null) {
+      result
+        ..add('price')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -185,6 +199,16 @@ class _$ClassDetailsRecordSerializer
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'info':
+          result.info.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'price':
+          result.price = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -224,6 +248,10 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final BuiltList<String>? businessHours;
   @override
+  final BuiltList<String>? info;
+  @override
+  final int? price;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassDetailsRecord(
@@ -243,6 +271,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
       this.instagram,
       this.images,
       this.businessHours,
+      this.info,
+      this.price,
       this.ffRef})
       : super._();
 
@@ -271,35 +301,31 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
         instagram == other.instagram &&
         images == other.images &&
         businessHours == other.businessHours &&
+        info == other.info &&
+        price == other.price &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc($jc(0, classRef.hashCode),
-                                                    monthlyLimit.hashCode),
-                                                duration.hashCode),
-                                            misc.hashCode),
-                                        address.hashCode),
-                                    website.hashCode),
-                                description.hashCode),
-                            requirements.hashCode),
-                        latitude.hashCode),
-                    instagram.hashCode),
-                images.hashCode),
-            businessHours.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, classRef.hashCode);
+    _$hash = $jc(_$hash, monthlyLimit.hashCode);
+    _$hash = $jc(_$hash, duration.hashCode);
+    _$hash = $jc(_$hash, misc.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
+    _$hash = $jc(_$hash, website.hashCode);
+    _$hash = $jc(_$hash, description.hashCode);
+    _$hash = $jc(_$hash, requirements.hashCode);
+    _$hash = $jc(_$hash, latitude.hashCode);
+    _$hash = $jc(_$hash, instagram.hashCode);
+    _$hash = $jc(_$hash, images.hashCode);
+    _$hash = $jc(_$hash, businessHours.hashCode);
+    _$hash = $jc(_$hash, info.hashCode);
+    _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -317,6 +343,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
           ..add('instagram', instagram)
           ..add('images', images)
           ..add('businessHours', businessHours)
+          ..add('info', info)
+          ..add('price', price)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -378,6 +406,14 @@ class ClassDetailsRecordBuilder
   set businessHours(ListBuilder<String>? businessHours) =>
       _$this._businessHours = businessHours;
 
+  ListBuilder<String>? _info;
+  ListBuilder<String> get info => _$this._info ??= new ListBuilder<String>();
+  set info(ListBuilder<String>? info) => _$this._info = info;
+
+  int? _price;
+  int? get price => _$this._price;
+  set price(int? price) => _$this._price = price;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -401,6 +437,8 @@ class ClassDetailsRecordBuilder
       _instagram = $v.instagram;
       _images = $v.images?.toBuilder();
       _businessHours = $v.businessHours?.toBuilder();
+      _info = $v.info?.toBuilder();
+      _price = $v.price;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -438,6 +476,8 @@ class ClassDetailsRecordBuilder
               instagram: instagram,
               images: _images?.build(),
               businessHours: _businessHours?.build(),
+              info: _info?.build(),
+              price: price,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -446,6 +486,8 @@ class ClassDetailsRecordBuilder
         _images?.build();
         _$failedField = 'businessHours';
         _businessHours?.build();
+        _$failedField = 'info';
+        _info?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ClassDetailsRecord', _$failedField, e.toString());
@@ -457,4 +499,4 @@ class ClassDetailsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

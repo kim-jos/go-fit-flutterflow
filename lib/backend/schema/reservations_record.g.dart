@@ -65,18 +65,24 @@ class _$ReservationsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.chatsRef;
-    if (value != null) {
-      result
-        ..add('chatsRef')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
-    }
     value = object.createdAt;
     if (value != null) {
       result
         ..add('createdAt')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.isFinal;
+    if (value != null) {
+      result
+        ..add('isFinal')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.startTime;
+    if (value != null) {
+      result
+        ..add('startTime')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
@@ -131,14 +137,16 @@ class _$ReservationsRecordSerializer
           result.time = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'chatsRef':
-          result.chatsRef = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
-          break;
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'isFinal':
+          result.isFinal = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'startTime':
+          result.startTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'Document__Reference__Field':
@@ -168,9 +176,11 @@ class _$ReservationsRecord extends ReservationsRecord {
   @override
   final String? time;
   @override
-  final DocumentReference<Object?>? chatsRef;
-  @override
   final DateTime? createdAt;
+  @override
+  final bool? isFinal;
+  @override
+  final DateTime? startTime;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -185,8 +195,9 @@ class _$ReservationsRecord extends ReservationsRecord {
       this.classRequiredCredits,
       this.className,
       this.time,
-      this.chatsRef,
       this.createdAt,
+      this.isFinal,
+      this.startTime,
       this.ffRef})
       : super._();
 
@@ -209,27 +220,27 @@ class _$ReservationsRecord extends ReservationsRecord {
         classRequiredCredits == other.classRequiredCredits &&
         className == other.className &&
         time == other.time &&
-        chatsRef == other.chatsRef &&
         createdAt == other.createdAt &&
+        isFinal == other.isFinal &&
+        startTime == other.startTime &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc($jc($jc(0, date.hashCode), timeSlot.hashCode),
-                                user.hashCode),
-                            classRequiredCredits.hashCode),
-                        className.hashCode),
-                    time.hashCode),
-                chatsRef.hashCode),
-            createdAt.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, date.hashCode);
+    _$hash = $jc(_$hash, timeSlot.hashCode);
+    _$hash = $jc(_$hash, user.hashCode);
+    _$hash = $jc(_$hash, classRequiredCredits.hashCode);
+    _$hash = $jc(_$hash, className.hashCode);
+    _$hash = $jc(_$hash, time.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, isFinal.hashCode);
+    _$hash = $jc(_$hash, startTime.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -241,8 +252,9 @@ class _$ReservationsRecord extends ReservationsRecord {
           ..add('classRequiredCredits', classRequiredCredits)
           ..add('className', className)
           ..add('time', time)
-          ..add('chatsRef', chatsRef)
           ..add('createdAt', createdAt)
+          ..add('isFinal', isFinal)
+          ..add('startTime', startTime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -278,14 +290,17 @@ class ReservationsRecordBuilder
   String? get time => _$this._time;
   set time(String? time) => _$this._time = time;
 
-  DocumentReference<Object?>? _chatsRef;
-  DocumentReference<Object?>? get chatsRef => _$this._chatsRef;
-  set chatsRef(DocumentReference<Object?>? chatsRef) =>
-      _$this._chatsRef = chatsRef;
-
   DateTime? _createdAt;
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
+
+  bool? _isFinal;
+  bool? get isFinal => _$this._isFinal;
+  set isFinal(bool? isFinal) => _$this._isFinal = isFinal;
+
+  DateTime? _startTime;
+  DateTime? get startTime => _$this._startTime;
+  set startTime(DateTime? startTime) => _$this._startTime = startTime;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -304,8 +319,9 @@ class ReservationsRecordBuilder
       _classRequiredCredits = $v.classRequiredCredits;
       _className = $v.className;
       _time = $v.time;
-      _chatsRef = $v.chatsRef;
       _createdAt = $v.createdAt;
+      _isFinal = $v.isFinal;
+      _startTime = $v.startTime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -335,12 +351,13 @@ class ReservationsRecordBuilder
             classRequiredCredits: classRequiredCredits,
             className: className,
             time: time,
-            chatsRef: chatsRef,
             createdAt: createdAt,
+            isFinal: isFinal,
+            startTime: startTime,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

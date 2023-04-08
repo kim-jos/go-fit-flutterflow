@@ -1,20 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "reservations",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "user",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "createdAt",
-          "order": "DESCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "classAvailableTimeSlots",
       "queryScope": "COLLECTION",
       "fields": [
@@ -33,29 +19,33 @@
       ]
     },
     {
-      "collectionGroup": "chats",
+      "collectionGroup": "reviews",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "className",
-          "order": "DESCENDING"
+          "fieldPath": "classRef",
+          "order": "ASCENDING"
         },
         {
-          "fieldPath": "timeSlotDate",
-          "order": "ASCENDING"
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "chats",
+      "collectionGroup": "reservations",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "users",
-          "arrayConfig": "CONTAINS"
+          "fieldPath": "user",
+          "order": "ASCENDING"
         },
         {
-          "fieldPath": "last_message_time",
+          "fieldPath": "isFinal",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
           "order": "DESCENDING"
         }
       ]
@@ -69,22 +59,12 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "priority",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "chat_messages",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "chat",
+          "fieldPath": "exerciseType",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "timestamp",
-          "order": "DESCENDING"
+          "fieldPath": "priority",
+          "order": "ASCENDING"
         }
       ]
     }

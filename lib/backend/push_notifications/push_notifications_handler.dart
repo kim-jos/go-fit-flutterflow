@@ -79,12 +79,12 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
   @override
   Widget build(BuildContext context) => _loading
       ? Container(
-          color: Colors.transparent,
+          color: FlutterFlowTheme.of(context).primaryBtnText,
           child: Center(
             child: Image.asset(
-              'assets/images/logo2.png',
-              width: 50,
-              height: 50,
+              'assets/images/newLogo12.png',
+              width: 50.0,
+              height: 50.0,
               fit: BoxFit.scaleDown,
             ),
           ),
@@ -115,39 +115,31 @@ final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
   'AuthEmailLogin': ParameterData.none(),
   'AuthLogin': ParameterData.none(),
-  'Chat': (data) async => ParameterData(
-        allParams: {
-          'chatUser': await getDocumentParameter<UsersRecord>(
-              data, 'chatUser', UsersRecord.serializer),
-          'chatRef': getParameter<DocumentReference>(data, 'chatRef'),
-        },
-      ),
-  'ChatGroups': ParameterData.none(),
-  'ChatCreateGroup': ParameterData.none(),
-  'Classes': ParameterData.none(),
   'ClassDetails': (data) async => ParameterData(
         allParams: {
           'classRef': getParameter<DocumentReference>(data, 'classRef'),
           'className': getParameter<String>(data, 'className'),
-          'maxLimit': getParameter<int>(data, 'maxLimit'),
           'exerciseType': getParameter<String>(data, 'exerciseType'),
-          'image': getParameter<String>(data, 'image'),
           'creditsRequired': getParameter<int>(data, 'creditsRequired'),
+          'coords': getParameter<LatLng>(data, 'coords'),
+          'paymentUrl': getParameter<String>(data, 'paymentUrl'),
         },
       ),
-  'MyPage': ParameterData.none(),
+  'Classes': ParameterData.none(),
   'ReservationComplete': ParameterData.none(),
-  'ChatAddUser': (data) async => ParameterData(
-        allParams: {
-          'chat': await getDocumentParameter<ChatsRecord>(
-              data, 'chat', ChatsRecord.serializer),
-        },
-      ),
-  'Credits': ParameterData.none(),
-  'Home': ParameterData.none(),
+  'MyPage': ParameterData.none(),
   'MyReservations': ParameterData.none(),
   'CustomerService': ParameterData.none(),
+  'Home': ParameterData.none(),
+  'AuthPhoneNumber': ParameterData.none(),
   'Settings': ParameterData.none(),
+  'Review': (data) async => ParameterData(
+        allParams: {
+          'classRef': getParameter<DocumentReference>(data, 'classRef'),
+          'reservationRef':
+              getParameter<DocumentReference>(data, 'reservationRef'),
+        },
+      ),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

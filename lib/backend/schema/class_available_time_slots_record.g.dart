@@ -48,14 +48,6 @@ class _$ClassAvailableTimeSlotsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.weekdays;
-    if (value != null) {
-      result
-        ..add('weekdays')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
-    }
     value = object.minHoursBeforeClass;
     if (value != null) {
       result
@@ -89,6 +81,20 @@ class _$ClassAvailableTimeSlotsRecordSerializer
       result
         ..add('minHoursToCancel')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.creditsRequired;
+    if (value != null) {
+      result
+        ..add('creditsRequired')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.weekdays;
+    if (value != null) {
+      result
+        ..add('weekdays')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(int)])));
     }
     value = object.ffRef;
     if (value != null) {
@@ -127,12 +133,6 @@ class _$ClassAvailableTimeSlotsRecordSerializer
           result.endTime = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'weekdays':
-          result.weekdays.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
-          break;
         case 'minHoursBeforeClass':
           result.minHoursBeforeClass = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
@@ -156,6 +156,16 @@ class _$ClassAvailableTimeSlotsRecordSerializer
           result.minHoursToCancel = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'creditsRequired':
+          result.creditsRequired = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'weekdays':
+          result.weekdays.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(int)]))!
+              as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -177,8 +187,6 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
   @override
   final String? endTime;
   @override
-  final BuiltList<String>? weekdays;
-  @override
   final int? minHoursBeforeClass;
   @override
   final int? maxHoursBeforeClass;
@@ -188,6 +196,10 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
   final int? maxLimit;
   @override
   final int? minHoursToCancel;
+  @override
+  final int? creditsRequired;
+  @override
+  final BuiltList<int>? weekdays;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -199,12 +211,13 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
       {this.classRef,
       this.startTime,
       this.endTime,
-      this.weekdays,
       this.minHoursBeforeClass,
       this.maxHoursBeforeClass,
       this.reservations,
       this.maxLimit,
       this.minHoursToCancel,
+      this.creditsRequired,
+      this.weekdays,
       this.ffRef})
       : super._();
 
@@ -224,35 +237,32 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
         classRef == other.classRef &&
         startTime == other.startTime &&
         endTime == other.endTime &&
-        weekdays == other.weekdays &&
         minHoursBeforeClass == other.minHoursBeforeClass &&
         maxHoursBeforeClass == other.maxHoursBeforeClass &&
         reservations == other.reservations &&
         maxLimit == other.maxLimit &&
         minHoursToCancel == other.minHoursToCancel &&
+        creditsRequired == other.creditsRequired &&
+        weekdays == other.weekdays &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc($jc(0, classRef.hashCode),
-                                        startTime.hashCode),
-                                    endTime.hashCode),
-                                weekdays.hashCode),
-                            minHoursBeforeClass.hashCode),
-                        maxHoursBeforeClass.hashCode),
-                    reservations.hashCode),
-                maxLimit.hashCode),
-            minHoursToCancel.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, classRef.hashCode);
+    _$hash = $jc(_$hash, startTime.hashCode);
+    _$hash = $jc(_$hash, endTime.hashCode);
+    _$hash = $jc(_$hash, minHoursBeforeClass.hashCode);
+    _$hash = $jc(_$hash, maxHoursBeforeClass.hashCode);
+    _$hash = $jc(_$hash, reservations.hashCode);
+    _$hash = $jc(_$hash, maxLimit.hashCode);
+    _$hash = $jc(_$hash, minHoursToCancel.hashCode);
+    _$hash = $jc(_$hash, creditsRequired.hashCode);
+    _$hash = $jc(_$hash, weekdays.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -261,12 +271,13 @@ class _$ClassAvailableTimeSlotsRecord extends ClassAvailableTimeSlotsRecord {
           ..add('classRef', classRef)
           ..add('startTime', startTime)
           ..add('endTime', endTime)
-          ..add('weekdays', weekdays)
           ..add('minHoursBeforeClass', minHoursBeforeClass)
           ..add('maxHoursBeforeClass', maxHoursBeforeClass)
           ..add('reservations', reservations)
           ..add('maxLimit', maxLimit)
           ..add('minHoursToCancel', minHoursToCancel)
+          ..add('creditsRequired', creditsRequired)
+          ..add('weekdays', weekdays)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -290,11 +301,6 @@ class ClassAvailableTimeSlotsRecordBuilder
   String? _endTime;
   String? get endTime => _$this._endTime;
   set endTime(String? endTime) => _$this._endTime = endTime;
-
-  ListBuilder<String>? _weekdays;
-  ListBuilder<String> get weekdays =>
-      _$this._weekdays ??= new ListBuilder<String>();
-  set weekdays(ListBuilder<String>? weekdays) => _$this._weekdays = weekdays;
 
   int? _minHoursBeforeClass;
   int? get minHoursBeforeClass => _$this._minHoursBeforeClass;
@@ -321,6 +327,15 @@ class ClassAvailableTimeSlotsRecordBuilder
   set minHoursToCancel(int? minHoursToCancel) =>
       _$this._minHoursToCancel = minHoursToCancel;
 
+  int? _creditsRequired;
+  int? get creditsRequired => _$this._creditsRequired;
+  set creditsRequired(int? creditsRequired) =>
+      _$this._creditsRequired = creditsRequired;
+
+  ListBuilder<int>? _weekdays;
+  ListBuilder<int> get weekdays => _$this._weekdays ??= new ListBuilder<int>();
+  set weekdays(ListBuilder<int>? weekdays) => _$this._weekdays = weekdays;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -335,12 +350,13 @@ class ClassAvailableTimeSlotsRecordBuilder
       _classRef = $v.classRef;
       _startTime = $v.startTime;
       _endTime = $v.endTime;
-      _weekdays = $v.weekdays?.toBuilder();
       _minHoursBeforeClass = $v.minHoursBeforeClass;
       _maxHoursBeforeClass = $v.maxHoursBeforeClass;
       _reservations = $v.reservations?.toBuilder();
       _maxLimit = $v.maxLimit;
       _minHoursToCancel = $v.minHoursToCancel;
+      _creditsRequired = $v.creditsRequired;
+      _weekdays = $v.weekdays?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -369,21 +385,22 @@ class ClassAvailableTimeSlotsRecordBuilder
               classRef: classRef,
               startTime: startTime,
               endTime: endTime,
-              weekdays: _weekdays?.build(),
               minHoursBeforeClass: minHoursBeforeClass,
               maxHoursBeforeClass: maxHoursBeforeClass,
               reservations: _reservations?.build(),
               maxLimit: maxLimit,
               minHoursToCancel: minHoursToCancel,
+              creditsRequired: creditsRequired,
+              weekdays: _weekdays?.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'weekdays';
-        _weekdays?.build();
-
         _$failedField = 'reservations';
         _reservations?.build();
+
+        _$failedField = 'weekdays';
+        _weekdays?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ClassAvailableTimeSlotsRecord', _$failedField, e.toString());
@@ -395,4 +412,4 @@ class ClassAvailableTimeSlotsRecordBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

@@ -91,31 +91,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => AuthLoginWidget(),
             ),
             FFRoute(
-              name: 'Chat',
-              path: 'chat',
-              requireAuth: true,
-              asyncParams: {
-                'chatUser': getDoc(['users'], UsersRecord.serializer),
-              },
-              builder: (context, params) => ChatWidget(
-                chatUser: params.getParam('chatUser', ParamType.Document),
-                chatRef: params.getParam(
-                    'chatRef', ParamType.DocumentReference, false, ['chats']),
-                chatUserList: params.getParam<DocumentReference>('chatUserList',
-                    ParamType.DocumentReference, true, ['users']),
+              name: 'ClassDetails',
+              path: 'ClassDetails',
+              builder: (context, params) => ClassDetailsWidget(
+                classRef: params.getParam('classRef',
+                    ParamType.DocumentReference, false, ['classes']),
+                className: params.getParam('className', ParamType.String),
+                exerciseType: params.getParam('exerciseType', ParamType.String),
+                creditsRequired:
+                    params.getParam('creditsRequired', ParamType.int),
+                coords: params.getParam('coords', ParamType.LatLng),
+                paymentUrl: params.getParam('paymentUrl', ParamType.String),
               ),
-            ),
-            FFRoute(
-              name: 'ChatGroups',
-              path: 'chatGroups',
-              requireAuth: true,
-              builder: (context, params) => ChatGroupsWidget(),
-            ),
-            FFRoute(
-              name: 'ChatCreateGroup',
-              path: 'chatCreateGroup',
-              requireAuth: true,
-              builder: (context, params) => ChatCreateGroupWidget(),
             ),
             FFRoute(
               name: 'Classes',
@@ -125,18 +112,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ClassesWidget(),
             ),
             FFRoute(
-              name: 'ClassDetails',
-              path: 'ClassDetails',
-              builder: (context, params) => ClassDetailsWidget(
-                classRef: params.getParam('classRef',
-                    ParamType.DocumentReference, false, ['classes']),
-                className: params.getParam('className', ParamType.String),
-                maxLimit: params.getParam('maxLimit', ParamType.int),
-                exerciseType: params.getParam('exerciseType', ParamType.String),
-                image: params.getParam('image', ParamType.String),
-                creditsRequired:
-                    params.getParam('creditsRequired', ParamType.int),
-              ),
+              name: 'ReservationComplete',
+              path: 'reservationComplete',
+              requireAuth: true,
+              builder: (context, params) => ReservationCompleteWidget(),
             ),
             FFRoute(
               name: 'MyPage',
@@ -144,39 +123,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'MyPage')
                   : MyPageWidget(),
-            ),
-            FFRoute(
-              name: 'ReservationComplete',
-              path: 'reservationComplete',
-              requireAuth: true,
-              builder: (context, params) => ReservationCompleteWidget(),
-            ),
-            FFRoute(
-              name: 'ChatAddUser',
-              path: 'chatAddUser',
-              requireAuth: true,
-              asyncParams: {
-                'chat': getDoc(['chats'], ChatsRecord.serializer),
-              },
-              builder: (context, params) => ChatAddUserWidget(
-                chat: params.getParam('chat', ParamType.Document),
-              ),
-            ),
-            FFRoute(
-              name: 'Credits',
-              path: 'credits',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Credits')
-                  : CreditsWidget(),
-            ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(),
             ),
             FFRoute(
               name: 'MyReservations',
@@ -193,14 +139,39 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => CustomerServiceWidget(),
             ),
             FFRoute(
+              name: 'Home',
+              path: 'home',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Home')
+                  : HomeWidget(),
+            ),
+            FFRoute(
+              name: 'AuthPhoneNumber',
+              path: 'authPhoneNumber',
+              requireAuth: true,
+              builder: (context, params) => AuthPhoneNumberWidget(),
+            ),
+            FFRoute(
               name: 'Settings',
               path: 'settings',
               requireAuth: true,
               builder: (context, params) => SettingsWidget(),
+            ),
+            FFRoute(
+              name: 'Review',
+              path: 'review',
+              requireAuth: true,
+              builder: (context, params) => ReviewWidget(
+                classRef: params.getParam('classRef',
+                    ParamType.DocumentReference, false, ['classes']),
+                reservationRef: params.getParam('reservationRef',
+                    ParamType.DocumentReference, false, ['reservations']),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
-        ).toRoute(appStateNotifier),
-      ],
+        ),
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
     );
 
@@ -246,6 +217,16 @@ extension NavigationExtensions on BuildContext {
               queryParams: queryParams,
               extra: extra,
             );
+
+  void safePop() {
+    // If there is only one route on the stack, navigate to the initial
+    // page instead of popping.
+    if (GoRouter.of(this).routerDelegate.matches.length <= 1) {
+      go('/');
+    } else {
+      pop();
+    }
+  }
 }
 
 extension GoRouterExtensions on GoRouter {
@@ -257,6 +238,7 @@ extension GoRouterExtensions on GoRouter {
           : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
+  void clearRedirectLocation() => appState.clearRedirectLocation();
   void setRedirectLocationIfUnset(String location) =>
       (routerDelegate.refreshListenable as AppStateNotifier)
           .updateNotifyOnAuthChange(false);
@@ -370,12 +352,12 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.transparent,
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
                   child: Center(
                     child: Image.asset(
-                      'assets/images/logo2.png',
-                      width: 50,
-                      height: 50,
+                      'assets/images/newLogo12.png',
+                      width: 50.0,
+                      height: 50.0,
                       fit: BoxFit.scaleDown,
                     ),
                   ),

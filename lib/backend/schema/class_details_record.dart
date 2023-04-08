@@ -35,6 +35,10 @@ abstract class ClassDetailsRecord
 
   BuiltList<String>? get businessHours;
 
+  BuiltList<String>? get info;
+
+  int? get price;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -49,7 +53,9 @@ abstract class ClassDetailsRecord
     ..requirements = ''
     ..instagram = ''
     ..images = ListBuilder()
-    ..businessHours = ListBuilder();
+    ..businessHours = ListBuilder()
+    ..info = ListBuilder()
+    ..price = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classDetails');
@@ -84,6 +90,7 @@ Map<String, dynamic> createClassDetailsRecordData({
   String? requirements,
   LatLng? latitude,
   String? instagram,
+  int? price,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassDetailsRecord.serializer,
@@ -100,7 +107,9 @@ Map<String, dynamic> createClassDetailsRecordData({
         ..latitude = latitude
         ..instagram = instagram
         ..images = null
-        ..businessHours = null,
+        ..businessHours = null
+        ..info = null
+        ..price = price,
     ),
   );
 

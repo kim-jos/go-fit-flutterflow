@@ -19,8 +19,6 @@ abstract class ClassAvailableTimeSlotsRecord
 
   String? get endTime;
 
-  BuiltList<String>? get weekdays;
-
   int? get minHoursBeforeClass;
 
   int? get maxHoursBeforeClass;
@@ -31,6 +29,10 @@ abstract class ClassAvailableTimeSlotsRecord
 
   int? get minHoursToCancel;
 
+  int? get creditsRequired;
+
+  BuiltList<int>? get weekdays;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -40,12 +42,13 @@ abstract class ClassAvailableTimeSlotsRecord
       builder
         ..startTime = ''
         ..endTime = ''
-        ..weekdays = ListBuilder()
         ..minHoursBeforeClass = 0
         ..maxHoursBeforeClass = 0
         ..reservations = ListBuilder()
         ..maxLimit = 0
-        ..minHoursToCancel = 0;
+        ..minHoursToCancel = 0
+        ..creditsRequired = 0
+        ..weekdays = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classAvailableTimeSlots');
@@ -79,6 +82,7 @@ Map<String, dynamic> createClassAvailableTimeSlotsRecordData({
   int? maxHoursBeforeClass,
   int? maxLimit,
   int? minHoursToCancel,
+  int? creditsRequired,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassAvailableTimeSlotsRecord.serializer,
@@ -87,12 +91,13 @@ Map<String, dynamic> createClassAvailableTimeSlotsRecordData({
         ..classRef = classRef
         ..startTime = startTime
         ..endTime = endTime
-        ..weekdays = null
         ..minHoursBeforeClass = minHoursBeforeClass
         ..maxHoursBeforeClass = maxHoursBeforeClass
         ..reservations = null
         ..maxLimit = maxLimit
-        ..minHoursToCancel = minHoursToCancel,
+        ..minHoursToCancel = minHoursToCancel
+        ..creditsRequired = creditsRequired
+        ..weekdays = null,
     ),
   );
 

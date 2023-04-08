@@ -1,20 +1,19 @@
 // Export pages
-export 'auth_email_login/auth_email_login_widget.dart'
+export '/pages/auth/auth_email_login/auth_email_login_widget.dart'
     show AuthEmailLoginWidget;
-export 'auth_login/auth_login_widget.dart' show AuthLoginWidget;
-export 'chat/chat_widget.dart' show ChatWidget;
-export 'chat_groups/chat_groups_widget.dart' show ChatGroupsWidget;
-export 'chat_create_group/chat_create_group_widget.dart'
-    show ChatCreateGroupWidget;
-export 'classes/classes_widget.dart' show ClassesWidget;
-export 'class_details/class_details_widget.dart' show ClassDetailsWidget;
-export 'my_page/my_page_widget.dart' show MyPageWidget;
-export 'reservation_complete/reservation_complete_widget.dart'
+export '/pages/auth/auth_login/auth_login_widget.dart' show AuthLoginWidget;
+export '/pages/classes/class_details/class_details_widget.dart'
+    show ClassDetailsWidget;
+export '/pages/classes/classes/classes_widget.dart' show ClassesWidget;
+export '/pages/other/reservation_complete/reservation_complete_widget.dart'
     show ReservationCompleteWidget;
-export 'chat_add_user/chat_add_user_widget.dart' show ChatAddUserWidget;
-export 'credits/credits_widget.dart' show CreditsWidget;
-export 'home/home_widget.dart' show HomeWidget;
-export 'my_reservations/my_reservations_widget.dart' show MyReservationsWidget;
-export 'customer_service/customer_service_widget.dart'
+export '/pages/tabs/my_page/my_page_widget.dart' show MyPageWidget;
+export '/pages/tabs/my_reservations/my_reservations_widget.dart'
+    show MyReservationsWidget;
+export '/pages/settings/customer_service/customer_service_widget.dart'
     show CustomerServiceWidget;
-export 'settings/settings_widget.dart' show SettingsWidget;
+export '/pages/tabs/home/home_widget.dart' show HomeWidget;
+export '/pages/auth/auth_phone_number/auth_phone_number_widget.dart'
+    show AuthPhoneNumberWidget;
+export '/pages/settings/settings/settings_widget.dart' show SettingsWidget;
+export '/pages/settings/review/review_widget.dart' show ReviewWidget;

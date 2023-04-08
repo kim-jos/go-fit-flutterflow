@@ -14,8 +14,6 @@ abstract class ClassesRecord
 
   String? get image;
 
-  int? get creditsRequired;
-
   String? get exerciseType;
 
   int? get priority;
@@ -28,6 +26,12 @@ abstract class ClassesRecord
 
   LatLng? get coords;
 
+  bool? get isPopular;
+
+  int? get creditsRequired;
+
+  String? get paymentUrl;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -35,12 +39,14 @@ abstract class ClassesRecord
   static void _initializeBuilder(ClassesRecordBuilder builder) => builder
     ..name = ''
     ..image = ''
-    ..creditsRequired = 0
     ..exerciseType = ''
     ..priority = 0
     ..distance = ''
     ..hideClass = false
-    ..ratings = 0;
+    ..ratings = 0
+    ..isPopular = false
+    ..creditsRequired = 0
+    ..paymentUrl = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classes');
@@ -66,13 +72,15 @@ abstract class ClassesRecord
 Map<String, dynamic> createClassesRecordData({
   String? name,
   String? image,
-  int? creditsRequired,
   String? exerciseType,
   int? priority,
   String? distance,
   bool? hideClass,
   int? ratings,
   LatLng? coords,
+  bool? isPopular,
+  int? creditsRequired,
+  String? paymentUrl,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassesRecord.serializer,
@@ -80,13 +88,15 @@ Map<String, dynamic> createClassesRecordData({
       (c) => c
         ..name = name
         ..image = image
-        ..creditsRequired = creditsRequired
         ..exerciseType = exerciseType
         ..priority = priority
         ..distance = distance
         ..hideClass = hideClass
         ..ratings = ratings
-        ..coords = coords,
+        ..coords = coords
+        ..isPopular = isPopular
+        ..creditsRequired = creditsRequired
+        ..paymentUrl = paymentUrl,
     ),
   );
 

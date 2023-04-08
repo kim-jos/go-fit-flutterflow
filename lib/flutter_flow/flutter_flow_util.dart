@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:from_css_color/from_css_color.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:json_path/json_path.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -17,8 +16,9 @@ import 'lat_lng.dart';
 export 'keep_alive_wrapper.dart';
 export 'lat_lng.dart';
 export 'place.dart';
-export 'local_file.dart';
+export 'uploaded_file.dart';
 export '../app_state.dart';
+export 'flutter_flow_model.dart';
 export 'dart:math' show min, max;
 export 'dart:typed_data' show Uint8List;
 export 'dart:convert' show jsonEncode, jsonDecode;
@@ -35,6 +35,8 @@ T valueOrDefault<T>(T? value, T defaultValue) =>
 
 void _setTimeagoLocales() {
   timeago.setLocaleMessages('ko', timeago.KoMessages());
+  timeago.setLocaleMessages('en', timeago.EnMessages());
+  timeago.setLocaleMessages('en_short', timeago.EnShortMessages());
 }
 
 String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
@@ -45,7 +47,7 @@ String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
     _setTimeagoLocales();
     return timeago.format(dateTime, locale: locale);
   }
-  return DateFormat(format).format(dateTime);
+  return DateFormat(format, locale).format(dateTime);
 }
 
 Future launchURL(String url) async {
@@ -142,6 +144,13 @@ String formatNumber(
 }
 
 DateTime get getCurrentTimestamp => DateTime.now();
+DateTime dateTimeFromSecondsSinceEpoch(int seconds) {
+  return DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+}
+
+extension DateTimeConversionExtension on DateTime {
+  int get secondsSinceEpoch => (millisecondsSinceEpoch / 1000).round();
+}
 
 extension DateTimeComparisonOperators on DateTime {
   bool operator <(DateTime other) => isBefore(other);
@@ -207,50 +216,9 @@ const kTextValidatorEmailRegex =
 const kTextValidatorWebsiteRegex =
     r'(https?:\/\/)?(www\.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)|(https?:\/\/)?(www\.)?(?!ww)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)';
 
-LatLng? cachedUserLocation;
-Future<LatLng> getCurrentUserLocation(
-    {required LatLng defaultLocation, bool cached = false}) async {
-  if (cached && cachedUserLocation != null) {
-    return cachedUserLocation!;
-  }
-  return queryCurrentUserLocation().then((loc) {
-    if (loc != null) {
-      cachedUserLocation = loc;
-    }
-    return loc ?? defaultLocation;
-  }).onError((error, _) {
-    print("Error querying user location: $error");
-    return defaultLocation;
-  });
-}
-
-Future<LatLng?> queryCurrentUserLocation() async {
-  final serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return Future.error('Location services are disabled.');
-  }
-
-  var permission = await Geolocator.checkPermission();
-  if (permission == LocationPermission.denied) {
-    permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied) {
-      return Future.error('Location permissions are denied');
-    }
-  }
-
-  if (permission == LocationPermission.deniedForever) {
-    return Future.error(
-        'Location permissions are permanently denied, we cannot request permissions.');
-  }
-
-  final position = await Geolocator.getCurrentPosition();
-  return position != null && position.latitude != 0 && position.longitude != 0
-      ? LatLng(position.latitude, position.longitude)
-      : null;
-}
-
-extension StringDocRef on String {
-  DocumentReference get ref => FirebaseFirestore.instance.doc(this);
+extension FFTextEditingControllerExt on TextEditingController? {
+  String get text => this == null ? '' : this!.text;
+  set text(String newText) => this?.text = newText;
 }
 
 extension IterableExt<T> on Iterable<T> {
@@ -259,6 +227,10 @@ extension IterableExt<T> on Iterable<T> {
       .map((index, value) => MapEntry(index, func(index, value)))
       .values
       .toList();
+}
+
+extension StringDocRef on String {
+  DocumentReference get ref => FirebaseFirestore.instance.doc(this);
 }
 
 void setAppLanguage(BuildContext context, String language) =>

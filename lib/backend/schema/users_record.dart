@@ -31,6 +31,12 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   DateTime? get expirationDate;
 
+  int? get referralCount;
+
+  String? get referralCode;
+
+  String? get referralBy;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -42,7 +48,10 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..uid = ''
     ..phoneNumber = ''
     ..currCredits = 0
-    ..admin = false;
+    ..admin = false
+    ..referralCount = 0
+    ..referralCode = ''
+    ..referralBy = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -75,6 +84,9 @@ Map<String, dynamic> createUsersRecordData({
   int? currCredits,
   bool? admin,
   DateTime? expirationDate,
+  int? referralCount,
+  String? referralCode,
+  String? referralBy,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -88,7 +100,10 @@ Map<String, dynamic> createUsersRecordData({
         ..phoneNumber = phoneNumber
         ..currCredits = currCredits
         ..admin = admin
-        ..expirationDate = expirationDate,
+        ..expirationDate = expirationDate
+        ..referralCount = referralCount
+        ..referralCode = referralCode
+        ..referralBy = referralBy,
     ),
   );
 

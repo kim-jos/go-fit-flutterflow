@@ -12,9 +12,10 @@ import 'schema/class_available_time_slots_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/reservations_record.dart';
-import 'schema/feedback_record.dart';
 import 'schema/memberships_record.dart';
 import 'schema/discovery_record.dart';
+import 'schema/reviews_record.dart';
+import 'schema/referrals_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -29,9 +30,10 @@ export 'schema/class_available_time_slots_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/reservations_record.dart';
-export 'schema/feedback_record.dart';
 export 'schema/memberships_record.dart';
 export 'schema/discovery_record.dart';
+export 'schema/reviews_record.dart';
+export 'schema/referrals_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -399,58 +401,6 @@ Future<FFFirestorePage<ReservationsRecord>> queryReservationsRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query FeedbackRecords (as a Stream and as a Future).
-Future<int> queryFeedbackRecordCount({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      FeedbackRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<FeedbackRecord>> queryFeedbackRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      FeedbackRecord.collection,
-      FeedbackRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<FeedbackRecord>> queryFeedbackRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      FeedbackRecord.collection,
-      FeedbackRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<FeedbackRecord>> queryFeedbackRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      FeedbackRecord.collection,
-      FeedbackRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
 /// Functions to query MembershipsRecords (as a Stream and as a Future).
 Future<int> queryMembershipsRecordCount({
   Query Function(Query)? queryBuilder,
@@ -549,6 +499,110 @@ Future<FFFirestorePage<DiscoveryRecord>> queryDiscoveryRecordPage({
     queryCollectionPage(
       DiscoveryRecord.collection,
       DiscoveryRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query ReviewsRecords (as a Stream and as a Future).
+Future<int> queryReviewsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ReviewsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ReviewsRecord>> queryReviewsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ReviewsRecord.collection,
+      ReviewsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ReviewsRecord>> queryReviewsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ReviewsRecord.collection,
+      ReviewsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<ReviewsRecord>> queryReviewsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      ReviewsRecord.collection,
+      ReviewsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query ReferralsRecords (as a Stream and as a Future).
+Future<int> queryReferralsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ReferralsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ReferralsRecord>> queryReferralsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ReferralsRecord.collection,
+      ReferralsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ReferralsRecord>> queryReferralsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ReferralsRecord.collection,
+      ReferralsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<ReferralsRecord>> queryReferralsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      ReferralsRecord.collection,
+      ReferralsRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

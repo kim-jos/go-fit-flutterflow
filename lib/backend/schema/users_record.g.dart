@@ -81,6 +81,26 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.referralCount;
+    if (value != null) {
+      result
+        ..add('referralCount')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.referralCode;
+    if (value != null) {
+      result
+        ..add('referralCode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.referralBy;
+    if (value != null) {
+      result
+        ..add('referralBy')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -139,6 +159,18 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.expirationDate = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'referralCount':
+          result.referralCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'referralCode':
+          result.referralCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'referralBy':
+          result.referralBy = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -172,6 +204,12 @@ class _$UsersRecord extends UsersRecord {
   @override
   final DateTime? expirationDate;
   @override
+  final int? referralCount;
+  @override
+  final String? referralCode;
+  @override
+  final String? referralBy;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -187,6 +225,9 @@ class _$UsersRecord extends UsersRecord {
       this.currCredits,
       this.admin,
       this.expirationDate,
+      this.referralCount,
+      this.referralCode,
+      this.referralBy,
       this.ffRef})
       : super._();
 
@@ -210,29 +251,30 @@ class _$UsersRecord extends UsersRecord {
         currCredits == other.currCredits &&
         admin == other.admin &&
         expirationDate == other.expirationDate &&
+        referralCount == other.referralCount &&
+        referralCode == other.referralCode &&
+        referralBy == other.referralBy &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc($jc(0, email.hashCode),
-                                        displayName.hashCode),
-                                    photoUrl.hashCode),
-                                uid.hashCode),
-                            createdTime.hashCode),
-                        phoneNumber.hashCode),
-                    currCredits.hashCode),
-                admin.hashCode),
-            expirationDate.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, displayName.hashCode);
+    _$hash = $jc(_$hash, photoUrl.hashCode);
+    _$hash = $jc(_$hash, uid.hashCode);
+    _$hash = $jc(_$hash, createdTime.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, currCredits.hashCode);
+    _$hash = $jc(_$hash, admin.hashCode);
+    _$hash = $jc(_$hash, expirationDate.hashCode);
+    _$hash = $jc(_$hash, referralCount.hashCode);
+    _$hash = $jc(_$hash, referralCode.hashCode);
+    _$hash = $jc(_$hash, referralBy.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -247,6 +289,9 @@ class _$UsersRecord extends UsersRecord {
           ..add('currCredits', currCredits)
           ..add('admin', admin)
           ..add('expirationDate', expirationDate)
+          ..add('referralCount', referralCount)
+          ..add('referralCode', referralCode)
+          ..add('referralBy', referralBy)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -292,6 +337,19 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set expirationDate(DateTime? expirationDate) =>
       _$this._expirationDate = expirationDate;
 
+  int? _referralCount;
+  int? get referralCount => _$this._referralCount;
+  set referralCount(int? referralCount) =>
+      _$this._referralCount = referralCount;
+
+  String? _referralCode;
+  String? get referralCode => _$this._referralCode;
+  set referralCode(String? referralCode) => _$this._referralCode = referralCode;
+
+  String? _referralBy;
+  String? get referralBy => _$this._referralBy;
+  set referralBy(String? referralBy) => _$this._referralBy = referralBy;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -312,6 +370,9 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _currCredits = $v.currCredits;
       _admin = $v.admin;
       _expirationDate = $v.expirationDate;
+      _referralCount = $v.referralCount;
+      _referralCode = $v.referralCode;
+      _referralBy = $v.referralBy;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -344,10 +405,13 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
             currCredits: currCredits,
             admin: admin,
             expirationDate: expirationDate,
+            referralCount: referralCount,
+            referralCode: referralCode,
+            referralBy: referralBy,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

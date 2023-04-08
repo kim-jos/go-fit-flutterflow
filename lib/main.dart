@@ -21,6 +21,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFirebase();
 
+  await FFLocalizations.initialize();
+
   final appState = FFAppState(); // Initialize FFAppState
 
   runApp(ChangeNotifierProvider(
@@ -39,7 +41,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale;
+  Locale? _locale = FFLocalizations.getStoredLocale();
   ThemeMode _themeMode = ThemeMode.system;
 
   late Stream<GoFitFirebaseUser> userStream;
@@ -73,6 +75,7 @@ class _MyAppState extends State<MyApp> {
 
   void setLocale(String language) {
     setState(() => _locale = createLocale(language));
+    FFLocalizations.storeLocale(language);
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
@@ -92,6 +95,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [
         Locale('ko'),
+        Locale('en'),
       ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
@@ -128,7 +132,6 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Home': HomeWidget(),
       'Classes': ClassesWidget(),
-      'Credits': CreditsWidget(),
       'MyReservations': MyReservationsWidget(),
       'MyPage': MyPageWidget(),
     };
@@ -142,8 +145,8 @@ class _NavBarPageState extends State<NavBarPage> {
           _currentPageName = tabs.keys.toList()[i];
         }),
         backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
-        selectedItemColor: FlutterFlowTheme.of(context).primaryColor,
-        unselectedItemColor: Color(0x8A000000),
+        selectedItemColor: FlutterFlowTheme.of(context).black600,
+        unselectedItemColor: FlutterFlowTheme.of(context).grayIcon,
         showSelectedLabels: true,
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
@@ -151,41 +154,41 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: FaIcon(
               FontAwesomeIcons.home,
-              size: 24,
+              size: 20.0,
             ),
-            label: '홈',
+            label: FFLocalizations.of(context).getText(
+              '09xuqskz' /* 홈 */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: FaIcon(
               FontAwesomeIcons.mapMarkerAlt,
-              size: 24,
+              size: 24.0,
             ),
-            label: '내 주변',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(
-              FontAwesomeIcons.dollarSign,
-              size: 24,
+            label: FFLocalizations.of(context).getText(
+              'zcr8dm2g' /* 내 주변 */,
             ),
-            label: '크레딧',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: FaIcon(
               FontAwesomeIcons.calendarCheck,
-              size: 24,
+              size: 24.0,
             ),
-            label: '예약현황',
+            label: FFLocalizations.of(context).getText(
+              'rtdplk0h' /* 예약현황 */,
+            ),
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.account_circle,
-              size: 24,
+              size: 28.0,
             ),
-            label: '내 정보',
+            label: FFLocalizations.of(context).getText(
+              'szdy40va' /* 내 정보 */,
+            ),
             tooltip: '',
           )
         ],

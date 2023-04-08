@@ -34,12 +34,6 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.creditsRequired;
-    if (value != null) {
-      result
-        ..add('creditsRequired')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.exerciseType;
     if (value != null) {
       result
@@ -80,6 +74,26 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(LatLng)));
     }
+    value = object.isPopular;
+    if (value != null) {
+      result
+        ..add('isPopular')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.creditsRequired;
+    if (value != null) {
+      result
+        ..add('creditsRequired')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.paymentUrl;
+    if (value != null) {
+      result
+        ..add('paymentUrl')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -111,10 +125,6 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
           result.image = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'creditsRequired':
-          result.creditsRequired = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'exerciseType':
           result.exerciseType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -139,6 +149,18 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
           result.coords = serializers.deserialize(value,
               specifiedType: const FullType(LatLng)) as LatLng?;
           break;
+        case 'isPopular':
+          result.isPopular = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'creditsRequired':
+          result.creditsRequired = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'paymentUrl':
+          result.paymentUrl = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -158,8 +180,6 @@ class _$ClassesRecord extends ClassesRecord {
   @override
   final String? image;
   @override
-  final int? creditsRequired;
-  @override
   final String? exerciseType;
   @override
   final int? priority;
@@ -172,6 +192,12 @@ class _$ClassesRecord extends ClassesRecord {
   @override
   final LatLng? coords;
   @override
+  final bool? isPopular;
+  @override
+  final int? creditsRequired;
+  @override
+  final String? paymentUrl;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassesRecord([void Function(ClassesRecordBuilder)? updates]) =>
@@ -180,13 +206,15 @@ class _$ClassesRecord extends ClassesRecord {
   _$ClassesRecord._(
       {this.name,
       this.image,
-      this.creditsRequired,
       this.exerciseType,
       this.priority,
       this.distance,
       this.hideClass,
       this.ratings,
       this.coords,
+      this.isPopular,
+      this.creditsRequired,
+      this.paymentUrl,
       this.ffRef})
       : super._();
 
@@ -203,34 +231,35 @@ class _$ClassesRecord extends ClassesRecord {
     return other is ClassesRecord &&
         name == other.name &&
         image == other.image &&
-        creditsRequired == other.creditsRequired &&
         exerciseType == other.exerciseType &&
         priority == other.priority &&
         distance == other.distance &&
         hideClass == other.hideClass &&
         ratings == other.ratings &&
         coords == other.coords &&
+        isPopular == other.isPopular &&
+        creditsRequired == other.creditsRequired &&
+        paymentUrl == other.paymentUrl &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc($jc(0, name.hashCode), image.hashCode),
-                                    creditsRequired.hashCode),
-                                exerciseType.hashCode),
-                            priority.hashCode),
-                        distance.hashCode),
-                    hideClass.hashCode),
-                ratings.hashCode),
-            coords.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, image.hashCode);
+    _$hash = $jc(_$hash, exerciseType.hashCode);
+    _$hash = $jc(_$hash, priority.hashCode);
+    _$hash = $jc(_$hash, distance.hashCode);
+    _$hash = $jc(_$hash, hideClass.hashCode);
+    _$hash = $jc(_$hash, ratings.hashCode);
+    _$hash = $jc(_$hash, coords.hashCode);
+    _$hash = $jc(_$hash, isPopular.hashCode);
+    _$hash = $jc(_$hash, creditsRequired.hashCode);
+    _$hash = $jc(_$hash, paymentUrl.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -238,13 +267,15 @@ class _$ClassesRecord extends ClassesRecord {
     return (newBuiltValueToStringHelper(r'ClassesRecord')
           ..add('name', name)
           ..add('image', image)
-          ..add('creditsRequired', creditsRequired)
           ..add('exerciseType', exerciseType)
           ..add('priority', priority)
           ..add('distance', distance)
           ..add('hideClass', hideClass)
           ..add('ratings', ratings)
           ..add('coords', coords)
+          ..add('isPopular', isPopular)
+          ..add('creditsRequired', creditsRequired)
+          ..add('paymentUrl', paymentUrl)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -261,11 +292,6 @@ class ClassesRecordBuilder
   String? _image;
   String? get image => _$this._image;
   set image(String? image) => _$this._image = image;
-
-  int? _creditsRequired;
-  int? get creditsRequired => _$this._creditsRequired;
-  set creditsRequired(int? creditsRequired) =>
-      _$this._creditsRequired = creditsRequired;
 
   String? _exerciseType;
   String? get exerciseType => _$this._exerciseType;
@@ -291,6 +317,19 @@ class ClassesRecordBuilder
   LatLng? get coords => _$this._coords;
   set coords(LatLng? coords) => _$this._coords = coords;
 
+  bool? _isPopular;
+  bool? get isPopular => _$this._isPopular;
+  set isPopular(bool? isPopular) => _$this._isPopular = isPopular;
+
+  int? _creditsRequired;
+  int? get creditsRequired => _$this._creditsRequired;
+  set creditsRequired(int? creditsRequired) =>
+      _$this._creditsRequired = creditsRequired;
+
+  String? _paymentUrl;
+  String? get paymentUrl => _$this._paymentUrl;
+  set paymentUrl(String? paymentUrl) => _$this._paymentUrl = paymentUrl;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -304,13 +343,15 @@ class ClassesRecordBuilder
     if ($v != null) {
       _name = $v.name;
       _image = $v.image;
-      _creditsRequired = $v.creditsRequired;
       _exerciseType = $v.exerciseType;
       _priority = $v.priority;
       _distance = $v.distance;
       _hideClass = $v.hideClass;
       _ratings = $v.ratings;
       _coords = $v.coords;
+      _isPopular = $v.isPopular;
+      _creditsRequired = $v.creditsRequired;
+      _paymentUrl = $v.paymentUrl;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -336,17 +377,19 @@ class ClassesRecordBuilder
         new _$ClassesRecord._(
             name: name,
             image: image,
-            creditsRequired: creditsRequired,
             exerciseType: exerciseType,
             priority: priority,
             distance: distance,
             hideClass: hideClass,
             ratings: ratings,
             coords: coords,
+            isPopular: isPopular,
+            creditsRequired: creditsRequired,
+            paymentUrl: paymentUrl,
             ffRef: ffRef);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint
