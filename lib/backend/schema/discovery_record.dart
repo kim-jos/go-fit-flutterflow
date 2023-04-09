@@ -17,10 +17,10 @@ abstract class DiscoveryRecord
   @BuiltValueField(wireName: 'created_at')
   DateTime? get createdAt;
 
+  String? get title;
+
   @BuiltValueField(wireName: 'thumbnail_url')
   String? get thumbnailUrl;
-
-  String? get title;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -28,8 +28,8 @@ abstract class DiscoveryRecord
 
   static void _initializeBuilder(DiscoveryRecordBuilder builder) => builder
     ..contentUrl = ListBuilder()
-    ..thumbnailUrl = ''
-    ..title = '';
+    ..title = ''
+    ..thumbnailUrl = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('Discovery');
@@ -54,8 +54,8 @@ abstract class DiscoveryRecord
 
 Map<String, dynamic> createDiscoveryRecordData({
   DateTime? createdAt,
-  String? thumbnailUrl,
   String? title,
+  String? thumbnailUrl,
 }) {
   final firestoreData = serializers.toFirestore(
     DiscoveryRecord.serializer,
@@ -63,8 +63,8 @@ Map<String, dynamic> createDiscoveryRecordData({
       (d) => d
         ..contentUrl = null
         ..createdAt = createdAt
-        ..thumbnailUrl = thumbnailUrl
-        ..title = title,
+        ..title = title
+        ..thumbnailUrl = thumbnailUrl,
     ),
   );
 

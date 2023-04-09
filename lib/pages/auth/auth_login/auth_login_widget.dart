@@ -185,7 +185,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                           'Button_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Classes', mounted);
+                                                          'Home', mounted);
                                                     }
 
                                                     logFirebaseEvent(
@@ -290,7 +290,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                         'Button_navigate_to');
 
                                                     context.pushNamedAuth(
-                                                        'Classes', mounted);
+                                                        'Home', mounted);
                                                   }
 
                                                   logFirebaseEvent(
@@ -385,7 +385,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             logFirebaseEvent(
                                                 'Text_navigate_to');
 
-                                            context.pushNamed('Classes');
+                                            context.pushNamed('Home');
 
                                             logFirebaseEvent(
                                                 'Text_google_analytics_event');

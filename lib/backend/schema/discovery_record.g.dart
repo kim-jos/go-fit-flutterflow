@@ -36,17 +36,17 @@ class _$DiscoveryRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
-    value = object.thumbnailUrl;
-    if (value != null) {
-      result
-        ..add('thumbnail_url')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.title;
     if (value != null) {
       result
         ..add('title')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.thumbnailUrl;
+    if (value != null) {
+      result
+        ..add('thumbnail_url')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -83,12 +83,12 @@ class _$DiscoveryRecordSerializer
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
-        case 'thumbnail_url':
-          result.thumbnailUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
         case 'title':
           result.title = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'thumbnail_url':
+          result.thumbnailUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
@@ -110,9 +110,9 @@ class _$DiscoveryRecord extends DiscoveryRecord {
   @override
   final DateTime? createdAt;
   @override
-  final String? thumbnailUrl;
-  @override
   final String? title;
+  @override
+  final String? thumbnailUrl;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -122,8 +122,8 @@ class _$DiscoveryRecord extends DiscoveryRecord {
   _$DiscoveryRecord._(
       {this.contentUrl,
       this.createdAt,
-      this.thumbnailUrl,
       this.title,
+      this.thumbnailUrl,
       this.ffRef})
       : super._();
 
@@ -141,8 +141,8 @@ class _$DiscoveryRecord extends DiscoveryRecord {
     return other is DiscoveryRecord &&
         contentUrl == other.contentUrl &&
         createdAt == other.createdAt &&
-        thumbnailUrl == other.thumbnailUrl &&
         title == other.title &&
+        thumbnailUrl == other.thumbnailUrl &&
         ffRef == other.ffRef;
   }
 
@@ -151,8 +151,8 @@ class _$DiscoveryRecord extends DiscoveryRecord {
     var _$hash = 0;
     _$hash = $jc(_$hash, contentUrl.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
-    _$hash = $jc(_$hash, thumbnailUrl.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
+    _$hash = $jc(_$hash, thumbnailUrl.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -163,8 +163,8 @@ class _$DiscoveryRecord extends DiscoveryRecord {
     return (newBuiltValueToStringHelper(r'DiscoveryRecord')
           ..add('contentUrl', contentUrl)
           ..add('createdAt', createdAt)
-          ..add('thumbnailUrl', thumbnailUrl)
           ..add('title', title)
+          ..add('thumbnailUrl', thumbnailUrl)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -184,13 +184,13 @@ class DiscoveryRecordBuilder
   DateTime? get createdAt => _$this._createdAt;
   set createdAt(DateTime? createdAt) => _$this._createdAt = createdAt;
 
-  String? _thumbnailUrl;
-  String? get thumbnailUrl => _$this._thumbnailUrl;
-  set thumbnailUrl(String? thumbnailUrl) => _$this._thumbnailUrl = thumbnailUrl;
-
   String? _title;
   String? get title => _$this._title;
   set title(String? title) => _$this._title = title;
+
+  String? _thumbnailUrl;
+  String? get thumbnailUrl => _$this._thumbnailUrl;
+  set thumbnailUrl(String? thumbnailUrl) => _$this._thumbnailUrl = thumbnailUrl;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -205,8 +205,8 @@ class DiscoveryRecordBuilder
     if ($v != null) {
       _contentUrl = $v.contentUrl?.toBuilder();
       _createdAt = $v.createdAt;
-      _thumbnailUrl = $v.thumbnailUrl;
       _title = $v.title;
+      _thumbnailUrl = $v.thumbnailUrl;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -234,8 +234,8 @@ class DiscoveryRecordBuilder
           new _$DiscoveryRecord._(
               contentUrl: _contentUrl?.build(),
               createdAt: createdAt,
-              thumbnailUrl: thumbnailUrl,
               title: title,
+              thumbnailUrl: thumbnailUrl,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

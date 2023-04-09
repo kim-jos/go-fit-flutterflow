@@ -330,14 +330,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'ko': '1:1 문의',
       'en': '',
     },
-    '309euai8': {
-      'ko': '내 추천 코드',
-      'en': '',
-    },
-    's3xwl9gf': {
-      'ko': '보유 크레딧',
-      'en': '',
-    },
     'm3pfioi0': {
       'ko': '내가 추천한 친구 수',
       'en': '',
@@ -351,6 +343,14 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'en': '',
     },
     '1t0zdkab': {
+      'ko': '보유 크레딧',
+      'en': '',
+    },
+    '309euai8': {
+      'ko': '내 추천 코드',
+      'en': '',
+    },
+    's3xwl9gf': {
       'ko': '보유 크레딧',
       'en': '',
     },
@@ -408,7 +408,15 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
   // Home
   {
     'ur5tuu56': {
+      'ko': '공지사항',
+      'en': '',
+    },
+    'mj97gh4q': {
       'ko': '인기 수업',
+      'en': '',
+    },
+    'arb368t6': {
+      'ko': '다른 수업 보기',
       'en': '',
     },
     'i4li92hl': {

@@ -28,6 +28,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
+  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
@@ -42,6 +43,8 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       FFAppState().update(() {});
     });
 
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -56,6 +59,21 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+    if (currentUserLocationValue == null) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 40.0,
+            height: 40.0,
+            child: SpinKitCircle(
+              color: FlutterFlowTheme.of(context).primary,
+              size: 40.0,
+            ),
+          ),
+        ),
+      );
+    }
 
     return StreamBuilder<List<ClassesRecord>>(
       stream: queryClassesRecord(
@@ -250,11 +268,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                             onCameraIdle: (latLng) =>
                                 _model.googleMapsCenter = latLng,
                             initialLocation: _model.googleMapsCenter ??=
-                                classesClassesRecordList
-                                    .where((e) => e.exerciseType == '크로스핏')
-                                    .toList()
-                                    .first
-                                    .coords!,
+                                currentUserLocationValue!,
                             markers: classesClassesRecordList
                                 .where((e) => e.hideClass == false)
                                 .toList()
@@ -365,7 +379,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         color: Colors.transparent,
                                         width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(50.0),
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                   ),
                                 ),

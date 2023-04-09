@@ -365,7 +365,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
 
                 logFirebaseEvent('Button-Login_navigate_to');
 
-                context.pushNamed('Classes');
+                context.pushNamed('Home');
               },
               text: FFLocalizations.of(context).getText(
                 '29e9mifs' /* 완료 */,

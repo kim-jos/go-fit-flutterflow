@@ -193,7 +193,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         return;
                       }
 
-                      context.goNamedAuth('Classes', mounted);
+                      context.goNamedAuth('Home', mounted);
                     },
                     child: Text(
                       FFLocalizations.of(context).getText(

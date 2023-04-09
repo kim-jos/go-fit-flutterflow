@@ -16,6 +16,7 @@ import 'schema/memberships_record.dart';
 import 'schema/discovery_record.dart';
 import 'schema/reviews_record.dart';
 import 'schema/referrals_record.dart';
+import 'schema/home_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -34,6 +35,7 @@ export 'schema/memberships_record.dart';
 export 'schema/discovery_record.dart';
 export 'schema/reviews_record.dart';
 export 'schema/referrals_record.dart';
+export 'schema/home_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -603,6 +605,58 @@ Future<FFFirestorePage<ReferralsRecord>> queryReferralsRecordPage({
     queryCollectionPage(
       ReferralsRecord.collection,
       ReferralsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query HomeRecords (as a Stream and as a Future).
+Future<int> queryHomeRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      HomeRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<HomeRecord>> queryHomeRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      HomeRecord.collection,
+      HomeRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<HomeRecord>> queryHomeRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      HomeRecord.collection,
+      HomeRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<HomeRecord>> queryHomeRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      HomeRecord.collection,
+      HomeRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

@@ -58,6 +58,8 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need to access your location in order to help you find the nearest fitness center.</string>
 	<key>NSCameraUsageDescription</key>
     <string>We need to access your camera to allow you to upload a profile picture. The picture will only be used for your personal profile page. People will be able to view your profile page when you make a reservation for a class.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
