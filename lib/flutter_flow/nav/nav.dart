@@ -7,7 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
 
-import '../../auth/firebase_user_provider.dart';
+import '../../auth/base_auth_user_provider.dart';
 import '../../backend/push_notifications/push_notifications_handler.dart'
     show PushNotificationsHandler;
 
@@ -23,8 +23,8 @@ export 'serialization_util.dart';
 const kTransitionInfoKey = '__transition_info__';
 
 class AppStateNotifier extends ChangeNotifier {
-  GoFitFirebaseUser? initialUser;
-  GoFitFirebaseUser? user;
+  BaseAuthUser? initialUser;
+  BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -49,7 +49,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(GoFitFirebaseUser newUser) {
+  void update(BaseAuthUser newUser) {
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
@@ -72,13 +72,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? NavBarPage() : AuthLoginWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : ClassesWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : AuthLoginWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : ClassesWidget(),
           routes: [
             FFRoute(
               name: 'AuthEmailLogin',
@@ -102,6 +102,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     params.getParam('creditsRequired', ParamType.int),
                 coords: params.getParam('coords', ParamType.LatLng),
                 paymentUrl: params.getParam('paymentUrl', ParamType.String),
+                originalPrice: params.getParam('originalPrice', ParamType.int),
               ),
             ),
             FFRoute(
@@ -338,7 +339,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/authLogin';
+            return '/classes';
           }
           return null;
         },

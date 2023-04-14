@@ -74,9 +74,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
                 ),
               ),
               Text(
-                FFLocalizations.of(context).getText(
-                  'ngpu391n' /* 예약 요청 완료! */,
-                ),
+                '예약 요청 완료!',
                 textAlign: TextAlign.center,
                 style: FlutterFlowTheme.of(context).headlineMedium.override(
                       fontFamily: 'Pretendard',
@@ -95,9 +93,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
 
                     context.pushNamed('Classes');
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'qbo5qv38' /* 다른 수업 보기 */,
-                  ),
+                  text: '다른 수업 보기',
                   options: FFButtonOptions(
                     width: 130.0,
                     height: 50.0,

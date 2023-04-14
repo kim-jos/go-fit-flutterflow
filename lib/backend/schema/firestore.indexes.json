@@ -59,6 +59,24 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "locationFilter",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "priority",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "classes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "hideClass",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "exerciseType",
           "order": "ASCENDING"
         },

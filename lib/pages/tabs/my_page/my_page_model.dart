@@ -1,5 +1,5 @@
-import '/auth/auth_util.dart';
-import '/auth/firebase_user_provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/update_name/update_name_widget.dart';

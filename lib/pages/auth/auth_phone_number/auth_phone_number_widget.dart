@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -59,9 +59,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
-          FFLocalizations.of(context).getText(
-            '9xumgdyd' /* 정보 입력 */,
-          ),
+          '정보 입력',
           style: FlutterFlowTheme.of(context).headlineMedium,
         ),
         actions: [],
@@ -82,9 +80,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 0.0),
                     child: Text(
-                      FFLocalizations.of(context).getText(
-                        '1l46usfw' /* 수업예약에 문제가 있을 경우 문자로 연락을 드립니다! */,
-                      ),
+                      '수업예약에 문제가 있을 경우 문자로 연락을 드립니다!',
                       style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                   ),
@@ -99,9 +95,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
               autofocus: true,
               obscureText: false,
               decoration: InputDecoration(
-                hintText: FFLocalizations.of(context).getText(
-                  '177chycy' /* 전화번호 입력해주세요 */,
-                ),
+                hintText: '전화번호 입력해주세요',
                 hintStyle: FlutterFlowTheme.of(context).bodySmall,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
@@ -157,9 +151,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                     child: Text(
-                      FFLocalizations.of(context).getText(
-                        'pw7bppvd' /* 추천인 코드 입력하고 보상 받으세요! */,
-                      ),
+                      '추천인 코드 입력하고 보상 받으세요!',
                       style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                   ),
@@ -185,9 +177,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                           autofocus: true,
                           obscureText: false,
                           decoration: InputDecoration(
-                            hintText: FFLocalizations.of(context).getText(
-                              'qbffn0wx' /* 추천인 코드 입력해주세요 */,
-                            ),
+                            hintText: '추천인 코드 입력해주세요',
                             hintStyle: FlutterFlowTheme.of(context).bodySmall,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -238,9 +228,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                       ),
                       if (_model.referrersCode != null)
                         Text(
-                          FFLocalizations.of(context).getText(
-                            'yg6rsftp' /* 추천코드 확인됐습니다! */,
-                          ),
+                          '추천코드 확인됐습니다!',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Pretendard',
@@ -251,9 +239,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                       if (FFAppState().didPressReferralVerification &&
                           (_model.referrersCode == null))
                         Text(
-                          FFLocalizations.of(context).getText(
-                            'rxmzgx5x' /* 유효하지 않은 추천코드입니다! */,
-                          ),
+                          '유효하지 않은 추천코드입니다!',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Pretendard',
@@ -280,9 +266,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
 
                       setState(() {});
                     },
-                    text: FFLocalizations.of(context).getText(
-                      'g60u26y1' /* 추천인 확인 */,
-                    ),
+                    text: '추천인 확인',
                     options: FFButtonOptions(
                       width: 90.0,
                       height: 40.0,
@@ -367,9 +351,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
 
                 context.pushNamed('Home');
               },
-              text: FFLocalizations.of(context).getText(
-                '29e9mifs' /* 완료 */,
-              ),
+              text: '완료',
               options: FFButtonOptions(
                 width: 230.0,
                 height: 50.0,

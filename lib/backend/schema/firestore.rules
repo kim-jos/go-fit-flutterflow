@@ -86,6 +86,20 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /promotions/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /workoutCategories/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
     match /ff_user_push_notifications/{id} {
       allow read, update, delete: if false;
       allow create: if /databases/$(database)/documents/users/$(request.auth.uid) == request.resource.data.sender;

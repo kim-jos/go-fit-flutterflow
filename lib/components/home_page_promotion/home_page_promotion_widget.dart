@@ -1,9 +1,11 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'home_page_promotion_model.dart';
 export 'home_page_promotion_model.dart';
 
@@ -60,30 +62,75 @@ class _HomePagePromotionWidgetState extends State<HomePagePromotionWidget> {
         ),
         shape: BoxShape.rectangle,
       ),
-      child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
-        child: Builder(
-          builder: (context) {
-            final promotionImageList = widget.contentUrls?.toList() ?? [];
-            return ListView.builder(
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.vertical,
-              itemCount: promotionImageList.length,
-              itemBuilder: (context, promotionImageListIndex) {
-                final promotionImageListItem =
-                    promotionImageList[promotionImageListIndex];
-                return Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 3.0),
-                  child: Image.network(
-                    promotionImageListItem,
-                    width: MediaQuery.of(context).size.width * 1.0,
-                    height: 400.0,
-                    fit: BoxFit.cover,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Builder(
+                  builder: (context) => FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent('HOME_PROMOTION_BUTTON_BTN_ON_TAP');
+                      logFirebaseEvent('Button_share');
+                      await Share.share(
+                        'gofit://gofit.com${GoRouter.of(context).location}',
+                        sharePositionOrigin: getWidgetBoundingBox(context),
+                      );
+                    },
+                    text: 'Button',
+                    options: FFButtonOptions(
+                      width: 130.0,
+                      height: 40.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Pretendard',
+                                color: Colors.white,
+                                useGoogleFonts: false,
+                              ),
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
-                );
-              },
-            );
-          },
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 50.0, 0.0, 0.0),
+              child: Builder(
+                builder: (context) {
+                  final promotionImageList = widget.contentUrls?.toList() ?? [];
+                  return Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: List.generate(promotionImageList.length,
+                        (promotionImageListIndex) {
+                      final promotionImageListItem =
+                          promotionImageList[promotionImageListIndex];
+                      return Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 3.0),
+                        child: Image.network(
+                          promotionImageListItem,
+                          width: MediaQuery.of(context).size.width * 1.0,
+                          height: 400.0,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    }),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

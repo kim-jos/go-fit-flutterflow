@@ -94,6 +94,19 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.locationFilter;
+    if (value != null) {
+      result
+        ..add('locationFilter')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.originalPrice;
+    if (value != null) {
+      result
+        ..add('originalPrice')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -161,6 +174,14 @@ class _$ClassesRecordSerializer implements StructuredSerializer<ClassesRecord> {
           result.paymentUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'locationFilter':
+          result.locationFilter = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'originalPrice':
+          result.originalPrice = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -198,6 +219,10 @@ class _$ClassesRecord extends ClassesRecord {
   @override
   final String? paymentUrl;
   @override
+  final String? locationFilter;
+  @override
+  final int? originalPrice;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassesRecord([void Function(ClassesRecordBuilder)? updates]) =>
@@ -215,6 +240,8 @@ class _$ClassesRecord extends ClassesRecord {
       this.isPopular,
       this.creditsRequired,
       this.paymentUrl,
+      this.locationFilter,
+      this.originalPrice,
       this.ffRef})
       : super._();
 
@@ -240,6 +267,8 @@ class _$ClassesRecord extends ClassesRecord {
         isPopular == other.isPopular &&
         creditsRequired == other.creditsRequired &&
         paymentUrl == other.paymentUrl &&
+        locationFilter == other.locationFilter &&
+        originalPrice == other.originalPrice &&
         ffRef == other.ffRef;
   }
 
@@ -257,6 +286,8 @@ class _$ClassesRecord extends ClassesRecord {
     _$hash = $jc(_$hash, isPopular.hashCode);
     _$hash = $jc(_$hash, creditsRequired.hashCode);
     _$hash = $jc(_$hash, paymentUrl.hashCode);
+    _$hash = $jc(_$hash, locationFilter.hashCode);
+    _$hash = $jc(_$hash, originalPrice.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -276,6 +307,8 @@ class _$ClassesRecord extends ClassesRecord {
           ..add('isPopular', isPopular)
           ..add('creditsRequired', creditsRequired)
           ..add('paymentUrl', paymentUrl)
+          ..add('locationFilter', locationFilter)
+          ..add('originalPrice', originalPrice)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -330,6 +363,16 @@ class ClassesRecordBuilder
   String? get paymentUrl => _$this._paymentUrl;
   set paymentUrl(String? paymentUrl) => _$this._paymentUrl = paymentUrl;
 
+  String? _locationFilter;
+  String? get locationFilter => _$this._locationFilter;
+  set locationFilter(String? locationFilter) =>
+      _$this._locationFilter = locationFilter;
+
+  int? _originalPrice;
+  int? get originalPrice => _$this._originalPrice;
+  set originalPrice(int? originalPrice) =>
+      _$this._originalPrice = originalPrice;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -352,6 +395,8 @@ class ClassesRecordBuilder
       _isPopular = $v.isPopular;
       _creditsRequired = $v.creditsRequired;
       _paymentUrl = $v.paymentUrl;
+      _locationFilter = $v.locationFilter;
+      _originalPrice = $v.originalPrice;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -386,6 +431,8 @@ class ClassesRecordBuilder
             isPopular: isPopular,
             creditsRequired: creditsRequired,
             paymentUrl: paymentUrl,
+            locationFilter: locationFilter,
+            originalPrice: originalPrice,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -96,9 +96,7 @@ class _UpdateNameWidgetState extends State<UpdateNameWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 0.0, 0.0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    'ic2mbziq' /* 이름 변경 */,
-                  ),
+                  '이름 변경',
                   style: FlutterFlowTheme.of(context).headlineMedium,
                 ),
               ),
@@ -109,9 +107,7 @@ class _UpdateNameWidgetState extends State<UpdateNameWidget> {
                   autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
-                    hintText: FFLocalizations.of(context).getText(
-                      'iu9vwco1' /* 이름을 변경하기 */,
-                    ),
+                    hintText: '이름을 변경하기',
                     hintStyle: FlutterFlowTheme.of(context).bodySmall,
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -200,9 +196,7 @@ class _UpdateNameWidgetState extends State<UpdateNameWidget> {
                         logFirebaseEvent('Button_bottom_sheet');
                         Navigator.pop(context);
                       },
-                      text: FFLocalizations.of(context).getText(
-                        'qki27un7' /* 저장하기 */,
-                      ),
+                      text: '저장하기',
                       options: FFButtonOptions(
                         width: 270.0,
                         height: 50.0,

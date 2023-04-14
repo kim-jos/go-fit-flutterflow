@@ -1,7 +1,7 @@
 import 'package:built_value/serializer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth/auth_util.dart';
+import '../auth/firebase_auth/auth_util.dart';
 
 import '../flutter_flow/flutter_flow_util.dart';
 
@@ -17,6 +17,8 @@ import 'schema/discovery_record.dart';
 import 'schema/reviews_record.dart';
 import 'schema/referrals_record.dart';
 import 'schema/home_record.dart';
+import 'schema/promotions_record.dart';
+import 'schema/workout_categories_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -36,6 +38,8 @@ export 'schema/discovery_record.dart';
 export 'schema/reviews_record.dart';
 export 'schema/referrals_record.dart';
 export 'schema/home_record.dart';
+export 'schema/promotions_record.dart';
+export 'schema/workout_categories_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -662,6 +666,111 @@ Future<FFFirestorePage<HomeRecord>> queryHomeRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query PromotionsRecords (as a Stream and as a Future).
+Future<int> queryPromotionsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PromotionsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<PromotionsRecord>> queryPromotionsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PromotionsRecord.collection,
+      PromotionsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PromotionsRecord>> queryPromotionsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PromotionsRecord.collection,
+      PromotionsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<PromotionsRecord>> queryPromotionsRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      PromotionsRecord.collection,
+      PromotionsRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query WorkoutCategoriesRecords (as a Stream and as a Future).
+Future<int> queryWorkoutCategoriesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      WorkoutCategoriesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<WorkoutCategoriesRecord>> queryWorkoutCategoriesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      WorkoutCategoriesRecord.collection,
+      WorkoutCategoriesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<WorkoutCategoriesRecord>> queryWorkoutCategoriesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      WorkoutCategoriesRecord.collection,
+      WorkoutCategoriesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<WorkoutCategoriesRecord>>
+    queryWorkoutCategoriesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          WorkoutCategoriesRecord.collection,
+          WorkoutCategoriesRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
 
 Future<int> queryCollectionCount(
   Query collection, {

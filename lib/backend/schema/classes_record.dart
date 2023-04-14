@@ -32,6 +32,10 @@ abstract class ClassesRecord
 
   String? get paymentUrl;
 
+  String? get locationFilter;
+
+  int? get originalPrice;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -46,7 +50,9 @@ abstract class ClassesRecord
     ..ratings = 0
     ..isPopular = false
     ..creditsRequired = 0
-    ..paymentUrl = '';
+    ..paymentUrl = ''
+    ..locationFilter = ''
+    ..originalPrice = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classes');
@@ -81,6 +87,8 @@ Map<String, dynamic> createClassesRecordData({
   bool? isPopular,
   int? creditsRequired,
   String? paymentUrl,
+  String? locationFilter,
+  int? originalPrice,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassesRecord.serializer,
@@ -96,7 +104,9 @@ Map<String, dynamic> createClassesRecordData({
         ..coords = coords
         ..isPopular = isPopular
         ..creditsRequired = creditsRequired
-        ..paymentUrl = paymentUrl,
+        ..paymentUrl = paymentUrl
+        ..locationFilter = locationFilter
+        ..originalPrice = originalPrice,
     ),
   );
 

@@ -45,9 +45,7 @@ class _NoTimeSlotsAvailableWidgetState
     context.watch<FFAppState>();
 
     return Text(
-      FFLocalizations.of(context).getText(
-        '90u0b7za' /* 수업이 없습니다 */,
-      ),
+      '수업이 없습니다',
       style: FlutterFlowTheme.of(context).titleMedium,
     );
   }

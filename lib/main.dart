@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'auth/firebase_user_provider.dart';
-import 'auth/auth_util.dart';
+import 'auth/firebase_auth/firebase_user_provider.dart';
+import 'auth/firebase_auth/auth_util.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
@@ -20,8 +20,6 @@ import 'index.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFirebase();
-
-  await FFLocalizations.initialize();
 
   final appState = FFAppState(); // Initialize FFAppState
 
@@ -41,10 +39,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Locale? _locale = FFLocalizations.getStoredLocale();
+  Locale? _locale;
   ThemeMode _themeMode = ThemeMode.system;
 
-  late Stream<GoFitFirebaseUser> userStream;
+  late Stream<BaseAuthUser> userStream;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -75,7 +73,6 @@ class _MyAppState extends State<MyApp> {
 
   void setLocale(String language) {
     setState(() => _locale = createLocale(language));
-    FFLocalizations.storeLocale(language);
   }
 
   void setThemeMode(ThemeMode mode) => setState(() {
@@ -95,7 +92,6 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       supportedLocales: const [
         Locale('ko'),
-        Locale('en'),
       ],
       theme: ThemeData(brightness: Brightness.light),
       themeMode: _themeMode,
@@ -156,9 +152,7 @@ class _NavBarPageState extends State<NavBarPage> {
               FontAwesomeIcons.home,
               size: 20.0,
             ),
-            label: FFLocalizations.of(context).getText(
-              '09xuqskz' /* 홈 */,
-            ),
+            label: '홈',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -166,9 +160,7 @@ class _NavBarPageState extends State<NavBarPage> {
               FontAwesomeIcons.mapMarkerAlt,
               size: 24.0,
             ),
-            label: FFLocalizations.of(context).getText(
-              'zcr8dm2g' /* 내 주변 */,
-            ),
+            label: '내 주변',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -176,9 +168,7 @@ class _NavBarPageState extends State<NavBarPage> {
               FontAwesomeIcons.calendarCheck,
               size: 24.0,
             ),
-            label: FFLocalizations.of(context).getText(
-              'rtdplk0h' /* 예약현황 */,
-            ),
+            label: '예약현황',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -186,9 +176,7 @@ class _NavBarPageState extends State<NavBarPage> {
               Icons.account_circle,
               size: 28.0,
             ),
-            label: FFLocalizations.of(context).getText(
-              'szdy40va' /* 내 정보 */,
-            ),
+            label: '내 정보',
             tooltip: '',
           )
         ],

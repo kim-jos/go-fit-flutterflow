@@ -19,7 +19,7 @@ class ClassesModel extends FlutterFlowModel {
 
   // State field(s) for ChoiceChips widget.
   List<String>? choiceChipsValues;
-  FormFieldController<List<String>>? choiceChipsController;
+  FormFieldController<List<String>>? choiceChipsValueController;
   // State field(s) for GoogleMap widget.
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();

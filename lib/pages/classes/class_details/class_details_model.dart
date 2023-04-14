@@ -1,5 +1,5 @@
-import '/auth/auth_util.dart';
-import '/auth/firebase_user_provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/components/confirmation_reservation/confirmation_reservation_widget.dart';
 import '/components/no_time_slots_available/no_time_slots_available_widget.dart';
@@ -14,6 +14,7 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

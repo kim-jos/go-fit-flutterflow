@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -64,11 +64,11 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(
-              width: 40.0,
-              height: 40.0,
+              width: 30.0,
+              height: 30.0,
               child: SpinKitCircle(
                 color: FlutterFlowTheme.of(context).primary,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           );
@@ -113,9 +113,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 60.0),
                       child: Text(
-                        FFLocalizations.of(context).getText(
-                          'u7sd5fe4' /* Go Fit */,
-                        ),
+                        'Go Fit',
                         textAlign: TextAlign.center,
                         style:
                             FlutterFlowTheme.of(context).displaySmall.override(
@@ -152,14 +150,10 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                   FlutterFlowTheme.of(context).primaryText,
                               tabs: [
                                 Tab(
-                                  text: FFLocalizations.of(context).getText(
-                                    'mrjn4nw8' /* 로그인 */,
-                                  ),
+                                  text: '로그인',
                                 ),
                                 Tab(
-                                  text: FFLocalizations.of(context).getText(
-                                    '1lyvfoko' /* 회원가입 */,
-                                  ),
+                                  text: '회원가입',
                                 ),
                               ],
                             ),
@@ -190,11 +184,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
-                                              hintText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'sm6kkgm0' /* 이메일 */,
-                                              ),
+                                              hintText: '이메일',
                                               hintStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -285,11 +275,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
-                                              hintText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'nmslv0cc' /* 비밀번호 */,
-                                              ),
+                                              hintText: '비밀번호',
                                               hintStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -381,8 +367,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               GoRouter.of(context)
                                                   .prepareAuthEvent();
 
-                                              final user =
-                                                  await signInWithEmail(
+                                              final user = await authManager
+                                                  .signInWithEmail(
                                                 context,
                                                 _model.emailAddressController
                                                     .text,
@@ -413,10 +399,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 parameterData: {},
                                               );
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              'lbwr7onm' /* 로그인 */,
-                                            ),
+                                            text: '로그인',
                                             options: FFButtonOptions(
                                               width: 230.0,
                                               height: 50.0,
@@ -504,7 +487,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                   );
                                                   return;
                                                 }
-                                                await resetPassword(
+                                                await authManager.resetPassword(
                                                   email: _model
                                                       .emailAddressController
                                                       .text,
@@ -516,10 +499,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 Navigator.pop(context);
                                               }
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              'qdypelx9' /* 비밀번호 찾기 */,
-                                            ),
+                                            text: '비밀번호 찾기',
                                             options: FFButtonOptions(
                                               width: 170.0,
                                               height: 40.0,
@@ -557,10 +537,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               logFirebaseEvent(
                                                   'AuthEmailLogin - 둘러보기');
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              '17buouiy' /* 둘러보기 */,
-                                            ),
+                                            text: '둘러보기',
                                             options: FFButtonOptions(
                                               width: 170.0,
                                               height: 40.0,
@@ -604,11 +581,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                             ),
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'v2n03fwl' /* 이름 */,
-                                              ),
+                                              labelText: '이름',
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -698,11 +671,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 .emailAddressCreateController,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'h8ot3s4k' /* 이메일 */,
-                                              ),
+                                              labelText: '이메일',
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -777,11 +746,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
-                                              hintText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'u3t9zbc8' /* 비밀번호 */,
-                                              ),
+                                              hintText: '비밀번호',
                                               hintStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -873,11 +838,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               labelStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
-                                              hintText:
-                                                  FFLocalizations.of(context)
-                                                      .getText(
-                                                'untvo2lq' /* 비밀번호 확인 */,
-                                              ),
+                                              hintText: '비밀번호 확인',
                                               hintStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .bodySmall,
@@ -985,8 +946,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 return;
                                               }
 
-                                              final user =
-                                                  await createAccountWithEmail(
+                                              final user = await authManager
+                                                  .createAccountWithEmail(
                                                 context,
                                                 _model
                                                     .emailAddressCreateController
@@ -1032,10 +993,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 parameterData: {},
                                               );
                                             },
-                                            text: FFLocalizations.of(context)
-                                                .getText(
-                                              'celr4qfk' /* 회원가입 */,
-                                            ),
+                                            text: '회원가입',
                                             options: FFButtonOptions(
                                               width: 230.0,
                                               height: 50.0,

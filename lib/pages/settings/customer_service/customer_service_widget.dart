@@ -67,9 +67,7 @@ class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            'y2ezeldf' /* 문의하기 */,
-          ),
+          '문의하기',
           style: FlutterFlowTheme.of(context).headlineMedium,
         ),
         actions: [],
@@ -102,9 +100,7 @@ class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
                                 controller: _model.textController,
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                  hintText: FFLocalizations.of(context).getText(
-                                    '1n2df4dp' /* 문의사항을 남겨주세요 */,
-                                  ),
+                                  hintText: '문의사항을 남겨주세요',
                                   hintStyle:
                                       FlutterFlowTheme.of(context).bodySmall,
                                   enabledBorder: OutlineInputBorder(
@@ -157,9 +153,7 @@ class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
             ],
           ),
           Text(
-            FFLocalizations.of(context).getText(
-              'hi52ztwl' /*  대표번호: 010-5090-9006 */,
-            ),
+            ' 대표번호: 010-5090-9006',
             style: FlutterFlowTheme.of(context).bodySmall,
           ),
           Padding(
@@ -180,9 +174,7 @@ class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
                   },
                 ));
               },
-              text: FFLocalizations.of(context).getText(
-                'ukbbflf8' /* 문의하기 */,
-              ),
+              text: '문의하기',
               options: FFButtonOptions(
                 width: 270.0,
                 height: 50.0,

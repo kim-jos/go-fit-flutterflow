@@ -1,5 +1,5 @@
-import '/auth/auth_util.dart';
-import '/auth/firebase_user_provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/empty_reservation/empty_reservation_widget.dart';
@@ -61,9 +61,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
           title: Text(
-            FFLocalizations.of(context).getText(
-              'nx5oww7a' /* 예약현황 */,
-            ),
+            '예약현황',
             style: FlutterFlowTheme.of(context).headlineMedium.override(
                   fontFamily: 'Pretendard',
                   color: FlutterFlowTheme.of(context).black600,
@@ -163,11 +161,11 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         // Customize what your widget looks like when it's loading the first page.
                         firstPageProgressIndicatorBuilder: (_) => Center(
                           child: SizedBox(
-                            width: 40.0,
-                            height: 40.0,
+                            width: 30.0,
+                            height: 30.0,
                             child: SpinKitCircle(
                               color: FlutterFlowTheme.of(context).primary,
-                              size: 40.0,
+                              size: 30.0,
                             ),
                           ),
                         ),
@@ -189,12 +187,12 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                 if (!snapshot.hasData) {
                                   return Center(
                                     child: SizedBox(
-                                      width: 40.0,
-                                      height: 40.0,
+                                      width: 30.0,
+                                      height: 30.0,
                                       child: SpinKitCircle(
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
-                                        size: 40.0,
+                                        size: 30.0,
                                       ),
                                     ),
                                   );
@@ -236,13 +234,13 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                             if (!snapshot.hasData) {
                                               return Center(
                                                 child: SizedBox(
-                                                  width: 40.0,
-                                                  height: 40.0,
+                                                  width: 30.0,
+                                                  height: 30.0,
                                                   child: SpinKitCircle(
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .primary,
-                                                    size: 40.0,
+                                                    size: 30.0,
                                                   ),
                                                 ),
                                               );
@@ -327,11 +325,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                                           0.0,
                                                                           0.0),
                                                               child: Text(
-                                                                FFLocalizations.of(
-                                                                        context)
-                                                                    .getText(
-                                                                  'mtl864zq' /*  -  */,
-                                                                ),
+                                                                ' - ',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodySmall,
@@ -377,14 +371,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                         if (!snapshot.hasData) {
                                                           return Center(
                                                             child: SizedBox(
-                                                              width: 40.0,
-                                                              height: 40.0,
+                                                              width: 30.0,
+                                                              height: 30.0,
                                                               child:
                                                                   SpinKitCircle(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primary,
-                                                                size: 40.0,
+                                                                size: 30.0,
                                                               ),
                                                             ),
                                                           );
@@ -569,14 +563,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                       if (!snapshot.hasData) {
                                                         return Center(
                                                           child: SizedBox(
-                                                            width: 40.0,
-                                                            height: 40.0,
+                                                            width: 30.0,
+                                                            height: 30.0,
                                                             child:
                                                                 SpinKitCircle(
                                                               color: FlutterFlowTheme
                                                                       .of(context)
                                                                   .primary,
-                                                              size: 40.0,
+                                                              size: 30.0,
                                                             ),
                                                           ),
                                                         );

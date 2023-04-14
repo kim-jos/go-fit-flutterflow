@@ -39,6 +39,8 @@ abstract class ClassDetailsRecord
 
   int? get price;
 
+  bool? get hasShower;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -55,7 +57,8 @@ abstract class ClassDetailsRecord
     ..images = ListBuilder()
     ..businessHours = ListBuilder()
     ..info = ListBuilder()
-    ..price = 0;
+    ..price = 0
+    ..hasShower = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('classDetails');
@@ -91,6 +94,7 @@ Map<String, dynamic> createClassDetailsRecordData({
   LatLng? latitude,
   String? instagram,
   int? price,
+  bool? hasShower,
 }) {
   final firestoreData = serializers.toFirestore(
     ClassDetailsRecord.serializer,
@@ -109,7 +113,8 @@ Map<String, dynamic> createClassDetailsRecordData({
         ..images = null
         ..businessHours = null
         ..info = null
-        ..price = price,
+        ..price = price
+        ..hasShower = hasShower,
     ),
   );
 

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -76,9 +76,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            '9exzt1e7' /* 리뷰 */,
-          ),
+          '리뷰',
           style: FlutterFlowTheme.of(context).headlineMedium,
         ),
         actions: [],
@@ -128,10 +126,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                                   controller: _model.textController,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    hintText:
-                                        FFLocalizations.of(context).getText(
-                                      '3nhsokfa' /* 수업은 어땠나요? */,
-                                    ),
+                                    hintText: '수업은 어땠나요?',
                                     hintStyle:
                                         FlutterFlowTheme.of(context).bodySmall,
                                     enabledBorder: OutlineInputBorder(
@@ -222,9 +217,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                   return;
                 }
               },
-              text: FFLocalizations.of(context).getText(
-                '9msuiz14' /* 리뷰 작성하기 */,
-              ),
+              text: '리뷰 작성하기',
               options: FFButtonOptions(
                 width: 270.0,
                 height: 50.0,

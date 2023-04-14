@@ -123,6 +123,7 @@ final parametersBuilderMap =
           'creditsRequired': getParameter<int>(data, 'creditsRequired'),
           'coords': getParameter<LatLng>(data, 'coords'),
           'paymentUrl': getParameter<String>(data, 'paymentUrl'),
+          'originalPrice': getParameter<int>(data, 'originalPrice'),
         },
       ),
   'Classes': ParameterData.none(),

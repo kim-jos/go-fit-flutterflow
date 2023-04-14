@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -66,9 +66,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           },
         ),
         title: Text(
-          FFLocalizations.of(context).getText(
-            '4492bvg0' /* 환경설정 */,
-          ),
+          '환경설정',
           style: FlutterFlowTheme.of(context).headlineMedium,
         ),
         actions: [],
@@ -111,18 +109,16 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   if (confirmDialogResponse) {
                     logFirebaseEvent('Text_auth');
                     GoRouter.of(context).prepareAuthEvent();
-                    await signOut();
+                    await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
                   } else {
                     return;
                   }
 
-                  context.goNamedAuth('AuthLogin', mounted);
+                  context.goNamedAuth('Classes', mounted);
                 },
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    'bc2j3zgc' /* 로그아웃 */,
-                  ),
+                  '로그아웃',
                   textAlign: TextAlign.start,
                   style: FlutterFlowTheme.of(context).titleMedium,
                 ),
@@ -140,11 +136,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 40.0,
-                        height: 40.0,
+                        width: 30.0,
+                        height: 30.0,
                         child: SpinKitCircle(
                           color: FlutterFlowTheme.of(context).primary,
-                          size: 40.0,
+                          size: 30.0,
                         ),
                       ),
                     );
@@ -188,7 +184,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           parameterData: {},
                         );
                         logFirebaseEvent('Text_auth');
-                        await deleteUser(context);
+                        await authManager.deleteUser(context);
                       } else {
                         return;
                       }
@@ -196,9 +192,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       context.goNamedAuth('Home', mounted);
                     },
                     child: Text(
-                      FFLocalizations.of(context).getText(
-                        'syouxty8' /* 회원탈퇴 */,
-                      ),
+                      '회원탈퇴',
                       style: FlutterFlowTheme.of(context).titleMedium,
                     ),
                   );

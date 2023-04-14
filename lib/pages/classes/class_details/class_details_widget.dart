@@ -1,5 +1,5 @@
-import '/auth/auth_util.dart';
-import '/auth/firebase_user_provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/components/confirmation_reservation/confirmation_reservation_widget.dart';
 import '/components/no_time_slots_available/no_time_slots_available_widget.dart';
@@ -14,6 +14,7 @@ import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -32,6 +33,7 @@ class ClassDetailsWidget extends StatefulWidget {
     this.creditsRequired,
     this.coords,
     this.paymentUrl,
+    this.originalPrice,
   }) : super(key: key);
 
   final DocumentReference? classRef;
@@ -40,6 +42,7 @@ class ClassDetailsWidget extends StatefulWidget {
   final int? creditsRequired;
   final LatLng? coords;
   final String? paymentUrl;
+  final int? originalPrice;
 
   @override
   _ClassDetailsWidgetState createState() => _ClassDetailsWidgetState();
@@ -82,11 +85,11 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(
-              width: 40.0,
-              height: 40.0,
+              width: 30.0,
+              height: 30.0,
               child: SpinKitCircle(
                 color: FlutterFlowTheme.of(context).primary,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           );
@@ -256,9 +259,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             25.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            '551lzfm2' /* 수업 정보 요약 */,
-                          ),
+                          '가격 정보',
                           style: FlutterFlowTheme.of(context).titleMedium,
                         ),
                       ),
@@ -278,164 +279,188 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 10.0, 0.0, 0.0),
-                              child: Column(
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 5.0, 0.0),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.3,
-                                          height: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            border: Border.all(
-                                              color:
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 5.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '기존 가격',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Pretendard',
+                                                  fontSize: 18.0,
+                                                  useGoogleFonts: false,
+                                                ),
+                                          ),
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: formatNumber(
+                                                    widget.originalPrice,
+                                                    formatType:
+                                                        FormatType.decimal,
+                                                    decimalType:
+                                                        DecimalType.automatic,
+                                                  ),
+                                                  style: TextStyle(),
+                                                ),
+                                                TextSpan(
+                                                  text: '원',
+                                                  style: TextStyle(),
+                                                )
+                                              ],
+                                              style:
                                                   FlutterFlowTheme.of(context)
-                                                      .lineColor,
+                                                      .bodyMedium,
                                             ),
                                           ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 5.0),
-                                                child: Icon(
-                                                  Icons.attach_money,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                  size: 30.0,
-                                                ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    height: 100.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Go Fit 가격',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium
+                                              .override(
+                                                fontFamily: 'Pretendard',
+                                                fontSize: 18.0,
+                                                useGoogleFonts: false,
                                               ),
-                                              Text(
-                                                '${formatNumber(
-                                                  classDetailsClassDetailsRecord!
-                                                      .price,
+                                        ),
+                                        RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: formatNumber(
+                                                  widget.creditsRequired,
                                                   formatType:
                                                       FormatType.decimal,
                                                   decimalType:
                                                       DecimalType.automatic,
-                                                )}원',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall,
+                                                ),
+                                                style: TextStyle(),
                                               ),
+                                              TextSpan(
+                                                text: '원',
+                                                style: TextStyle(),
+                                              )
                                             ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 5.0, 0.0),
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.3,
-                                          height: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .lineColor,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 5.0),
-                                                child: FaIcon(
-                                                  FontAwesomeIcons.tshirt,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Pretendard',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .secondaryText,
-                                                  size: 30.0,
+                                                      .primary,
+                                                  fontWeight: FontWeight.bold,
+                                                  useGoogleFonts: false,
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        3.0, 0.0, 3.0, 0.0),
-                                                child: AutoSizeText(
-                                                  classDetailsClassDetailsRecord!
-                                                      .requirements!,
-                                                  textAlign: TextAlign.center,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall,
-                                                ),
-                                              ),
-                                            ],
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 5.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
                                       ),
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.3,
-                                        height: 100.0,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.of(context)
-                                                .lineColor,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: formatNumber(
+                                                    1 -
+                                                        (widget.creditsRequired! /
+                                                            widget
+                                                                .originalPrice!),
+                                                    formatType:
+                                                        FormatType.percent,
+                                                  ),
+                                                  style: TextStyle(),
+                                                ),
+                                                TextSpan(
+                                                  text: ' 할인',
+                                                  style: TextStyle(),
+                                                )
+                                              ],
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily: 'Pretendard',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    fontWeight: FontWeight.bold,
+                                                    useGoogleFonts: false,
+                                                  ),
+                                            ),
                                           ),
-                                        ),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 5.0),
-                                              child: FaIcon(
-                                                FontAwesomeIcons.stopwatch,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 30.0,
-                                              ),
-                                            ),
-                                            Text(
-                                              classDetailsClassDetailsRecord!
-                                                  .duration!,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodySmall,
-                                            ),
-                                          ],
-                                        ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -450,9 +475,177 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             25.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            'd36xhzaj' /* 수업 예약 */,
-                          ),
+                          '수업 정보 요약',
+                          style: FlutterFlowTheme.of(context).titleMedium,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            12.0, 0.0, 12.0, 10.0),
+                        child: Wrap(
+                          spacing: 8.0,
+                          runSpacing: 8.0,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 5.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 5.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.tshirt,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 30.0,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    3.0, 0.0, 3.0, 0.0),
+                                            child: AutoSizeText(
+                                              classDetailsClassDetailsRecord!
+                                                  .requirements!,
+                                              textAlign: TextAlign.center,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 5.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 5.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.stopwatch,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 30.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            classDetailsClassDetailsRecord!
+                                                .duration!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    height: 100.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      border: Border.all(
+                                        color: Colors.transparent,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 5.0),
+                                          child: FaIcon(
+                                            FontAwesomeIcons.shower,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 30.0,
+                                          ),
+                                        ),
+                                        Text(
+                                          classDetailsClassDetailsRecord!
+                                                  .hasShower!
+                                              ? '샤워 가능'
+                                              : '샤워 불가능',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Divider(
+                        thickness: 1.0,
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            25.0, 12.0, 0.0, 0.0),
+                        child: Text(
+                          '수업 예약',
                           style: FlutterFlowTheme.of(context).titleMedium,
                         ),
                       ),
@@ -470,9 +663,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
 
                                 context.pushNamed('AuthLogin');
                               },
-                              text: FFLocalizations.of(context).getText(
-                                'i8vijwwa' /* 로그인 */,
-                              ),
+                              text: '로그인',
                               options: FFButtonOptions(
                                 width: 130.0,
                                 height: 40.0,
@@ -569,12 +760,12 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                   if (!snapshot.hasData) {
                                     return Center(
                                       child: SizedBox(
-                                        width: 40.0,
-                                        height: 40.0,
+                                        width: 30.0,
+                                        height: 30.0,
                                         child: SpinKitCircle(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
-                                          size: 40.0,
+                                          size: 30.0,
                                         ),
                                       ),
                                     );
@@ -614,13 +805,13 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                           if (!snapshot.hasData) {
                                             return Center(
                                               child: SizedBox(
-                                                width: 40.0,
-                                                height: 40.0,
+                                                width: 30.0,
+                                                height: 30.0,
                                                 child: SpinKitCircle(
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
-                                                  size: 40.0,
+                                                  size: 30.0,
                                                 ),
                                               ),
                                             );
@@ -857,9 +1048,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             25.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            'pthwba89' /* 공지사항 */,
-                          ),
+                          '공지사항',
                           style: FlutterFlowTheme.of(context).titleMedium,
                         ),
                       ),
@@ -897,9 +1086,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             25.0, 12.0, 0.0, 0.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            '848lfv2w' /* 운영시간 */,
-                          ),
+                          '운영시간',
                           style: FlutterFlowTheme.of(context).titleMedium,
                         ),
                       ),
@@ -939,9 +1126,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             25.0, 12.0, 0.0, 5.0),
                         child: Text(
-                          FFLocalizations.of(context).getText(
-                            'o2b28yjl' /* 리뷰 */,
-                          ),
+                          '리뷰',
                           style: FlutterFlowTheme.of(context).titleMedium,
                         ),
                       ),
@@ -959,11 +1144,11 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                             if (!snapshot.hasData) {
                               return Center(
                                 child: SizedBox(
-                                  width: 40.0,
-                                  height: 40.0,
+                                  width: 30.0,
+                                  height: 30.0,
                                   child: SpinKitCircle(
                                     color: FlutterFlowTheme.of(context).primary,
-                                    size: 40.0,
+                                    size: 30.0,
                                   ),
                                 ),
                               );
@@ -1011,13 +1196,13 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                   if (!snapshot.hasData) {
                                                     return Center(
                                                       child: SizedBox(
-                                                        width: 40.0,
-                                                        height: 40.0,
+                                                        width: 30.0,
+                                                        height: 30.0,
                                                         child: SpinKitCircle(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primary,
-                                                          size: 40.0,
+                                                          size: 30.0,
                                                         ),
                                                       ),
                                                     );

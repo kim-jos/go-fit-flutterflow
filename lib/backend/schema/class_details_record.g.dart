@@ -122,6 +122,13 @@ class _$ClassDetailsRecordSerializer
         ..add('price')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.hasShower;
+    if (value != null) {
+      result
+        ..add('hasShower')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -209,6 +216,10 @@ class _$ClassDetailsRecordSerializer
           result.price = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'hasShower':
+          result.hasShower = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -252,6 +263,8 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
   @override
   final int? price;
   @override
+  final bool? hasShower;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ClassDetailsRecord(
@@ -273,6 +286,7 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
       this.businessHours,
       this.info,
       this.price,
+      this.hasShower,
       this.ffRef})
       : super._();
 
@@ -303,6 +317,7 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
         businessHours == other.businessHours &&
         info == other.info &&
         price == other.price &&
+        hasShower == other.hasShower &&
         ffRef == other.ffRef;
   }
 
@@ -323,6 +338,7 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
     _$hash = $jc(_$hash, businessHours.hashCode);
     _$hash = $jc(_$hash, info.hashCode);
     _$hash = $jc(_$hash, price.hashCode);
+    _$hash = $jc(_$hash, hasShower.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -345,6 +361,7 @@ class _$ClassDetailsRecord extends ClassDetailsRecord {
           ..add('businessHours', businessHours)
           ..add('info', info)
           ..add('price', price)
+          ..add('hasShower', hasShower)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -414,6 +431,10 @@ class ClassDetailsRecordBuilder
   int? get price => _$this._price;
   set price(int? price) => _$this._price = price;
 
+  bool? _hasShower;
+  bool? get hasShower => _$this._hasShower;
+  set hasShower(bool? hasShower) => _$this._hasShower = hasShower;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -439,6 +460,7 @@ class ClassDetailsRecordBuilder
       _businessHours = $v.businessHours?.toBuilder();
       _info = $v.info?.toBuilder();
       _price = $v.price;
+      _hasShower = $v.hasShower;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -478,6 +500,7 @@ class ClassDetailsRecordBuilder
               businessHours: _businessHours?.build(),
               info: _info?.build(),
               price: price,
+              hasShower: hasShower,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

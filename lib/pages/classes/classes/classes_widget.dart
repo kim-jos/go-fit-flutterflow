@@ -64,11 +64,11 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         color: FlutterFlowTheme.of(context).primaryBackground,
         child: Center(
           child: SizedBox(
-            width: 40.0,
-            height: 40.0,
+            width: 30.0,
+            height: 30.0,
             child: SpinKitCircle(
               color: FlutterFlowTheme.of(context).primary,
-              size: 40.0,
+              size: 30.0,
             ),
           ),
         ),
@@ -87,11 +87,11 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(
-              width: 40.0,
-              height: 40.0,
+              width: 30.0,
+              height: 30.0,
               child: SpinKitCircle(
                 color: FlutterFlowTheme.of(context).primary,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           );
@@ -120,9 +120,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               20.0, 20.0, 0.0, 0.0),
                           child: Text(
-                            FFLocalizations.of(context).getText(
-                              'ma6p27sk' /* 그룹 운동시설 */,
-                            ),
+                            '그룹 운동시설',
                             textAlign: TextAlign.start,
                             style: FlutterFlowTheme.of(context).displaySmall,
                           ),
@@ -143,11 +141,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                       logFirebaseEvent(
                                           'Button_clear_all_select_all');
                                       setState(() => _model
-                                          .choiceChipsController?.value = []);
+                                          .choiceChipsValueController
+                                          ?.value = []);
                                     },
-                                    text: FFLocalizations.of(context).getText(
-                                      'tg7xd40n' /* 전체 보기 */,
-                                    ),
+                                    text: '전체 보기',
                                     options: FFButtonOptions(
                                       width: 90.0,
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -178,42 +175,15 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                       10.0, 0.0, 0.0, 0.0),
                                   child: FlutterFlowChoiceChips(
                                     options: [
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        '05csufli' /* 필라테스 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'wuqykbdw' /* 크로스핏 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'r8j1djeu' /* 골프 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'okglq00s' /* 발레 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'y5cftd3k' /* PT */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'furuppdj' /* 주짓수 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'r724rgb6' /* 댄스 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'wjgngsfj' /* 요가 */,
-                                      )),
-                                      ChipData(
-                                          FFLocalizations.of(context).getText(
-                                        'cse5k69x' /* 스피닝 */,
-                                      ))
+                                      ChipData('필라테스'),
+                                      ChipData('크로스핏'),
+                                      ChipData('골프'),
+                                      ChipData('발레'),
+                                      ChipData('PT'),
+                                      ChipData('주짓수'),
+                                      ChipData('댄스'),
+                                      ChipData('요가'),
+                                      ChipData('스피닝')
                                     ],
                                     onChanged: (val) => setState(
                                         () => _model.choiceChipsValues = val),
@@ -245,8 +215,9 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                     initialized:
                                         _model.choiceChipsValues != null,
                                     alignment: WrapAlignment.center,
-                                    controller: _model.choiceChipsController ??=
-                                        FormFieldController<List<String>>(
+                                    controller:
+                                        _model.choiceChipsValueController ??=
+                                            FormFieldController<List<String>>(
                                       [],
                                     ),
                                   ),
@@ -354,9 +325,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         },
                                       ).then((value) => setState(() {}));
                                     },
-                                    text: FFLocalizations.of(context).getText(
-                                      '72kr8bab' /* 목록 보기 */,
-                                    ),
+                                    text: '목록 보기',
                                     options: FFButtonOptions(
                                       width: 100.0,
                                       height: 40.0,
@@ -465,6 +434,17 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                   .first
                                                   .paymentUrl,
                                               ParamType.String,
+                                            ),
+                                            'originalPrice': serializeParam(
+                                              classesClassesRecordList
+                                                  .where((e) =>
+                                                      e.reference ==
+                                                      FFAppState()
+                                                          .markerClassRef)
+                                                  .toList()
+                                                  .first
+                                                  .originalPrice,
+                                              ParamType.int,
                                             ),
                                           }.withoutNulls,
                                           extra: <String, dynamic>{

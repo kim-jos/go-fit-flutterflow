@@ -1,5 +1,5 @@
-import '/auth/auth_util.dart';
-import '/auth/firebase_user_provider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/update_name/update_name_widget.dart';
@@ -94,9 +94,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
-          FFLocalizations.of(context).getText(
-            'zak15vob' /* 내 정보 */,
-          ),
+          '내 정보',
           style: FlutterFlowTheme.of(context).bodyMedium.override(
                 fontFamily: 'Pretendard',
                 color: FlutterFlowTheme.of(context).primaryText,
@@ -538,9 +536,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        'wuo3ru0i' /* 환경설정 */,
-                                      ),
+                                      '환경설정',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
@@ -603,9 +599,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        '7vjallym' /* 1:1 문의 */,
-                                      ),
+                                      '1:1 문의',
                                       style: FlutterFlowTheme.of(context)
                                           .bodySmall,
                                     ),
@@ -663,9 +657,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         12.0, 0.0, 0.0, 0.0),
                                     child: Text(
-                                      FFLocalizations.of(context).getText(
-                                        '1dng9rwb' /* 1:1 문의 */,
-                                      ),
+                                      '1:1 문의',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium,
                                     ),
@@ -726,9 +718,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'm3pfioi0' /* 내가 추천한 친구 수 */,
-                                          ),
+                                          '내가 추천한 친구 수',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         ),
@@ -746,14 +736,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -811,9 +801,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'lk2a9kq0' /* 보유 크레딧 */,
-                                          ),
+                                          '보유 크레딧',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
@@ -831,14 +819,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -902,9 +890,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            'p4sx1icp' /* 내 포인트 */,
-                                          ),
+                                          '내 포인트',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         ),
@@ -922,14 +908,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -987,9 +973,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            '1t0zdkab' /* 보유 크레딧 */,
-                                          ),
+                                          '보유 크레딧',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
@@ -1007,14 +991,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -1078,9 +1062,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            '309euai8' /* 내 추천 코드 */,
-                                          ),
+                                          '내 추천 코드',
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall,
                                         ),
@@ -1098,14 +1080,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -1162,9 +1144,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12.0, 0.0, 0.0, 0.0),
                                         child: Text(
-                                          FFLocalizations.of(context).getText(
-                                            's3xwl9gf' /* 보유 크레딧 */,
-                                          ),
+                                          '보유 크레딧',
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium,
                                         ),
@@ -1182,14 +1162,14 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                               if (!snapshot.hasData) {
                                                 return Center(
                                                   child: SizedBox(
-                                                    width: 40.0,
-                                                    height: 40.0,
+                                                    width: 30.0,
+                                                    height: 30.0,
                                                     child: SpinKitCircle(
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      size: 40.0,
+                                                      size: 30.0,
                                                     ),
                                                   ),
                                                 );
@@ -1229,9 +1209,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
 
                     context.pushNamed('AuthLogin');
                   },
-                  text: FFLocalizations.of(context).getText(
-                    '6cvf1cft' /* 로그인 */,
-                  ),
+                  text: '로그인',
                   options: FFButtonOptions(
                     width: 130.0,
                     height: 40.0,
@@ -1279,9 +1257,7 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                     logFirebaseEvent('Button_google_analytics_event');
                     logFirebaseEvent('CopyReferralCode');
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'auk1yhh3' /* 추천 코드 복사 */,
-                  ),
+                  text: '추천 코드 복사',
                   options: FFButtonOptions(
                     width: 130.0,
                     height: 40.0,

@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/confirmation_reservation/confirmation_reservation_widget.dart';
 import '/components/no_time_slots_available/no_time_slots_available_widget.dart';
@@ -102,18 +102,14 @@ class _ReservationWidgetState extends State<ReservationWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    '3xgaq3lj' /* 수업 예약 */,
-                  ),
+                  '수업 예약',
                   style: FlutterFlowTheme.of(context).headlineSmall,
                 ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                 child: Text(
-                  FFLocalizations.of(context).getText(
-                    '4ldfd1n9' /* 날짜/시간 선택 */,
-                  ),
+                  '날짜/시간 선택',
                   style: FlutterFlowTheme.of(context).bodySmall,
                 ),
               ),
@@ -172,11 +168,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 40.0,
-                        height: 40.0,
+                        width: 30.0,
+                        height: 30.0,
                         child: SpinKitCircle(
                           color: FlutterFlowTheme.of(context).primary,
-                          size: 40.0,
+                          size: 30.0,
                         ),
                       ),
                     );
@@ -204,11 +200,11 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 40.0,
-                              height: 40.0,
+                              width: 30.0,
+                              height: 30.0,
                               child: SpinKitCircle(
                                 color: FlutterFlowTheme.of(context).primary,
-                                size: 40.0,
+                                size: 30.0,
                               ),
                             ),
                           );
@@ -371,9 +367,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                     logFirebaseEvent('Button_bottom_sheet');
                     Navigator.pop(context);
                   },
-                  text: FFLocalizations.of(context).getText(
-                    'fitnbi1b' /* 닫기 */,
-                  ),
+                  text: '닫기',
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 40.0,

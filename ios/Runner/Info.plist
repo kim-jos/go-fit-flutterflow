@@ -16,11 +16,6 @@
 	<string>GoFit</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>ko</string>
-		<string>en</string>
-	</array>
 
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>

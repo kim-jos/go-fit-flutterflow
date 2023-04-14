@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -137,9 +137,7 @@ class _ConfirmationReservationWidgetState
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            FFLocalizations.of(context).getText(
-                              'cixwrkmj' /* 예약을 진행하시겠습니까? */,
-                            ),
+                            '예약을 진행하시겠습니까?',
                             style:
                                 FlutterFlowTheme.of(context).bodySmall.override(
                                       fontFamily: 'Pretendard',
@@ -159,9 +157,7 @@ class _ConfirmationReservationWidgetState
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              FFLocalizations.of(context).getText(
-                                'voqvkzbp' /* 예약 취소는 수업 시작 24시간 전 까지만 가능합니다. */,
-                              ),
+                              '예약 취소는 수업 시작 24시간 전 까지만 가능합니다.',
                               style: FlutterFlowTheme.of(context)
                                   .bodySmall
                                   .override(
@@ -215,11 +211,11 @@ class _ConfirmationReservationWidgetState
                           if (!snapshot.hasData) {
                             return Center(
                               child: SizedBox(
-                                width: 40.0,
-                                height: 40.0,
+                                width: 30.0,
+                                height: 30.0,
                                 child: SpinKitCircle(
                                   color: FlutterFlowTheme.of(context).primary,
-                                  size: 40.0,
+                                  size: 30.0,
                                 ),
                               ),
                             );
@@ -349,9 +345,7 @@ class _ConfirmationReservationWidgetState
                                 return;
                               }
                             },
-                            text: FFLocalizations.of(context).getText(
-                              '7q84xuov' /* 예약하기 */,
-                            ),
+                            text: '예약하기',
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 50.0,

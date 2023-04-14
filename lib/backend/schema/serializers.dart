@@ -13,6 +13,8 @@ import 'discovery_record.dart';
 import 'reviews_record.dart';
 import 'referrals_record.dart';
 import 'home_record.dart';
+import 'promotions_record.dart';
+import 'workout_categories_record.dart';
 
 import 'index.dart';
 
@@ -35,6 +37,8 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   ReviewsRecord,
   ReferralsRecord,
   HomeRecord,
+  PromotionsRecord,
+  WorkoutCategoriesRecord,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
@@ -219,6 +223,9 @@ Map<String, dynamic> mapToFirestore(Map<String, dynamic> data) =>
       }
       return MapEntry(key, value);
     });
+
+List<GeoPoint>? convertToGeoPointList(List<LatLng>? list) =>
+    list?.map((e) => e.toGeoPoint()).toList();
 
 extension GeoPointExtension on LatLng {
   GeoPoint toGeoPoint() => GeoPoint(latitude, longitude);

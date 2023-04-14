@@ -15,10 +15,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DiscoveryRecord.serializer)
       ..add(HomeRecord.serializer)
       ..add(MembershipsRecord.serializer)
+      ..add(PromotionsRecord.serializer)
       ..add(ReferralsRecord.serializer)
       ..add(ReservationsRecord.serializer)
       ..add(ReviewsRecord.serializer)
       ..add(UsersRecord.serializer)
+      ..add(WorkoutCategoriesRecord.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(

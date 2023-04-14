@@ -1,4 +1,4 @@
-import '/auth/auth_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -56,11 +56,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
         if (!snapshot.hasData) {
           return Center(
             child: SizedBox(
-              width: 40.0,
-              height: 40.0,
+              width: 30.0,
+              height: 30.0,
               child: SpinKitCircle(
                 color: FlutterFlowTheme.of(context).primary,
-                size: 40.0,
+                size: 30.0,
               ),
             ),
           );
@@ -84,9 +84,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          FFLocalizations.of(context).getText(
-                            '196371zp' /* Go Fit */,
-                          ),
+                          'Go Fit',
                           style: FlutterFlowTheme.of(context)
                               .displaySmall
                               .override(
@@ -125,14 +123,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                 FlutterFlowTheme.of(context).primaryText,
                             tabs: [
                               Tab(
-                                text: FFLocalizations.of(context).getText(
-                                  '9t8b8ezy' /* 로그인 */,
-                                ),
+                                text: '로그인',
                               ),
                               Tab(
-                                text: FFLocalizations.of(context).getText(
-                                  'q34ek0kh' /* 회원가입 */,
-                                ),
+                                text: '회원가입',
                               ),
                             ],
                           ),
@@ -165,8 +159,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                     GoRouter.of(context)
                                                         .prepareAuthEvent();
                                                     final user =
-                                                        await signInWithGoogle(
-                                                            context);
+                                                        await authManager
+                                                            .signInWithGoogle(
+                                                                context);
                                                     if (user == null) {
                                                       return;
                                                     }
@@ -205,11 +200,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       parameterData: {},
                                                     );
                                                   },
-                                                  text: FFLocalizations.of(
-                                                          context)
-                                                      .getText(
-                                                    'qwglaxrp' /* Google로 로그인 */,
-                                                  ),
+                                                  text: 'Google로 로그인',
                                                   icon: FaIcon(
                                                     FontAwesomeIcons.google,
                                                     color: FlutterFlowTheme.of(
@@ -269,9 +260,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       'Button_auth');
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
-                                                  final user =
-                                                      await signInWithApple(
-                                                          context);
+                                                  final user = await authManager
+                                                      .signInWithApple(context);
                                                   if (user == null) {
                                                     return;
                                                   }
@@ -309,11 +299,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                     parameterData: {},
                                                   );
                                                 },
-                                                text:
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                  'zwoheq92' /* Apple로 로그인 */,
-                                                ),
+                                                text: 'Apple로 로그인',
                                                 icon: FaIcon(
                                                   FontAwesomeIcons.apple,
                                                   color: FlutterFlowTheme.of(
@@ -367,9 +353,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             context.pushNamed('AuthEmailLogin');
                                           },
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              '5ahve3qy' /* E-mail로 로그인 */,
-                                            ),
+                                            'E-mail로 로그인',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium,
                                           ),
@@ -393,9 +377,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 'AuthLogin - 둘러보기');
                                           },
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              '94yrjtwq' /* 둘러보기 */,
-                                            ),
+                                            '둘러보기',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium,
                                           ),
@@ -420,8 +402,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             logFirebaseEvent('Button_auth');
                                             GoRouter.of(context)
                                                 .prepareAuthEvent();
-                                            final user =
-                                                await signInWithGoogle(context);
+                                            final user = await authManager
+                                                .signInWithGoogle(context);
                                             if (user == null) {
                                               return;
                                             }
@@ -444,10 +426,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             context.pushNamedAuth(
                                                 'AuthPhoneNumber', mounted);
                                           },
-                                          text: FFLocalizations.of(context)
-                                              .getText(
-                                            'sh0xuws4' /* Google로 등록 */,
-                                          ),
+                                          text: 'Google로 등록',
                                           icon: FaIcon(
                                             FontAwesomeIcons.google,
                                             color: FlutterFlowTheme.of(context)
@@ -496,9 +475,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       'Button_auth');
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
-                                                  final user =
-                                                      await signInWithApple(
-                                                          context);
+                                                  final user = await authManager
+                                                      .signInWithApple(context);
                                                   if (user == null) {
                                                     return;
                                                   }
@@ -524,11 +502,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       'AuthPhoneNumber',
                                                       mounted);
                                                 },
-                                                text:
-                                                    FFLocalizations.of(context)
-                                                        .getText(
-                                                  'd33hhv9s' /* Apple로 등록 */,
-                                                ),
+                                                text: 'Apple로 등록',
                                                 icon: FaIcon(
                                                   FontAwesomeIcons.apple,
                                                   color: FlutterFlowTheme.of(
@@ -582,9 +556,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                             context.pushNamed('AuthEmailLogin');
                                           },
                                           child: Text(
-                                            FFLocalizations.of(context).getText(
-                                              '8s89w6h0' /* E-mail로 등록 */,
-                                            ),
+                                            'E-mail로 등록',
                                             style: FlutterFlowTheme.of(context)
                                                 .titleMedium,
                                           ),

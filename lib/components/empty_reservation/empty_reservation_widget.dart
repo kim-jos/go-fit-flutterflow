@@ -43,9 +43,7 @@ class _EmptyReservationWidgetState extends State<EmptyReservationWidget> {
     context.watch<FFAppState>();
 
     return Text(
-      FFLocalizations.of(context).getText(
-        '6dr8u57v' /* 예약한 수업이 없습니다 */,
-      ),
+      '예약한 수업이 없습니다',
       style: FlutterFlowTheme.of(context).titleMedium,
     );
   }
