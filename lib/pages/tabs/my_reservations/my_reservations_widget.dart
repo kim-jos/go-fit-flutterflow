@@ -5,6 +5,7 @@ import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/empty_reservation/empty_reservation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -79,6 +80,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  width: double.infinity,
+                  height: 400.0,
+                  child: custom_widgets.MyReservationsCalendar(
+                    width: double.infinity,
+                    height: 400.0,
+                  ),
+                ),
                 if (loggedIn)
                   Padding(
                     padding:

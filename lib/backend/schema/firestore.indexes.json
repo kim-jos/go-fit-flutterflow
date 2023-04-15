@@ -59,6 +59,10 @@
           "order": "ASCENDING"
         },
         {
+          "fieldPath": "exerciseType",
+          "order": "ASCENDING"
+        },
+        {
           "fieldPath": "locationFilter",
           "order": "ASCENDING"
         },

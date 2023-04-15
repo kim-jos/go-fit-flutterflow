@@ -13,7 +13,6 @@ import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
 import 'schema/reservations_record.dart';
 import 'schema/memberships_record.dart';
-import 'schema/discovery_record.dart';
 import 'schema/reviews_record.dart';
 import 'schema/referrals_record.dart';
 import 'schema/home_record.dart';
@@ -34,7 +33,6 @@ export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
 export 'schema/reservations_record.dart';
 export 'schema/memberships_record.dart';
-export 'schema/discovery_record.dart';
 export 'schema/reviews_record.dart';
 export 'schema/referrals_record.dart';
 export 'schema/home_record.dart';
@@ -453,58 +451,6 @@ Future<FFFirestorePage<MembershipsRecord>> queryMembershipsRecordPage({
     queryCollectionPage(
       MembershipsRecord.collection,
       MembershipsRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query DiscoveryRecords (as a Stream and as a Future).
-Future<int> queryDiscoveryRecordCount({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      DiscoveryRecord.collection,
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<DiscoveryRecord>> queryDiscoveryRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      DiscoveryRecord.collection,
-      DiscoveryRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<DiscoveryRecord>> queryDiscoveryRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      DiscoveryRecord.collection,
-      DiscoveryRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<DiscoveryRecord>> queryDiscoveryRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      DiscoveryRecord.collection,
-      DiscoveryRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

@@ -16,9 +16,11 @@ class ClassListWidget extends StatefulWidget {
   const ClassListWidget({
     Key? key,
     this.classList,
+    this.category,
   }) : super(key: key);
 
   final List<ClassesRecord>? classList;
+  final String? category;
 
   @override
   _ClassListWidgetState createState() => _ClassListWidgetState();
@@ -153,6 +155,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                       .where('hideClass', isEqualTo: false)
                       .whereIn(
                           'locationFilter', _model.locationFilterChipsValues)
+                      .where('exerciseType', isEqualTo: widget.category)
                       .orderBy('priority'),
                 ),
                 builder: (context, snapshot) {

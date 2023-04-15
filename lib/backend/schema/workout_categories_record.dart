@@ -11,23 +11,11 @@ abstract class WorkoutCategoriesRecord
   static Serializer<WorkoutCategoriesRecord> get serializer =>
       _$workoutCategoriesRecordSerializer;
 
-  String? get ballet;
+  int? get priority;
 
-  String? get climbing;
+  String? get category;
 
-  String? get crossfit;
-
-  String? get dance;
-
-  String? get martialArts;
-
-  String? get pilates;
-
-  String? get spinning;
-
-  String? get squash;
-
-  String? get yoga;
+  String? get imageUrl;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -35,15 +23,9 @@ abstract class WorkoutCategoriesRecord
 
   static void _initializeBuilder(WorkoutCategoriesRecordBuilder builder) =>
       builder
-        ..ballet = ''
-        ..climbing = ''
-        ..crossfit = ''
-        ..dance = ''
-        ..martialArts = ''
-        ..pilates = ''
-        ..spinning = ''
-        ..squash = ''
-        ..yoga = '';
+        ..priority = 0
+        ..category = ''
+        ..imageUrl = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('workoutCategories');
@@ -69,29 +51,17 @@ abstract class WorkoutCategoriesRecord
 }
 
 Map<String, dynamic> createWorkoutCategoriesRecordData({
-  String? ballet,
-  String? climbing,
-  String? crossfit,
-  String? dance,
-  String? martialArts,
-  String? pilates,
-  String? spinning,
-  String? squash,
-  String? yoga,
+  int? priority,
+  String? category,
+  String? imageUrl,
 }) {
   final firestoreData = serializers.toFirestore(
     WorkoutCategoriesRecord.serializer,
     WorkoutCategoriesRecord(
       (w) => w
-        ..ballet = ballet
-        ..climbing = climbing
-        ..crossfit = crossfit
-        ..dance = dance
-        ..martialArts = martialArts
-        ..pilates = pilates
-        ..spinning = spinning
-        ..squash = squash
-        ..yoga = yoga,
+        ..priority = priority
+        ..category = category
+        ..imageUrl = imageUrl,
     ),
   );
 

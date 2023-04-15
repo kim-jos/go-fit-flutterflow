@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
+import '/components/class_list/class_list_widget.dart';
 import '/components/home_page_promotion/home_page_promotion_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';

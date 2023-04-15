@@ -25,66 +25,23 @@ class _$WorkoutCategoriesRecordSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.ballet;
+    value = object.priority;
     if (value != null) {
       result
-        ..add('ballet')
+        ..add('priority')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.category;
+    if (value != null) {
+      result
+        ..add('category')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.climbing;
+    value = object.imageUrl;
     if (value != null) {
       result
-        ..add('climbing')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.crossfit;
-    if (value != null) {
-      result
-        ..add('crossfit')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.dance;
-    if (value != null) {
-      result
-        ..add('dance')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.martialArts;
-    if (value != null) {
-      result
-        ..add('martialArts')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.pilates;
-    if (value != null) {
-      result
-        ..add('pilates')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.spinning;
-    if (value != null) {
-      result
-        ..add('spinning')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.squash;
-    if (value != null) {
-      result
-        ..add('squash')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.yoga;
-    if (value != null) {
-      result
-        ..add('yoga')
+        ..add('imageUrl')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -111,40 +68,16 @@ class _$WorkoutCategoriesRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'ballet':
-          result.ballet = serializers.deserialize(value,
+        case 'priority':
+          result.priority = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'category':
+          result.category = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'climbing':
-          result.climbing = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'crossfit':
-          result.crossfit = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'dance':
-          result.dance = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'martialArts':
-          result.martialArts = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'pilates':
-          result.pilates = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'spinning':
-          result.spinning = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'squash':
-          result.squash = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'yoga':
-          result.yoga = serializers.deserialize(value,
+        case 'imageUrl':
+          result.imageUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
@@ -162,23 +95,11 @@ class _$WorkoutCategoriesRecordSerializer
 
 class _$WorkoutCategoriesRecord extends WorkoutCategoriesRecord {
   @override
-  final String? ballet;
+  final int? priority;
   @override
-  final String? climbing;
+  final String? category;
   @override
-  final String? crossfit;
-  @override
-  final String? dance;
-  @override
-  final String? martialArts;
-  @override
-  final String? pilates;
-  @override
-  final String? spinning;
-  @override
-  final String? squash;
-  @override
-  final String? yoga;
+  final String? imageUrl;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -187,16 +108,7 @@ class _$WorkoutCategoriesRecord extends WorkoutCategoriesRecord {
       (new WorkoutCategoriesRecordBuilder()..update(updates))._build();
 
   _$WorkoutCategoriesRecord._(
-      {this.ballet,
-      this.climbing,
-      this.crossfit,
-      this.dance,
-      this.martialArts,
-      this.pilates,
-      this.spinning,
-      this.squash,
-      this.yoga,
-      this.ffRef})
+      {this.priority, this.category, this.imageUrl, this.ffRef})
       : super._();
 
   @override
@@ -212,30 +124,18 @@ class _$WorkoutCategoriesRecord extends WorkoutCategoriesRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is WorkoutCategoriesRecord &&
-        ballet == other.ballet &&
-        climbing == other.climbing &&
-        crossfit == other.crossfit &&
-        dance == other.dance &&
-        martialArts == other.martialArts &&
-        pilates == other.pilates &&
-        spinning == other.spinning &&
-        squash == other.squash &&
-        yoga == other.yoga &&
+        priority == other.priority &&
+        category == other.category &&
+        imageUrl == other.imageUrl &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, ballet.hashCode);
-    _$hash = $jc(_$hash, climbing.hashCode);
-    _$hash = $jc(_$hash, crossfit.hashCode);
-    _$hash = $jc(_$hash, dance.hashCode);
-    _$hash = $jc(_$hash, martialArts.hashCode);
-    _$hash = $jc(_$hash, pilates.hashCode);
-    _$hash = $jc(_$hash, spinning.hashCode);
-    _$hash = $jc(_$hash, squash.hashCode);
-    _$hash = $jc(_$hash, yoga.hashCode);
+    _$hash = $jc(_$hash, priority.hashCode);
+    _$hash = $jc(_$hash, category.hashCode);
+    _$hash = $jc(_$hash, imageUrl.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -244,15 +144,9 @@ class _$WorkoutCategoriesRecord extends WorkoutCategoriesRecord {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'WorkoutCategoriesRecord')
-          ..add('ballet', ballet)
-          ..add('climbing', climbing)
-          ..add('crossfit', crossfit)
-          ..add('dance', dance)
-          ..add('martialArts', martialArts)
-          ..add('pilates', pilates)
-          ..add('spinning', spinning)
-          ..add('squash', squash)
-          ..add('yoga', yoga)
+          ..add('priority', priority)
+          ..add('category', category)
+          ..add('imageUrl', imageUrl)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -263,41 +157,17 @@ class WorkoutCategoriesRecordBuilder
         Builder<WorkoutCategoriesRecord, WorkoutCategoriesRecordBuilder> {
   _$WorkoutCategoriesRecord? _$v;
 
-  String? _ballet;
-  String? get ballet => _$this._ballet;
-  set ballet(String? ballet) => _$this._ballet = ballet;
+  int? _priority;
+  int? get priority => _$this._priority;
+  set priority(int? priority) => _$this._priority = priority;
 
-  String? _climbing;
-  String? get climbing => _$this._climbing;
-  set climbing(String? climbing) => _$this._climbing = climbing;
+  String? _category;
+  String? get category => _$this._category;
+  set category(String? category) => _$this._category = category;
 
-  String? _crossfit;
-  String? get crossfit => _$this._crossfit;
-  set crossfit(String? crossfit) => _$this._crossfit = crossfit;
-
-  String? _dance;
-  String? get dance => _$this._dance;
-  set dance(String? dance) => _$this._dance = dance;
-
-  String? _martialArts;
-  String? get martialArts => _$this._martialArts;
-  set martialArts(String? martialArts) => _$this._martialArts = martialArts;
-
-  String? _pilates;
-  String? get pilates => _$this._pilates;
-  set pilates(String? pilates) => _$this._pilates = pilates;
-
-  String? _spinning;
-  String? get spinning => _$this._spinning;
-  set spinning(String? spinning) => _$this._spinning = spinning;
-
-  String? _squash;
-  String? get squash => _$this._squash;
-  set squash(String? squash) => _$this._squash = squash;
-
-  String? _yoga;
-  String? get yoga => _$this._yoga;
-  set yoga(String? yoga) => _$this._yoga = yoga;
+  String? _imageUrl;
+  String? get imageUrl => _$this._imageUrl;
+  set imageUrl(String? imageUrl) => _$this._imageUrl = imageUrl;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -310,15 +180,9 @@ class WorkoutCategoriesRecordBuilder
   WorkoutCategoriesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _ballet = $v.ballet;
-      _climbing = $v.climbing;
-      _crossfit = $v.crossfit;
-      _dance = $v.dance;
-      _martialArts = $v.martialArts;
-      _pilates = $v.pilates;
-      _spinning = $v.spinning;
-      _squash = $v.squash;
-      _yoga = $v.yoga;
+      _priority = $v.priority;
+      _category = $v.category;
+      _imageUrl = $v.imageUrl;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -342,15 +206,9 @@ class WorkoutCategoriesRecordBuilder
   _$WorkoutCategoriesRecord _build() {
     final _$result = _$v ??
         new _$WorkoutCategoriesRecord._(
-            ballet: ballet,
-            climbing: climbing,
-            crossfit: crossfit,
-            dance: dance,
-            martialArts: martialArts,
-            pilates: pilates,
-            spinning: spinning,
-            squash: squash,
-            yoga: yoga,
+            priority: priority,
+            category: category,
+            imageUrl: imageUrl,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

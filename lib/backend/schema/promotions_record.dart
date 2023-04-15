@@ -11,17 +11,28 @@ abstract class PromotionsRecord
   static Serializer<PromotionsRecord> get serializer =>
       _$promotionsRecordSerializer;
 
-  int? get friendReferral;
+  int? get amount;
 
-  int? get signUpEvent;
+  String? get type;
+
+  String? get imageUrl;
+
+  DateTime? get createdAt;
+
+  String? get shareContent;
+
+  BuiltList<String>? get contentImages;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(PromotionsRecordBuilder builder) => builder
-    ..friendReferral = 0
-    ..signUpEvent = 0;
+    ..amount = 0
+    ..type = ''
+    ..imageUrl = ''
+    ..shareContent = ''
+    ..contentImages = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('promotions');
@@ -45,15 +56,22 @@ abstract class PromotionsRecord
 }
 
 Map<String, dynamic> createPromotionsRecordData({
-  int? friendReferral,
-  int? signUpEvent,
+  int? amount,
+  String? type,
+  String? imageUrl,
+  DateTime? createdAt,
+  String? shareContent,
 }) {
   final firestoreData = serializers.toFirestore(
     PromotionsRecord.serializer,
     PromotionsRecord(
       (p) => p
-        ..friendReferral = friendReferral
-        ..signUpEvent = signUpEvent,
+        ..amount = amount
+        ..type = type
+        ..imageUrl = imageUrl
+        ..createdAt = createdAt
+        ..shareContent = shareContent
+        ..contentImages = null,
     ),
   );
 
