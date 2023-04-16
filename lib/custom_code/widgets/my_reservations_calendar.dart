@@ -28,50 +28,36 @@ class MyReservationsCalendar extends StatefulWidget {
 }
 
 class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
-  late final CalendarController _controller;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  late final User currentUser;
   late DateTime _focusedDay;
   late DateTime _firstDay;
   late DateTime _lastDay;
-  late List<Map<String, dynamic>> _reservations;
-
-  Future<List<Map<String, dynamic>>> _fetchReservations(DateTime day) async {
-    final reservations = FirebaseFirestore.instance
-        .collection('reservations')
-        .where('startTime', isGreaterThanOrEqualTo: _firstDay)
-        .where('startTime', isLessThanOrEqualTo: _lastDay);
-
-    final snapshot = await reservations.get();
-    final docs = snapshot.docs;
-
-    final reservationsForDay = docs
-        .where((doc) {
-          final startTime = doc['startTime'].toDate();
-          return startTime.day == day.day &&
-              startTime.month == day.month &&
-              startTime.year == day.year;
-        })
-        .map((doc) => doc.data())
-        .toList();
-
-    return reservationsForDay;
-  }
+  late dynamic _allReservations = [];
 
   @override
   void initState() {
     super.initState();
+    currentUser = auth.currentUser!;
     _focusedDay = DateTime.now();
-    _controller = CalendarController();
     _firstDay =
         DateTime(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day);
     _lastDay =
         DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day + 7);
-    _reservations = [];
+    _getAllReservations();
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  Future<void> _getAllReservations() async {
+    final reservations = FirebaseFirestore.instance
+        .collection('reservations')
+        .where('user', isEqualTo: currentUser.uid);
+
+    final querySnapshot = await reservations.get();
+    setState(() {
+      _allReservations = querySnapshot;
+      print('thisis the reservations list $_allReservations');
+      querySnapshot.docs.map((doc) => print(doc.data().toString()));
+    });
   }
 
   @override
@@ -79,43 +65,27 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     return Column(
       children: [
         TableCalendar(
-          calendarController: _controller,
           firstDay: _firstDay,
-          lastDay: _lastDay,
+          lastDay: _lastDay, // seven days in the future
           focusedDay: _focusedDay,
           calendarFormat: CalendarFormat.month,
           startingDayOfWeek: StartingDayOfWeek.monday,
-          eventLoader: (day) async {
-            final reservationsForDay = await _fetchReservations(day);
-            return reservationsForDay.isNotEmpty ? reservationsForDay : null;
-          },
-          onPageChanged: (focusedDay) {
-            _focusedDay = focusedDay;
-            _firstDay = DateTime(
-                _focusedDay.year, _focusedDay.month - 3, _focusedDay.day);
-            _lastDay = DateTime(
-                _focusedDay.year, _focusedDay.month, _focusedDay.day + 7);
-          },
-          onDaySelected: (selectedDay, focusedDay) async {
-            final reservationsForDay = await _fetchReservations(selectedDay);
+          calendarStyle: CalendarStyle(
+            // Use `CalendarStyle` to customize the UI
+            outsideDaysVisible: false,
+          ),
+          onDaySelected: (selectedDay, focusedDay) {
+            print('this is all reservations $_allReservations');
+            _allReservations.map((doc) => {print(doc)});
             setState(() {
-              _reservations = reservationsForDay;
+              _focusedDay = focusedDay; // update `_focusedDay` here as well
             });
           },
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: _reservations.length,
-            itemBuilder: (context, index) {
-              final reservation = _reservations[index];
-              return ListTile(
-                title: Text(reservation['className']),
-                subtitle: Text(
-                  '${reservation['startTime'].toDate().toString()}',
-                ),
-              );
-            },
-          ),
+          onPageChanged: (focusedDay) {
+            setState(() {
+              _focusedDay = focusedDay;
+            });
+          },
         ),
       ],
     );

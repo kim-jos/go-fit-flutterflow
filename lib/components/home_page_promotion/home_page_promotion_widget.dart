@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -87,7 +88,7 @@ class _HomePagePromotionWidgetState extends State<HomePagePromotionWidget> {
                             'HOME_PAGE_PROMOTION_COMP_공유하기_BTN_ON_TAP');
                         logFirebaseEvent('Button_share');
                         await Share.share(
-                          '',
+                          '${widget.shareContent}${valueOrDefault(currentUserDocument?.referralCode, '')}',
                           sharePositionOrigin: getWidgetBoundingBox(context),
                         );
                       },
