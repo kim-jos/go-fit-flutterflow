@@ -57,3 +57,8 @@ DateTime dateAndTimeStringParser(
 int convertWeekDayToInteger(DateTime date) {
   return date.weekday;
 }
+
+DateTime addDaysToCurrentTime(int days) {
+  // add days to currentTime as much as the inserted argument
+  return DateTime.now().add(Duration(days: days));
+}

@@ -1,4 +1,4 @@
-import '/auth/firebase_auth/firebase_user_provider.dart';
+import '/auth/base_auth_user_provider.dart';
 import '/backend/backend.dart';
 import '/components/class_list/class_list_widget.dart';
 import '/components/home_page_promotion/home_page_promotion_widget.dart';
@@ -109,59 +109,57 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 rowPromotionsRecordList[rowIndex];
                             return Align(
                               alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 4.0, 0.0),
-                                child: InkWell(
-                                  onTap: () async {
-                                    logFirebaseEvent(
-                                        'HOME_PAGE_Image_h2z3xh6z_ON_TAP');
-                                    logFirebaseEvent('Image_bottom_sheet');
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (bottomSheetContext) {
-                                        return GestureDetector(
-                                          onTap: () => FocusScope.of(context)
-                                              .requestFocus(_unfocusNode),
-                                          child: Padding(
-                                            padding: MediaQuery.of(
-                                                    bottomSheetContext)
-                                                .viewInsets,
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.75,
-                                              child: HomePagePromotionWidget(
-                                                type: rowPromotionsRecord.type,
-                                                contentImages:
-                                                    rowPromotionsRecord
-                                                        .contentImages!
-                                                        .toList(),
-                                                shareContent:
-                                                    rowPromotionsRecord
-                                                        .shareContent,
-                                                amount:
-                                                    rowPromotionsRecord.amount,
-                                              ),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'HOME_PAGE_Image_h2z3xh6z_ON_TAP');
+                                  logFirebaseEvent('Image_bottom_sheet');
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (bottomSheetContext) {
+                                      return GestureDetector(
+                                        onTap: () => FocusScope.of(context)
+                                            .requestFocus(_unfocusNode),
+                                        child: Padding(
+                                          padding:
+                                              MediaQuery.of(bottomSheetContext)
+                                                  .viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.75,
+                                            child: HomePagePromotionWidget(
+                                              type: rowPromotionsRecord.type,
+                                              contentImages: rowPromotionsRecord
+                                                  .contentImages!
+                                                  .toList(),
+                                              shareContent: rowPromotionsRecord
+                                                  .shareContent,
+                                              amount:
+                                                  rowPromotionsRecord.amount,
                                             ),
                                           ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: rowPromotionsRecord.imageUrl!,
-                                      width: MediaQuery.of(context).size.width *
-                                          1.0,
-                                      height: 140.0,
-                                      fit: BoxFit.cover,
-                                    ),
+                                        ),
+                                      );
+                                    },
+                                  ).then((value) => setState(() {}));
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  child: CachedNetworkImage(
+                                    imageUrl: rowPromotionsRecord.imageUrl!,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 140.0,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -180,111 +178,142 @@ class _HomeWidgetState extends State<HomeWidget> {
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                     ),
-                    child: StreamBuilder<List<WorkoutCategoriesRecord>>(
-                      stream: queryWorkoutCategoriesRecord(
-                        queryBuilder: (workoutCategoriesRecord) =>
-                            workoutCategoriesRecord.orderBy('priority'),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 30.0,
-                              height: 30.0,
-                              child: SpinKitCircle(
-                                color: FlutterFlowTheme.of(context).primary,
-                                size: 30.0,
-                              ),
-                            ),
-                          );
-                        }
-                        List<WorkoutCategoriesRecord>
-                            gridViewWorkoutCategoriesRecordList =
-                            snapshot.data!;
-                        return GridView.builder(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            crossAxisSpacing: 5.0,
-                            mainAxisSpacing: 2.0,
-                            childAspectRatio: 1.0,
-                          ),
-                          scrollDirection: Axis.vertical,
-                          itemCount: gridViewWorkoutCategoriesRecordList.length,
-                          itemBuilder: (context, gridViewIndex) {
-                            final gridViewWorkoutCategoriesRecord =
-                                gridViewWorkoutCategoriesRecordList[
-                                    gridViewIndex];
-                            return InkWell(
-                              onTap: () async {
-                                logFirebaseEvent(
-                                    'HOME_PAGE_Column_kc8hn2cq_ON_TAP');
-                                logFirebaseEvent('Column_bottom_sheet');
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (bottomSheetContext) {
-                                    return GestureDetector(
-                                      onTap: () => FocusScope.of(context)
-                                          .requestFocus(_unfocusNode),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.of(bottomSheetContext)
-                                                .viewInsets,
-                                        child: Container(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.75,
-                                          child: ClassListWidget(
-                                            category:
-                                                gridViewWorkoutCategoriesRecord
-                                                    .category,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => setState(() {}));
-                              },
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(0.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: gridViewWorkoutCategoriesRecord
-                                          .imageUrl!,
-                                      width: 35.0,
-                                      height: 35.0,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 5.0, 0.0, 0.0),
-                                    child: Text(
-                                      gridViewWorkoutCategoriesRecord.category!,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodySmall
-                                          .override(
-                                            fontFamily: 'Pretendard',
-                                            fontSize: 15.0,
-                                            useGoogleFonts: false,
-                                          ),
-                                    ),
-                                  ),
-                                ],
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
+                      child: StreamBuilder<List<WorkoutCategoriesRecord>>(
+                        stream: queryWorkoutCategoriesRecord(
+                          queryBuilder: (workoutCategoriesRecord) =>
+                              workoutCategoriesRecord.orderBy('priority'),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 30.0,
+                                height: 30.0,
+                                child: SpinKitCircle(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 30.0,
+                                ),
                               ),
                             );
-                          },
-                        );
-                      },
+                          }
+                          List<WorkoutCategoriesRecord>
+                              gridViewWorkoutCategoriesRecordList =
+                              snapshot.data!;
+                          return GridView.builder(
+                            padding: EdgeInsets.zero,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 5.0,
+                              mainAxisSpacing: 2.0,
+                              childAspectRatio: 1.0,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            itemCount:
+                                gridViewWorkoutCategoriesRecordList.length,
+                            itemBuilder: (context, gridViewIndex) {
+                              final gridViewWorkoutCategoriesRecord =
+                                  gridViewWorkoutCategoriesRecordList[
+                                      gridViewIndex];
+                              return Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 5.0),
+                                child: Container(
+                                  width: 100.0,
+                                  height: 100.0,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).grayIcon,
+                                    ),
+                                  ),
+                                  child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    onTap: () async {
+                                      logFirebaseEvent(
+                                          'HOME_PAGE_Column_kc8hn2cq_ON_TAP');
+                                      logFirebaseEvent('Column_bottom_sheet');
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        enableDrag: false,
+                                        context: context,
+                                        builder: (bottomSheetContext) {
+                                          return GestureDetector(
+                                            onTap: () => FocusScope.of(context)
+                                                .requestFocus(_unfocusNode),
+                                            child: Padding(
+                                              padding: MediaQuery.of(
+                                                      bottomSheetContext)
+                                                  .viewInsets,
+                                              child: Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.75,
+                                                child: ClassListWidget(
+                                                  category:
+                                                      gridViewWorkoutCategoriesRecord
+                                                          .category,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
+                                    },
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(0.0),
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                gridViewWorkoutCategoriesRecord
+                                                    .imageUrl!,
+                                            width: 35.0,
+                                            height: 35.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 5.0, 0.0, 0.0),
+                                          child: Text(
+                                            gridViewWorkoutCategoriesRecord
+                                                .category!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall
+                                                .override(
+                                                  fontFamily: 'Pretendard',
+                                                  fontSize: 15.0,
+                                                  useGoogleFonts: false,
+                                                ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -331,6 +360,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
                                       'HOME_PAGE_Row_6honob66_ON_TAP');

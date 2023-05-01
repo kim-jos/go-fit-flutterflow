@@ -1,10 +1,11 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/empty_reservation/empty_reservation_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -77,8 +78,16 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(
+                  width: double.infinity,
+                  height: 400.0,
+                  child: custom_widgets.MyReservationsCalendar(
+                    width: double.infinity,
+                    height: 400.0,
+                  ),
+                ),
                 if (loggedIn)
                   Padding(
                     padding:
@@ -387,6 +396,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                             iconUsersRecordList =
                                                             snapshot.data!;
                                                         return InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
                                                                 'MY_RESERVATIONS_Icon_ebmcw21w_ON_TAP');
@@ -578,6 +595,14 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                       int textCount =
                                                           snapshot.data!;
                                                       return InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
                                                               'MY_RESERVATIONS_Text_fp33cfn7_ON_TAP');

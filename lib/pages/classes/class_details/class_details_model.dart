@@ -1,5 +1,5 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/components/confirmation_reservation/confirmation_reservation_widget.dart';
 import '/components/no_time_slots_available/no_time_slots_available_widget.dart';

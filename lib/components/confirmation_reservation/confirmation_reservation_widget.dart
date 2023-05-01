@@ -21,7 +21,6 @@ class ConfirmationReservationWidget extends StatefulWidget {
     this.selectedTime,
     this.classRef,
     this.selectedTimeSlot,
-    this.price,
     this.creditsRequired,
     this.paymentUrl,
   }) : super(key: key);
@@ -31,7 +30,6 @@ class ConfirmationReservationWidget extends StatefulWidget {
   final String? selectedTime;
   final DocumentReference? classRef;
   final DocumentReference? selectedTimeSlot;
-  final int? price;
   final int? creditsRequired;
   final String? paymentUrl;
 

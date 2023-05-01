@@ -48,6 +48,18 @@ class FFAppState extends ChangeNotifier {
   set didPressReferralVerification(bool _value) {
     _didPressReferralVerification = _value;
   }
+
+  DateTime? _classDate;
+  DateTime? get classDate => _classDate;
+  set classDate(DateTime? _value) {
+    _classDate = _value;
+  }
+
+  int _selectedDay = 0;
+  int get selectedDay => _selectedDay;
+  set selectedDay(int _value) {
+    _selectedDay = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

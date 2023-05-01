@@ -1,5 +1,5 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/components/confirmation_reservation/confirmation_reservation_widget.dart';
 import '/components/no_time_slots_available/no_time_slots_available_widget.dart';
@@ -204,6 +204,10 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 5.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'CLASS_DETAILS_PAGE_Image_iiqej88j_ON_TAP');
@@ -222,6 +226,10 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                     ),
                                   ),
                                   InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'CLASS_DETAILS_PAGE_Image_wx4ck60g_ON_TAP');
@@ -962,9 +970,6 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                                   selectedTimeSlot:
                                                                       rowReserveClassAvailableTimeSlotsRecord
                                                                           .reference,
-                                                                  price:
-                                                                      classDetailsClassDetailsRecord!
-                                                                          .price,
                                                                   creditsRequired:
                                                                       widget
                                                                           .creditsRequired,

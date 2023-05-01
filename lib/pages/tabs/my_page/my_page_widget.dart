@@ -1,5 +1,5 @@
+import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
-import '/auth/firebase_auth/firebase_user_provider.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/components/update_name/update_name_widget.dart';
@@ -141,6 +141,11 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                                   0.0, 20.0, 0.0, 0.0),
                                           child: AuthUserStreamWidget(
                                             builder: (context) => InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
                                                 logFirebaseEvent(
                                                     'MY_PAGE_PAGE_CircleImage_y0ovcd4q_ON_TAP');
@@ -221,6 +226,8 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                                                   width: m
                                                                       .dimensions
                                                                       ?.width,
+                                                                  blurHash: m
+                                                                      .blurHash,
                                                                 ))
                                                             .toList();
 
@@ -315,6 +322,10 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                       0.0, 8.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'MY_PAGE_PAGE_Text_zuzs1v7y_ON_TAP');
@@ -417,6 +428,10 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                       0.0, 4.0, 0.0, 0.0),
                                   child: AuthUserStreamWidget(
                                     builder: (context) => InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'MY_PAGE_PAGE_Text_0o2zsafs_ON_TAP');
@@ -510,6 +525,10 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                               ),
                             ),
                             child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
                                     'MY_PAGE_PAGE_Row_yb884nh1_ON_TAP');
@@ -573,6 +592,10 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                               ),
                             ),
                             child: InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 logFirebaseEvent(
                                     'MY_PAGE_PAGE_Row_6w23nqel_ON_TAP');

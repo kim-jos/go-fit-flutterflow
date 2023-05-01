@@ -41,6 +41,26 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       logFirebaseEvent('CLASSES_PAGE_Classes_ON_INIT_STATE');
       logFirebaseEvent('Classes_update_app_state');
       FFAppState().update(() {});
+      logFirebaseEvent('Classes_bottom_sheet');
+      await showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        barrierColor: Colors.transparent,
+        enableDrag: false,
+        context: context,
+        builder: (bottomSheetContext) {
+          return GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+            child: Padding(
+              padding: MediaQuery.of(bottomSheetContext).viewInsets,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: ClassListWidget(),
+              ),
+            ),
+          );
+        },
+      ).then((value) => setState(() {}));
     });
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
@@ -263,7 +283,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                             markerColor: GoogleMarkerColor.cyan,
                             mapType: MapType.normal,
                             style: GoogleMapStyle.standard,
-                            initialZoom: 14.0,
+                            initialZoom: 10.0,
                             allowInteraction: true,
                             allowZoom: true,
                             showZoomControls: true,
@@ -314,11 +334,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                         .size
                                                         .height *
                                                     0.8,
-                                                child: ClassListWidget(
-                                                  classList:
-                                                      classesClassesRecordList
-                                                          .toList(),
-                                                ),
+                                                child: ClassListWidget(),
                                               ),
                                             ),
                                           );
@@ -360,6 +376,10 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         10.0, 0.0, 10.0, 10.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         logFirebaseEvent(
                                             'CLASSES_PAGE_ClassContainer_ON_TAP');

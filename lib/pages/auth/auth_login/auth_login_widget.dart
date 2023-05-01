@@ -104,31 +104,34 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                       initialIndex: 0,
                       child: Column(
                         children: [
-                          TabBar(
-                            isScrollable: true,
-                            labelColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            unselectedLabelColor:
-                                FlutterFlowTheme.of(context).lineColor,
-                            labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 24.0, 0.0),
-                            labelStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Pretendard',
-                                  fontSize: 18.0,
-                                  useGoogleFonts: false,
+                          Align(
+                            alignment: Alignment(0.0, 0),
+                            child: TabBar(
+                              isScrollable: true,
+                              labelColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              unselectedLabelColor:
+                                  FlutterFlowTheme.of(context).lineColor,
+                              labelPadding: EdgeInsetsDirectional.fromSTEB(
+                                  24.0, 0.0, 24.0, 0.0),
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .titleMedium
+                                  .override(
+                                    fontFamily: 'Pretendard',
+                                    fontSize: 18.0,
+                                    useGoogleFonts: false,
+                                  ),
+                              indicatorColor:
+                                  FlutterFlowTheme.of(context).primaryText,
+                              tabs: [
+                                Tab(
+                                  text: '로그인',
                                 ),
-                            indicatorColor:
-                                FlutterFlowTheme.of(context).primaryText,
-                            tabs: [
-                              Tab(
-                                text: '로그인',
-                              ),
-                              Tab(
-                                text: '회원가입',
-                              ),
-                            ],
+                                Tab(
+                                  text: '회원가입',
+                                ),
+                              ],
+                            ),
                           ),
                           Expanded(
                             child: TabBarView(
@@ -344,6 +347,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'AUTH_LOGIN_PAGE_Text_rt975us3_ON_TAP');
@@ -363,6 +370,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 15.0, 0.0, 0.0),
                                         child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'AUTH_LOGIN_PAGE_Text_jqlwr1xb_ON_TAP');
@@ -547,6 +558,10 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 20.0, 0.0, 0.0),
                                         child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
                                                 'AUTH_LOGIN_PAGE_Text_yia8ibjg_ON_TAP');

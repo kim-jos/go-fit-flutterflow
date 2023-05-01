@@ -82,6 +82,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
                 onTap: () async {
                   logFirebaseEvent('SETTINGS_PAGE_Text_o0yip3jq_ON_TAP');
                   logFirebaseEvent('Text_alert_dialog');
@@ -147,6 +151,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   }
                   List<UsersRecord> textUsersRecordList = snapshot.data!;
                   return InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                     onTap: () async {
                       logFirebaseEvent('SETTINGS_PAGE_Text_l3pv5eek_ON_TAP');
                       logFirebaseEvent('Text_alert_dialog');

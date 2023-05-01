@@ -136,26 +136,29 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                         initialIndex: 0,
                         child: Column(
                           children: [
-                            TabBar(
-                              isScrollable: true,
-                              labelColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              unselectedLabelColor:
-                                  FlutterFlowTheme.of(context).lineColor,
-                              labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 0.0, 24.0, 0.0),
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).titleMedium,
-                              indicatorColor:
-                                  FlutterFlowTheme.of(context).primaryText,
-                              tabs: [
-                                Tab(
-                                  text: '로그인',
-                                ),
-                                Tab(
-                                  text: '회원가입',
-                                ),
-                              ],
+                            Align(
+                              alignment: Alignment(0.0, 0),
+                              child: TabBar(
+                                isScrollable: true,
+                                labelColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                unselectedLabelColor:
+                                    FlutterFlowTheme.of(context).lineColor,
+                                labelPadding: EdgeInsetsDirectional.fromSTEB(
+                                    24.0, 0.0, 24.0, 0.0),
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).titleMedium,
+                                indicatorColor:
+                                    FlutterFlowTheme.of(context).primaryText,
+                                tabs: [
+                                  Tab(
+                                    text: '로그인',
+                                  ),
+                                  Tab(
+                                    text: '회원가입',
+                                  ),
+                                ],
+                              ),
                             ),
                             Expanded(
                               child: TabBarView(
