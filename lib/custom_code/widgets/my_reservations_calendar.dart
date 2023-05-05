@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
+import 'index.dart'; // Imports other custom widgets
+
 import 'package:table_calendar/table_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,13 +18,16 @@ import 'dart:collection';
 
 class CalendarData {
   Future<List<DocumentSnapshot>> getReservations(userRef) async {
+    final userRefFinal =
+        FirebaseFirestore.instance.collection('users').doc(userRef.uid);
+
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('reservations')
-        .where('startTime', isGreaterThanOrEqualTo: DateTime.now())
-        .where('userRef', isEqualTo: userRef.uid)
-        .orderBy('startTime')
+        .where('user', isEqualTo: userRefFinal)
+        // .orderBy('startTime', descending: true)
         .get();
-    print('snapshot docs: $snapshot');
+    dynamic docss = snapshot.docs.map((e) => print(e.get('className')));
+    print('fireabse: $docss');
     return snapshot.docs;
   }
 
@@ -41,7 +46,6 @@ class CalendarData {
         events[date]!.add(reservation);
       }
     });
-    print('joseph events: $events');
     return events;
   }
 }
@@ -76,8 +80,6 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   void initState() {
     super.initState();
     _currentUser = _auth.currentUser!;
-    dynamic userRef = _currentUser.uid;
-    print('cuurentUser: $userRef');
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
     _firstDay = DateTime(_focusedDay.year, _focusedDay.month - 3,
@@ -88,7 +90,7 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   }
 
   // fetches the reservations for the current month and groups them by date
-  void _fetchReservations() async {
+  _fetchReservations() async {
     final reservations = await _calendarData.getReservations(
         _currentUser); // get reservations for the current month
     final groupedEvents = _calendarData
@@ -97,20 +99,22 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
       _groupedEvents =
           groupedEvents; // update the state with the grouped events
     });
+    return _groupedEvents;
   }
 
   // builds the markers to show on each day with events
-  List<Widget> _buildEventsMarker(DateTime date, LinkedHashMap groupedEvents) {
+  List<Widget> _buildEventsMarker(DateTime date,
+      LinkedHashMap<DateTime, List<DocumentSnapshot>> groupedEvents) {
+    print('groude event: $groupedEvents');
     List<Widget> markers = [];
 
-    print('events: $groupedEvents');
-    if (groupedEvents.isNotEmpty) {
+    if (groupedEvents.containsKey(date)) {
       markers.add(
         Positioned(
           bottom: 1,
           child: Container(
-            width: 6,
-            height: 6,
+            width: 2,
+            height: 2,
             decoration: BoxDecoration(
               color: Colors.green,
               shape: BoxShape.circle,
@@ -119,48 +123,70 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
         ),
       );
     }
-    print('markers: $markers');
     return markers;
   }
 
-//   Map<DateTime, List<T>> _getEventsForDay(DateTime day) {
-//   return events[day] ?? [];
-// }
+  List _getEventsForDay(DateTime day) {
+    print('day $day');
+    final days = _groupedEvents[day];
+    print('get event for day: $days');
+    return _groupedEvents[day] ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TableCalendar(
-      firstDay: _firstDay,
-      lastDay: _lastDay,
-      focusedDay: _focusedDay,
-      selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          _selectedDay = selectedDay;
-          _focusedDay = focusedDay;
-        });
+    return Scaffold(
+        body: FutureBuilder(
+      future: _fetchReservations(),
+      builder: (context, snapshot) {
+        dynamic data = snapshot.data;
+        if (snapshot.hasData) {
+          print('snapshot data: $data');
+
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TableCalendar(
+                  firstDay: _firstDay,
+                  lastDay: _lastDay,
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+                  },
+                  calendarFormat: CalendarFormat.month,
+                  calendarStyle: CalendarStyle(
+                    outsideDaysVisible: false,
+                    weekendTextStyle: TextStyle().copyWith(color: Colors.black),
+                    todayTextStyle: TextStyle().copyWith(color: Colors.white),
+                    todayDecoration: BoxDecoration(
+                      color: Colors.blue,
+                      shape: BoxShape.circle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primary,
+                      shape: BoxShape.circle,
+                    ),
+                    markersMaxCount: 1,
+                    markersAlignment: Alignment.bottomCenter,
+                    markerSizeScale: 0.5,
+                  ),
+                  eventLoader: (day) {
+                    return _getEventsForDay(day);
+                  },
+                )
+              ],
+            ),
+          );
+        } else {
+          print('there is not data');
+          return Container();
+        }
       },
-      calendarFormat: CalendarFormat.month,
-      calendarStyle: CalendarStyle(
-        outsideDaysVisible: false,
-        weekendTextStyle: TextStyle().copyWith(color: Colors.black),
-        todayTextStyle: TextStyle().copyWith(color: Colors.white),
-        todayDecoration: BoxDecoration(
-          color: Colors.blue,
-          shape: BoxShape.circle,
-        ),
-        selectedDecoration: BoxDecoration(
-          color: FlutterFlowTheme.of(context).primaryColor,
-          shape: BoxShape.circle,
-        ),
-        markersMaxCount: 1,
-        markersAlignment: Alignment.bottomCenter,
-        markerSizeScale: 0.5,
-      ),
-      eventLoader: (day) {
-        print('grouped events: $_groupedEvents');
-        return _buildEventsMarker(day, _groupedEvents);
-      },
-    );
+    ));
   }
 }

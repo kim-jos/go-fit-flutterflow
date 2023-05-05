@@ -1386,7 +1386,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                     _googleMapMarker,
                                   ),
                               ],
-                              markerColor: GoogleMarkerColor.cyan,
+                              markerColor: GoogleMarkerColor.blue,
                               mapType: MapType.normal,
                               style: GoogleMapStyle.standard,
                               initialZoom: 18.0,

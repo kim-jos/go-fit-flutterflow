@@ -280,7 +280,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                   ),
                                 )
                                 .toList(),
-                            markerColor: GoogleMarkerColor.cyan,
+                            markerColor: GoogleMarkerColor.blue,
                             mapType: MapType.normal,
                             style: GoogleMapStyle.standard,
                             initialZoom: 10.0,
