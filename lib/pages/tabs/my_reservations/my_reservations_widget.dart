@@ -102,13 +102,56 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     List<ReservationsRecord>
                         myReservationsCalendarReservationsRecordList =
                         snapshot.data!;
-                    return Container(
-                      width: MediaQuery.of(context).size.width * 1.0,
-                      height: 400.0,
-                      child: custom_widgets.MyReservationsCalendar(
+                    return InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        logFirebaseEvent(
+                            'MY_RESERVATIONS_Container_i1axdjr7_ON_TA');
+                        logFirebaseEvent(
+                            'MyReservationsCalendar_update_app_state');
+                        setState(() {});
+                      },
+                      child: Container(
                         width: MediaQuery.of(context).size.width * 1.0,
                         height: 400.0,
+                        child: custom_widgets.MyReservationsCalendar(
+                          width: MediaQuery.of(context).size.width * 1.0,
+                          height: 400.0,
+                          allReservations:
+                              myReservationsCalendarReservationsRecordList
+                                  .toList(),
+                          onTap: () async {},
+                        ),
                       ),
+                    );
+                  },
+                ),
+                Builder(
+                  builder: (context) {
+                    final appStateReservations = FFAppState()
+                        .myReservations
+                        .map((e) => getJsonField(
+                              e,
+                              r'''$.className''',
+                            ))
+                        .toList();
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: List.generate(appStateReservations.length,
+                          (appStateReservationsIndex) {
+                        final appStateReservationsItem =
+                            appStateReservations[appStateReservationsIndex];
+                        return Text(
+                          valueOrDefault<String>(
+                            appStateReservationsItem.toString(),
+                            'didnt work',
+                          ),
+                          style: FlutterFlowTheme.of(context).bodyMedium,
+                        );
+                      }),
                     );
                   },
                 ),
@@ -430,7 +473,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                               .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
-                                                                'MY_RESERVATIONS_Icon_ebmcw21w_ON_TAP');
+                                                                'MY_RESERVATIONS_Icon_k9l9cpr5_ON_TAP');
                                                             if (functions.differenceInHours(
                                                                     getCurrentTimestamp,
                                                                     functions.dateAndTimeStringParser(
@@ -629,7 +672,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                             Colors.transparent,
                                                         onTap: () async {
                                                           logFirebaseEvent(
-                                                              'MY_RESERVATIONS_Text_fp33cfn7_ON_TAP');
+                                                              'MY_RESERVATIONS_Text_kjblc65q_ON_TAP');
                                                           if (textCount == 1) {
                                                             return;
                                                           }

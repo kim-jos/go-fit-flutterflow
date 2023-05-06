@@ -22,11 +22,13 @@ class MyReservationsCalendar extends StatefulWidget {
     this.width,
     this.height,
     this.allReservations,
+    required this.onTap,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final List<ReservationsRecord>? allReservations;
+  final Future<dynamic> Function() onTap;
 
   @override
   _MyReservationsCalendarState createState() => _MyReservationsCalendarState();
@@ -115,7 +117,11 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
               setState(() {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
+                FFAppState().myReservations = _allReservations;
+                widget.onTap();
               });
+              final hello = FFAppState().myReservations[0].className;
+              print('hello: $hello');
             },
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
