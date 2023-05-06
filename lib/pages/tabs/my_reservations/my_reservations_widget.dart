@@ -80,13 +80,40 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: double.infinity,
-                  height: 400.0,
-                  child: custom_widgets.MyReservationsCalendar(
-                    width: double.infinity,
-                    height: 400.0,
+                StreamBuilder<List<ReservationsRecord>>(
+                  stream: queryReservationsRecord(
+                    queryBuilder: (reservationsRecord) => reservationsRecord
+                        .where('user', isEqualTo: currentUserReference),
                   ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 30.0,
+                          height: 30.0,
+                          child: SpinKitCircle(
+                            color: FlutterFlowTheme.of(context).primary,
+                            size: 30.0,
+                          ),
+                        ),
+                      );
+                    }
+                    List<ReservationsRecord>
+                        myReservationsCalendarReservationsRecordList =
+                        snapshot.data!;
+                    return Container(
+                      width: MediaQuery.of(context).size.width * 1.0,
+                      height: 400.0,
+                      child: custom_widgets.MyReservationsCalendar(
+                        width: MediaQuery.of(context).size.width * 1.0,
+                        height: 400.0,
+                        reservations:
+                            myReservationsCalendarReservationsRecordList
+                                .toList(),
+                      ),
+                    );
+                  },
                 ),
                 if (loggedIn)
                   Padding(

@@ -9,11 +9,8 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'index.dart'; // Imports other custom widgets
-
 import 'package:table_calendar/table_calendar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:collection';
 
 class CalendarData {
@@ -26,8 +23,6 @@ class CalendarData {
         .where('user', isEqualTo: userRefFinal)
         // .orderBy('startTime', descending: true)
         .get();
-    dynamic docss = snapshot.docs.map((e) => print(e.get('className')));
-    print('fireabse: $docss');
     return snapshot.docs;
   }
 
@@ -39,7 +34,7 @@ class CalendarData {
     reservations.forEach((reservation) {
       final DateTime classDate = reservation['startTime'].toDate();
       final DateTime date =
-          DateTime(classDate.year, classDate.month, classDate.day);
+          DateTime.utc(classDate.year, classDate.month, classDate.day);
       if (events[date] == null) {
         events[date] = [reservation];
       } else {
@@ -55,10 +50,12 @@ class MyReservationsCalendar extends StatefulWidget {
     Key? key,
     this.width,
     this.height,
+    this.reservations,
   }) : super(key: key);
 
   final double? width;
   final double? height;
+  final List<ReservationsRecord>? reservations;
 
   @override
   _MyReservationsCalendarState createState() => _MyReservationsCalendarState();
@@ -71,6 +68,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   late DateTime _selectedDay;
   late DateTime _firstDay;
   late DateTime _lastDay;
+  late List<ReservationsRecord> _reservations;
+
   LinkedHashMap<DateTime, List<DocumentSnapshot>> _groupedEvents =
       LinkedHashMap(); // maintains the events grouped by date
   final CalendarData _calendarData =
@@ -86,7 +85,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
         _focusedDay.day); // 3 months before current month
     _lastDay = DateTime(_focusedDay.year, _focusedDay.month,
         _focusedDay.day + 7); // 7 days after current day
-    _fetchReservations(); // fetch reservations for the current month
+    _reservations = widget.reservations ?? [];
+    print('reservations: $_reservations');
   }
 
   // fetches the reservations for the current month and groups them by date
@@ -105,7 +105,10 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   // builds the markers to show on each day with events
   List<Widget> _buildEventsMarker(DateTime date,
       LinkedHashMap<DateTime, List<DocumentSnapshot>> groupedEvents) {
-    print('groude event: $groupedEvents');
+    print('grouped event: $groupedEvents');
+    print('grouped event day: $date');
+    print(groupedEvents.containsKey(date));
+
     List<Widget> markers = [];
 
     if (groupedEvents.containsKey(date)) {
@@ -113,8 +116,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
         Positioned(
           bottom: 1,
           child: Container(
-            width: 2,
-            height: 2,
+            width: 1,
+            height: 1,
             decoration: BoxDecoration(
               color: Colors.green,
               shape: BoxShape.circle,
@@ -123,14 +126,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
         ),
       );
     }
-    return markers;
-  }
 
-  List _getEventsForDay(DateTime day) {
-    print('day $day');
-    final days = _groupedEvents[day];
-    print('get event for day: $days');
-    return _groupedEvents[day] ?? [];
+    return markers;
   }
 
   @override
@@ -139,15 +136,13 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
         body: FutureBuilder(
       future: _fetchReservations(),
       builder: (context, snapshot) {
-        dynamic data = snapshot.data;
         if (snapshot.hasData) {
-          print('snapshot data: $data');
-
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TableCalendar(
+                  locale: 'ko_KR',
                   firstDay: _firstDay,
                   lastDay: _lastDay,
                   focusedDay: _focusedDay,
@@ -157,6 +152,9 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                       _selectedDay = selectedDay;
                       _focusedDay = focusedDay;
                     });
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
                   },
                   calendarFormat: CalendarFormat.month,
                   calendarStyle: CalendarStyle(
@@ -171,20 +169,22 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                       color: FlutterFlowTheme.of(context).primary,
                       shape: BoxShape.circle,
                     ),
-                    markersMaxCount: 1,
+                    markersMaxCount: 4,
                     markersAlignment: Alignment.bottomCenter,
-                    markerSizeScale: 0.5,
+                    markerSizeScale: 0.3,
+                    markerDecoration: const BoxDecoration(
+                        color: Colors.green, shape: BoxShape.circle),
                   ),
                   eventLoader: (day) {
-                    return _getEventsForDay(day);
+                    DateTime date = DateTime.utc(day.year, day.month, day.day);
+                    return _buildEventsMarker(date, _groupedEvents);
                   },
                 )
               ],
             ),
           );
         } else {
-          print('there is not data');
-          return Container();
+          return CircularProgressIndicator();
         }
       },
     ));

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
+import 'dart:convert';
 
 class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();
@@ -53,6 +54,24 @@ class FFAppState extends ChangeNotifier {
   int get selectedDay => _selectedDay;
   set selectedDay(int _value) {
     _selectedDay = _value;
+  }
+
+  List<dynamic> _events = [];
+  List<dynamic> get events => _events;
+  set events(List<dynamic> _value) {
+    _events = _value;
+  }
+
+  void addToEvents(dynamic _value) {
+    _events.add(_value);
+  }
+
+  void removeFromEvents(dynamic _value) {
+    _events.remove(_value);
+  }
+
+  void removeAtIndexFromEvents(int _index) {
+    _events.removeAt(_index);
   }
 }
 
