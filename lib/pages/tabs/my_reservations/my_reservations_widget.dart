@@ -11,6 +11,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,6 +40,15 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'MyReservations'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('MY_RESERVATIONS_MyReservations_ON_INIT_S');
+      logFirebaseEvent('MyReservations_update_app_state');
+      setState(() {
+        FFAppState().reservatationDate = getCurrentTimestamp;
+      });
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -114,7 +124,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         // Rebuild My Reservations
                         logFirebaseEvent(
                             'MyReservationsCalendar_RebuildMyReservat');
-                        setState(() {});
+                        FFAppState().update(() {});
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width * 1.0,
@@ -388,195 +398,409 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                         itemBuilder: (context, _, listViewIndex) {
                           final listViewReservationsRecord =
                               _model.pagingController!.itemList![listViewIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                10.0, 12.0, 10.0, 1.0),
-                            child: FutureBuilder<ClassAvailableTimeSlotsRecord>(
-                              future:
-                                  ClassAvailableTimeSlotsRecord.getDocumentOnce(
-                                      listViewReservationsRecord.timeSlot!),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 30.0,
-                                      height: 30.0,
-                                      child: SpinKitCircle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        size: 30.0,
+                          return Visibility(
+                            visible: FFAppState().reservatationDate ==
+                                functions.stripTimeFromDate(
+                                    listViewReservationsRecord.startTime!),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 12.0, 10.0, 1.0),
+                              child:
+                                  FutureBuilder<ClassAvailableTimeSlotsRecord>(
+                                future: ClassAvailableTimeSlotsRecord
+                                    .getDocumentOnce(
+                                        listViewReservationsRecord.timeSlot!),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 30.0,
+                                        height: 30.0,
+                                        child: SpinKitCircle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 30.0,
+                                        ),
                                       ),
+                                    );
+                                  }
+                                  final containerClassAvailableTimeSlotsRecord =
+                                      snapshot.data!;
+                                  return Container(
+                                    width: double.infinity,
+                                    height: 102.0,
+                                    constraints: BoxConstraints(
+                                      maxHeight: 500.0,
                                     ),
-                                  );
-                                }
-                                final containerClassAvailableTimeSlotsRecord =
-                                    snapshot.data!;
-                                return Container(
-                                  width: double.infinity,
-                                  height: 102.0,
-                                  constraints: BoxConstraints(
-                                    maxHeight: 500.0,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: FlutterFlowTheme.of(context)
-                                            .lineColor,
-                                        offset: Offset(0.0, 1.0),
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 5.0, 16.0, 5.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        StreamBuilder<ClassesRecord>(
-                                          stream: ClassesRecord.getDocument(
-                                              containerClassAvailableTimeSlotsRecord
-                                                  .classRef!),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 30.0,
-                                                  height: 30.0,
-                                                  child: SpinKitCircle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    size: 30.0,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: FlutterFlowTheme.of(context)
+                                              .lineColor,
+                                          offset: Offset(0.0, 1.0),
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 5.0, 16.0, 5.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          StreamBuilder<ClassesRecord>(
+                                            stream: ClassesRecord.getDocument(
+                                                containerClassAvailableTimeSlotsRecord
+                                                    .classRef!),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child: SpinKitCircle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      size: 30.0,
+                                                    ),
                                                   ),
+                                                );
+                                              }
+                                              final imageClassesRecord =
+                                                  snapshot.data!;
+                                              return ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      imageClassesRecord.image!,
+                                                  width: 100.0,
+                                                  height: 80.0,
+                                                  fit: BoxFit.cover,
                                                 ),
                                               );
-                                            }
-                                            final imageClassesRecord =
-                                                snapshot.data!;
-                                            return ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    imageClassesRecord.image!,
-                                                width: 100.0,
-                                                height: 80.0,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            listViewReservationsRecord
+                                                                .className!,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .titleMedium,
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  listViewReservationsRecord
+                                                                      .date!,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall,
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  ' - ',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall,
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            5.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Text(
+                                                                  containerClassAvailableTimeSlotsRecord
+                                                                      .startTime!,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    if (listViewReservationsRecord
+                                                            .startTime! >=
+                                                        getCurrentTimestamp)
+                                                      StreamBuilder<
+                                                          List<UsersRecord>>(
+                                                        stream:
+                                                            queryUsersRecord(
+                                                          queryBuilder:
+                                                              (usersRecord) =>
+                                                                  usersRecord.where(
+                                                                      'admin',
+                                                                      isEqualTo:
+                                                                          true),
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 30.0,
+                                                                height: 30.0,
+                                                                child:
+                                                                    SpinKitCircle(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  size: 30.0,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          }
+                                                          List<UsersRecord>
+                                                              iconUsersRecordList =
+                                                              snapshot.data!;
+                                                          return InkWell(
+                                                            splashColor: Colors
+                                                                .transparent,
+                                                            focusColor: Colors
+                                                                .transparent,
+                                                            hoverColor: Colors
+                                                                .transparent,
+                                                            highlightColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            onTap: () async {
+                                                              logFirebaseEvent(
+                                                                  'MY_RESERVATIONS_Icon_k9l9cpr5_ON_TAP');
+                                                              if (functions.differenceInHours(
+                                                                      getCurrentTimestamp,
+                                                                      functions.dateAndTimeStringParser(
+                                                                          listViewReservationsRecord
+                                                                              .date!,
+                                                                          listViewReservationsRecord
+                                                                              .time!)) <
+                                                                  containerClassAvailableTimeSlotsRecord
+                                                                      .minHoursToCancel!) {
+                                                                logFirebaseEvent(
+                                                                    'Icon_alert_dialog');
+                                                                await showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: Text(
+                                                                          '예약취소 불가능'),
+                                                                      content: Text(
+                                                                          '예약 취소는 수업 시작 24시간 전에만 가능합니다'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () =>
+                                                                              Navigator.pop(alertDialogContext),
+                                                                          child:
+                                                                              Text('확인'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+                                                                return;
+                                                              }
+                                                              logFirebaseEvent(
+                                                                  'Icon_alert_dialog');
+                                                              var confirmDialogResponse =
+                                                                  await showDialog<
+                                                                          bool>(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text('예약을 취소하시겠습니까?'),
+                                                                            actions: [
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                child: Text('아니요'),
+                                                                              ),
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                child: Text('예'),
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        },
+                                                                      ) ??
+                                                                      false;
+                                                              if (!confirmDialogResponse) {
+                                                                return;
+                                                              }
+                                                              // reservations collection
+                                                              logFirebaseEvent(
+                                                                  'Icon_reservationscollection');
+                                                              await listViewReservationsRecord
+                                                                  .reference
+                                                                  .delete();
+                                                              // Increment credits
+                                                              logFirebaseEvent(
+                                                                  'Icon_Incrementcredits');
+
+                                                              final usersUpdateData =
+                                                                  {
+                                                                'currCredits':
+                                                                    FieldValue.increment(
+                                                                        listViewReservationsRecord
+                                                                            .classRequiredCredits!),
+                                                              };
+                                                              await currentUserReference!
+                                                                  .update(
+                                                                      usersUpdateData);
+                                                              logFirebaseEvent(
+                                                                  'Icon_alert_dialog');
+                                                              await showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        '예약 취소 완료'),
+                                                                    content: Text(
+                                                                        '예약이 취소됐습니다'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () =>
+                                                                                Navigator.pop(alertDialogContext),
+                                                                        child: Text(
+                                                                            '확인'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                              logFirebaseEvent(
+                                                                  'Icon_trigger_push_notification');
+                                                              triggerPushNotification(
+                                                                notificationTitle:
+                                                                    '${listViewReservationsRecord.className} 예약취소',
+                                                                notificationText:
+                                                                    '${listViewReservationsRecord.date} - ${listViewReservationsRecord.time} ${currentUserDisplayName}',
+                                                                userRefs: iconUsersRecordList
+                                                                    .map((e) =>
+                                                                        e.reference)
+                                                                    .toList(),
+                                                                initialPageName:
+                                                                    'Classes',
+                                                                parameterData: {},
+                                                              );
+                                                              logFirebaseEvent(
+                                                                  'Icon_google_analytics_event');
+                                                              logFirebaseEvent(
+                                                                  'Cancel - ${listViewReservationsRecord.className}');
+                                                              logFirebaseEvent(
+                                                                  'Icon_navigate_to');
+                                                              if (Navigator.of(
+                                                                      context)
+                                                                  .canPop()) {
+                                                                context.pop();
+                                                              }
+                                                              context.pushNamed(
+                                                                  'Classes');
+                                                            },
+                                                            child: Icon(
+                                                              Icons
+                                                                  .cancel_outlined,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .grayIcon,
+                                                              size: 24.0,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                  ],
+                                                ),
+                                                if (listViewReservationsRecord
+                                                        .startTime! <
+                                                    getCurrentTimestamp)
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(10.0, 0.0,
-                                                                0.0, 0.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          listViewReservationsRecord
-                                                              .className!,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .titleMedium,
-                                                        ),
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                listViewReservationsRecord
-                                                                    .date!,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                ' - ',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall,
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          5.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Text(
-                                                                containerClassAvailableTimeSlotsRecord
-                                                                    .startTime!,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  if (listViewReservationsRecord
-                                                          .startTime! >=
-                                                      getCurrentTimestamp)
-                                                    StreamBuilder<
-                                                        List<UsersRecord>>(
-                                                      stream: queryUsersRecord(
-                                                        queryBuilder:
-                                                            (usersRecord) =>
-                                                                usersRecord.where(
-                                                                    'admin',
-                                                                    isEqualTo:
-                                                                        true),
+                                                            .fromSTEB(10.0,
+                                                                15.0, 0.0, 0.0),
+                                                    child: FutureBuilder<int>(
+                                                      future:
+                                                          queryReviewsRecordCount(
+                                                        queryBuilder: (reviewsRecord) =>
+                                                            reviewsRecord.where(
+                                                                'reservationRef',
+                                                                isEqualTo:
+                                                                    listViewReservationsRecord
+                                                                        .reference),
                                                       ),
                                                       builder:
                                                           (context, snapshot) {
@@ -596,8 +820,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                             ),
                                                           );
                                                         }
-                                                        List<UsersRecord>
-                                                            iconUsersRecordList =
+                                                        int textCount =
                                                             snapshot.data!;
                                                         return InkWell(
                                                           splashColor: Colors
@@ -610,267 +833,77 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                               .transparent,
                                                           onTap: () async {
                                                             logFirebaseEvent(
-                                                                'MY_RESERVATIONS_Icon_k9l9cpr5_ON_TAP');
-                                                            if (functions.differenceInHours(
-                                                                    getCurrentTimestamp,
-                                                                    functions.dateAndTimeStringParser(
-                                                                        listViewReservationsRecord
-                                                                            .date!,
-                                                                        listViewReservationsRecord
-                                                                            .time!)) <
-                                                                containerClassAvailableTimeSlotsRecord
-                                                                    .minHoursToCancel!) {
-                                                              logFirebaseEvent(
-                                                                  'Icon_alert_dialog');
-                                                              await showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (alertDialogContext) {
-                                                                  return AlertDialog(
-                                                                    title: Text(
-                                                                        '예약취소 불가능'),
-                                                                    content: Text(
-                                                                        '예약 취소는 수업 시작 24시간 전에만 가능합니다'),
-                                                                    actions: [
-                                                                      TextButton(
-                                                                        onPressed:
-                                                                            () =>
-                                                                                Navigator.pop(alertDialogContext),
-                                                                        child: Text(
-                                                                            '확인'),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
+                                                                'MY_RESERVATIONS_Text_kjblc65q_ON_TAP');
+                                                            if (textCount ==
+                                                                1) {
                                                               return;
                                                             }
                                                             logFirebaseEvent(
-                                                                'Icon_alert_dialog');
-                                                            var confirmDialogResponse =
-                                                                await showDialog<
-                                                                        bool>(
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (alertDialogContext) {
-                                                                        return AlertDialog(
-                                                                          title:
-                                                                              Text('예약을 취소하시겠습니까?'),
-                                                                          actions: [
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                              child: Text('아니요'),
-                                                                            ),
-                                                                            TextButton(
-                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                              child: Text('예'),
-                                                                            ),
-                                                                          ],
-                                                                        );
-                                                                      },
-                                                                    ) ??
-                                                                    false;
-                                                            if (!confirmDialogResponse) {
-                                                              return;
-                                                            }
-                                                            // reservations collection
-                                                            logFirebaseEvent(
-                                                                'Icon_reservationscollection');
-                                                            await listViewReservationsRecord
-                                                                .reference
-                                                                .delete();
-                                                            // Increment credits
-                                                            logFirebaseEvent(
-                                                                'Icon_Incrementcredits');
+                                                                'Text_navigate_to');
 
-                                                            final usersUpdateData =
-                                                                {
-                                                              'currCredits':
-                                                                  FieldValue.increment(
-                                                                      listViewReservationsRecord
-                                                                          .classRequiredCredits!),
-                                                            };
-                                                            await currentUserReference!
-                                                                .update(
-                                                                    usersUpdateData);
-                                                            logFirebaseEvent(
-                                                                'Icon_alert_dialog');
-                                                            await showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: Text(
-                                                                      '예약 취소 완료'),
-                                                                  content: Text(
-                                                                      '예약이 취소됐습니다'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed:
-                                                                          () =>
-                                                                              Navigator.pop(alertDialogContext),
-                                                                      child: Text(
-                                                                          '확인'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            );
-                                                            logFirebaseEvent(
-                                                                'Icon_trigger_push_notification');
-                                                            triggerPushNotification(
-                                                              notificationTitle:
-                                                                  '${listViewReservationsRecord.className} 예약취소',
-                                                              notificationText:
-                                                                  '${listViewReservationsRecord.date} - ${listViewReservationsRecord.time} ${currentUserDisplayName}',
-                                                              userRefs:
-                                                                  iconUsersRecordList
-                                                                      .map((e) =>
-                                                                          e.reference)
-                                                                      .toList(),
-                                                              initialPageName:
-                                                                  'Classes',
-                                                              parameterData: {},
-                                                            );
-                                                            logFirebaseEvent(
-                                                                'Icon_google_analytics_event');
-                                                            logFirebaseEvent(
-                                                                'Cancel - ${listViewReservationsRecord.className}');
-                                                            logFirebaseEvent(
-                                                                'Icon_navigate_to');
-                                                            if (Navigator.of(
-                                                                    context)
-                                                                .canPop()) {
-                                                              context.pop();
-                                                            }
                                                             context.pushNamed(
-                                                                'Classes');
+                                                              'Review',
+                                                              queryParams: {
+                                                                'classRef':
+                                                                    serializeParam(
+                                                                  containerClassAvailableTimeSlotsRecord
+                                                                      .classRef,
+                                                                  ParamType
+                                                                      .DocumentReference,
+                                                                ),
+                                                                'reservationRef':
+                                                                    serializeParam(
+                                                                  listViewReservationsRecord
+                                                                      .reference,
+                                                                  ParamType
+                                                                      .DocumentReference,
+                                                                ),
+                                                              }.withoutNulls,
+                                                            );
                                                           },
-                                                          child: Icon(
-                                                            Icons
-                                                                .cancel_outlined,
-                                                            color: FlutterFlowTheme
+                                                          child: Text(
+                                                            textCount == 1
+                                                                ? '리뷰 작성 완료! :)'
+                                                                : '리뷰 작성하기',
+                                                            style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .grayIcon,
-                                                            size: 24.0,
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Pretendard',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  useGoogleFonts:
+                                                                      false,
+                                                                ),
                                                           ),
                                                         );
                                                       },
                                                     ),
-                                                ],
-                                              ),
-                                              if (listViewReservationsRecord
-                                                      .startTime! <
-                                                  getCurrentTimestamp)
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          10.0, 15.0, 0.0, 0.0),
-                                                  child: FutureBuilder<int>(
-                                                    future:
-                                                        queryReviewsRecordCount(
-                                                      queryBuilder: (reviewsRecord) =>
-                                                          reviewsRecord.where(
-                                                              'reservationRef',
-                                                              isEqualTo:
-                                                                  listViewReservationsRecord
-                                                                      .reference),
-                                                    ),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      // Customize what your widget looks like when it's loading.
-                                                      if (!snapshot.hasData) {
-                                                        return Center(
-                                                          child: SizedBox(
-                                                            width: 30.0,
-                                                            height: 30.0,
-                                                            child:
-                                                                SpinKitCircle(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              size: 30.0,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      }
-                                                      int textCount =
-                                                          snapshot.data!;
-                                                      return InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          logFirebaseEvent(
-                                                              'MY_RESERVATIONS_Text_kjblc65q_ON_TAP');
-                                                          if (textCount == 1) {
-                                                            return;
-                                                          }
-                                                          logFirebaseEvent(
-                                                              'Text_navigate_to');
-
-                                                          context.pushNamed(
-                                                            'Review',
-                                                            queryParams: {
-                                                              'classRef':
-                                                                  serializeParam(
-                                                                containerClassAvailableTimeSlotsRecord
-                                                                    .classRef,
-                                                                ParamType
-                                                                    .DocumentReference,
-                                                              ),
-                                                              'reservationRef':
-                                                                  serializeParam(
-                                                                listViewReservationsRecord
-                                                                    .reference,
-                                                                ParamType
-                                                                    .DocumentReference,
-                                                              ),
-                                                            }.withoutNulls,
-                                                          );
-                                                        },
-                                                        child: Text(
-                                                          textCount == 1
-                                                              ? '리뷰 작성 완료! :)'
-                                                              : '리뷰 작성하기',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Pretendard',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                useGoogleFonts:
-                                                                    false,
-                                                              ),
-                                                        ),
-                                                      );
-                                                    },
                                                   ),
-                                                ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
+                                  );
+                                },
+                              ),
                             ),
                           );
                         },
                       ),
                     ),
                   ),
+                Text(
+                  valueOrDefault<String>(
+                    FFAppState().reservatationDate?.toString(),
+                    '00',
+                  ),
+                  style: FlutterFlowTheme.of(context).bodyMedium,
+                ),
               ],
             ),
           ),

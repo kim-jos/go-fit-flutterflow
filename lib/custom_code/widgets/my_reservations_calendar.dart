@@ -10,13 +10,6 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:collection';
-
-// Imports other custom widgets
-// Imports custom actions
-// Imports custom functions
-// Imports other custom widgets
-// Imports custom actions
-// Imports custom functions
 import 'package:table_calendar/table_calendar.dart';
 
 class MyReservationsCalendar extends StatefulWidget {
@@ -49,14 +42,20 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   @override
   void initState() {
     super.initState();
-    _focusedDay = DateTime.now();
+    _focusedDay =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     _selectedDay = DateTime.now();
-    _firstDay = DateTime(_focusedDay.year, _focusedDay.month - 3,
-        _focusedDay.day); // 3 months before current month
-    _lastDay = DateTime(_focusedDay.year, _focusedDay.month,
-        _focusedDay.day + 7); // 7 days after current day
-    _allReservations = widget.allReservations ?? [];
-    groupReservationsByDate(_allReservations);
+    _firstDay =
+        DateTime(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day);
+    _lastDay =
+        DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day + 7);
+    FFAppState().reservatationDate = _focusedDay;
+    groupReservationsByDate(widget.allReservations ?? []);
+    if (_groupedEvents[_focusedDay] != null) {
+      _allReservations = _groupedEvents[_focusedDay]!;
+    } else {
+      _allReservations = [];
+    }
   }
 
   LinkedHashMap<DateTime, List<ReservationsRecord>> groupReservationsByDate(
@@ -81,7 +80,6 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     return events;
   }
 
-  // builds the markers to show on each day with events
   List<Widget> _buildEventsMarker(DateTime date,
       LinkedHashMap<DateTime, List<ReservationsRecord>> groupedEvents) {
     List<Widget> markers = [];
@@ -93,6 +91,22 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     }
 
     return markers;
+  }
+
+  convertToJson(List<ReservationsRecord> reservationCollection) {
+    return reservationCollection
+        .map((e) => {
+              'date': e.date,
+              'timeSlot': e.timeSlot,
+              'user': e.user,
+              'classRequiredCredits': e.classRequiredCredits,
+              'className': e.className,
+              'time': e.time,
+              'createdAt': e.createdAt,
+              'isFinal': e.isFinal,
+              'startTime': DateFormat.yMMMd().format(e.startTime!),
+            })
+        .toList();
   }
 
   @override
@@ -113,20 +127,14 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                 print('focused day: $focusedDay');
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                var jsonData = _allReservations
-                    .map((e) => {
-                          'date': e.date,
-                          'timeSlot': e.timeSlot,
-                          'user': e.user,
-                          'classRequiredCredits': e.classRequiredCredits,
-                          'className': e.className,
-                          'time': e.time,
-                          'createdAt': e.createdAt,
-                          'isFinal': e.isFinal,
-                          'startTime': DateFormat.yMMMd().format(e.startTime!),
-                        })
-                    .toList();
-                FFAppState().myReservations = jsonData;
+                print('all reservations: $_allReservations');
+                print('grouped events: $_groupedEvents');
+                if (_allReservations.isNotEmpty) {
+                  var jsonData = convertToJson(_allReservations);
+                  FFAppState().myReservations = jsonData;
+                  FFAppState().reservatationDate = _focusedDay;
+                  print(FFAppState().reservatationDate);
+                }
                 widget.onTap();
               });
             },

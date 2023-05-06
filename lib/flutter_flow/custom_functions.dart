@@ -62,3 +62,10 @@ DateTime addDaysToCurrentTime(int days) {
   // add days to currentTime as much as the inserted argument
   return DateTime.now().add(Duration(days: days));
 }
+
+DateTime stripTimeFromDate(DateTime dateTimeWithTime) {
+  print(DateTime.utc(
+      dateTimeWithTime.year, dateTimeWithTime.month, dateTimeWithTime.day));
+  return DateTime.utc(
+      dateTimeWithTime.year, dateTimeWithTime.month, dateTimeWithTime.day);
+}
