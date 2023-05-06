@@ -14,6 +14,9 @@ import 'dart:collection';
 // Imports other custom widgets
 // Imports custom actions
 // Imports custom functions
+// Imports other custom widgets
+// Imports custom actions
+// Imports custom functions
 import 'package:table_calendar/table_calendar.dart';
 
 class MyReservationsCalendar extends StatefulWidget {
@@ -53,9 +56,6 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     _lastDay = DateTime(_focusedDay.year, _focusedDay.month,
         _focusedDay.day + 7); // 7 days after current day
     _allReservations = widget.allReservations ?? [];
-    var abc = _allReservations[0];
-    var res = abc.startTime;
-    print('reservations: $res');
     groupReservationsByDate(_allReservations);
   }
 
@@ -84,17 +84,11 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   // builds the markers to show on each day with events
   List<Widget> _buildEventsMarker(DateTime date,
       LinkedHashMap<DateTime, List<ReservationsRecord>> groupedEvents) {
-    print('grouped event: $groupedEvents');
-    print('grouped event day: $date');
-    print(groupedEvents.containsKey(date));
-
     List<Widget> markers = [];
 
     if (groupedEvents.containsKey(date)) {
       markers.add(
-        Positioned(
-          child: Container(),
-        ),
+        Container(),
       );
     }
 
@@ -117,11 +111,22 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
               setState(() {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                FFAppState().myReservations = _allReservations;
+                var jsonData = _allReservations
+                    .map((e) => {
+                          'date': e.date,
+                          'timeSlot': e.timeSlot,
+                          'user': e.user,
+                          'classRequiredCredits': e.classRequiredCredits,
+                          'className': e.className,
+                          'time': e.time,
+                          'createdAt': e.createdAt,
+                          'isFinal': e.isFinal,
+                          'startTime': e.startTime,
+                        })
+                    .toList();
+                FFAppState().myReservations = jsonData;
                 widget.onTap();
               });
-              final hello = FFAppState().myReservations[0].className;
-              print('hello: $hello');
             },
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
