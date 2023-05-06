@@ -111,8 +111,9 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                       onTap: () async {
                         logFirebaseEvent(
                             'MY_RESERVATIONS_Container_i1axdjr7_ON_TA');
+                        // Rebuild My Reservations
                         logFirebaseEvent(
-                            'MyReservationsCalendar_update_app_state');
+                            'MyReservationsCalendar_RebuildMyReservat');
                         setState(() {});
                       },
                       child: Container(
@@ -135,7 +136,9 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     final appStateReservations =
                         FFAppState().myReservations.toList();
                     if (appStateReservations.isEmpty) {
-                      return NoTimeSlotsAvailableWidget();
+                      return Center(
+                        child: NoTimeSlotsAvailableWidget(),
+                      );
                     }
                     return Column(
                       mainAxisSize: MainAxisSize.max,

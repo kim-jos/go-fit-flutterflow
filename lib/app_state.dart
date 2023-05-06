@@ -73,6 +73,12 @@ class FFAppState extends ChangeNotifier {
   void removeAtIndexFromMyReservations(int _index) {
     _myReservations.removeAt(_index);
   }
+
+  DateTime? _reservatationDate;
+  DateTime? get reservatationDate => _reservatationDate;
+  set reservatationDate(DateTime? _value) {
+    _reservatationDate = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
