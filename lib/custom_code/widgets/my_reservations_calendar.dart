@@ -109,6 +109,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
+                print('selected day: $selectedDay');
+                print('focused day: $focusedDay');
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
                 var jsonData = _allReservations
@@ -121,7 +123,7 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                           'time': e.time,
                           'createdAt': e.createdAt,
                           'isFinal': e.isFinal,
-                          'startTime': e.startTime,
+                          'startTime': DateFormat.yMMMd().format(e.startTime!),
                         })
                     .toList();
                 FFAppState().myReservations = jsonData;

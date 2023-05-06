@@ -3,6 +3,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/empty_reservation/empty_reservation_widget.dart';
+import '/components/no_time_slots_available/no_time_slots_available_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -131,13 +132,11 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                 ),
                 Builder(
                   builder: (context) {
-                    final appStateReservations = FFAppState()
-                        .myReservations
-                        .map((e) => getJsonField(
-                              e,
-                              r'''$.className''',
-                            ))
-                        .toList();
+                    final appStateReservations =
+                        FFAppState().myReservations.toList();
+                    if (appStateReservations.isEmpty) {
+                      return NoTimeSlotsAvailableWidget();
+                    }
                     return Column(
                       mainAxisSize: MainAxisSize.max,
                       children: List.generate(appStateReservations.length,
