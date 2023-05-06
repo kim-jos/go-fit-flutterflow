@@ -56,22 +56,22 @@ class FFAppState extends ChangeNotifier {
     _selectedDay = _value;
   }
 
-  List<dynamic> _events = [];
-  List<dynamic> get events => _events;
-  set events(List<dynamic> _value) {
-    _events = _value;
+  List<dynamic> _myReservations = [];
+  List<dynamic> get myReservations => _myReservations;
+  set myReservations(List<dynamic> _value) {
+    _myReservations = _value;
   }
 
-  void addToEvents(dynamic _value) {
-    _events.add(_value);
+  void addToMyReservations(dynamic _value) {
+    _myReservations.add(_value);
   }
 
-  void removeFromEvents(dynamic _value) {
-    _events.remove(_value);
+  void removeFromMyReservations(dynamic _value) {
+    _myReservations.remove(_value);
   }
 
-  void removeAtIndexFromEvents(int _index) {
-    _events.removeAt(_index);
+  void removeAtIndexFromMyReservations(int _index) {
+    _myReservations.removeAt(_index);
   }
 }
 

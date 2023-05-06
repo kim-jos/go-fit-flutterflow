@@ -108,9 +108,6 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                       child: custom_widgets.MyReservationsCalendar(
                         width: MediaQuery.of(context).size.width * 1.0,
                         height: 400.0,
-                        reservations:
-                            myReservationsCalendarReservationsRecordList
-                                .toList(),
                       ),
                     );
                   },
