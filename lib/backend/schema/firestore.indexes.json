@@ -45,8 +45,8 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "createdAt",
-          "order": "DESCENDING"
+          "fieldPath": "startTime",
+          "order": "ASCENDING"
         }
       ]
     },

@@ -66,7 +66,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
             child: SizedBox(
               width: 30.0,
               height: 30.0,
-              child: SpinKitCircle(
+              child: SpinKitWanderingCubes(
                 color: FlutterFlowTheme.of(context).primary,
                 size: 30.0,
               ),

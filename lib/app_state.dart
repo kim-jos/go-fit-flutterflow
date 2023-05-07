@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'backend/backend.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
-import 'dart:convert';
 
 class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();
@@ -56,28 +55,10 @@ class FFAppState extends ChangeNotifier {
     _selectedDay = _value;
   }
 
-  List<dynamic> _myReservations = [];
-  List<dynamic> get myReservations => _myReservations;
-  set myReservations(List<dynamic> _value) {
-    _myReservations = _value;
-  }
-
-  void addToMyReservations(dynamic _value) {
-    _myReservations.add(_value);
-  }
-
-  void removeFromMyReservations(dynamic _value) {
-    _myReservations.remove(_value);
-  }
-
-  void removeAtIndexFromMyReservations(int _index) {
-    _myReservations.removeAt(_index);
-  }
-
-  DateTime? _reservatationDate;
-  DateTime? get reservatationDate => _reservatationDate;
-  set reservatationDate(DateTime? _value) {
-    _reservatationDate = _value;
+  DateTime? _reservationDate;
+  DateTime? get reservationDate => _reservationDate;
+  set reservationDate(DateTime? _value) {
+    _reservationDate = _value;
   }
 }
 

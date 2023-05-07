@@ -87,7 +87,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
             child: SizedBox(
               width: 30.0,
               height: 30.0,
-              child: SpinKitCircle(
+              child: SpinKitWanderingCubes(
                 color: FlutterFlowTheme.of(context).primary,
                 size: 30.0,
               ),
@@ -770,7 +770,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                       child: SizedBox(
                                         width: 30.0,
                                         height: 30.0,
-                                        child: SpinKitCircle(
+                                        child: SpinKitWanderingCubes(
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 30.0,
@@ -815,7 +815,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                               child: SizedBox(
                                                 width: 30.0,
                                                 height: 30.0,
-                                                child: SpinKitCircle(
+                                                child: SpinKitWanderingCubes(
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primary,
@@ -1151,7 +1151,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                 child: SizedBox(
                                   width: 30.0,
                                   height: 30.0,
-                                  child: SpinKitCircle(
+                                  child: SpinKitWanderingCubes(
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 30.0,
                                   ),
@@ -1203,7 +1203,8 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                       child: SizedBox(
                                                         width: 30.0,
                                                         height: 30.0,
-                                                        child: SpinKitCircle(
+                                                        child:
+                                                            SpinKitWanderingCubes(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primary,

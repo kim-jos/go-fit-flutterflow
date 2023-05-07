@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'confirmation_reservation_model.dart';
 export 'confirmation_reservation_model.dart';
 
@@ -109,14 +110,56 @@ class _ConfirmationReservationWidgetState
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-                  child: Text(
-                    '${widget.className} - ${formatNumber(
-                      widget.creditsRequired,
-                      formatType: FormatType.decimal,
-                      decimalType: DecimalType.automatic,
-                    )}원',
-                    style: FlutterFlowTheme.of(context).headlineSmall,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${widget.className} - ${formatNumber(
+                          widget.creditsRequired,
+                          formatType: FormatType.decimal,
+                          decimalType: DecimalType.automatic,
+                        )}원',
+                        style: FlutterFlowTheme.of(context).headlineSmall,
+                      ),
+                      Builder(
+                        builder: (context) => FFButtonWidget(
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'CONFIRMATION_RESERVATION_친구에게_공유_BTN_ON_');
+                            logFirebaseEvent('Button_share');
+                            await Share.share(
+                              'gofit://gofit.com${GoRouter.of(context).location}',
+                              sharePositionOrigin:
+                                  getWidgetBoundingBox(context),
+                            );
+                          },
+                          text: '친구에게 공유',
+                          options: FFButtonOptions(
+                            width: 130.0,
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Pretendard',
+                                  color: Colors.white,
+                                  useGoogleFonts: false,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Divider(
@@ -155,7 +198,7 @@ class _ConfirmationReservationWidgetState
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              '예약 취소는 수업 시작 24시간 전 까지만 가능합니다.',
+                              '예약 취소는 24시간 전 까지만 가능합니다.',
                               style: FlutterFlowTheme.of(context)
                                   .bodySmall
                                   .override(
@@ -211,7 +254,7 @@ class _ConfirmationReservationWidgetState
                               child: SizedBox(
                                 width: 30.0,
                                 height: 30.0,
-                                child: SpinKitCircle(
+                                child: SpinKitWanderingCubes(
                                   color: FlutterFlowTheme.of(context).primary,
                                   size: 30.0,
                                 ),
@@ -351,12 +394,13 @@ class _ConfirmationReservationWidgetState
                                   0.0, 0.0, 0.0, 0.0),
                               iconPadding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
                                   .override(
                                     fontFamily: 'Pretendard',
-                                    color: Colors.white,
+                                    color: FlutterFlowTheme.of(context).primary,
                                     useGoogleFonts: false,
                                   ),
                               elevation: 2.0,

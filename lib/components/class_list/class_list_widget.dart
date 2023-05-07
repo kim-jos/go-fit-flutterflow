@@ -83,7 +83,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                   child: SizedBox(
                     width: 30.0,
                     height: 30.0,
-                    child: SpinKitCircle(
+                    child: SpinKitWanderingCubes(
                       color: FlutterFlowTheme.of(context).primary,
                       size: 30.0,
                     ),
@@ -741,7 +741,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                 child: SizedBox(
                                   width: 30.0,
                                   height: 30.0,
-                                  child: SpinKitCircle(
+                                  child: SpinKitWanderingCubes(
                                     color: FlutterFlowTheme.of(context).primary,
                                     size: 30.0,
                                   ),
@@ -984,7 +984,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                                     height:
                                                                         30.0,
                                                                     child:
-                                                                        SpinKitCircle(
+                                                                        SpinKitWanderingCubes(
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primary,
@@ -1046,7 +1046,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                                             height:
                                                                                 30.0,
                                                                             child:
-                                                                                SpinKitCircle(
+                                                                                SpinKitWanderingCubes(
                                                                               color: FlutterFlowTheme.of(context).primary,
                                                                               size: 30.0,
                                                                             ),
@@ -1059,10 +1059,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                                               .data!;
                                                                       if (rowReserveClassAvailableTimeSlotsRecordList
                                                                           .isEmpty) {
-                                                                        return Center(
-                                                                          child:
-                                                                              NoTimeSlotsAvailableWidget(),
-                                                                        );
+                                                                        return NoTimeSlotsAvailableWidget();
                                                                       }
                                                                       return SingleChildScrollView(
                                                                         scrollDirection:

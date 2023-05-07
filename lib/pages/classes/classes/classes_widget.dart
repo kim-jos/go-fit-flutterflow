@@ -54,7 +54,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
             child: Padding(
               padding: MediaQuery.of(bottomSheetContext).viewInsets,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height * 0.7,
                 child: ClassListWidget(),
               ),
             ),
@@ -86,7 +86,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
           child: SizedBox(
             width: 30.0,
             height: 30.0,
-            child: SpinKitCircle(
+            child: SpinKitWanderingCubes(
               color: FlutterFlowTheme.of(context).primary,
               size: 30.0,
             ),
@@ -109,7 +109,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
             child: SizedBox(
               width: 30.0,
               height: 30.0,
-              child: SpinKitCircle(
+              child: SpinKitWanderingCubes(
                 color: FlutterFlowTheme.of(context).primary,
                 size: 30.0,
               ),

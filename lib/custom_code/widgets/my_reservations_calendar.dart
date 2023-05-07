@@ -10,6 +10,10 @@ import 'package:flutter/material.dart';
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:collection';
+
+// Imports other custom widgets
+// Imports custom actions
+// Imports custom functions
 import 'package:table_calendar/table_calendar.dart';
 
 class MyReservationsCalendar extends StatefulWidget {
@@ -18,13 +22,11 @@ class MyReservationsCalendar extends StatefulWidget {
     this.width,
     this.height,
     this.allReservations,
-    required this.onTap,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final List<ReservationsRecord>? allReservations;
-  final Future<dynamic> Function() onTap;
 
   @override
   _MyReservationsCalendarState createState() => _MyReservationsCalendarState();
@@ -35,7 +37,6 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
   late DateTime _selectedDay;
   late DateTime _firstDay;
   late DateTime _lastDay;
-  late List<ReservationsRecord> _allReservations;
   LinkedHashMap<DateTime, List<ReservationsRecord>> _groupedEvents =
       LinkedHashMap();
 
@@ -45,17 +46,11 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     _focusedDay =
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     _selectedDay = DateTime.now();
-    _firstDay =
-        DateTime(_focusedDay.year, _focusedDay.month - 3, _focusedDay.day);
+    _firstDay = DateTime(_focusedDay.year, _focusedDay.month - 1, 1);
     _lastDay =
         DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day + 7);
-    FFAppState().reservatationDate = _focusedDay;
+    FFAppState().reservationDate = _focusedDay;
     groupReservationsByDate(widget.allReservations ?? []);
-    if (_groupedEvents[_focusedDay] != null) {
-      _allReservations = _groupedEvents[_focusedDay]!;
-    } else {
-      _allReservations = [];
-    }
   }
 
   LinkedHashMap<DateTime, List<ReservationsRecord>> groupReservationsByDate(
@@ -85,29 +80,32 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     List<Widget> markers = [];
 
     if (groupedEvents.containsKey(date)) {
-      markers.add(
-        Container(),
-      );
+      List<ReservationsRecord>? reservations = groupedEvents[date];
+      for (int i = 0; i < reservations!.length; i++) {
+        markers.add(
+          Container(),
+        );
+      }
     }
 
     return markers;
   }
 
-  convertToJson(List<ReservationsRecord> reservationCollection) {
-    return reservationCollection
-        .map((e) => {
-              'date': e.date,
-              'timeSlot': e.timeSlot,
-              'user': e.user,
-              'classRequiredCredits': e.classRequiredCredits,
-              'className': e.className,
-              'time': e.time,
-              'createdAt': e.createdAt,
-              'isFinal': e.isFinal,
-              'startTime': DateFormat.yMMMd().format(e.startTime!),
-            })
-        .toList();
-  }
+  // convertToJson(List<ReservationsRecord> reservationCollection) {
+  //   return reservationCollection
+  //       .map((e) => {
+  //             'date': e.date,
+  //             'timeSlot': e.timeSlot,
+  //             'user': e.user,
+  //             'classRequiredCredits': e.classRequiredCredits,
+  //             'className': e.className,
+  //             'time': e.time,
+  //             'createdAt': e.createdAt,
+  //             'isFinal': e.isFinal,
+  //             'startTime': DateFormat.yMMMd().format(e.startTime!),
+  //           })
+  //       .toList();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -123,23 +121,21 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
             selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
             onDaySelected: (selectedDay, focusedDay) {
               setState(() {
-                print('selected day: $selectedDay');
-                print('focused day: $focusedDay');
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                print('all reservations: $_allReservations');
-                print('grouped events: $_groupedEvents');
-                if (_allReservations.isNotEmpty) {
-                  var jsonData = convertToJson(_allReservations);
-                  FFAppState().myReservations = jsonData;
-                  FFAppState().reservatationDate = _focusedDay;
-                  print(FFAppState().reservatationDate);
+                if (_groupedEvents[focusedDay] != null) {
+                  FFAppState().reservationDate = _focusedDay;
                 }
-                widget.onTap();
+                FFAppState().reservationDate = DateTime.utc(
+                    focusedDay.year, focusedDay.month, focusedDay.day);
+                FFAppState().update(() {});
               });
             },
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
+            },
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Month',
             },
             calendarFormat: CalendarFormat.month,
             calendarStyle: CalendarStyle(
@@ -154,11 +150,11 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                 color: FlutterFlowTheme.of(context).primary,
                 shape: BoxShape.circle,
               ),
-              markersMaxCount: 4,
+              markersMaxCount: 10,
               markersAlignment: Alignment.bottomCenter,
-              markerSizeScale: 0.3,
-              markerDecoration: const BoxDecoration(
-                  color: Colors.green, shape: BoxShape.circle),
+              markerSizeScale: 0.2,
+              markerDecoration: BoxDecoration(
+                  color: Colors.greenAccent[400], shape: BoxShape.circle),
             ),
             eventLoader: (day) {
               DateTime date = DateTime.utc(day.year, day.month, day.day);
