@@ -39,7 +39,6 @@ bool? showClass(
         DateFormat("yyyy-MM-dd").format(tempDate) + " " + timeString + ":00");
     return currTime.isBefore(date);
   } catch (e) {
-    print("error $e");
     return false;
   }
 }

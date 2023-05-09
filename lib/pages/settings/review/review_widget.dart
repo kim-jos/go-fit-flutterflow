@@ -100,6 +100,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         RatingBar.builder(
                           onRatingUpdate: (newValue) =>

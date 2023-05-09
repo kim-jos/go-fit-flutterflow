@@ -50,6 +50,8 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
     _lastDay =
         DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day + 7);
     FFAppState().reservationDate = _focusedDay;
+    var hello = FFAppState().reservationDate;
+    print('reservation date: $hello');
     groupReservationsByDate(widget.allReservations ?? []);
   }
 
@@ -125,9 +127,14 @@ class _MyReservationsCalendarState extends State<MyReservationsCalendar> {
                 _focusedDay = focusedDay;
                 if (_groupedEvents[focusedDay] != null) {
                   FFAppState().reservationDate = _focusedDay;
+                  var hello = FFAppState().reservationDate;
+                  print('reservation date: $hello');
+                } else {
+                  FFAppState().reservationDate = DateTime.utc(
+                      focusedDay.year, focusedDay.month, focusedDay.day);
+                  var hello = FFAppState().reservationDate;
+                  print('reservation date: $hello');
                 }
-                FFAppState().reservationDate = DateTime.utc(
-                    focusedDay.year, focusedDay.month, focusedDay.day);
                 FFAppState().update(() {});
               });
             },

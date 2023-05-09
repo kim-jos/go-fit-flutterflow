@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'confirmation_reservation_model.dart';
 export 'confirmation_reservation_model.dart';
 
@@ -122,42 +121,6 @@ class _ConfirmationReservationWidgetState
                           decimalType: DecimalType.automatic,
                         )}원',
                         style: FlutterFlowTheme.of(context).headlineSmall,
-                      ),
-                      Builder(
-                        builder: (context) => FFButtonWidget(
-                          onPressed: () async {
-                            logFirebaseEvent(
-                                'CONFIRMATION_RESERVATION_친구에게_공유_BTN_ON_');
-                            logFirebaseEvent('Button_share');
-                            await Share.share(
-                              'gofit://gofit.com${GoRouter.of(context).location}',
-                              sharePositionOrigin:
-                                  getWidgetBoundingBox(context),
-                            );
-                          },
-                          text: '친구에게 공유',
-                          options: FFButtonOptions(
-                            width: 130.0,
-                            height: 40.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleSmall
-                                .override(
-                                  fontFamily: 'Pretendard',
-                                  color: Colors.white,
-                                  useGoogleFonts: false,
-                                ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
                       ),
                     ],
                   ),

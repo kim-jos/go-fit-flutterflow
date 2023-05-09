@@ -46,7 +46,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
-        enableDrag: false,
         context: context,
         builder: (bottomSheetContext) {
           return GestureDetector(
