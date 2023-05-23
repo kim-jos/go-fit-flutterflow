@@ -119,7 +119,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     return;
                   }
 
-                  context.goNamedAuth('AuthLogin', mounted);
+                  context.goNamedAuth('AuthLogin', context.mounted);
                 },
                 child: Text(
                   '로그아웃',
@@ -197,7 +197,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         return;
                       }
 
-                      context.goNamedAuth('Home', mounted);
+                      context.goNamedAuth('Home', context.mounted);
                     },
                     child: Text(
                       '회원탈퇴',

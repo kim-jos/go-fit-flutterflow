@@ -153,9 +153,8 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         alignment: AlignmentDirectional(0.0, 0.0),
                         child: Builder(
                           builder: (context) {
-                            final images = classDetailsClassDetailsRecord!
-                                .images!
-                                .toList();
+                            final images =
+                                classDetailsClassDetailsRecord!.images.toList();
                             return SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: Row(
@@ -214,7 +213,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                         logFirebaseEvent('Image_launch_u_r_l');
                                         await launchURL(
                                             classDetailsClassDetailsRecord!
-                                                .instagram!);
+                                                .instagram);
                                       },
                                       child: CachedNetworkImage(
                                         imageUrl:
@@ -236,7 +235,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                       logFirebaseEvent('Image_launch_u_r_l');
                                       await launchURL(
                                           classDetailsClassDetailsRecord!
-                                              .website!);
+                                              .website);
                                     },
                                     child: CachedNetworkImage(
                                       imageUrl:
@@ -256,7 +255,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 5.0, 0.0),
                         child: Text(
-                          classDetailsClassDetailsRecord!.description!,
+                          classDetailsClassDetailsRecord!.description,
                           style: FlutterFlowTheme.of(context).bodySmall,
                         ),
                       ),
@@ -547,7 +546,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                     3.0, 0.0, 3.0, 0.0),
                                             child: AutoSizeText(
                                               classDetailsClassDetailsRecord!
-                                                  .requirements!,
+                                                  .requirements,
                                               textAlign: TextAlign.center,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -593,7 +592,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                           ),
                                           Text(
                                             classDetailsClassDetailsRecord!
-                                                .duration!,
+                                                .duration,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodySmall,
                                           ),
@@ -631,7 +630,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                         ),
                                         Text(
                                           classDetailsClassDetailsRecord!
-                                                  .hasShower!
+                                                  .hasShower
                                               ? '샤워 가능'
                                               : '샤워 불가능',
                                           style: FlutterFlowTheme.of(context)
@@ -849,27 +848,27 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                   visible: (containerReservationsRecordList
                                                               .length <
                                                           rowReserveClassAvailableTimeSlotsRecord
-                                                              .maxLimit!) &&
+                                                              .maxLimit) &&
                                                       (functions.differenceInHours(
                                                               getCurrentTimestamp,
                                                               functions.dateTimeParser(
                                                                   rowReserveClassAvailableTimeSlotsRecord
-                                                                      .startTime!,
+                                                                      .startTime,
                                                                   _model
                                                                       .calendarSelectedDay!
                                                                       .start)) >
                                                           rowReserveClassAvailableTimeSlotsRecord
-                                                              .minHoursBeforeClass!) &&
+                                                              .minHoursBeforeClass) &&
                                                       (functions.differenceInHours(
                                                               getCurrentTimestamp,
                                                               functions.dateTimeParser(
                                                                   rowReserveClassAvailableTimeSlotsRecord
-                                                                      .startTime!,
+                                                                      .startTime,
                                                                   _model
                                                                       .calendarSelectedDay!
                                                                       .start)) <
                                                           rowReserveClassAvailableTimeSlotsRecord
-                                                              .maxHoursBeforeClass!) &&
+                                                              .maxHoursBeforeClass) &&
                                                       (containerReservationsRecordList
                                                               .where((e) =>
                                                                   e.time ==
@@ -926,7 +925,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                           FFAppState()
                                                                   .selectedTime =
                                                               rowReserveClassAvailableTimeSlotsRecord
-                                                                  .startTime!;
+                                                                  .startTime;
                                                         });
                                                         logFirebaseEvent(
                                                             'Button_google_analytics_event');
@@ -987,7 +986,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                               '22:30'
                                                           ? '종일권'
                                                           : rowReserveClassAvailableTimeSlotsRecord
-                                                              .startTime!,
+                                                              .startTime,
                                                       options: FFButtonOptions(
                                                         width: 130.0,
                                                         height: 40.0,
@@ -1063,7 +1062,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         child: Builder(
                           builder: (context) {
                             final infoList =
-                                classDetailsClassDetailsRecord!.info!.toList();
+                                classDetailsClassDetailsRecord!.info.toList();
                             return Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -1101,7 +1100,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                         child: Builder(
                           builder: (context) {
                             final businessHours =
-                                classDetailsClassDetailsRecord!.businessHours!
+                                classDetailsClassDetailsRecord!.businessHours
                                     .toList();
                             return Column(
                               mainAxisSize: MainAxisSize.max,
@@ -1239,7 +1238,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                                   0,
                                                                 )
                                                               : rowUsersRecord
-                                                                  .photoUrl!,
+                                                                  .photoUrl,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
@@ -1260,7 +1259,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                           children: [
                                                             Text(
                                                               rowUsersRecord
-                                                                  .displayName!,
+                                                                  .displayName,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium,
@@ -1323,7 +1322,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                       direction:
                                                           Axis.horizontal,
                                                       rating: rowReviewsRecord
-                                                          .rating!
+                                                          .rating
                                                           .toDouble(),
                                                       unratedColor:
                                                           Color(0xFF9E9E9E),
@@ -1334,7 +1333,7 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                 ),
                                               ),
                                               Text(
-                                                rowReviewsRecord.review!,
+                                                rowReviewsRecord.review,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyMedium

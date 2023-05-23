@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
-import '../../backend/backend.dart';
+import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
 import '../../backend/push_notifications/push_notifications_handler.dart'
@@ -169,6 +169,36 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 reservationRef: params.getParam('reservationRef',
                     ParamType.DocumentReference, false, ['reservations']),
               ),
+            ),
+            FFRoute(
+              name: 'HomeCopy',
+              path: 'homeCopy',
+              requireAuth: true,
+              builder: (context, params) => HomeCopyWidget(),
+            ),
+            FFRoute(
+              name: 'Membership',
+              path: 'membership',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Membership')
+                  : MembershipWidget(),
+            ),
+            FFRoute(
+              name: 'Payment',
+              path: 'payment',
+              requireAuth: true,
+              builder: (context, params) => PaymentWidget(
+                paymentUrl: params.getParam('paymentUrl', ParamType.String),
+              ),
+            ),
+            FFRoute(
+              name: 'MyWebview',
+              path: 'myWebview',
+              requireAuth: true,
+              builder: (context, params) => MyWebviewWidget(
+                paymentUrl: params.getParam('paymentUrl', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -306,7 +336,8 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionNamePath);
+    return deserializeParam<T>(param, type, isList,
+        collectionNamePath: collectionNamePath);
   }
 }
 

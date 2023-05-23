@@ -1,51 +1,66 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'home_record.g.dart';
+class HomeRecord extends FirestoreRecord {
+  HomeRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class HomeRecord implements Built<HomeRecord, HomeRecordBuilder> {
-  static Serializer<HomeRecord> get serializer => _$homeRecordSerializer;
+  // "title" field.
+  String? _title;
+  String get title => _title ?? '';
+  bool hasTitle() => _title != null;
 
-  String? get videoUrl;
+  // "classesRef" field.
+  List<DocumentReference>? _classesRef;
+  List<DocumentReference> get classesRef => _classesRef ?? const [];
+  bool hasClassesRef() => _classesRef != null;
 
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(HomeRecordBuilder builder) =>
-      builder..videoUrl = '';
+  void _initializeFields() {
+    _title = snapshotData['title'] as String?;
+    _classesRef = getDataList(snapshotData['classesRef']);
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('home');
 
-  static Stream<HomeRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<HomeRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => HomeRecord.fromSnapshot(s));
 
-  static Future<HomeRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<HomeRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => HomeRecord.fromSnapshot(s));
 
-  HomeRecord._();
-  factory HomeRecord([void Function(HomeRecordBuilder) updates]) = _$HomeRecord;
+  static HomeRecord fromSnapshot(DocumentSnapshot snapshot) => HomeRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static HomeRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      HomeRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'HomeRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createHomeRecordData({
-  String? videoUrl,
+  String? title,
 }) {
-  final firestoreData = serializers.toFirestore(
-    HomeRecord.serializer,
-    HomeRecord(
-      (h) => h..videoUrl = videoUrl,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'title': title,
+    }.withoutNulls,
   );
 
   return firestoreData;

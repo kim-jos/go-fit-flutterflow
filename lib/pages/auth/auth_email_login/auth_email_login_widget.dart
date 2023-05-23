@@ -385,7 +385,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                   'Button-Login_navigate_to');
 
                                               context.pushNamedAuth(
-                                                  'Home', mounted);
+                                                  'Home', context.mounted);
 
                                               logFirebaseEvent(
                                                   'Button-Login_trigger_push_notification');
@@ -978,7 +978,8 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                   'Button-Login_navigate_to');
 
                                               context.pushNamedAuth(
-                                                  'AuthPhoneNumber', mounted);
+                                                  'AuthPhoneNumber',
+                                                  context.mounted);
 
                                               logFirebaseEvent(
                                                   'Button-Login_trigger_push_notification');

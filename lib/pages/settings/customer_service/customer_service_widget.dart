@@ -166,13 +166,18 @@ class _CustomerServiceWidgetState extends State<CustomerServiceWidget> {
                   return;
                 }
                 logFirebaseEvent('Button_send_s_m_s');
-                await launchUrl(Uri(
-                  scheme: 'sms',
-                  path: '+821050909006',
-                  queryParameters: <String, String>{
-                    'body': _model.textController.text,
-                  },
-                ));
+                if (isiOS) {
+                  await launchUrl(Uri.parse(
+                      "sms:'+821050909006'&body=${Uri.encodeComponent(_model.textController.text)}"));
+                } else {
+                  await launchUrl(Uri(
+                    scheme: 'sms',
+                    path: '+821050909006',
+                    queryParameters: <String, String>{
+                      'body': Uri.encodeComponent(_model.textController.text),
+                    },
+                  ));
+                }
               },
               text: '문의하기',
               options: FFButtonOptions(

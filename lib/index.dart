@@ -17,3 +17,7 @@ export '/pages/auth/auth_phone_number/auth_phone_number_widget.dart'
     show AuthPhoneNumberWidget;
 export '/pages/settings/settings/settings_widget.dart' show SettingsWidget;
 export '/pages/settings/review/review_widget.dart' show ReviewWidget;
+export '/pages/tabs/home_copy/home_copy_widget.dart' show HomeCopyWidget;
+export '/pages/tabs/membership/membership_widget.dart' show MembershipWidget;
+export '/pages/other/payment/payment_widget.dart' show PaymentWidget;
+export '/pages/tabs/my_webview/my_webview_widget.dart' show MyWebviewWidget;

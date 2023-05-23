@@ -141,6 +141,18 @@ final parametersBuilderMap =
               getParameter<DocumentReference>(data, 'reservationRef'),
         },
       ),
+  'HomeCopy': ParameterData.none(),
+  'Membership': ParameterData.none(),
+  'Payment': (data) async => ParameterData(
+        allParams: {
+          'paymentUrl': getParameter<String>(data, 'paymentUrl'),
+        },
+      ),
+  'MyWebview': (data) async => ParameterData(
+        allParams: {
+          'paymentUrl': getParameter<String>(data, 'paymentUrl'),
+        },
+      ),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

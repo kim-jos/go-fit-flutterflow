@@ -253,19 +253,22 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () async {
-                      logFirebaseEvent(
-                          'AUTH_PHONE_NUMBER_VerifyReferrer_ON_TAP');
-                      logFirebaseEvent('VerifyReferrer_custom_action');
-                      _model.referrersCode =
-                          await actions.doesReferralCodeExist(
-                        _model.referralCodeController.text,
-                      );
-                      logFirebaseEvent('VerifyReferrer_update_app_state');
-                      FFAppState().didPressReferralVerification = true;
+                    onPressed: (_model.referrersCode != null) &&
+                            FFAppState().didPressReferralVerification
+                        ? null
+                        : () async {
+                            logFirebaseEvent(
+                                'AUTH_PHONE_NUMBER_VerifyReferrer_ON_TAP');
+                            logFirebaseEvent('VerifyReferrer_custom_action');
+                            _model.referrersCode =
+                                await actions.doesReferralCodeExist(
+                              _model.referralCodeController.text,
+                            );
+                            logFirebaseEvent('VerifyReferrer_update_app_state');
+                            FFAppState().didPressReferralVerification = true;
 
-                      setState(() {});
-                    },
+                            setState(() {});
+                          },
                     text: '추천인 확인',
                     options: FFButtonOptions(
                       width: 90.0,
@@ -287,6 +290,9 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                         width: 1.0,
                       ),
                       borderRadius: BorderRadius.circular(30.0),
+                      disabledColor: FlutterFlowTheme.of(context).accent1,
+                      disabledTextColor:
+                          FlutterFlowTheme.of(context).primaryBtnText,
                     ),
                   ),
                 ),

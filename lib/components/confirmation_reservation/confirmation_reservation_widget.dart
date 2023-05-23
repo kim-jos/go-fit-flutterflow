@@ -277,7 +277,7 @@ class _ConfirmationReservationWidgetState
                                   notificationText:
                                       '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${widget.className} - ${widget.selectedDate?.toString()} - ${widget.selectedTime}',
                                   userRefs: buttonUsersRecordList
-                                      .where((e) => e.admin!)
+                                      .where((e) => e.admin)
                                       .toList()
                                       .map((e) => e.reference)
                                       .toList(),
@@ -294,8 +294,18 @@ class _ConfirmationReservationWidgetState
                                     'Confirm Reservation Widget - ${widget.className}');
                                 return;
                               } else {
-                                logFirebaseEvent('Button_launch_u_r_l');
-                                await launchURL(widget.paymentUrl!);
+                                logFirebaseEvent('Button_navigate_to');
+
+                                context.pushNamed(
+                                  'Payment',
+                                  queryParams: {
+                                    'paymentUrl': serializeParam(
+                                      widget.paymentUrl,
+                                      ParamType.String,
+                                    ),
+                                  }.withoutNulls,
+                                );
+
                                 // reservations collection
                                 logFirebaseEvent(
                                     'Button_reservationscollection');
@@ -331,17 +341,13 @@ class _ConfirmationReservationWidgetState
                                   notificationText:
                                       '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${widget.className} - ${widget.selectedDate?.toString()} - ${widget.selectedTime}',
                                   userRefs: buttonUsersRecordList
-                                      .where((e) => e.admin!)
+                                      .where((e) => e.admin)
                                       .toList()
                                       .map((e) => e.reference)
                                       .toList(),
                                   initialPageName: 'Classes',
                                   parameterData: {},
                                 );
-                                logFirebaseEvent('Button_navigate_to');
-
-                                context.goNamed('Classes');
-
                                 logFirebaseEvent(
                                     'Button_google_analytics_event');
                                 logFirebaseEvent(

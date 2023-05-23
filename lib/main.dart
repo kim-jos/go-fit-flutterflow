@@ -130,10 +130,12 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Home': HomeWidget(),
       'Classes': ClassesWidget(),
+      'Membership': MembershipWidget(),
       'MyReservations': MyReservationsWidget(),
       'MyPage': MyPageWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
+
     return Scaffold(
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
@@ -145,14 +147,14 @@ class _NavBarPageState extends State<NavBarPage> {
         backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
         selectedItemColor: FlutterFlowTheme.of(context).black600,
         unselectedItemColor: FlutterFlowTheme.of(context).grayIcon,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: FaIcon(
               FontAwesomeIcons.home,
-              size: 20.0,
+              size: 24.0,
             ),
             label: '홈',
             tooltip: '',
@@ -160,15 +162,23 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: FaIcon(
               FontAwesomeIcons.mapMarkerAlt,
-              size: 24.0,
+              size: 25.0,
             ),
             label: '내 주변',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: FaIcon(
+              FontAwesomeIcons.coins,
+              size: 25.0,
+            ),
+            label: '홈',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: FaIcon(
               FontAwesomeIcons.calendarCheck,
-              size: 24.0,
+              size: 25.0,
             ),
             label: '예약현황',
             tooltip: '',
@@ -176,7 +186,7 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.account_circle,
-              size: 28.0,
+              size: 30.0,
             ),
             label: '내 정보',
             tooltip: '',

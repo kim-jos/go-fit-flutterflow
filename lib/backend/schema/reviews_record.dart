@@ -1,54 +1,82 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'reviews_record.g.dart';
+class ReviewsRecord extends FirestoreRecord {
+  ReviewsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class ReviewsRecord
-    implements Built<ReviewsRecord, ReviewsRecordBuilder> {
-  static Serializer<ReviewsRecord> get serializer => _$reviewsRecordSerializer;
+  // "userRef" field.
+  DocumentReference? _userRef;
+  DocumentReference? get userRef => _userRef;
+  bool hasUserRef() => _userRef != null;
 
-  DocumentReference? get userRef;
+  // "classRef" field.
+  DocumentReference? _classRef;
+  DocumentReference? get classRef => _classRef;
+  bool hasClassRef() => _classRef != null;
 
-  DocumentReference? get classRef;
+  // "createdAt" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  DateTime? get createdAt;
+  // "review" field.
+  String? _review;
+  String get review => _review ?? '';
+  bool hasReview() => _review != null;
 
-  String? get review;
+  // "rating" field.
+  int? _rating;
+  int get rating => _rating ?? 0;
+  bool hasRating() => _rating != null;
 
-  int? get rating;
+  // "reservationRef" field.
+  DocumentReference? _reservationRef;
+  DocumentReference? get reservationRef => _reservationRef;
+  bool hasReservationRef() => _reservationRef != null;
 
-  DocumentReference? get reservationRef;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(ReviewsRecordBuilder builder) => builder
-    ..review = ''
-    ..rating = 0;
+  void _initializeFields() {
+    _userRef = snapshotData['userRef'] as DocumentReference?;
+    _classRef = snapshotData['classRef'] as DocumentReference?;
+    _createdAt = snapshotData['createdAt'] as DateTime?;
+    _review = snapshotData['review'] as String?;
+    _rating = snapshotData['rating'] as int?;
+    _reservationRef = snapshotData['reservationRef'] as DocumentReference?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('reviews');
 
-  static Stream<ReviewsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<ReviewsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => ReviewsRecord.fromSnapshot(s));
 
-  static Future<ReviewsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<ReviewsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => ReviewsRecord.fromSnapshot(s));
 
-  ReviewsRecord._();
-  factory ReviewsRecord([void Function(ReviewsRecordBuilder) updates]) =
-      _$ReviewsRecord;
+  static ReviewsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      ReviewsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static ReviewsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      ReviewsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'ReviewsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createReviewsRecordData({
@@ -59,17 +87,15 @@ Map<String, dynamic> createReviewsRecordData({
   int? rating,
   DocumentReference? reservationRef,
 }) {
-  final firestoreData = serializers.toFirestore(
-    ReviewsRecord.serializer,
-    ReviewsRecord(
-      (r) => r
-        ..userRef = userRef
-        ..classRef = classRef
-        ..createdAt = createdAt
-        ..review = review
-        ..rating = rating
-        ..reservationRef = reservationRef,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'userRef': userRef,
+      'classRef': classRef,
+      'createdAt': createdAt,
+      'review': review,
+      'rating': rating,
+      'reservationRef': reservationRef,
+    }.withoutNulls,
   );
 
   return firestoreData;

@@ -122,6 +122,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
             key: scaffoldKey,
             resizeToAvoidBottomInset: false,
             body: SafeArea(
+              top: true,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -521,7 +522,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                                       .markerClassRef)
                                                               .toList()
                                                               .first
-                                                              .image!,
+                                                              .image,
                                                           width: 74.0,
                                                           height: 74.0,
                                                           fit: BoxFit.cover,
@@ -555,7 +556,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                                       .markerClassRef)
                                                               .toList()
                                                               .first
-                                                              .name!,
+                                                              .name,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall,
@@ -574,7 +575,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                                       .markerClassRef)
                                                               .toList()
                                                               .first
-                                                              .exerciseType!,
+                                                              .exerciseType,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodySmall
@@ -602,7 +603,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                                                       .markerClassRef)
                                                               .toList()
                                                               .first
-                                                              .distance!,
+                                                              .distance,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium

@@ -10,7 +10,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:text_search/text_search.dart';
 import 'home_model.dart';
 export 'home_model.dart';
 
@@ -33,7 +32,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     _model = createModel(context, () => HomeModel());
 
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Home'});
-    _model.searchClassController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -72,148 +70,14 @@ class _HomeWidgetState extends State<HomeWidget> {
           elevation: 2.0,
         ),
         body: SafeArea(
+          top: true,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 16.0, 10.0, 0.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                4.0, 0.0, 4.0, 0.0),
-                            child: TextFormField(
-                              controller: _model.searchClassController,
-                              onFieldSubmitted: (_) async {
-                                logFirebaseEvent(
-                                    'HOME_SearchClass_ON_TEXTFIELD_SUBMIT');
-                                logFirebaseEvent('SearchClass_simple_search');
-                                await queryClassesRecordOnce()
-                                    .then(
-                                      (records) => _model
-                                          .simpleSearchResults = TextSearch(
-                                        records
-                                            .map(
-                                              (record) => TextSearchItem(
-                                                  record, [
-                                                record.name!,
-                                                record.exerciseType!
-                                              ]),
-                                            )
-                                            .toList(),
-                                      )
-                                          .search(
-                                              _model.searchClassController.text)
-                                          .map((r) => r.object)
-                                          .toList(),
-                                    )
-                                    .onError((_, __) =>
-                                        _model.simpleSearchResults = [])
-                                    .whenComplete(() => setState(() {}));
-                              },
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: '수업 검색',
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.white,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                filled: true,
-                                fillColor: Colors.white,
-                                prefixIcon: Icon(
-                                  Icons.search_sharp,
-                                  color: Color(0xFF57636C),
-                                ),
-                              ),
-                              style: FlutterFlowTheme.of(context)
-                                  .bodyMedium
-                                  .override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF57636C),
-                                    fontSize: 14.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              maxLines: null,
-                              validator: _model.searchClassControllerValidator
-                                  .asValidator(context),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 8.0, 0.0),
-                          child: FFButtonWidget(
-                            onPressed: () {
-                              print('Button pressed ...');
-                            },
-                            text: '검색',
-                            options: FFButtonOptions(
-                              width: 100.0,
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Colors.white,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                              elevation: 2.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 0.0),
+                      EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
                   child: StreamBuilder<List<WorkoutCategoriesRecord>>(
                     stream: queryWorkoutCategoriesRecord(
                       queryBuilder: (workoutCategoriesRecord) =>
@@ -248,8 +112,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 5.0, 0.0),
                               child: Container(
-                                width: 100.0,
-                                height: 100.0,
+                                width: 80.0,
+                                height: 80.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -305,7 +169,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                             BorderRadius.circular(0.0),
                                         child: CachedNetworkImage(
                                           imageUrl: rowWorkoutCategoriesRecord
-                                              .imageUrl!,
+                                              .imageUrl,
                                           width: 35.0,
                                           height: 35.0,
                                           fit: BoxFit.cover,
@@ -315,7 +179,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 5.0, 0.0, 0.0),
                                         child: Text(
-                                          rowWorkoutCategoriesRecord.category!,
+                                          rowWorkoutCategoriesRecord.category,
                                           style: FlutterFlowTheme.of(context)
                                               .bodySmall
                                               .override(
@@ -338,13 +202,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 0.0),
-                  child: StreamBuilder<List<ClassesRecord>>(
-                    stream: queryClassesRecord(
-                      queryBuilder: (classesRecord) => classesRecord
-                          .where('hideClass', isEqualTo: false)
-                          .orderBy('priority'),
-                    ),
+                      EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 20.0),
+                  child: StreamBuilder<List<HomeRecord>>(
+                    stream: queryHomeRecord(),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.
                       if (!snapshot.hasData) {
@@ -359,209 +219,257 @@ class _HomeWidgetState extends State<HomeWidget> {
                           ),
                         );
                       }
-                      List<ClassesRecord> columnClassesRecordList =
-                          snapshot.data!;
+                      List<HomeRecord> columnHomeRecordList = snapshot.data!;
                       return Column(
                         mainAxisSize: MainAxisSize.max,
-                        children: List.generate(columnClassesRecordList.length,
+                        children: List.generate(columnHomeRecordList.length,
                             (columnIndex) {
-                          final columnClassesRecord =
-                              columnClassesRecordList[columnIndex];
+                          final columnHomeRecord =
+                              columnHomeRecordList[columnIndex];
                           return Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 5.0),
-                            child: Container(
-                              width: double.infinity,
-                              height: 90.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  logFirebaseEvent(
-                                      'HOME_PAGE_Row_6honob66_ON_TAP');
-                                  logFirebaseEvent('Row_navigate_to');
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  columnHomeRecord.title,
+                                  style: FlutterFlowTheme.of(context).bodyLarge,
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: Builder(
+                                    builder: (context) {
+                                      final classesRef =
+                                          columnHomeRecord.classesRef.toList();
+                                      return SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children:
+                                              List.generate(classesRef.length,
+                                                  (classesRefIndex) {
+                                            final classesRefItem =
+                                                classesRef[classesRefIndex];
+                                            return Align(
+                                              alignment: AlignmentDirectional(
+                                                  0.0, 0.0),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 10.0, 0.0),
+                                                child: StreamBuilder<
+                                                    ClassesRecord>(
+                                                  stream:
+                                                      ClassesRecord.getDocument(
+                                                          classesRefItem),
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 30.0,
+                                                          height: 30.0,
+                                                          child:
+                                                              SpinKitWanderingCubes(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primary,
+                                                            size: 30.0,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }
+                                                    final containerClassesRecord =
+                                                        snapshot.data!;
+                                                    return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        logFirebaseEvent(
+                                                            'HOME_PAGE_Container_hialen4w_ON_TAP');
+                                                        logFirebaseEvent(
+                                                            'Container_navigate_to');
 
-                                  context.pushNamed(
-                                    'ClassDetails',
-                                    queryParams: {
-                                      'classRef': serializeParam(
-                                        columnClassesRecord.reference,
-                                        ParamType.DocumentReference,
-                                      ),
-                                      'className': serializeParam(
-                                        columnClassesRecord.name,
-                                        ParamType.String,
-                                      ),
-                                      'exerciseType': serializeParam(
-                                        columnClassesRecord.exerciseType,
-                                        ParamType.String,
-                                      ),
-                                      'coords': serializeParam(
-                                        columnClassesRecord.coords,
-                                        ParamType.LatLng,
-                                      ),
-                                      'creditsRequired': serializeParam(
-                                        columnClassesRecord.creditsRequired,
-                                        ParamType.int,
-                                      ),
-                                      'paymentUrl': serializeParam(
-                                        columnClassesRecord.paymentUrl,
-                                        ParamType.String,
-                                      ),
-                                      'originalPrice': serializeParam(
-                                        columnClassesRecord.originalPrice,
-                                        ParamType.int,
-                                      ),
-                                    }.withoutNulls,
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType:
-                                            PageTransitionType.rightToLeft,
-                                      ),
-                                    },
-                                  );
-
-                                  logFirebaseEvent(
-                                      'Row_google_analytics_event');
-                                  logFirebaseEvent(
-                                      'Home-${columnClassesRecord.name}');
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Stack(
-                                          alignment:
-                                              AlignmentDirectional(0.7, -0.75),
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 8.0, 8.0, 8.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: columnClassesRecord
-                                                      .image!,
-                                                  width: 74.0,
-                                                  height: 74.0,
-                                                  fit: BoxFit.cover,
+                                                        context.pushNamed(
+                                                          'ClassDetails',
+                                                          queryParams: {
+                                                            'classRef':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .reference,
+                                                              ParamType
+                                                                  .DocumentReference,
+                                                            ),
+                                                            'className':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .name,
+                                                              ParamType.String,
+                                                            ),
+                                                            'exerciseType':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .exerciseType,
+                                                              ParamType.String,
+                                                            ),
+                                                            'coords':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .coords,
+                                                              ParamType.LatLng,
+                                                            ),
+                                                            'creditsRequired':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .creditsRequired,
+                                                              ParamType.int,
+                                                            ),
+                                                            'paymentUrl':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .paymentUrl,
+                                                              ParamType.String,
+                                                            ),
+                                                            'originalPrice':
+                                                                serializeParam(
+                                                              containerClassesRecord
+                                                                  .originalPrice,
+                                                              ParamType.int,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            kTransitionInfoKey:
+                                                                TransitionInfo(
+                                                              hasTransition:
+                                                                  true,
+                                                              transitionType:
+                                                                  PageTransitionType
+                                                                      .rightToLeft,
+                                                            ),
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        width: 160.0,
+                                                        height: 190.0,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image:
+                                                                CachedNetworkImageProvider(
+                                                              containerClassesRecord
+                                                                  .image,
+                                                            ),
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          shape: BoxShape
+                                                              .rectangle,
+                                                        ),
+                                                        child: Stack(
+                                                          children: [
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0.0, 0.0),
+                                                              child: Container(
+                                                                width: double
+                                                                    .infinity,
+                                                                height: double
+                                                                    .infinity,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Color(
+                                                                      0x4B101213),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10.0),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0.0, 0.3),
+                                                              child: Text(
+                                                                containerClassesRecord
+                                                                    .name,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleLarge
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Pretendard',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryBtnText,
+                                                                      useGoogleFonts:
+                                                                          false,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0.0, 0.6),
+                                                              child: Text(
+                                                                containerClassesRecord
+                                                                    .exerciseType,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Pretendard',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryBtnText,
+                                                                      useGoogleFonts:
+                                                                          false,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            );
+                                          }),
                                         ),
-                                      ],
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 1.0, 0.0, 0.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  columnClassesRecord.name!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .titleSmall,
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  columnClassesRecord
-                                                      .exerciseType!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily:
-                                                            'Pretendard',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        useGoogleFonts: false,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text(
-                                                  columnClassesRecord.distance!,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Pretendard',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        useGoogleFonts: false,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 8.0, 0.0),
-                                            child: Icon(
-                                              Icons.chevron_right_outlined,
-                                              color: Color(0xFF95A1AC),
-                                              size: 24.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
                           );
                         }),
                       );
                     },
-                  ),
-                ),
-                Container(
-                  width: 100.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: Color(0x00FFFFFF),
                   ),
                 ),
                 if (loggedIn == false)

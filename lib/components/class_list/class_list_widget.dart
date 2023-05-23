@@ -210,7 +210,6 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                       options:
                                           containerWorkoutCategoriesRecordList
                                               .map((e) => e.category)
-                                              .withoutNulls
                                               .toList()
                                               .map((label) => ChipData(label))
                                               .toList(),
@@ -732,6 +731,8 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                     isEqualTo: _model.dropDownValue)
                                 .whereIn(
                                     'exerciseType', _model.categoryFilterValues)
+                                .where('exerciseType',
+                                    isEqualTo: widget.category)
                                 .orderBy('priority'),
                           ),
                           builder: (context, snapshot) {
@@ -834,6 +835,8 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                           children: [
                                             Column(
                                               mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Stack(
                                                   alignment:
@@ -856,7 +859,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                             CachedNetworkImage(
                                                           imageUrl:
                                                               columnClassesRecord
-                                                                  .image!,
+                                                                  .image,
                                                           width: 74.0,
                                                           height: 74.0,
                                                           fit: BoxFit.cover,
@@ -871,12 +874,12 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        8.0, 1.0, 0.0, 0.0),
+                                                        8.0, 8.0, 0.0, 0.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.center,
+                                                      MainAxisAlignment.start,
                                                   children: [
                                                     Row(
                                                       mainAxisSize:
@@ -884,7 +887,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                       children: [
                                                         Text(
                                                           columnClassesRecord
-                                                              .name!,
+                                                              .name,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .titleSmall,
@@ -897,7 +900,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                       children: [
                                                         Text(
                                                           columnClassesRecord
-                                                              .exerciseType!,
+                                                              .exerciseType,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodySmall
@@ -919,7 +922,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                       children: [
                                                         Text(
                                                           columnClassesRecord
-                                                              .distance!,
+                                                              .distance,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium
@@ -950,219 +953,212 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          StreamBuilder<
-                                                              List<
-                                                                  ReservationsRecord>>(
-                                                            stream:
-                                                                queryReservationsRecord(
-                                                              queryBuilder: (reservationsRecord) => reservationsRecord
-                                                                  .where('date',
-                                                                      isEqualTo: dateTimeFormat(
+                                                          Expanded(
+                                                            child: StreamBuilder<
+                                                                List<
+                                                                    ReservationsRecord>>(
+                                                              stream:
+                                                                  queryReservationsRecord(
+                                                                queryBuilder: (reservationsRecord) => reservationsRecord
+                                                                    .where('date',
+                                                                        isEqualTo: dateTimeFormat(
+                                                                                  'yMd',
+                                                                                  FFAppState().classDate,
+                                                                                  locale: FFLocalizations.of(context).languageCode,
+                                                                                ) !=
+                                                                                ''
+                                                                            ? dateTimeFormat(
                                                                                 'yMd',
                                                                                 FFAppState().classDate,
                                                                                 locale: FFLocalizations.of(context).languageCode,
-                                                                              ) !=
-                                                                              ''
-                                                                          ? dateTimeFormat(
-                                                                              'yMd',
-                                                                              FFAppState().classDate,
-                                                                              locale: FFLocalizations.of(context).languageCode,
-                                                                            )
-                                                                          : null)
-                                                                  .where('className', isEqualTo: columnClassesRecord.name != '' ? columnClassesRecord.name : null)
-                                                                  .where('user', isEqualTo: currentUserReference),
-                                                            ),
-                                                            builder: (context,
-                                                                snapshot) {
-                                                              // Customize what your widget looks like when it's loading.
-                                                              if (!snapshot
-                                                                  .hasData) {
-                                                                return Center(
-                                                                  child:
-                                                                      SizedBox(
-                                                                    width: 30.0,
-                                                                    height:
-                                                                        30.0,
+                                                                              )
+                                                                            : null)
+                                                                    .where('className', isEqualTo: columnClassesRecord.name != '' ? columnClassesRecord.name : null)
+                                                                    .where('user', isEqualTo: currentUserReference),
+                                                              ),
+                                                              builder: (context,
+                                                                  snapshot) {
+                                                                // Customize what your widget looks like when it's loading.
+                                                                if (!snapshot
+                                                                    .hasData) {
+                                                                  return Center(
                                                                     child:
-                                                                        SpinKitWanderingCubes(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                      size:
+                                                                        SizedBox(
+                                                                      width:
                                                                           30.0,
+                                                                      height:
+                                                                          30.0,
+                                                                      child:
+                                                                          SpinKitWanderingCubes(
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                        size:
+                                                                            30.0,
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                }
+                                                                List<ReservationsRecord>
+                                                                    containerReservationsRecordList =
+                                                                    snapshot
+                                                                        .data!;
+                                                                return Container(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      1.0,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryBackground,
+                                                                  ),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            10.0),
+                                                                    child: StreamBuilder<
+                                                                        List<
+                                                                            ClassAvailableTimeSlotsRecord>>(
+                                                                      stream:
+                                                                          queryClassAvailableTimeSlotsRecord(
+                                                                        queryBuilder: (classAvailableTimeSlotsRecord) => classAvailableTimeSlotsRecord
+                                                                            .where('weekdays',
+                                                                                arrayContains: functions.convertWeekDayToInteger(FFAppState().classDate!))
+                                                                            .where('classRef', isEqualTo: columnClassesRecord.reference)
+                                                                            .orderBy('startTime'),
+                                                                      ),
+                                                                      builder:
+                                                                          (context,
+                                                                              snapshot) {
+                                                                        // Customize what your widget looks like when it's loading.
+                                                                        if (!snapshot
+                                                                            .hasData) {
+                                                                          return Center(
+                                                                            child:
+                                                                                SizedBox(
+                                                                              width: 30.0,
+                                                                              height: 30.0,
+                                                                              child: SpinKitWanderingCubes(
+                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                size: 30.0,
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        }
+                                                                        List<ClassAvailableTimeSlotsRecord>
+                                                                            rowReserveClassAvailableTimeSlotsRecordList =
+                                                                            snapshot.data!;
+                                                                        if (rowReserveClassAvailableTimeSlotsRecordList
+                                                                            .isEmpty) {
+                                                                          return NoTimeSlotsAvailableWidget();
+                                                                        }
+                                                                        return SingleChildScrollView(
+                                                                          scrollDirection:
+                                                                              Axis.horizontal,
+                                                                          child:
+                                                                              Row(
+                                                                            mainAxisSize:
+                                                                                MainAxisSize.max,
+                                                                            children:
+                                                                                List.generate(rowReserveClassAvailableTimeSlotsRecordList.length, (rowReserveIndex) {
+                                                                              final rowReserveClassAvailableTimeSlotsRecord = rowReserveClassAvailableTimeSlotsRecordList[rowReserveIndex];
+                                                                              return Visibility(
+                                                                                visible: (containerReservationsRecordList.length < rowReserveClassAvailableTimeSlotsRecord.maxLimit) && (functions.differenceInHours(getCurrentTimestamp, functions.dateTimeParser(rowReserveClassAvailableTimeSlotsRecord.startTime, FFAppState().classDate!)) > rowReserveClassAvailableTimeSlotsRecord.minHoursBeforeClass) && (functions.differenceInHours(getCurrentTimestamp, functions.dateTimeParser(rowReserveClassAvailableTimeSlotsRecord.startTime, FFAppState().classDate!)) < rowReserveClassAvailableTimeSlotsRecord.maxHoursBeforeClass) && (containerReservationsRecordList.where((e) => e.time == rowReserveClassAvailableTimeSlotsRecord.startTime).toList().length < 1),
+                                                                                child: Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
+                                                                                  child: FFButtonWidget(
+                                                                                    onPressed: () async {
+                                                                                      logFirebaseEvent('CLASS_LIST_COMP_BUTTON_BTN_ON_TAP');
+                                                                                      if (!(currentPhoneNumber != null && currentPhoneNumber != '')) {
+                                                                                        logFirebaseEvent('Button_alert_dialog');
+                                                                                        await showDialog(
+                                                                                          context: context,
+                                                                                          builder: (alertDialogContext) {
+                                                                                            return AlertDialog(
+                                                                                              title: Text('전화번호 입력 해주세요'),
+                                                                                              content: Text('예약은 전화번호 등록 후에 가능합니다'),
+                                                                                              actions: [
+                                                                                                TextButton(
+                                                                                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                                                                                  child: Text('확인'),
+                                                                                                ),
+                                                                                              ],
+                                                                                            );
+                                                                                          },
+                                                                                        );
+                                                                                        logFirebaseEvent('Button_navigate_to');
+
+                                                                                        context.pushNamed('MyPage');
+                                                                                      }
+                                                                                      logFirebaseEvent('Button_update_app_state');
+                                                                                      FFAppState().update(() {
+                                                                                        FFAppState().selectedTime = rowReserveClassAvailableTimeSlotsRecord.startTime;
+                                                                                        FFAppState().selectedDate = FFAppState().classDate;
+                                                                                      });
+                                                                                      logFirebaseEvent('Button_google_analytics_event');
+                                                                                      logFirebaseEvent('Reserve${columnClassesRecord.name}');
+                                                                                      logFirebaseEvent('Button_bottom_sheet');
+                                                                                      await showModalBottomSheet(
+                                                                                        isScrollControlled: true,
+                                                                                        backgroundColor: Colors.transparent,
+                                                                                        barrierColor: Color(0x00000000),
+                                                                                        context: context,
+                                                                                        builder: (bottomSheetContext) {
+                                                                                          return Padding(
+                                                                                            padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                            child: Container(
+                                                                                              height: MediaQuery.of(context).size.height * 0.5,
+                                                                                              child: ConfirmationReservationWidget(
+                                                                                                className: columnClassesRecord.name,
+                                                                                                selectedDate: FFAppState().classDate,
+                                                                                                selectedTime: FFAppState().selectedTime,
+                                                                                                classRef: columnClassesRecord.reference,
+                                                                                                selectedTimeSlot: rowReserveClassAvailableTimeSlotsRecord.reference,
+                                                                                                creditsRequired: columnClassesRecord.creditsRequired,
+                                                                                                paymentUrl: columnClassesRecord.paymentUrl,
+                                                                                              ),
+                                                                                            ),
+                                                                                          );
+                                                                                        },
+                                                                                      ).then((value) => setState(() {}));
+                                                                                    },
+                                                                                    text: rowReserveClassAvailableTimeSlotsRecord.startTime == '22:30' ? '종일권' : rowReserveClassAvailableTimeSlotsRecord.startTime,
+                                                                                    options: FFButtonOptions(
+                                                                                      width: 130.0,
+                                                                                      height: 40.0,
+                                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                                                      color: FlutterFlowTheme.of(context).primary,
+                                                                                      textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                                                                                            fontFamily: 'Pretendard',
+                                                                                            color: Colors.white,
+                                                                                            useGoogleFonts: false,
+                                                                                          ),
+                                                                                      elevation: 2.0,
+                                                                                      borderSide: BorderSide(
+                                                                                        color: Colors.transparent,
+                                                                                        width: 1.0,
+                                                                                      ),
+                                                                                      borderRadius: BorderRadius.circular(30.0),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            }),
+                                                                          ),
+                                                                        );
+                                                                      },
                                                                     ),
                                                                   ),
                                                                 );
-                                                              }
-                                                              List<ReservationsRecord>
-                                                                  containerReservationsRecordList =
-                                                                  snapshot
-                                                                      .data!;
-                                                              return Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    1.0,
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryBackground,
-                                                                ),
-                                                                child: Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          10.0),
-                                                                  child: StreamBuilder<
-                                                                      List<
-                                                                          ClassAvailableTimeSlotsRecord>>(
-                                                                    stream:
-                                                                        queryClassAvailableTimeSlotsRecord(
-                                                                      queryBuilder: (classAvailableTimeSlotsRecord) => classAvailableTimeSlotsRecord
-                                                                          .where(
-                                                                              'weekdays',
-                                                                              arrayContains: functions.convertWeekDayToInteger(FFAppState()
-                                                                                  .classDate!))
-                                                                          .where(
-                                                                              'classRef',
-                                                                              isEqualTo: columnClassesRecord.reference)
-                                                                          .orderBy('startTime'),
-                                                                    ),
-                                                                    builder:
-                                                                        (context,
-                                                                            snapshot) {
-                                                                      // Customize what your widget looks like when it's loading.
-                                                                      if (!snapshot
-                                                                          .hasData) {
-                                                                        return Center(
-                                                                          child:
-                                                                              SizedBox(
-                                                                            width:
-                                                                                30.0,
-                                                                            height:
-                                                                                30.0,
-                                                                            child:
-                                                                                SpinKitWanderingCubes(
-                                                                              color: FlutterFlowTheme.of(context).primary,
-                                                                              size: 30.0,
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      }
-                                                                      List<ClassAvailableTimeSlotsRecord>
-                                                                          rowReserveClassAvailableTimeSlotsRecordList =
-                                                                          snapshot
-                                                                              .data!;
-                                                                      if (rowReserveClassAvailableTimeSlotsRecordList
-                                                                          .isEmpty) {
-                                                                        return NoTimeSlotsAvailableWidget();
-                                                                      }
-                                                                      return SingleChildScrollView(
-                                                                        scrollDirection:
-                                                                            Axis.horizontal,
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.max,
-                                                                          children: List.generate(
-                                                                              rowReserveClassAvailableTimeSlotsRecordList.length,
-                                                                              (rowReserveIndex) {
-                                                                            final rowReserveClassAvailableTimeSlotsRecord =
-                                                                                rowReserveClassAvailableTimeSlotsRecordList[rowReserveIndex];
-                                                                            return Visibility(
-                                                                              visible: (containerReservationsRecordList.length < rowReserveClassAvailableTimeSlotsRecord.maxLimit!) && (functions.differenceInHours(getCurrentTimestamp, functions.dateTimeParser(rowReserveClassAvailableTimeSlotsRecord.startTime!, FFAppState().classDate!)) > rowReserveClassAvailableTimeSlotsRecord.minHoursBeforeClass!) && (functions.differenceInHours(getCurrentTimestamp, functions.dateTimeParser(rowReserveClassAvailableTimeSlotsRecord.startTime!, FFAppState().classDate!)) < rowReserveClassAvailableTimeSlotsRecord.maxHoursBeforeClass!) && (containerReservationsRecordList.where((e) => e.time == rowReserveClassAvailableTimeSlotsRecord.startTime).toList().length < 1),
-                                                                              child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 0.0, 0.0),
-                                                                                child: FFButtonWidget(
-                                                                                  onPressed: () async {
-                                                                                    logFirebaseEvent('CLASS_LIST_COMP_BUTTON_BTN_ON_TAP');
-                                                                                    if (!(currentPhoneNumber != null && currentPhoneNumber != '')) {
-                                                                                      logFirebaseEvent('Button_alert_dialog');
-                                                                                      await showDialog(
-                                                                                        context: context,
-                                                                                        builder: (alertDialogContext) {
-                                                                                          return AlertDialog(
-                                                                                            title: Text('전화번호 입력 해주세요'),
-                                                                                            content: Text('예약은 전화번호 등록 후에 가능합니다'),
-                                                                                            actions: [
-                                                                                              TextButton(
-                                                                                                onPressed: () => Navigator.pop(alertDialogContext),
-                                                                                                child: Text('확인'),
-                                                                                              ),
-                                                                                            ],
-                                                                                          );
-                                                                                        },
-                                                                                      );
-                                                                                      logFirebaseEvent('Button_navigate_to');
-
-                                                                                      context.pushNamed('MyPage');
-                                                                                    }
-                                                                                    logFirebaseEvent('Button_update_app_state');
-                                                                                    FFAppState().update(() {
-                                                                                      FFAppState().selectedTime = rowReserveClassAvailableTimeSlotsRecord.startTime!;
-                                                                                      FFAppState().selectedDate = FFAppState().classDate;
-                                                                                    });
-                                                                                    logFirebaseEvent('Button_google_analytics_event');
-                                                                                    logFirebaseEvent('Reserve${columnClassesRecord.name}');
-                                                                                    logFirebaseEvent('Button_bottom_sheet');
-                                                                                    await showModalBottomSheet(
-                                                                                      isScrollControlled: true,
-                                                                                      backgroundColor: Colors.transparent,
-                                                                                      barrierColor: Color(0x00000000),
-                                                                                      context: context,
-                                                                                      builder: (bottomSheetContext) {
-                                                                                        return Padding(
-                                                                                          padding: MediaQuery.of(bottomSheetContext).viewInsets,
-                                                                                          child: Container(
-                                                                                            height: MediaQuery.of(context).size.height * 0.5,
-                                                                                            child: ConfirmationReservationWidget(
-                                                                                              className: columnClassesRecord.name,
-                                                                                              selectedDate: FFAppState().classDate,
-                                                                                              selectedTime: FFAppState().selectedTime,
-                                                                                              classRef: columnClassesRecord.reference,
-                                                                                              selectedTimeSlot: rowReserveClassAvailableTimeSlotsRecord.reference,
-                                                                                              creditsRequired: columnClassesRecord.creditsRequired,
-                                                                                              paymentUrl: columnClassesRecord.paymentUrl,
-                                                                                            ),
-                                                                                          ),
-                                                                                        );
-                                                                                      },
-                                                                                    ).then((value) => setState(() {}));
-                                                                                  },
-                                                                                  text: rowReserveClassAvailableTimeSlotsRecord.startTime == '22:30' ? '종일권' : rowReserveClassAvailableTimeSlotsRecord.startTime!,
-                                                                                  options: FFButtonOptions(
-                                                                                    width: 130.0,
-                                                                                    height: 40.0,
-                                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                    iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                                                                    color: FlutterFlowTheme.of(context).primary,
-                                                                                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                                                                                          fontFamily: 'Pretendard',
-                                                                                          color: Colors.white,
-                                                                                          useGoogleFonts: false,
-                                                                                        ),
-                                                                                    elevation: 2.0,
-                                                                                    borderSide: BorderSide(
-                                                                                      color: Colors.transparent,
-                                                                                      width: 1.0,
-                                                                                    ),
-                                                                                    borderRadius: BorderRadius.circular(30.0),
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                            );
-                                                                          }),
-                                                                        ),
-                                                                      );
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            },
+                                                              },
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
@@ -1170,25 +1166,6 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Expanded(
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                8.0, 0.0),
-                                                    child: Icon(
-                                                      Icons
-                                                          .chevron_right_outlined,
-                                                      color: Color(0xFF95A1AC),
-                                                      size: 24.0,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
                                             ),
                                           ],
                                         ),

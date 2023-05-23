@@ -1,75 +1,77 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'memberships_record.g.dart';
+class MembershipsRecord extends FirestoreRecord {
+  MembershipsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class MembershipsRecord
-    implements Built<MembershipsRecord, MembershipsRecordBuilder> {
-  static Serializer<MembershipsRecord> get serializer =>
-      _$membershipsRecordSerializer;
+  // "price" field.
+  int? _price;
+  int get price => _price ?? 0;
+  bool hasPrice() => _price != null;
 
-  String? get title;
+  // "points" field.
+  int? _points;
+  int get points => _points ?? 0;
+  bool hasPoints() => _points != null;
 
-  String? get description;
+  // "paymentUrl" field.
+  String? _paymentUrl;
+  String get paymentUrl => _paymentUrl ?? '';
+  bool hasPaymentUrl() => _paymentUrl != null;
 
-  int? get price;
-
-  String? get paymentUrl;
-
-  int? get creditsIssued;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(MembershipsRecordBuilder builder) => builder
-    ..title = ''
-    ..description = ''
-    ..price = 0
-    ..paymentUrl = ''
-    ..creditsIssued = 0;
+  void _initializeFields() {
+    _price = snapshotData['price'] as int?;
+    _points = snapshotData['points'] as int?;
+    _paymentUrl = snapshotData['paymentUrl'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('memberships');
 
-  static Stream<MembershipsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<MembershipsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => MembershipsRecord.fromSnapshot(s));
 
-  static Future<MembershipsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<MembershipsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => MembershipsRecord.fromSnapshot(s));
 
-  MembershipsRecord._();
-  factory MembershipsRecord([void Function(MembershipsRecordBuilder) updates]) =
-      _$MembershipsRecord;
+  static MembershipsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      MembershipsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static MembershipsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      MembershipsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'MembershipsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createMembershipsRecordData({
-  String? title,
-  String? description,
   int? price,
+  int? points,
   String? paymentUrl,
-  int? creditsIssued,
 }) {
-  final firestoreData = serializers.toFirestore(
-    MembershipsRecord.serializer,
-    MembershipsRecord(
-      (m) => m
-        ..title = title
-        ..description = description
-        ..price = price
-        ..paymentUrl = paymentUrl
-        ..creditsIssued = creditsIssued,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'price': price,
+      'points': points,
+      'paymentUrl': paymentUrl,
+    }.withoutNulls,
   );
 
   return firestoreData;

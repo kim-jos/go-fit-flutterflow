@@ -1,58 +1,82 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'promotions_record.g.dart';
+class PromotionsRecord extends FirestoreRecord {
+  PromotionsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class PromotionsRecord
-    implements Built<PromotionsRecord, PromotionsRecordBuilder> {
-  static Serializer<PromotionsRecord> get serializer =>
-      _$promotionsRecordSerializer;
+  // "amount" field.
+  int? _amount;
+  int get amount => _amount ?? 0;
+  bool hasAmount() => _amount != null;
 
-  int? get amount;
+  // "type" field.
+  String? _type;
+  String get type => _type ?? '';
+  bool hasType() => _type != null;
 
-  String? get type;
+  // "imageUrl" field.
+  String? _imageUrl;
+  String get imageUrl => _imageUrl ?? '';
+  bool hasImageUrl() => _imageUrl != null;
 
-  String? get imageUrl;
+  // "createdAt" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  DateTime? get createdAt;
+  // "shareContent" field.
+  String? _shareContent;
+  String get shareContent => _shareContent ?? '';
+  bool hasShareContent() => _shareContent != null;
 
-  String? get shareContent;
+  // "contentImages" field.
+  List<String>? _contentImages;
+  List<String> get contentImages => _contentImages ?? const [];
+  bool hasContentImages() => _contentImages != null;
 
-  BuiltList<String>? get contentImages;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(PromotionsRecordBuilder builder) => builder
-    ..amount = 0
-    ..type = ''
-    ..imageUrl = ''
-    ..shareContent = ''
-    ..contentImages = ListBuilder();
+  void _initializeFields() {
+    _amount = snapshotData['amount'] as int?;
+    _type = snapshotData['type'] as String?;
+    _imageUrl = snapshotData['imageUrl'] as String?;
+    _createdAt = snapshotData['createdAt'] as DateTime?;
+    _shareContent = snapshotData['shareContent'] as String?;
+    _contentImages = getDataList(snapshotData['contentImages']);
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('promotions');
 
-  static Stream<PromotionsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<PromotionsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => PromotionsRecord.fromSnapshot(s));
 
-  static Future<PromotionsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<PromotionsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => PromotionsRecord.fromSnapshot(s));
 
-  PromotionsRecord._();
-  factory PromotionsRecord([void Function(PromotionsRecordBuilder) updates]) =
-      _$PromotionsRecord;
+  static PromotionsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      PromotionsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static PromotionsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      PromotionsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'PromotionsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createPromotionsRecordData({
@@ -62,17 +86,14 @@ Map<String, dynamic> createPromotionsRecordData({
   DateTime? createdAt,
   String? shareContent,
 }) {
-  final firestoreData = serializers.toFirestore(
-    PromotionsRecord.serializer,
-    PromotionsRecord(
-      (p) => p
-        ..amount = amount
-        ..type = type
-        ..imageUrl = imageUrl
-        ..createdAt = createdAt
-        ..shareContent = shareContent
-        ..contentImages = null,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'amount': amount,
+      'type': type,
+      'imageUrl': imageUrl,
+      'createdAt': createdAt,
+      'shareContent': shareContent,
+    }.withoutNulls,
   );
 
   return firestoreData;

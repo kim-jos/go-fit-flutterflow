@@ -51,6 +51,7 @@ class _ReservationCompleteWidgetState extends State<ReservationCompleteWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primary,
         body: SafeArea(
+          top: true,
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,

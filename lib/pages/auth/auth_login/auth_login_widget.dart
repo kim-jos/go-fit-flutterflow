@@ -177,13 +177,14 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                                       context.pushNamedAuth(
                                                           'AuthPhoneNumber',
-                                                          mounted);
+                                                          context.mounted);
                                                     } else {
                                                       logFirebaseEvent(
                                                           'Button_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'Home', mounted);
+                                                          'Home',
+                                                          context.mounted);
                                                     }
 
                                                     logFirebaseEvent(
@@ -277,13 +278,14 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                                     context.pushNamedAuth(
                                                         'AuthPhoneNumber',
-                                                        mounted);
+                                                        context.mounted);
                                                   } else {
                                                     logFirebaseEvent(
                                                         'Button_navigate_to');
 
                                                     context.pushNamedAuth(
-                                                        'Home', mounted);
+                                                        'Home',
+                                                        context.mounted);
                                                   }
 
                                                   logFirebaseEvent(
@@ -435,7 +437,8 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 'Button_navigate_to');
 
                                             context.pushNamedAuth(
-                                                'AuthPhoneNumber', mounted);
+                                                'AuthPhoneNumber',
+                                                context.mounted);
                                           },
                                           text: 'Google로 등록',
                                           icon: FaIcon(
@@ -511,7 +514,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
 
                                                   context.pushNamedAuth(
                                                       'AuthPhoneNumber',
-                                                      mounted);
+                                                      context.mounted);
                                                 },
                                                 text: 'Apple로 등록',
                                                 icon: FaIcon(

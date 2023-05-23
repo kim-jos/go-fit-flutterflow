@@ -108,6 +108,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
               elevation: 2.0,
             ),
             body: SafeArea(
+              top: true,
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -116,8 +117,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                     custom_widgets.MyReservationsCalendar(
                       width: MediaQuery.of(context).size.width * 1.0,
                       height: MediaQuery.of(context).size.height * 0.4,
-                      allReservations:
-                          myReservationsReservationsRecordList.toList(),
+                      allReservations: myReservationsReservationsRecordList,
                     ),
                     if (loggedIn)
                       Padding(
@@ -230,7 +230,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                       child: CachedNetworkImage(
                                                         imageUrl:
                                                             imageClassesRecord
-                                                                .image!,
+                                                                .image,
                                                         width: 120.0,
                                                         height: 100.0,
                                                         fit: BoxFit.cover,
@@ -282,7 +282,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                                 children: [
                                                                   Text(
                                                                     myReservationsItem
-                                                                        .className!,
+                                                                        .className,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .titleMedium
@@ -454,7 +454,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                         myReservationsItem
                                                             .startTime!) <
                                                     containerClassAvailableTimeSlotsRecord
-                                                        .minHoursToCancel!)
+                                                        .minHoursToCancel)
                                                   StreamBuilder<
                                                       List<UsersRecord>>(
                                                     stream: queryUsersRecord(
@@ -503,7 +503,7 @@ class _MyReservationsWidgetState extends State<MyReservationsWidget> {
                                                                   myReservationsItem
                                                                       .startTime!) <
                                                               containerClassAvailableTimeSlotsRecord
-                                                                  .minHoursToCancel!) {
+                                                                  .minHoursToCancel) {
                                                             logFirebaseEvent(
                                                                 'Icon_alert_dialog');
                                                             await showDialog(

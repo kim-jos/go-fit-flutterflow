@@ -231,25 +231,25 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                 visible: (containerReservationsRecordList
                                             .length <
                                         rowClassAvailableTimeSlotsRecord
-                                            .maxLimit!) &&
+                                            .maxLimit) &&
                                     (functions.differenceInHours(
                                             getCurrentTimestamp,
                                             functions.dateTimeParser(
                                                 rowClassAvailableTimeSlotsRecord
-                                                    .startTime!,
+                                                    .startTime,
                                                 _model.calendarSelectedDay!
                                                     .start)) >
                                         rowClassAvailableTimeSlotsRecord
-                                            .minHoursBeforeClass!) &&
+                                            .minHoursBeforeClass) &&
                                     (functions.differenceInHours(
                                             getCurrentTimestamp,
                                             functions.dateTimeParser(
                                                 rowClassAvailableTimeSlotsRecord
-                                                    .startTime!,
+                                                    .startTime,
                                                 _model.calendarSelectedDay!
                                                     .start)) <
                                         rowClassAvailableTimeSlotsRecord
-                                            .maxHoursBeforeClass!) &&
+                                            .maxHoursBeforeClass) &&
                                     (containerReservationsRecordList
                                             .where((e) =>
                                                 e.time ==
@@ -270,7 +270,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                       FFAppState().update(() {
                                         FFAppState().selectedTime =
                                             rowClassAvailableTimeSlotsRecord
-                                                .startTime!;
+                                                .startTime;
                                       });
                                       logFirebaseEvent('Button_bottom_sheet');
                                       await showModalBottomSheet(
@@ -310,7 +310,7 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                             '22:30'
                                         ? '종일권'
                                         : rowClassAvailableTimeSlotsRecord
-                                            .startTime!,
+                                            .startTime,
                                     options: FFButtonOptions(
                                       width: 130.0,
                                       height: 40.0,

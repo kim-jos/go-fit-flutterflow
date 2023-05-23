@@ -1,47 +1,64 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'referrals_record.g.dart';
+class ReferralsRecord extends FirestoreRecord {
+  ReferralsRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class ReferralsRecord
-    implements Built<ReferralsRecord, ReferralsRecordBuilder> {
-  static Serializer<ReferralsRecord> get serializer =>
-      _$referralsRecordSerializer;
+  // "createdAt" field.
+  DateTime? _createdAt;
+  DateTime? get createdAt => _createdAt;
+  bool hasCreatedAt() => _createdAt != null;
 
-  DateTime? get createdAt;
+  // "referralBy" field.
+  DocumentReference? _referralBy;
+  DocumentReference? get referralBy => _referralBy;
+  bool hasReferralBy() => _referralBy != null;
 
-  DocumentReference? get referralBy;
+  // "userRef" field.
+  DocumentReference? _userRef;
+  DocumentReference? get userRef => _userRef;
+  bool hasUserRef() => _userRef != null;
 
-  DocumentReference? get userRef;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(ReferralsRecordBuilder builder) => builder;
+  void _initializeFields() {
+    _createdAt = snapshotData['createdAt'] as DateTime?;
+    _referralBy = snapshotData['referralBy'] as DocumentReference?;
+    _userRef = snapshotData['userRef'] as DocumentReference?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('referrals');
 
-  static Stream<ReferralsRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<ReferralsRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => ReferralsRecord.fromSnapshot(s));
 
-  static Future<ReferralsRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<ReferralsRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => ReferralsRecord.fromSnapshot(s));
 
-  ReferralsRecord._();
-  factory ReferralsRecord([void Function(ReferralsRecordBuilder) updates]) =
-      _$ReferralsRecord;
+  static ReferralsRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      ReferralsRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static ReferralsRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      ReferralsRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'ReferralsRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createReferralsRecordData({
@@ -49,14 +66,12 @@ Map<String, dynamic> createReferralsRecordData({
   DocumentReference? referralBy,
   DocumentReference? userRef,
 }) {
-  final firestoreData = serializers.toFirestore(
-    ReferralsRecord.serializer,
-    ReferralsRecord(
-      (r) => r
-        ..createdAt = createdAt
-        ..referralBy = referralBy
-        ..userRef = userRef,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'createdAt': createdAt,
+      'referralBy': referralBy,
+      'userRef': userRef,
+    }.withoutNulls,
   );
 
   return firestoreData;

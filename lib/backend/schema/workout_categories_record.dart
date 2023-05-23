@@ -1,53 +1,65 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'workout_categories_record.g.dart';
+class WorkoutCategoriesRecord extends FirestoreRecord {
+  WorkoutCategoriesRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class WorkoutCategoriesRecord
-    implements Built<WorkoutCategoriesRecord, WorkoutCategoriesRecordBuilder> {
-  static Serializer<WorkoutCategoriesRecord> get serializer =>
-      _$workoutCategoriesRecordSerializer;
+  // "priority" field.
+  int? _priority;
+  int get priority => _priority ?? 0;
+  bool hasPriority() => _priority != null;
 
-  int? get priority;
+  // "category" field.
+  String? _category;
+  String get category => _category ?? '';
+  bool hasCategory() => _category != null;
 
-  String? get category;
+  // "imageUrl" field.
+  String? _imageUrl;
+  String get imageUrl => _imageUrl ?? '';
+  bool hasImageUrl() => _imageUrl != null;
 
-  String? get imageUrl;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(WorkoutCategoriesRecordBuilder builder) =>
-      builder
-        ..priority = 0
-        ..category = ''
-        ..imageUrl = '';
+  void _initializeFields() {
+    _priority = snapshotData['priority'] as int?;
+    _category = snapshotData['category'] as String?;
+    _imageUrl = snapshotData['imageUrl'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('workoutCategories');
 
   static Stream<WorkoutCategoriesRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.snapshots().map((s) => WorkoutCategoriesRecord.fromSnapshot(s));
 
   static Future<WorkoutCategoriesRecord> getDocumentOnce(
           DocumentReference ref) =>
-      ref.get().then(
-          (s) => serializers.deserializeWith(serializer, serializedData(s))!);
+      ref.get().then((s) => WorkoutCategoriesRecord.fromSnapshot(s));
 
-  WorkoutCategoriesRecord._();
-  factory WorkoutCategoriesRecord(
-          [void Function(WorkoutCategoriesRecordBuilder) updates]) =
-      _$WorkoutCategoriesRecord;
+  static WorkoutCategoriesRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      WorkoutCategoriesRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static WorkoutCategoriesRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      WorkoutCategoriesRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'WorkoutCategoriesRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createWorkoutCategoriesRecordData({
@@ -55,14 +67,12 @@ Map<String, dynamic> createWorkoutCategoriesRecordData({
   String? category,
   String? imageUrl,
 }) {
-  final firestoreData = serializers.toFirestore(
-    WorkoutCategoriesRecord.serializer,
-    WorkoutCategoriesRecord(
-      (w) => w
-        ..priority = priority
-        ..category = category
-        ..imageUrl = imageUrl,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'priority': priority,
+      'category': category,
+      'imageUrl': imageUrl,
+    }.withoutNulls,
   );
 
   return firestoreData;
