@@ -200,7 +200,15 @@ class _MembershipsWidgetState extends State<MembershipsWidget> {
                                       'MEMBERSHIPS_PAGE_Row_0h1zbind_ON_TAP');
                                   logFirebaseEvent('Row_navigate_to');
 
-                                  context.pushNamed('MyWebview');
+                                  context.pushNamed(
+                                    'MyWebview',
+                                    queryParams: {
+                                      'paymentUrl': serializeParam(
+                                        'https://payapplite.com/l/O2rJ4B',
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
