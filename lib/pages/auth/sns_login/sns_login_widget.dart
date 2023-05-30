@@ -9,18 +9,18 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'auth_login_model.dart';
-export 'auth_login_model.dart';
+import 'sns_login_model.dart';
+export 'sns_login_model.dart';
 
-class AuthLoginWidget extends StatefulWidget {
-  const AuthLoginWidget({Key? key}) : super(key: key);
+class SnsLoginWidget extends StatefulWidget {
+  const SnsLoginWidget({Key? key}) : super(key: key);
 
   @override
-  _AuthLoginWidgetState createState() => _AuthLoginWidgetState();
+  _SnsLoginWidgetState createState() => _SnsLoginWidgetState();
 }
 
-class _AuthLoginWidgetState extends State<AuthLoginWidget> {
-  late AuthLoginModel _model;
+class _SnsLoginWidgetState extends State<SnsLoginWidget> {
+  late SnsLoginModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -28,9 +28,9 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthLoginModel());
+    _model = createModel(context, () => SnsLoginModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'AuthLogin'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'snsLogin'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -65,12 +65,28 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
             ),
           );
         }
-        List<UsersRecord> authLoginUsersRecordList = snapshot.data!;
+        List<UsersRecord> snsLoginUsersRecordList = snapshot.data!;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBtnText,
+            appBar: AppBar(
+              backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+              automaticallyImplyLeading: false,
+              title: Text(
+                '개인회원',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Pretendard',
+                      color: FlutterFlowTheme.of(context).black600,
+                      fontSize: 22.0,
+                      useGoogleFonts: false,
+                    ),
+              ),
+              actions: [],
+              centerTitle: true,
+              elevation: 2.0,
+            ),
             body: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
               child: Column(
@@ -156,7 +172,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
                                                     logFirebaseEvent(
-                                                        'AUTH_LOGIN_PAGE_GOOGLE로_로그인_BTN_ON_TAP');
+                                                        'SNS_LOGIN_PAGE_GOOGLE로_로그인_BTN_ON_TAP');
                                                     logFirebaseEvent(
                                                         'Button_auth');
                                                     GoRouter.of(context)
@@ -176,7 +192,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                           'Button_navigate_to');
 
                                                       context.pushNamedAuth(
-                                                          'AuthPhoneNumber',
+                                                          'PhoneNumber',
                                                           context.mounted);
                                                     } else {
                                                       logFirebaseEvent(
@@ -195,7 +211,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       notificationText:
                                                           currentUserEmail,
                                                       userRefs:
-                                                          authLoginUsersRecordList
+                                                          snsLoginUsersRecordList
                                                               .map((e) =>
                                                                   e.reference)
                                                               .toList(),
@@ -259,7 +275,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'AUTH_LOGIN_PAGE_APPLE로_로그인_BTN_ON_TAP');
+                                                      'SNS_LOGIN_PAGE_APPLE로_로그인_BTN_ON_TAP');
                                                   logFirebaseEvent(
                                                       'Button_auth');
                                                   GoRouter.of(context)
@@ -277,7 +293,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                         'Button_navigate_to');
 
                                                     context.pushNamedAuth(
-                                                        'AuthPhoneNumber',
+                                                        'PhoneNumber',
                                                         context.mounted);
                                                   } else {
                                                     logFirebaseEvent(
@@ -296,7 +312,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                     notificationText:
                                                         currentUserEmail,
                                                     userRefs:
-                                                        authLoginUsersRecordList
+                                                        snsLoginUsersRecordList
                                                             .map((e) =>
                                                                 e.reference)
                                                             .toList(),
@@ -355,11 +371,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'AUTH_LOGIN_PAGE_Text_rt975us3_ON_TAP');
+                                                'SNS_LOGIN_PAGE_Text_rt975us3_ON_TAP');
                                             logFirebaseEvent(
                                                 'Text_navigate_to');
 
-                                            context.pushNamed('AuthEmailLogin');
+                                            context.pushNamed('EmailLogin');
                                           },
                                           child: Text(
                                             'E-mail로 로그인',
@@ -378,7 +394,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'AUTH_LOGIN_PAGE_Text_jqlwr1xb_ON_TAP');
+                                                'SNS_LOGIN_PAGE_Text_jqlwr1xb_ON_TAP');
                                             logFirebaseEvent(
                                                 'Text_navigate_to');
 
@@ -411,7 +427,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             logFirebaseEvent(
-                                                'AUTH_LOGIN_PAGE_GOOGLE로_등록_BTN_ON_TAP');
+                                                'SNS_LOGIN_PAGE_GOOGLE로_등록_BTN_ON_TAP');
                                             logFirebaseEvent('Button_auth');
                                             GoRouter.of(context)
                                                 .prepareAuthEvent();
@@ -427,7 +443,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                   '${currentUserDisplayName} 회원가입',
                                               notificationText:
                                                   currentUserEmail,
-                                              userRefs: authLoginUsersRecordList
+                                              userRefs: snsLoginUsersRecordList
                                                   .map((e) => e.reference)
                                                   .toList(),
                                               initialPageName: 'Home',
@@ -437,8 +453,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                 'Button_navigate_to');
 
                                             context.pushNamedAuth(
-                                                'AuthPhoneNumber',
-                                                context.mounted);
+                                                'PhoneNumber', context.mounted);
                                           },
                                           text: 'Google로 등록',
                                           icon: FaIcon(
@@ -484,7 +499,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   logFirebaseEvent(
-                                                      'AUTH_LOGIN_PAGE_APPLE로_등록_BTN_ON_TAP');
+                                                      'SNS_LOGIN_PAGE_APPLE로_등록_BTN_ON_TAP');
                                                   logFirebaseEvent(
                                                       'Button_auth');
                                                   GoRouter.of(context)
@@ -502,7 +517,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                     notificationText:
                                                         currentUserEmail,
                                                     userRefs:
-                                                        authLoginUsersRecordList
+                                                        snsLoginUsersRecordList
                                                             .map((e) =>
                                                                 e.reference)
                                                             .toList(),
@@ -513,7 +528,7 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                                       'Button_navigate_to');
 
                                                   context.pushNamedAuth(
-                                                      'AuthPhoneNumber',
+                                                      'PhoneNumber',
                                                       context.mounted);
                                                 },
                                                 text: 'Apple로 등록',
@@ -567,11 +582,11 @@ class _AuthLoginWidgetState extends State<AuthLoginWidget> {
                                           highlightColor: Colors.transparent,
                                           onTap: () async {
                                             logFirebaseEvent(
-                                                'AUTH_LOGIN_PAGE_Text_yia8ibjg_ON_TAP');
+                                                'SNS_LOGIN_PAGE_Text_yia8ibjg_ON_TAP');
                                             logFirebaseEvent(
                                                 'Text_navigate_to');
 
-                                            context.pushNamed('AuthEmailLogin');
+                                            context.pushNamed('EmailLogin');
                                           },
                                           child: Text(
                                             'E-mail로 등록',

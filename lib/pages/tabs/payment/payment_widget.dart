@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_web_view.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,12 +11,7 @@ import 'payment_model.dart';
 export 'payment_model.dart';
 
 class PaymentWidget extends StatefulWidget {
-  const PaymentWidget({
-    Key? key,
-    required this.paymentUrl,
-  }) : super(key: key);
-
-  final String? paymentUrl;
+  const PaymentWidget({Key? key}) : super(key: key);
 
   @override
   _PaymentWidgetState createState() => _PaymentWidgetState();
@@ -75,7 +69,7 @@ class _PaymentWidgetState extends State<PaymentWidget> {
             },
           ),
           title: Text(
-            '포인트 결제',
+            '결제',
             style: FlutterFlowTheme.of(context).titleLarge.override(
                   fontFamily: 'Pretendard',
                   fontWeight: FontWeight.bold,
@@ -88,58 +82,21 @@ class _PaymentWidgetState extends State<PaymentWidget> {
         ),
         body: SafeArea(
           top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    FlutterFlowWebView(
-                      url: widget.paymentUrl!,
-                      bypass: false,
-                      width: MediaQuery.of(context).size.width * 1.0,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      verticalScroll: true,
-                      horizontalScroll: false,
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          logFirebaseEvent('PAYMENT_PAGE_다른_수업_보기_BTN_ON_TAP');
-                          logFirebaseEvent('Button_navigate_to');
-
-                          context.pushNamed('Classes');
-                        },
-                        text: '다른 수업 보기',
-                        options: FFButtonOptions(
-                          width: 130.0,
-                          height: 50.0,
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          iconPadding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color: FlutterFlowTheme.of(context).primaryBtnText,
-                          textStyle:
-                              FlutterFlowTheme.of(context).titleSmall.override(
-                                    fontFamily: 'Pretendard',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    useGoogleFonts: false,
-                                  ),
-                          elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FlutterFlowWebView(
+                  url: 'https://payapplite.com/l/O2rJ4B',
+                  bypass: false,
+                  width: MediaQuery.of(context).size.width * 1.0,
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  verticalScroll: false,
+                  horizontalScroll: false,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

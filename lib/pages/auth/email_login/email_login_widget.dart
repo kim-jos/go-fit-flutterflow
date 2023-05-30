@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'auth_email_login_model.dart';
-export 'auth_email_login_model.dart';
+import 'email_login_model.dart';
+export 'email_login_model.dart';
 
-class AuthEmailLoginWidget extends StatefulWidget {
-  const AuthEmailLoginWidget({Key? key}) : super(key: key);
+class EmailLoginWidget extends StatefulWidget {
+  const EmailLoginWidget({Key? key}) : super(key: key);
 
   @override
-  _AuthEmailLoginWidgetState createState() => _AuthEmailLoginWidgetState();
+  _EmailLoginWidgetState createState() => _EmailLoginWidgetState();
 }
 
-class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
-  late AuthEmailLoginModel _model;
+class _EmailLoginWidgetState extends State<EmailLoginWidget> {
+  late EmailLoginModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -29,10 +29,9 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthEmailLoginModel());
+    _model = createModel(context, () => EmailLoginModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'AuthEmailLogin'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'EmailLogin'});
     _model.emailAddressController ??= TextEditingController();
     _model.passwordController ??= TextEditingController();
     _model.nameCreateController ??= TextEditingController();
@@ -73,7 +72,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
             ),
           );
         }
-        List<UsersRecord> authEmailLoginUsersRecordList = snapshot.data!;
+        List<UsersRecord> emailLoginUsersRecordList = snapshot.data!;
         return GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Scaffold(
@@ -93,10 +92,19 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  logFirebaseEvent('AUTH_EMAIL_LOGIN_chevron_left_rounded_IC');
+                  logFirebaseEvent('EMAIL_LOGIN_chevron_left_rounded_ICN_ON_');
                   logFirebaseEvent('IconButton_navigate_back');
                   context.pop();
                 },
+              ),
+              title: Text(
+                '개인회원',
+                style: FlutterFlowTheme.of(context).headlineMedium.override(
+                      fontFamily: 'Pretendard',
+                      color: FlutterFlowTheme.of(context).black600,
+                      fontSize: 22.0,
+                      useGoogleFonts: false,
+                    ),
               ),
               actions: [],
               centerTitle: true,
@@ -364,7 +372,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_EMAIL_LOGIN_Button-Login_ON_TAP');
+                                                  'EMAIL_LOGIN_PAGE_Button-Login_ON_TAP');
                                               logFirebaseEvent(
                                                   'Button-Login_auth');
                                               GoRouter.of(context)
@@ -395,7 +403,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 notificationText:
                                                     currentUserEmail,
                                                 userRefs:
-                                                    authEmailLoginUsersRecordList
+                                                    emailLoginUsersRecordList
                                                         .map((e) => e.reference)
                                                         .toList(),
                                                 initialPageName: 'Classes',
@@ -438,7 +446,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_EMAIL_LOGIN_Button-ForgotPassword_O');
+                                                  'EMAIL_LOGIN_Button-ForgotPassword_ON_TAP');
                                               logFirebaseEvent(
                                                   'Button-ForgotPassword_alert_dialog');
                                               var confirmDialogResponse =
@@ -529,7 +537,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_EMAIL_LOGIN_Button-ViewFirst_ON_TAP');
+                                                  'EMAIL_LOGIN_PAGE_Button-ViewFirst_ON_TAP');
                                               logFirebaseEvent(
                                                   'Button-ViewFirst_navigate_to');
 
@@ -552,6 +560,40 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               textStyle:
                                                   FlutterFlowTheme.of(context)
                                                       .titleMedium,
+                                              elevation: 0.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 15.0, 0.0, 0.0),
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'EMAIL_LOGIN_Button-ForgotPassword_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Button-ForgotPassword_navigate_to');
+
+                                              context
+                                                  .pushNamed('B2bEmailLogin');
+                                            },
+                                            text: '기업회원 로그인',
+                                            options: FFButtonOptions(
+                                              width: 170.0,
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color: Colors.transparent,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall,
                                               elevation: 0.0,
                                               borderSide: BorderSide(
                                                 color: Colors.transparent,
@@ -927,7 +969,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                           child: FFButtonWidget(
                                             onPressed: () async {
                                               logFirebaseEvent(
-                                                  'AUTH_EMAIL_LOGIN_Button-Login_ON_TAP');
+                                                  'EMAIL_LOGIN_PAGE_Button-Login_ON_TAP');
                                               logFirebaseEvent(
                                                   'Button-Login_auth');
                                               GoRouter.of(context)
@@ -962,23 +1004,11 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                 return;
                                               }
 
-                                              final usersCreateData =
-                                                  createUsersRecordData(
-                                                email: _model
-                                                    .emailAddressCreateController
-                                                    .text,
-                                                displayName: _model
-                                                    .nameCreateController.text,
-                                              );
-                                              await UsersRecord.collection
-                                                  .doc(user.uid)
-                                                  .update(usersCreateData);
-
                                               logFirebaseEvent(
                                                   'Button-Login_navigate_to');
 
                                               context.pushNamedAuth(
-                                                  'AuthPhoneNumber',
+                                                  'PhoneNumber',
                                                   context.mounted);
 
                                               logFirebaseEvent(
@@ -990,7 +1020,7 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                                     .emailAddressController
                                                     .text,
                                                 userRefs:
-                                                    authEmailLoginUsersRecordList
+                                                    emailLoginUsersRecordList
                                                         .map((e) => e.reference)
                                                         .toList(),
                                                 initialPageName: 'Home',
@@ -1023,6 +1053,40 @@ class _AuthEmailLoginWidgetState extends State<AuthEmailLoginWidget> {
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(30.0),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 15.0, 0.0, 0.0),
+                                          child: FFButtonWidget(
+                                            onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'EMAIL_LOGIN_Button-ForgotPassword_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Button-ForgotPassword_navigate_to');
+
+                                              context
+                                                  .pushNamed('B2bEmailLogin');
+                                            },
+                                            text: '기업회원 로그인',
+                                            options: FFButtonOptions(
+                                              width: 170.0,
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color: Colors.transparent,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall,
+                                              elevation: 0.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
                                             ),
                                           ),
                                         ),

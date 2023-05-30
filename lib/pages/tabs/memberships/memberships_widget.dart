@@ -8,18 +8,18 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'membership_model.dart';
-export 'membership_model.dart';
+import 'memberships_model.dart';
+export 'memberships_model.dart';
 
-class MembershipWidget extends StatefulWidget {
-  const MembershipWidget({Key? key}) : super(key: key);
+class MembershipsWidget extends StatefulWidget {
+  const MembershipsWidget({Key? key}) : super(key: key);
 
   @override
-  _MembershipWidgetState createState() => _MembershipWidgetState();
+  _MembershipsWidgetState createState() => _MembershipsWidgetState();
 }
 
-class _MembershipWidgetState extends State<MembershipWidget> {
-  late MembershipModel _model;
+class _MembershipsWidgetState extends State<MembershipsWidget> {
+  late MembershipsModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
@@ -27,9 +27,9 @@ class _MembershipWidgetState extends State<MembershipWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => MembershipModel());
+    _model = createModel(context, () => MembershipsModel());
 
-    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Membership'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Memberships'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -178,7 +178,7 @@ class _MembershipWidgetState extends State<MembershipWidget> {
                             highlightColor: Colors.transparent,
                             onTap: () async {
                               logFirebaseEvent(
-                                  'MEMBERSHIP_PAGE_ClassView_ON_TAP');
+                                  'MEMBERSHIPS_PAGE_ClassView_ON_TAP');
                               logFirebaseEvent('ClassView_launch_u_r_l');
                               await launchURL('');
                             },
@@ -197,18 +197,10 @@ class _MembershipWidgetState extends State<MembershipWidget> {
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   logFirebaseEvent(
-                                      'MEMBERSHIP_PAGE_Row_0h1zbind_ON_TAP');
+                                      'MEMBERSHIPS_PAGE_Row_0h1zbind_ON_TAP');
                                   logFirebaseEvent('Row_navigate_to');
 
-                                  context.pushNamed(
-                                    'MyWebview',
-                                    queryParams: {
-                                      'paymentUrl': serializeParam(
-                                        columnMembershipsRecord.paymentUrl,
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
+                                  context.pushNamed('MyWebview');
                                 },
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,

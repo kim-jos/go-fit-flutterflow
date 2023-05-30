@@ -72,23 +72,23 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, _) =>
-          appStateNotifier.loggedIn ? NavBarPage() : AuthLoginWidget(),
+          appStateNotifier.loggedIn ? NavBarPage() : B2bEmailLoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : AuthLoginWidget(),
+              appStateNotifier.loggedIn ? NavBarPage() : B2bEmailLoginWidget(),
           routes: [
             FFRoute(
-              name: 'AuthEmailLogin',
-              path: 'authEmailLogin',
-              builder: (context, params) => AuthEmailLoginWidget(),
+              name: 'EmailLogin',
+              path: 'emailLogin',
+              builder: (context, params) => EmailLoginWidget(),
             ),
             FFRoute(
-              name: 'AuthLogin',
-              path: 'authLogin',
-              builder: (context, params) => AuthLoginWidget(),
+              name: 'snsLogin',
+              path: 'snsLogin',
+              builder: (context, params) => SnsLoginWidget(),
             ),
             FFRoute(
               name: 'ClassDetails',
@@ -148,12 +148,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : HomeWidget(),
             ),
             FFRoute(
-              name: 'AuthPhoneNumber',
-              path: 'authPhoneNumber',
-              requireAuth: true,
-              builder: (context, params) => AuthPhoneNumberWidget(),
-            ),
-            FFRoute(
               name: 'Settings',
               path: 'settings',
               requireAuth: true,
@@ -171,26 +165,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
-              name: 'HomeCopy',
-              path: 'homeCopy',
-              requireAuth: true,
-              builder: (context, params) => HomeCopyWidget(),
-            ),
-            FFRoute(
-              name: 'Membership',
-              path: 'membership',
+              name: 'Memberships',
+              path: 'memberships',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Membership')
-                  : MembershipWidget(),
-            ),
-            FFRoute(
-              name: 'Payment',
-              path: 'payment',
-              requireAuth: true,
-              builder: (context, params) => PaymentWidget(
-                paymentUrl: params.getParam('paymentUrl', ParamType.String),
-              ),
+                  ? NavBarPage(initialPage: 'Memberships')
+                  : MembershipsWidget(),
             ),
             FFRoute(
               name: 'MyWebview',
@@ -199,6 +179,29 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => MyWebviewWidget(
                 paymentUrl: params.getParam('paymentUrl', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'Payment',
+              path: 'payment',
+              requireAuth: true,
+              builder: (context, params) => PaymentWidget(),
+            ),
+            FFRoute(
+              name: 'PhoneNumber',
+              path: 'phoneNumber',
+              requireAuth: true,
+              builder: (context, params) => PhoneNumberWidget(),
+            ),
+            FFRoute(
+              name: 'B2bEmailLogin',
+              path: 'b2bEmailLogin',
+              builder: (context, params) => B2bEmailLoginWidget(),
+            ),
+            FFRoute(
+              name: 'B2bPhoneNumber',
+              path: 'b2bPhoneNumber',
+              requireAuth: true,
+              builder: (context, params) => B2bPhoneNumberWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -370,7 +373,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/authLogin';
+            return '/b2bEmailLogin';
           }
           return null;
         },

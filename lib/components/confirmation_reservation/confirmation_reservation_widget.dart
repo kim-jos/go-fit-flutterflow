@@ -237,7 +237,7 @@ class _ConfirmationReservationWidgetState
                                 logFirebaseEvent(
                                     'Button_reservationscollection');
 
-                                final reservationsCreateData1 = {
+                                final reservationsCreateData = {
                                   ...createReservationsRecordData(
                                     date: dateTimeFormat(
                                       'yMd',
@@ -260,7 +260,7 @@ class _ConfirmationReservationWidgetState
                                 };
                                 await ReservationsRecord.collection
                                     .doc()
-                                    .set(reservationsCreateData1);
+                                    .set(reservationsCreateData);
                                 // Decrement currCredits
                                 logFirebaseEvent('Button_DecrementcurrCredits');
 
@@ -294,65 +294,23 @@ class _ConfirmationReservationWidgetState
                                     'Confirm Reservation Widget - ${widget.className}');
                                 return;
                               } else {
-                                logFirebaseEvent('Button_navigate_to');
-
-                                context.pushNamed(
-                                  'Payment',
-                                  queryParams: {
-                                    'paymentUrl': serializeParam(
-                                      widget.paymentUrl,
-                                      ParamType.String,
-                                    ),
-                                  }.withoutNulls,
+                                logFirebaseEvent('Button_alert_dialog');
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('포인트 부족'),
+                                      content: Text('포인트 충천 후 사용해주세요!'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('확인'),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
-
-                                // reservations collection
-                                logFirebaseEvent(
-                                    'Button_reservationscollection');
-
-                                final reservationsCreateData2 = {
-                                  ...createReservationsRecordData(
-                                    date: dateTimeFormat(
-                                      'yMd',
-                                      widget.selectedDate,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    ),
-                                    timeSlot: widget.selectedTimeSlot,
-                                    user: currentUserReference,
-                                    classRequiredCredits:
-                                        widget.creditsRequired,
-                                    className: widget.className,
-                                    time: widget.selectedTime,
-                                    isFinal: false,
-                                    startTime: functions.dateTimeParser(
-                                        widget.selectedTime!,
-                                        widget.selectedDate!),
-                                  ),
-                                  'createdAt': FieldValue.serverTimestamp(),
-                                };
-                                await ReservationsRecord.collection
-                                    .doc()
-                                    .set(reservationsCreateData2);
-                                logFirebaseEvent(
-                                    'Button_trigger_push_notification');
-                                triggerPushNotification(
-                                  notificationTitle: 'Reservation!',
-                                  notificationText:
-                                      '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${widget.className} - ${widget.selectedDate?.toString()} - ${widget.selectedTime}',
-                                  userRefs: buttonUsersRecordList
-                                      .where((e) => e.admin)
-                                      .toList()
-                                      .map((e) => e.reference)
-                                      .toList(),
-                                  initialPageName: 'Classes',
-                                  parameterData: {},
-                                );
-                                logFirebaseEvent(
-                                    'Button_google_analytics_event');
-                                logFirebaseEvent(
-                                    'Confirm Reservation Widget - ${widget.className}');
-                                return;
                               }
                             },
                             text: '예약하기',

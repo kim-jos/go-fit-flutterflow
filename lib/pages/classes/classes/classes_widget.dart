@@ -52,10 +52,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
             onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
             child: Padding(
               padding: MediaQuery.of(bottomSheetContext).viewInsets,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: ClassListWidget(),
-              ),
+              child: ClassListWidget(),
             ),
           );
         },

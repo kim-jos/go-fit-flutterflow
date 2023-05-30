@@ -13,29 +13,28 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'auth_phone_number_model.dart';
-export 'auth_phone_number_model.dart';
+import 'phone_number_model.dart';
+export 'phone_number_model.dart';
 
-class AuthPhoneNumberWidget extends StatefulWidget {
-  const AuthPhoneNumberWidget({Key? key}) : super(key: key);
+class PhoneNumberWidget extends StatefulWidget {
+  const PhoneNumberWidget({Key? key}) : super(key: key);
 
   @override
-  _AuthPhoneNumberWidgetState createState() => _AuthPhoneNumberWidgetState();
+  _PhoneNumberWidgetState createState() => _PhoneNumberWidgetState();
 }
 
-class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
+class _PhoneNumberWidgetState extends State<PhoneNumberWidget>
     with TickerProviderStateMixin {
-  late AuthPhoneNumberModel _model;
+  late PhoneNumberModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AuthPhoneNumberModel());
+    _model = createModel(context, () => PhoneNumberModel());
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'AuthPhoneNumber'});
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'PhoneNumber'});
     _model.phoneNumberController ??= TextEditingController();
     _model.referralCodeController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -258,7 +257,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
                         ? null
                         : () async {
                             logFirebaseEvent(
-                                'AUTH_PHONE_NUMBER_VerifyReferrer_ON_TAP');
+                                'PHONE_NUMBER_PAGE_VerifyReferrer_ON_TAP');
                             logFirebaseEvent('VerifyReferrer_custom_action');
                             _model.referrersCode =
                                 await actions.doesReferralCodeExist(
@@ -303,7 +302,7 @@ class _AuthPhoneNumberWidgetState extends State<AuthPhoneNumberWidget>
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
             child: FFButtonWidget(
               onPressed: () async {
-                logFirebaseEvent('AUTH_PHONE_NUMBER_Button-Login_ON_TAP');
+                logFirebaseEvent('PHONE_NUMBER_PAGE_Button-Login_ON_TAP');
                 if (_model.referrersCode != null) {
                   logFirebaseEvent('Button-Login_backend_call');
 

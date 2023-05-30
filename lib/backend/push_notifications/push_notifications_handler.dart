@@ -113,8 +113,8 @@ class ParameterData {
 
 final parametersBuilderMap =
     <String, Future<ParameterData> Function(Map<String, dynamic>)>{
-  'AuthEmailLogin': ParameterData.none(),
-  'AuthLogin': ParameterData.none(),
+  'EmailLogin': ParameterData.none(),
+  'snsLogin': ParameterData.none(),
   'ClassDetails': (data) async => ParameterData(
         allParams: {
           'classRef': getParameter<DocumentReference>(data, 'classRef'),
@@ -132,7 +132,6 @@ final parametersBuilderMap =
   'MyReservations': ParameterData.none(),
   'CustomerService': ParameterData.none(),
   'Home': ParameterData.none(),
-  'AuthPhoneNumber': ParameterData.none(),
   'Settings': ParameterData.none(),
   'Review': (data) async => ParameterData(
         allParams: {
@@ -141,18 +140,16 @@ final parametersBuilderMap =
               getParameter<DocumentReference>(data, 'reservationRef'),
         },
       ),
-  'HomeCopy': ParameterData.none(),
-  'Membership': ParameterData.none(),
-  'Payment': (data) async => ParameterData(
-        allParams: {
-          'paymentUrl': getParameter<String>(data, 'paymentUrl'),
-        },
-      ),
+  'Memberships': ParameterData.none(),
   'MyWebview': (data) async => ParameterData(
         allParams: {
           'paymentUrl': getParameter<String>(data, 'paymentUrl'),
         },
       ),
+  'Payment': ParameterData.none(),
+  'PhoneNumber': ParameterData.none(),
+  'B2bEmailLogin': ParameterData.none(),
+  'B2bPhoneNumber': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

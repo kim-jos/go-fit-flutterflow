@@ -76,9 +76,9 @@ class _MyWebviewWidgetState extends State<MyWebviewWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 custom_widgets.MyWebView(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  paymentUrl: widget.paymentUrl!,
+                  width: MediaQuery.of(context).size.width * 1.0,
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  paymentUrl: 'https://payapplite.com/l/O2rJ4B',
                 ),
               ],
             ),

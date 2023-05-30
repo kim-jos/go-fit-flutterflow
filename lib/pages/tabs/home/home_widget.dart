@@ -481,7 +481,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         logFirebaseEvent('HOME_PAGE_로그인_BTN_ON_TAP');
                         logFirebaseEvent('Button_navigate_to');
 
-                        context.pushNamed('AuthLogin');
+                        context.pushNamed('snsLogin');
                       },
                       text: '로그인',
                       options: FFButtonOptions(

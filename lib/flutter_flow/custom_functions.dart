@@ -68,3 +68,12 @@ DateTime stripTimeFromDate(DateTime dateTimeWithTime) {
   return DateTime.utc(
       dateTimeWithTime.year, dateTimeWithTime.month, dateTimeWithTime.day);
 }
+
+bool emailValidator(
+  String companyEmail,
+  String inputEmail,
+) {
+  // use regex to check whether the inputEmail contains the companyemail
+  RegExp regExp = RegExp(r"^[a-zA-Z0-9.]+@$companyEmail");
+  return regExp.hasMatch(inputEmail);
+}

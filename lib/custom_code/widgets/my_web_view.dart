@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:webview_flutter/webview_flutter.dart';
-
 class MyWebView extends StatefulWidget {
   const MyWebView({
     Key? key,
@@ -28,28 +26,8 @@ class MyWebView extends StatefulWidget {
 }
 
 class _MyWebViewState extends State<MyWebView> {
-  WebViewController _webViewController = WebViewController();
-
-  @override
-  void initState() {
-    super.initState();
-    _webViewController
-      ..addJavaScriptChannel(
-        'Toaster',
-        onMessageReceived: (JavaScriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        },
-      )
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(widget.paymentUrl));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(
-      controller: _webViewController,
-    );
+    return Container();
   }
 }

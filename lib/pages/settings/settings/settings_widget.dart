@@ -119,7 +119,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     return;
                   }
 
-                  context.goNamedAuth('AuthLogin', context.mounted);
+                  context.goNamedAuth('B2bEmailLogin', context.mounted);
                 },
                 child: Text(
                   '로그아웃',

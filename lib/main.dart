@@ -130,7 +130,7 @@ class _NavBarPageState extends State<NavBarPage> {
     final tabs = {
       'Home': HomeWidget(),
       'Classes': ClassesWidget(),
-      'Membership': MembershipWidget(),
+      'Memberships': MembershipsWidget(),
       'MyReservations': MyReservationsWidget(),
       'MyPage': MyPageWidget(),
     };
