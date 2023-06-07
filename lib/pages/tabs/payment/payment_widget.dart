@@ -1,7 +1,7 @@
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_web_view.dart';
+import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -92,13 +92,14 @@ class _PaymentWidgetState extends State<PaymentWidget> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                FlutterFlowWebView(
-                  url: widget.paymentUrl!,
-                  bypass: false,
-                  width: MediaQuery.of(context).size.width * 1.0,
-                  height: MediaQuery.of(context).size.height * 0.929,
-                  verticalScroll: false,
-                  horizontalScroll: false,
+                Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.9,
+                  child: custom_widgets.PaymentWebview(
+                    width: double.infinity,
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    url: widget.paymentUrl!,
+                  ),
                 ),
               ],
             ),
