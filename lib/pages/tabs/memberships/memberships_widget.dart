@@ -201,10 +201,10 @@ class _MembershipsWidgetState extends State<MembershipsWidget> {
                                   logFirebaseEvent('Row_navigate_to');
 
                                   context.pushNamed(
-                                    'MyWebview',
-                                    queryParams: {
+                                    'Payment',
+                                    queryParameters: {
                                       'paymentUrl': serializeParam(
-                                        'https://payapplite.com/l/O2rJ4B',
+                                        columnMembershipsRecord.paymentUrl,
                                         ParamType.String,
                                       ),
                                     }.withoutNulls,

@@ -47,12 +47,15 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         backgroundColor: Colors.transparent,
         barrierColor: Colors.transparent,
         context: context,
-        builder: (bottomSheetContext) {
+        builder: (context) {
           return GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
             child: Padding(
-              padding: MediaQuery.of(bottomSheetContext).viewInsets,
-              child: ClassListWidget(),
+              padding: MediaQuery.of(context).viewInsets,
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: ClassListWidget(),
+              ),
             ),
           );
         },
@@ -101,13 +104,15 @@ class _ClassesWidgetState extends State<ClassesWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 30.0,
-              height: 30.0,
-              child: SpinKitWanderingCubes(
-                color: FlutterFlowTheme.of(context).primary,
-                size: 30.0,
+          return Scaffold(
+            body: Center(
+              child: SizedBox(
+                width: 30.0,
+                height: 30.0,
+                child: SpinKitWanderingCubes(
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 30.0,
+                ),
               ),
             ),
           );
@@ -189,7 +194,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 0.0, 0.0),
+                                      10.0, 8.0, 0.0, 8.0),
                                   child: FlutterFlowChoiceChips(
                                     options: [
                                       ChipData('필라테스'),
@@ -228,6 +233,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                       elevation: 4.0,
                                     ),
                                     chipSpacing: 10.0,
+                                    rowSpacing: 12.0,
                                     multiselect: true,
                                     initialized:
                                         _model.choiceChipsValues != null,
@@ -318,13 +324,12 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         backgroundColor: Colors.transparent,
                                         barrierColor: Color(0x00000000),
                                         context: context,
-                                        builder: (bottomSheetContext) {
+                                        builder: (context) {
                                           return GestureDetector(
                                             onTap: () => FocusScope.of(context)
                                                 .requestFocus(_unfocusNode),
                                             child: Padding(
-                                              padding: MediaQuery.of(
-                                                      bottomSheetContext)
+                                              padding: MediaQuery.of(context)
                                                   .viewInsets,
                                               child: Container(
                                                 height: MediaQuery.of(context)
@@ -385,7 +390,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
 
                                         context.pushNamed(
                                           'ClassDetails',
-                                          queryParams: {
+                                          queryParameters: {
                                             'classRef': serializeParam(
                                               classesClassesRecordList
                                                   .where((e) =>

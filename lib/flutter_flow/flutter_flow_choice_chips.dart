@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-const double _kChoiceChipsHeight = 40.0;
-
 class ChipData {
   const ChipData(this.label, [this.iconData]);
   final String label;
@@ -15,19 +13,25 @@ class ChipData {
 
 class ChipStyle {
   const ChipStyle({
-    required this.backgroundColor,
-    required this.textStyle,
-    required this.iconColor,
-    required this.iconSize,
+    this.backgroundColor,
+    this.textStyle,
+    this.iconColor,
+    this.iconSize,
     this.labelPadding,
-    required this.elevation,
+    this.elevation,
+    this.borderColor,
+    this.borderWidth,
+    this.borderRadius,
   });
-  final Color backgroundColor;
-  final TextStyle textStyle;
-  final Color iconColor;
-  final double iconSize;
+  final Color? backgroundColor;
+  final TextStyle? textStyle;
+  final Color? iconColor;
+  final double? iconSize;
   final EdgeInsetsGeometry? labelPadding;
-  final double elevation;
+  final double? elevation;
+  final Color? borderColor;
+  final double? borderWidth;
+  final BorderRadius? borderRadius;
 }
 
 class FlutterFlowChoiceChips extends StatefulWidget {
@@ -98,6 +102,7 @@ class _FlutterFlowChoiceChipsState extends State<FlutterFlowChoiceChips> {
         spacing: widget.chipSpacing,
         runSpacing: widget.rowSpacing,
         alignment: widget.alignment,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           ...widget.options.map(
             (option) {
@@ -105,48 +110,50 @@ class _FlutterFlowChoiceChipsState extends State<FlutterFlowChoiceChips> {
               final style = selected
                   ? widget.selectedChipStyle
                   : widget.unselectedChipStyle;
-              return Container(
-                height: _kChoiceChipsHeight,
-                child: ChoiceChip(
-                  selected: selected,
-                  onSelected: widget.onChanged != null
-                      ? (isSelected) {
-                          if (isSelected) {
-                            widget.multiselect
-                                ? choiceChipValues.add(option.label)
-                                : choiceChipValues = [option.label];
+              return ChoiceChip(
+                selected: selected,
+                onSelected: widget.onChanged != null
+                    ? (isSelected) {
+                        if (isSelected) {
+                          widget.multiselect
+                              ? choiceChipValues.add(option.label)
+                              : choiceChipValues = [option.label];
+                          widget.controller.value = List.from(choiceChipValues);
+                          setState(() {});
+                        } else {
+                          if (widget.multiselect) {
+                            choiceChipValues.remove(option.label);
                             widget.controller.value =
                                 List.from(choiceChipValues);
                             setState(() {});
-                          } else {
-                            if (widget.multiselect) {
-                              choiceChipValues.remove(option.label);
-                              widget.controller.value =
-                                  List.from(choiceChipValues);
-                              setState(() {});
-                            }
                           }
                         }
-                      : null,
-                  label: Text(
-                    option.label,
-                    style: style.textStyle,
+                      }
+                    : null,
+                label: Text(
+                  option.label,
+                  style: style.textStyle,
+                ),
+                labelPadding: style.labelPadding,
+                avatar: option.iconData != null
+                    ? FaIcon(
+                        option.iconData,
+                        size: style.iconSize,
+                        color: style.iconColor,
+                      )
+                    : null,
+                elevation: style.elevation,
+                selectedColor:
+                    selected ? widget.selectedChipStyle.backgroundColor : null,
+                backgroundColor: selected
+                    ? null
+                    : widget.unselectedChipStyle.backgroundColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: style.borderRadius ?? BorderRadius.circular(16),
+                  side: BorderSide(
+                    color: style.borderColor ?? Colors.transparent,
+                    width: style.borderWidth ?? 0,
                   ),
-                  labelPadding: style.labelPadding,
-                  avatar: option.iconData != null
-                      ? FaIcon(
-                          option.iconData,
-                          size: style.iconSize,
-                          color: style.iconColor,
-                        )
-                      : null,
-                  elevation: style.elevation,
-                  selectedColor: selected
-                      ? widget.selectedChipStyle.backgroundColor
-                      : null,
-                  backgroundColor: selected
-                      ? null
-                      : widget.unselectedChipStyle.backgroundColor,
                 ),
               );
             },

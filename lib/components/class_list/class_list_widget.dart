@@ -205,7 +205,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 5.0, 0.0, 0.0),
+                                        5.0, 13.0, 0.0, 8.0),
                                     child: FlutterFlowChoiceChips(
                                       options:
                                           containerWorkoutCategoriesRecordList
@@ -252,6 +252,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                         elevation: 4.0,
                                       ),
                                       chipSpacing: 7.0,
+                                      rowSpacing: 12.0,
                                       multiselect: true,
                                       initialized:
                                           _model.categoryFilterValues != null,
@@ -781,7 +782,7 @@ class _ClassListWidgetState extends State<ClassListWidget> {
 
                                           context.pushNamed(
                                             'ClassDetails',
-                                            queryParams: {
+                                            queryParameters: {
                                               'classRef': serializeParam(
                                                 columnClassesRecord.reference,
                                                 ParamType.DocumentReference,
@@ -1109,9 +1110,9 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                                                                         backgroundColor: Colors.transparent,
                                                                                         barrierColor: Color(0x00000000),
                                                                                         context: context,
-                                                                                        builder: (bottomSheetContext) {
+                                                                                        builder: (context) {
                                                                                           return Padding(
-                                                                                            padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                            padding: MediaQuery.of(context).viewInsets,
                                                                                             child: Container(
                                                                                               height: MediaQuery.of(context).size.height * 0.5,
                                                                                               child: ConfirmationReservationWidget(

@@ -369,10 +369,9 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                             barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (bottomSheetContext) {
+                                            builder: (context) {
                                               return Padding(
-                                                padding: MediaQuery.of(
-                                                        bottomSheetContext)
+                                                padding: MediaQuery.of(context)
                                                     .viewInsets,
                                                 child: UpdateNameWidget(),
                                               );
@@ -473,10 +472,9 @@ class _MyPageWidgetState extends State<MyPageWidget> {
                                             barrierColor: Color(0x00000000),
                                             enableDrag: false,
                                             context: context,
-                                            builder: (bottomSheetContext) {
+                                            builder: (context) {
                                               return Padding(
-                                                padding: MediaQuery.of(
-                                                        bottomSheetContext)
+                                                padding: MediaQuery.of(context)
                                                     .viewInsets,
                                                 child: UpdatePhoneWidget(),
                                               );

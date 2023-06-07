@@ -72,3 +72,15 @@ LatLng? _latLngFromString(String? val) {
   final lng = double.parse(split.last);
   return LatLng(lat, lng);
 }
+
+void _safeInit(Function() initializeField) {
+  try {
+    initializeField();
+  } catch (_) {}
+}
+
+Future _safeInitAsync(Function() initializeField) async {
+  try {
+    await initializeField();
+  } catch (_) {}
+}

@@ -278,10 +278,9 @@ class _ReservationWidgetState extends State<ReservationWidget> {
                                         backgroundColor: Colors.transparent,
                                         barrierColor: Color(0x00000000),
                                         context: context,
-                                        builder: (bottomSheetContext) {
+                                        builder: (context) {
                                           return Padding(
-                                            padding: MediaQuery.of(
-                                                    bottomSheetContext)
+                                            padding: MediaQuery.of(context)
                                                 .viewInsets,
                                             child: Container(
                                               height: MediaQuery.of(context)

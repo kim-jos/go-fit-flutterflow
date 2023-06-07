@@ -83,13 +83,16 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
-          return Center(
-            child: SizedBox(
-              width: 30.0,
-              height: 30.0,
-              child: SpinKitWanderingCubes(
-                color: FlutterFlowTheme.of(context).primary,
-                size: 30.0,
+          return Scaffold(
+            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+            body: Center(
+              child: SizedBox(
+                width: 30.0,
+                height: 30.0,
+                child: SpinKitWanderingCubes(
+                  color: FlutterFlowTheme.of(context).primary,
+                  size: 30.0,
+                ),
               ),
             ),
           );
@@ -942,11 +945,10 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                                           barrierColor:
                                                               Color(0x00000000),
                                                           context: context,
-                                                          builder:
-                                                              (bottomSheetContext) {
+                                                          builder: (context) {
                                                             return Padding(
-                                                              padding: MediaQuery.of(
-                                                                      bottomSheetContext)
+                                                              padding: MediaQuery
+                                                                      .of(context)
                                                                   .viewInsets,
                                                               child: Container(
                                                                 height: MediaQuery.of(
