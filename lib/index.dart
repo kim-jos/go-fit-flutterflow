@@ -4,7 +4,7 @@ export '/pages/auth/sns_login/sns_login_widget.dart' show SnsLoginWidget;
 export '/pages/classes/class_details/class_details_widget.dart'
     show ClassDetailsWidget;
 export '/pages/classes/classes/classes_widget.dart' show ClassesWidget;
-export '/reservation_complete/reservation_complete_widget.dart'
+export '/components/reservation_complete/reservation_complete_widget.dart'
     show ReservationCompleteWidget;
 export '/pages/tabs/my_page/my_page_widget.dart' show MyPageWidget;
 export '/pages/tabs/my_reservations/my_reservations_widget.dart'

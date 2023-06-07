@@ -16,10 +16,12 @@ class MyWebView extends StatefulWidget {
     Key? key,
     this.width,
     this.height,
+    required this.url,
   }) : super(key: key);
 
   final double? width;
   final double? height;
+  final String url;
 
   @override
   _MyWebViewState createState() => _MyWebViewState();
@@ -80,7 +82,7 @@ class _MyWebViewState extends State<MyWebView> {
               child: WebViewX(
                 width: MediaQuery.of(context).size.height * 100,
                 height: MediaQuery.of(context).size.width * 100,
-                initialContent: 'https://gofitweb.flutterflow.app/',
+                initialContent: widget.url,
                 initialSourceType: SourceType.url,
                 onWebViewCreated: (controller) {
                   webviewController = controller;

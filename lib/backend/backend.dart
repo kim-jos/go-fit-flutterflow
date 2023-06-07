@@ -20,6 +20,7 @@ import 'schema/promotions_record.dart';
 import 'schema/workout_categories_record.dart';
 import 'schema/points_record.dart';
 import 'schema/companies_record.dart';
+import 'schema/webview_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,6 +43,7 @@ export 'schema/promotions_record.dart';
 export 'schema/workout_categories_record.dart';
 export 'schema/points_record.dart';
 export 'schema/companies_record.dart';
+export 'schema/webview_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -820,6 +822,58 @@ Future<FFFirestorePage<CompaniesRecord>> queryCompaniesRecordPage({
     queryCollectionPage(
       CompaniesRecord.collection,
       CompaniesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query WebviewRecords (as a Stream and as a Future).
+Future<int> queryWebviewRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      WebviewRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<WebviewRecord>> queryWebviewRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      WebviewRecord.collection,
+      WebviewRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<WebviewRecord>> queryWebviewRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      WebviewRecord.collection,
+      WebviewRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<WebviewRecord>> queryWebviewRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      WebviewRecord.collection,
+      WebviewRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

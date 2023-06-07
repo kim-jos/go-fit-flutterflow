@@ -55,27 +55,15 @@ class _HomeWidgetState extends State<HomeWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
           automaticallyImplyLeading: false,
-          title: InkWell(
-            splashColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            onTap: () async {
-              logFirebaseEvent('HOME_PAGE_Text_txch1k4i_ON_TAP');
-              logFirebaseEvent('Text_navigate_to');
-
-              context.pushNamed('MyWebview');
-            },
-            child: Text(
-              'Go Fit',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Pretendard',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    useGoogleFonts: false,
-                  ),
-            ),
+          title: Text(
+            'Go Fit',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Pretendard',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  useGoogleFonts: false,
+                ),
           ),
           actions: [],
           centerTitle: true,
