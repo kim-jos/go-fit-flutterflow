@@ -150,6 +150,7 @@ final parametersBuilderMap =
   'PhoneNumber': ParameterData.none(),
   'B2bEmailLogin': ParameterData.none(),
   'B2bPhoneNumber': ParameterData.none(),
+  'MyWebviewLoggedIn': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

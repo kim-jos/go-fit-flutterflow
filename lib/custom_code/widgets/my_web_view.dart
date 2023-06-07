@@ -9,157 +9,87 @@ import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webviewx_plus/webviewx_plus.dart';
 
 class MyWebView extends StatefulWidget {
   const MyWebView({
     Key? key,
     this.width,
     this.height,
-    required this.paymentUrl,
   }) : super(key: key);
 
   final double? width;
   final double? height;
-  final String paymentUrl;
 
   @override
   _MyWebViewState createState() => _MyWebViewState();
 }
 
 class _MyWebViewState extends State<MyWebView> {
-  InAppWebViewController? webViewController;
-  InAppWebViewSettings settings = InAppWebViewSettings(
-      useShouldOverrideUrlLoading: true,
-      mediaPlaybackRequiresUserGesture: false,
-      allowsInlineMediaPlayback: true,
-      iframeAllow: "camera; microphone",
-      iframeAllowFullscreen: true);
+  late WebViewXController webviewController;
+  // LatLng? currentUserLocationValue;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+    //     .then((loc) => setState(() => currentUserLocationValue = loc));
+
+    // logFirebaseEvent('screen_view', parameters: {'screen_name': 'MyWebview'});
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  // Future<void> getLocation() async {
+  //   final javascriptCode = '''
+  //   navigator.geolocation.getCurrentPosition = function(successCallback, errorCallback, options) {
+  //     successCallback({ coords: { latitude: ${currentUserLocationValue!.latitude}, longitude: ${currentUserLocationValue!.longitude} } });
+  //   }
+  // ''';
+
+  //   await webviewController.evalRawJavascript(javascriptCode);
+  // }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<bool> _handleBackButton() async {
+    if (await webviewController.canGoBack()) {
+      webviewController.goBack();
+      return false;
+    }
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
+    // context.watch<FFAppState>();
+
     return Scaffold(
-        appBar: AppBar(title: Text("Official InAppWebView website")),
-        body: SafeArea(
-            child: Column(children: <Widget>[
-          TextField(
-            decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
-            controller: urlController,
-            keyboardType: TextInputType.url,
-            onSubmitted: (value) {
-              var url = WebUri(value);
-              if (url.scheme.isEmpty) {
-                url = WebUri("https://www.google.com/search?q=" + value);
-              }
-              webViewController?.loadUrl(urlRequest: URLRequest(url: url));
-            },
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                InAppWebView(
-                  key: webViewKey,
-                  initialUrlRequest: URLRequest(
-                      url: WebUri("https://gofitweb.flutterflow.app/")),
-                  initialSettings: settings,
-                  pullToRefreshController: pullToRefreshController,
-                  onWebViewCreated: (controller) {
-                    webViewController = controller;
-                  },
-                  onLoadStart: (controller, url) {
-                    setState(() {
-                      this.url = url.toString();
-                      urlController.text = this.url;
-                    });
-                  },
-                  onPermissionRequest: (controller, request) async {
-                    return PermissionResponse(
-                        resources: request.resources,
-                        action: PermissionResponseAction.GRANT);
-                  },
-                  shouldOverrideUrlLoading:
-                      (controller, navigationAction) async {
-                    var uri = navigationAction.request.url!;
-
-                    if (![
-                      "http",
-                      "https",
-                      "file",
-                      "chrome",
-                      "data",
-                      "javascript",
-                      "about"
-                    ].contains(uri.scheme)) {
-                      if (await canLaunchUrl(uri)) {
-                        // Launch the App
-                        await launchUrl(
-                          uri,
-                        );
-                        // and cancel the request
-                        return NavigationActionPolicy.CANCEL;
-                      }
-                    }
-
-                    return NavigationActionPolicy.ALLOW;
-                  },
-                  onLoadStop: (controller, url) async {
-                    pullToRefreshController?.endRefreshing();
-                    setState(() {
-                      this.url = url.toString();
-                      urlController.text = this.url;
-                    });
-                  },
-                  onReceivedError: (controller, request, error) {
-                    pullToRefreshController?.endRefreshing();
-                  },
-                  onProgressChanged: (controller, progress) {
-                    if (progress == 100) {
-                      pullToRefreshController?.endRefreshing();
-                    }
-                    setState(() {
-                      this.progress = progress / 100;
-                      urlController.text = this.url;
-                    });
-                  },
-                  onUpdateVisitedHistory: (controller, url, androidIsReload) {
-                    setState(() {
-                      this.url = url.toString();
-                      urlController.text = this.url;
-                    });
-                  },
-                  onConsoleMessage: (controller, consoleMessage) {
-                    print(consoleMessage);
-                  },
-                ),
-                progress < 1.0
-                    ? LinearProgressIndicator(value: progress)
-                    : Container(),
-              ],
+      key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      body: SafeArea(
+        child: WillPopScope(
+          onWillPop: _handleBackButton,
+          child: Container(
+            child: Expanded(
+              child: WebViewX(
+                width: MediaQuery.of(context).size.height * 100,
+                height: MediaQuery.of(context).size.width * 100,
+                initialContent: 'https://gofitweb.flutterflow.app/',
+                initialSourceType: SourceType.url,
+                onWebViewCreated: (controller) {
+                  webviewController = controller;
+                },
+              ),
             ),
           ),
-          ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                child: Icon(Icons.arrow_back),
-                onPressed: () {
-                  webViewController?.goBack();
-                },
-              ),
-              ElevatedButton(
-                child: Icon(Icons.arrow_forward),
-                onPressed: () {
-                  webViewController?.goForward();
-                },
-              ),
-              ElevatedButton(
-                child: Icon(Icons.refresh),
-                onPressed: () {
-                  webViewController?.reload();
-                },
-              ),
-            ],
-          ),
-        ])));
+        ),
+      ),
+    );
   }
 }

@@ -75,14 +75,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? NavBarPage() : B2bEmailLoginWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? MyWebviewLoggedInWidget()
+          : MyWebviewWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : B2bEmailLoginWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? MyWebviewLoggedInWidget()
+              : MyWebviewWidget(),
           routes: [
             FFRoute(
               name: 'EmailLogin',
@@ -112,9 +114,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Classes',
               path: 'classes',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Classes')
-                  : ClassesWidget(),
+              builder: (context, params) => ClassesWidget(),
             ),
             FFRoute(
               name: 'ReservationComplete',
@@ -125,17 +125,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'MyPage',
               path: 'myPage',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'MyPage')
-                  : MyPageWidget(),
+              builder: (context, params) => MyPageWidget(),
             ),
             FFRoute(
               name: 'MyReservations',
               path: 'myReservations',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'MyReservations')
-                  : MyReservationsWidget(),
+              builder: (context, params) => MyReservationsWidget(),
             ),
             FFRoute(
               name: 'CustomerService',
@@ -147,9 +143,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'Home',
               path: 'home',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : HomeWidget(),
+              builder: (context, params) => HomeWidget(),
             ),
             FFRoute(
               name: 'Settings',
@@ -172,9 +166,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'Memberships',
               path: 'memberships',
               requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Memberships')
-                  : MembershipsWidget(),
+              builder: (context, params) => MembershipsWidget(),
             ),
             FFRoute(
               name: 'MyWebview',
@@ -205,6 +197,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'b2bPhoneNumber',
               requireAuth: true,
               builder: (context, params) => B2bPhoneNumberWidget(),
+            ),
+            FFRoute(
+              name: 'MyWebviewLoggedIn',
+              path: 'myWebviewLoggedIn',
+              builder: (context, params) => MyWebviewLoggedInWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
@@ -373,7 +370,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.location);
-            return '/b2bEmailLogin';
+            return '/myWebview';
           }
           return null;
         },

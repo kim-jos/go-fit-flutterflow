@@ -23,3 +23,5 @@ export '/pages/auth/b2b_email_login/b2b_email_login_widget.dart'
     show B2bEmailLoginWidget;
 export '/pages/auth/b2b_phone_number/b2b_phone_number_widget.dart'
     show B2bPhoneNumberWidget;
+export '/my_webview_logged_in/my_webview_logged_in_widget.dart'
+    show MyWebviewLoggedInWidget;

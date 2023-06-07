@@ -54,7 +54,6 @@ dependencies:
   firebase_storage_web: 3.3.17
   flutter_animate: 4.1.1+1
   flutter_cache_manager: 3.3.0
-  flutter_inappwebview: ^5.7.2+3
   flutter_plugin_android_lifecycle: 2.0.9
   flutter_rating_bar: 4.0.1
   flutter_spinkit: 5.1.0
