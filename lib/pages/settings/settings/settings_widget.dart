@@ -119,7 +119,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     return;
                   }
 
-                  context.goNamedAuth('MyWebview', context.mounted);
+                  context.goNamedAuth('B2bEmailLogin', context.mounted);
                 },
                 child: Text(
                   '로그아웃',
@@ -197,7 +197,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                         return;
                       }
 
-                      context.goNamedAuth('MyWebviewLoggedIn', context.mounted);
+                      context.goNamedAuth('Home', context.mounted);
                     },
                     child: Text(
                       '회원탈퇴',

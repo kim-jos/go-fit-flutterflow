@@ -400,6 +400,35 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
                                                 onPressed: () async {
                                                   logFirebaseEvent(
                                                       'B2B_EMAIL_LOGIN_PAGE_Button-Login_ON_TAP');
+                                                  if (!functions.emailValidator(
+                                                      _model.companyEmail!,
+                                                      _model
+                                                          .emailAddressController
+                                                          .text)) {
+                                                    logFirebaseEvent(
+                                                        'Button-Login_alert_dialog');
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text(
+                                                              '회사 이메일로 로그인 해주세요'),
+                                                          content: Text(
+                                                              '${_model.companyEmail} 이메일 사용해주세요'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: Text('확인'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
+                                                    return;
+                                                  }
                                                   logFirebaseEvent(
                                                       'Button-Login_auth');
                                                   GoRouter.of(context)
@@ -437,6 +466,29 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
                                                                 e.reference)
                                                             .toList(),
                                                     initialPageName: 'Classes',
+                                                    parameterData: {},
+                                                  );
+                                                  logFirebaseEvent(
+                                                      'Button-Login_navigate_to');
+
+                                                  context.pushNamedAuth(
+                                                      'B2bPhoneNumber',
+                                                      context.mounted);
+
+                                                  logFirebaseEvent(
+                                                      'Button-Login_trigger_push_notification');
+                                                  triggerPushNotification(
+                                                    notificationTitle:
+                                                        '${_model.nameCreateController.text} 회원가입',
+                                                    notificationText: _model
+                                                        .emailAddressController
+                                                        .text,
+                                                    userRefs:
+                                                        b2bEmailLoginUsersRecordList
+                                                            .map((e) =>
+                                                                e.reference)
+                                                            .toList(),
+                                                    initialPageName: 'Home',
                                                     parameterData: {},
                                                   );
                                                 },
