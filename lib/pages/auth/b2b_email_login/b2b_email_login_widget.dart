@@ -467,29 +467,6 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
                                                     initialPageName: 'Classes',
                                                     parameterData: {},
                                                   );
-                                                  logFirebaseEvent(
-                                                      'Button-Login_navigate_to');
-
-                                                  context.pushNamedAuth(
-                                                      'B2bPhoneNumber',
-                                                      context.mounted);
-
-                                                  logFirebaseEvent(
-                                                      'Button-Login_trigger_push_notification');
-                                                  triggerPushNotification(
-                                                    notificationTitle:
-                                                        '${_model.nameCreateController.text} 회원가입',
-                                                    notificationText: _model
-                                                        .emailAddressController
-                                                        .text,
-                                                    userRefs:
-                                                        b2bEmailLoginUsersRecordList
-                                                            .map((e) =>
-                                                                e.reference)
-                                                            .toList(),
-                                                    initialPageName: 'Home',
-                                                    parameterData: {},
-                                                  );
                                                 },
                                                 text: '로그인',
                                                 options: FFButtonOptions(
