@@ -198,7 +198,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'B2bPhoneNumber',
               path: 'b2bPhoneNumber',
-              requireAuth: true,
               builder: (context, params) => B2bPhoneNumberWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),

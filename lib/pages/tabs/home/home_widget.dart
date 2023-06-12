@@ -330,13 +330,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                           style: TextStyle(),
                                                         ),
                                                         TextSpan(
-                                                          text: functions
-                                                              .addDaysToDate(
-                                                                  cardCompaniesRecord
-                                                                      .startDate!,
-                                                                  cardCompaniesRecord
-                                                                      .contractLengthInDays)
-                                                              .toString(),
+                                                          text: dateTimeFormat(
+                                                            'yMMMd',
+                                                            functions.addDaysToDate(
+                                                                cardCompaniesRecord
+                                                                    .startDate!,
+                                                                cardCompaniesRecord
+                                                                    .contractLengthInDays),
+                                                            locale: FFLocalizations
+                                                                    .of(context)
+                                                                .languageCode,
+                                                          ),
                                                           style: TextStyle(),
                                                         )
                                                       ],

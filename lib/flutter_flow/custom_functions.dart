@@ -74,10 +74,16 @@ bool emailValidator(
   String inputEmail,
 ) {
   // use regex to check whether the inputEmail contains the companyemail
-  print('company email: $companyEmail');
-  print('input email: $inputEmail');
-  RegExp regExp = RegExp(r'^[a-zA-Z0-9.]+@$companyEmail');
-  return regExp.hasMatch(inputEmail);
+  String domain = companyEmail.toLowerCase();
+  String email = inputEmail.toLowerCase().split('@')[1];
+
+  print('domain: $domain');
+  print('email: $email');
+  final isSame = domain == email;
+  print('is same?: $isSame');
+  final endswith = inputEmail.endsWith(domain);
+  print('is same?: $isSame');
+  return endswith;
 }
 
 DateTime addDaysToDate(
