@@ -20,6 +20,7 @@ class B2bEmailLoginModel extends FlutterFlowModel {
 
   ///  State fields for stateful widgets in this page.
 
+  final unfocusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
   // State field(s) for emailAddress widget.
   TextEditingController? emailAddressController;
@@ -71,6 +72,7 @@ class B2bEmailLoginModel extends FlutterFlowModel {
   }
 
   void dispose() {
+    unfocusNode.dispose();
     emailAddressController?.dispose();
     passwordController?.dispose();
     nameCreateController?.dispose();
@@ -78,6 +80,8 @@ class B2bEmailLoginModel extends FlutterFlowModel {
     passwordCreateController?.dispose();
     passwordConfirmCreateController?.dispose();
   }
+
+  /// Action blocks are added here.
 
   /// Additional helper methods are added here.
 

@@ -27,7 +27,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   late ClassesModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
   LatLng? currentUserLocationValue;
 
   @override
@@ -49,7 +48,8 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         context: context,
         builder: (context) {
           return GestureDetector(
-            onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+            onTap: () =>
+                FocusScope.of(context).requestFocus(_model.unfocusNode),
             child: Padding(
               padding: MediaQuery.of(context).viewInsets,
               child: Container(
@@ -71,7 +71,6 @@ class _ClassesWidgetState extends State<ClassesWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -119,7 +118,7 @@ class _ClassesWidgetState extends State<ClassesWidget> {
         }
         List<ClassesRecord> classesClassesRecordList = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             resizeToAvoidBottomInset: false,
@@ -327,7 +326,8 @@ class _ClassesWidgetState extends State<ClassesWidget> {
                                         builder: (context) {
                                           return GestureDetector(
                                             onTap: () => FocusScope.of(context)
-                                                .requestFocus(_unfocusNode),
+                                                .requestFocus(
+                                                    _model.unfocusNode),
                                             child: Padding(
                                               padding: MediaQuery.of(context)
                                                   .viewInsets,

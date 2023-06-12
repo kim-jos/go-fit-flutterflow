@@ -141,7 +141,6 @@ final parametersBuilderMap =
         },
       ),
   'Memberships': ParameterData.none(),
-  'MyWebview': ParameterData.none(),
   'Payment': (data) async => ParameterData(
         allParams: {
           'paymentUrl': getParameter<String>(data, 'paymentUrl'),
@@ -150,7 +149,6 @@ final parametersBuilderMap =
   'PhoneNumber': ParameterData.none(),
   'B2bEmailLogin': ParameterData.none(),
   'B2bPhoneNumber': ParameterData.none(),
-  'MyWebviewLoggedIn': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

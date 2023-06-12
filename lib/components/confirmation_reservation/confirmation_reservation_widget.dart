@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -205,140 +204,211 @@ class _ConfirmationReservationWidgetState
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 24.0),
-                      child: StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(
-                          queryBuilder: (usersRecord) =>
-                              usersRecord.where('admin', isEqualTo: true),
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 30.0,
-                                height: 30.0,
-                                child: SpinKitWanderingCubes(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  size: 30.0,
+                      child: AuthUserStreamWidget(
+                        builder: (context) => FutureBuilder<CompaniesRecord>(
+                          future: CompaniesRecord.getDocumentOnce(
+                              currentUserDocument!.companyRef!),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 30.0,
+                                  height: 30.0,
+                                  child: SpinKitWanderingCubes(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    size: 30.0,
+                                  ),
                                 ),
+                              );
+                            }
+                            final buttonCompaniesRecord = snapshot.data!;
+                            return FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'CONFIRMATION_RESERVATION_예약하기_BTN_ON_TAP');
+                                if (valueOrDefault(
+                                        currentUserDocument?.b2bType, '') ==
+                                    'team') {
+                                  if (currentUserEmailVerified) {
+                                    if (buttonCompaniesRecord
+                                            .remainingCredits <=
+                                        0) {
+                                      logFirebaseEvent('Button_alert_dialog');
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('사용권 부족'),
+                                            content: Text('사용권 추가 구매 후 사용해주세요'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('확인'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                      return;
+                                    }
+                                    // reservations collection
+                                    logFirebaseEvent(
+                                        'Button_reservationscollection');
+
+                                    final reservationsCreateData1 = {
+                                      ...createReservationsRecordData(
+                                        date: dateTimeFormat(
+                                          'yMd',
+                                          widget.selectedDate,
+                                          locale: FFLocalizations.of(context)
+                                              .languageCode,
+                                        ),
+                                        timeSlot: widget.selectedTimeSlot,
+                                        user: currentUserReference,
+                                        classRequiredCredits:
+                                            widget.creditsRequired,
+                                        className: widget.className,
+                                        time: widget.selectedTime,
+                                        isFinal: true,
+                                        startTime: functions.dateTimeParser(
+                                            widget.selectedTime!,
+                                            widget.selectedDate!),
+                                      ),
+                                      'createdAt': FieldValue.serverTimestamp(),
+                                    };
+                                    await ReservationsRecord.collection
+                                        .doc()
+                                        .set(reservationsCreateData1);
+                                    logFirebaseEvent('Button_navigate_to');
+
+                                    context.goNamed('ReservationComplete');
+
+                                    logFirebaseEvent(
+                                        'Button_google_analytics_event');
+                                    logFirebaseEvent(
+                                        'Confirm Reservation Widget - ${widget.className}');
+                                    return;
+                                  } else {
+                                    logFirebaseEvent('Button_alert_dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: Text('이메일 인증 필요'),
+                                          content: Text('이메일 인증 후 예약 가능합니다'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('확인'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    return;
+                                  }
+                                }
+                                if (valueOrDefault(
+                                        currentUserDocument?.currCredits, 0) >=
+                                    widget.creditsRequired!) {
+                                  // reservations collection
+                                  logFirebaseEvent(
+                                      'Button_reservationscollection');
+
+                                  final reservationsCreateData2 = {
+                                    ...createReservationsRecordData(
+                                      date: dateTimeFormat(
+                                        'yMd',
+                                        widget.selectedDate,
+                                        locale: FFLocalizations.of(context)
+                                            .languageCode,
+                                      ),
+                                      timeSlot: widget.selectedTimeSlot,
+                                      user: currentUserReference,
+                                      classRequiredCredits:
+                                          widget.creditsRequired,
+                                      className: widget.className,
+                                      time: widget.selectedTime,
+                                      isFinal: true,
+                                      startTime: functions.dateTimeParser(
+                                          widget.selectedTime!,
+                                          widget.selectedDate!),
+                                    ),
+                                    'createdAt': FieldValue.serverTimestamp(),
+                                  };
+                                  await ReservationsRecord.collection
+                                      .doc()
+                                      .set(reservationsCreateData2);
+                                  // Decrement currCredits
+                                  logFirebaseEvent(
+                                      'Button_DecrementcurrCredits');
+
+                                  final usersUpdateData = {
+                                    'currCredits': FieldValue.increment(
+                                        -(widget.creditsRequired!)),
+                                  };
+                                  await currentUserReference!
+                                      .update(usersUpdateData);
+                                  logFirebaseEvent('Button_navigate_to');
+
+                                  context.goNamed('ReservationComplete');
+
+                                  logFirebaseEvent(
+                                      'Button_google_analytics_event');
+                                  logFirebaseEvent(
+                                      'Confirm Reservation Widget - ${widget.className}');
+                                } else {
+                                  logFirebaseEvent('Button_alert_dialog');
+                                  await showDialog(
+                                    context: context,
+                                    builder: (alertDialogContext) {
+                                      return AlertDialog(
+                                        title: Text('포인트 부족'),
+                                        content: Text('포인트 충천 후 사용해주세요!'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(
+                                                alertDialogContext),
+                                            child: Text('확인'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  return;
+                                }
+                              },
+                              text: '예약하기',
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 50.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Pretendard',
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      useGoogleFonts: false,
+                                    ),
+                                elevation: 2.0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
                             );
-                          }
-                          List<UsersRecord> buttonUsersRecordList =
-                              snapshot.data!;
-                          return FFButtonWidget(
-                            onPressed: () async {
-                              logFirebaseEvent(
-                                  'CONFIRMATION_RESERVATION_예약하기_BTN_ON_TAP');
-                              if (valueOrDefault(
-                                      currentUserDocument?.currCredits, 0) >=
-                                  widget.creditsRequired!) {
-                                // reservations collection
-                                logFirebaseEvent(
-                                    'Button_reservationscollection');
-
-                                final reservationsCreateData = {
-                                  ...createReservationsRecordData(
-                                    date: dateTimeFormat(
-                                      'yMd',
-                                      widget.selectedDate,
-                                      locale: FFLocalizations.of(context)
-                                          .languageCode,
-                                    ),
-                                    timeSlot: widget.selectedTimeSlot,
-                                    user: currentUserReference,
-                                    classRequiredCredits:
-                                        widget.creditsRequired,
-                                    className: widget.className,
-                                    time: widget.selectedTime,
-                                    isFinal: true,
-                                    startTime: functions.dateTimeParser(
-                                        widget.selectedTime!,
-                                        widget.selectedDate!),
-                                  ),
-                                  'createdAt': FieldValue.serverTimestamp(),
-                                };
-                                await ReservationsRecord.collection
-                                    .doc()
-                                    .set(reservationsCreateData);
-                                // Decrement currCredits
-                                logFirebaseEvent('Button_DecrementcurrCredits');
-
-                                final usersUpdateData = {
-                                  'currCredits': FieldValue.increment(
-                                      -(widget.creditsRequired!)),
-                                };
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                                logFirebaseEvent(
-                                    'Button_trigger_push_notification');
-                                triggerPushNotification(
-                                  notificationTitle: 'Reservation!',
-                                  notificationText:
-                                      '${currentUserDisplayName != null && currentUserDisplayName != '' ? currentUserDisplayName : currentUserEmail} - ${widget.className} - ${widget.selectedDate?.toString()} - ${widget.selectedTime}',
-                                  userRefs: buttonUsersRecordList
-                                      .where((e) => e.admin)
-                                      .toList()
-                                      .map((e) => e.reference)
-                                      .toList(),
-                                  initialPageName: 'Classes',
-                                  parameterData: {},
-                                );
-                                logFirebaseEvent('Button_navigate_to');
-
-                                context.goNamed('ReservationComplete');
-
-                                logFirebaseEvent(
-                                    'Button_google_analytics_event');
-                                logFirebaseEvent(
-                                    'Confirm Reservation Widget - ${widget.className}');
-                                return;
-                              } else {
-                                logFirebaseEvent('Button_alert_dialog');
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('포인트 부족'),
-                                      content: Text('포인트 충천 후 사용해주세요!'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('확인'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                            text: '예약하기',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color:
-                                  FlutterFlowTheme.of(context).primaryBtnText,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Pretendard',
-                                    color: FlutterFlowTheme.of(context).primary,
-                                    useGoogleFonts: false,
-                                  ),
-                              elevation: 2.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          );
-                        },
+                          },
+                        ),
                       ),
                     ),
                   ],

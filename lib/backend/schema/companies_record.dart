@@ -24,9 +24,39 @@ class CompaniesRecord extends FirestoreRecord {
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
+  // "totalCredits" field.
+  int? _totalCredits;
+  int get totalCredits => _totalCredits ?? 0;
+  bool hasTotalCredits() => _totalCredits != null;
+
+  // "membershipType" field.
+  String? _membershipType;
+  String get membershipType => _membershipType ?? '';
+  bool hasMembershipType() => _membershipType != null;
+
+  // "startDate" field.
+  DateTime? _startDate;
+  DateTime? get startDate => _startDate;
+  bool hasStartDate() => _startDate != null;
+
+  // "contractLengthInDays" field.
+  int? _contractLengthInDays;
+  int get contractLengthInDays => _contractLengthInDays ?? 0;
+  bool hasContractLengthInDays() => _contractLengthInDays != null;
+
+  // "remainingCredits" field.
+  int? _remainingCredits;
+  int get remainingCredits => _remainingCredits ?? 0;
+  bool hasRemainingCredits() => _remainingCredits != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _email = snapshotData['email'] as String?;
+    _totalCredits = snapshotData['totalCredits'] as int?;
+    _membershipType = snapshotData['membershipType'] as String?;
+    _startDate = snapshotData['startDate'] as DateTime?;
+    _contractLengthInDays = snapshotData['contractLengthInDays'] as int?;
+    _remainingCredits = snapshotData['remainingCredits'] as int?;
   }
 
   static CollectionReference get collection =>
@@ -53,16 +83,34 @@ class CompaniesRecord extends FirestoreRecord {
   @override
   String toString() =>
       'CompaniesRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is CompaniesRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createCompaniesRecordData({
   String? name,
   String? email,
+  int? totalCredits,
+  String? membershipType,
+  DateTime? startDate,
+  int? contractLengthInDays,
+  int? remainingCredits,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
       'email': email,
+      'totalCredits': totalCredits,
+      'membershipType': membershipType,
+      'startDate': startDate,
+      'contractLengthInDays': contractLengthInDays,
+      'remainingCredits': remainingCredits,
     }.withoutNulls,
   );
 

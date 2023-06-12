@@ -35,6 +35,8 @@ class PhoneNumberModel extends FlutterFlowModel {
     referralCodeController?.dispose();
   }
 
+  /// Action blocks are added here.
+
   /// Additional helper methods are added here.
 
 }

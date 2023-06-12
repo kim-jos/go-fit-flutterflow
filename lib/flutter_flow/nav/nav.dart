@@ -177,11 +177,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : MembershipsWidget(),
             ),
             FFRoute(
-              name: 'MyWebview',
-              path: 'myWebview',
-              builder: (context, params) => MyWebviewWidget(),
-            ),
-            FFRoute(
               name: 'Payment',
               path: 'payment',
               requireAuth: true,
@@ -205,11 +200,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'b2bPhoneNumber',
               requireAuth: true,
               builder: (context, params) => B2bPhoneNumberWidget(),
-            ),
-            FFRoute(
-              name: 'MyWebviewLoggedIn',
-              path: 'myWebviewLoggedIn',
-              builder: (context, params) => MyWebviewLoggedInWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),

@@ -26,7 +26,6 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
   late B2bEmailLoginModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -48,7 +47,6 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -80,7 +78,7 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
         }
         List<UsersRecord> b2bEmailLoginUsersRecordList = snapshot.data!;
         return GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+          onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).white,
@@ -164,10 +162,10 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
                                         .primaryText,
                                     tabs: [
                                       Tab(
-                                        text: '로그인',
+                                        text: '기업회원 로그인',
                                       ),
                                       Tab(
-                                        text: '회원가입',
+                                        text: '기업회원 회원가입',
                                       ),
                                     ],
                                   ),
@@ -748,17 +746,11 @@ class _B2bEmailLoginWidgetState extends State<B2bEmailLoginWidget> {
                                                     },
                                                     width: 300.0,
                                                     height: 50.0,
-                                                    searchHintTextStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelMedium,
                                                     textStyle:
                                                         FlutterFlowTheme.of(
                                                                 context)
                                                             .bodyMedium,
                                                     hintText: '내 회사 선택',
-                                                    searchHintText:
-                                                        'Search for an item...',
                                                     icon: Icon(
                                                       Icons
                                                           .keyboard_arrow_down_rounded,

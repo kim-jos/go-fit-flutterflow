@@ -74,6 +74,16 @@ class UsersRecord extends FirestoreRecord {
   String get referralBy => _referralBy ?? '';
   bool hasReferralBy() => _referralBy != null;
 
+  // "b2bType" field.
+  String? _b2bType;
+  String get b2bType => _b2bType ?? '';
+  bool hasB2bType() => _b2bType != null;
+
+  // "companyRef" field.
+  DocumentReference? _companyRef;
+  DocumentReference? get companyRef => _companyRef;
+  bool hasCompanyRef() => _companyRef != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -87,6 +97,8 @@ class UsersRecord extends FirestoreRecord {
     _referralCount = snapshotData['referralCount'] as int?;
     _referralCode = snapshotData['referralCode'] as String?;
     _referralBy = snapshotData['referralBy'] as String?;
+    _b2bType = snapshotData['b2bType'] as String?;
+    _companyRef = snapshotData['companyRef'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -112,6 +124,14 @@ class UsersRecord extends FirestoreRecord {
   @override
   String toString() =>
       'UsersRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is UsersRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createUsersRecordData({
@@ -127,6 +147,8 @@ Map<String, dynamic> createUsersRecordData({
   int? referralCount,
   String? referralCode,
   String? referralBy,
+  String? b2bType,
+  DocumentReference? companyRef,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -142,6 +164,8 @@ Map<String, dynamic> createUsersRecordData({
       'referralCount': referralCount,
       'referralCode': referralCode,
       'referralBy': referralBy,
+      'b2bType': b2bType,
+      'companyRef': companyRef,
     }.withoutNulls,
   );
 

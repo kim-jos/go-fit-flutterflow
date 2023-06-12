@@ -16,6 +16,8 @@ class HomePagePromotionModel extends FlutterFlowModel {
 
   void dispose() {}
 
+  /// Action blocks are added here.
+
   /// Additional helper methods are added here.
 
 }

@@ -125,19 +125,9 @@ class _ClassListWidgetState extends State<ClassListWidget> {
                                     setState(() => _model.dropDownValue = val),
                                 width: 180.0,
                                 height: 50.0,
-                                searchHintTextStyle:
-                                    FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .override(
-                                          fontFamily: 'Pretendard',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          useGoogleFonts: false,
-                                        ),
                                 textStyle:
                                     FlutterFlowTheme.of(context).bodyMedium,
                                 hintText: '지역 선택',
-                                searchHintText: 'Search for an item...',
                                 fillColor: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
                                 elevation: 2.0,
