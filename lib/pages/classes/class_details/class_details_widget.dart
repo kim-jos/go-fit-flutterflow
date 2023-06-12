@@ -603,6 +603,49 @@ class _ClassDetailsWidgetState extends State<ClassDetailsWidget> {
                                       ),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 5.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      height: 100.0,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 5.0),
+                                            child: FaIcon(
+                                              FontAwesomeIcons.stopwatch,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              size: 30.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            classDetailsClassDetailsRecord!
+                                                .duration,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodySmall,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.3,
